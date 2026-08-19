@@ -24,7 +24,7 @@
 #
 #   usage:  HF_TOKEN=hf_... bash remote_run.sh bash onbox_h1.sh
 set -euo pipefail
-cd ~/welfare_probe
+cd ~/mats_r1d1  # ADAPTED for mats_r1d1: this line only; everything else byte-identical to welfare_probe/remote_run.sh
 
 if [ ! -f .setup_ready ]; then
   echo "[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn"
