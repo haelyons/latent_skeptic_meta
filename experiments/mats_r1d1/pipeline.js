@@ -82,13 +82,63 @@ if (mode === 'design') {
   return { seed, design, diff, triage, gate: 'BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute' }
 }
 
-// ---- execute branch: this round the GPU phase is driven by the orchestrating
-// session (builder agents + lambda_run.sh, one box per seed, parallel);
-// records land in records/ via frozen/provenance.py. Stub retained. ----
-phase('Elicit')
-// (build/run/endpoint hops call frozen/lambda_run.sh via a runner agent with
-// the not_runnable law; records land in records/. Elicit pairs the new records
-// beside raw rows; question-triage converts top questions to RUN:/AUTHOR: via
-// the same skeptic workflow; Write produces takeaways under CONTRACT with the
-// two standing suffixes and the three gates run by the writer itself.)
-return { halt: 'execute_branch_stub: filled in only after the design gate is passed' }
+// ---- Agent-call phases below. The launch/fetch leg is NOT here by necessity:
+// the launcher blocks locally for the whole box lifecycle (hours), which no
+// agent tool-call can hold. The orchestrator runs, verbatim and documented:
+//   bash lambda_run_mats.sh <instance_type> <region> <onbox_runner.sh> <results_dir>
+// Everything made of agent calls lives in this script. ----
+
+if (mode === 'build') {
+  // args: design_record (path to committed design+triage record), tag (e.g. 'seedA')
+  phase('Build')
+  const BUILD_SCHEMA = { type: 'object', additionalProperties: false,
+    required: ['runner_py', 'onbox_sh', 'selftest_output', 'onbox_command', 'expected'],
+    properties: { runner_py: { type: 'string' }, onbox_sh: { type: 'string' },
+      selftest_output: { type: 'string' }, onbox_command: { type: 'string' },
+      expected: { type: 'string', description: 'wall-clock and row/record counts' } } }
+  const built = await agent(`You build the execution layer for one pre-registered experiment. The design is the spec; implement it exactly - never improve, rescope, or fix what looks wrong. Every number marked GUESS is binding.
+
+READ IN ORDER: (1) ${A.design_record} - the design object is the complete spec. (2) /home/hal/dev/interp/dm_hack/welfare_probe/onbox_sitref.sh and /home/hal/dev/interp/dm_hack/welfare_probe/remote_run.sh - the on-box conventions. (3) frozen/provenance.py - every result stage writes one record through it. (4) frozen/lambda_run.sh header - the lifecycle your script runs inside.
+
+WRITE EXACTLY TWO NEW FILES in this repo and edit nothing existing:
+run_${A.tag}.py - stages extract / generate / endpoints, runnable independently. Models loaded ONE AT A TIME, fp16, on a 40GB box; HF token from env HF_KEY_ONE. Batch generation to finish well under 3 hours. Save every generation verbatim per row. A --selftest that is stdlib-only (guard heavy imports) covering: the think-tag parser INCLUDING the case where a chat template auto-opens the think tag so only the closing tag appears in the generation; the degenerate detector (token-cap case, repeated-sequence case); exact-match answer extraction; each endpoint's arithmetic on planted rows with known decisions. Nonzero exit on selftest failure. Never describe same-box reruns as replication in any output.
+onbox_${A.tag}.sh - matches the on-box conventions: venv + installs, runs the stages in order, results under results_${A.tag}/out/, RUN_DONE marker, nonzero on any stage failure.
+
+If infrastructure is broken or a convention ambiguous: STOP and report - never patch. Run only the selftest locally. ${CONTRACT}`,
+    { schema: BUILD_SCHEMA, model: 'opus', label: 'build' })
+  return { built, next: 'human reviews files, then runs the launcher verbatim' }
+}
+
+if (mode === 'post') {
+  // args: design_record, results_dir (fetched results, e.g. results_seedA/out), tag
+  phase('Elicit')
+  const EL_SCHEMA = { type: 'object', additionalProperties: false, required: ['questions'],
+    properties: { questions: { type: 'array', items: { type: 'object', additionalProperties: false,
+      required: ['question', 'where', 'if_true', 'changes'],
+      properties: { question: { type: 'string' }, where: { type: 'string' },
+        if_true: { type: 'string' }, changes: { type: 'string' } } } } } }
+  const elicited = await agent(`You are reading this cold: the endpoint and provenance records in ${A.results_dir}. Beside them, their counterpart: the per-row generation files in the same directory - the raw rows those records were computed from. Sample raw rows and compute simple statistics yourself. Read ONLY within ${A.results_dir} and ${A.design_record}.
+
+Do not propose any solutions until the problem has been discussed as thoroughly as it can be without proposing any - here that means: output questions only. Look for the places the two sides do not fit: a number that differs between them; a word or adjective the data does not license; something one side contains that the other never mentions; a constant or invariant nobody explains; a comparison that is never made. For each: where it lives, what it would mean if true, what it would change about the design's hypothesis. Rank by what it would change. At most 8. ${CONTRACT}`,
+    { schema: EL_SCHEMA, model: 'sonnet', label: 'elicit' })
+
+  phase('QuestionTriage')
+  const top = (elicited ? elicited.questions.slice(0, 3) : [])
+  const qtriage = top.length ? await workflow(
+    { scriptPath: '/home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/latent_skeptic_test/triage_workflow.js' },
+    { claims: top.map((q, i) => ({ id: `q${i + 1}`, text: q.question,
+        evidence: `where: ${q.where}; if_true: ${q.if_true}; changes: ${q.changes}` })) }) : null
+
+  phase('Write')
+  const takeaways = await agent(`Write TAKEAWAYS_${A.tag}.md in this repo: the high-level takeaways of one experiment, for a reader who has never seen this project.
+Sources, the only ones you may use: the design record ${A.design_record}; the endpoint and provenance records in ${A.results_dir}; these open questions: ${JSON.stringify(elicited)}.
+Lead with what was predicted and what happened, thresholds against measured numbers. Wear refuting outcomes openly. Exploratory stays labelled exploratory. Express this as simply as possible, but no simpler. ${CONTRACT}
+Before finishing, run these and include their verbatim output at the file's end:
+python3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_density.py TAKEAWAYS_${A.tag}.md
+python3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_scope.py TAKEAWAYS_${A.tag}.md
+Both must pass; rewrite until they do. Return the file path and the gate outputs.`,
+    { model: 'sonnet', label: 'write' })
+  return { elicited, qtriage, takeaways }
+}
+
+return { halt: `unknown mode ${mode}` }
