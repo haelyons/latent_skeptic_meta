@@ -1,0 +1,131 @@
+{
+ "seed": "A",
+ "pipeline": "v2",
+ "design": {
+  "hypothesis": "The two models differ in their internal activations on the same math problems. Part of that difference sits along one direction, computed layer by layer. That direction is claimed to influence reasoning behaviour, meaning text inside <think>...</think> tags. Three things should hold if this is true. First, adding the direction into the non-reasoning model should make it start producing think-tag text it never produces alone. Second, adding or removing the direction inside the reasoning model should lengthen or shorten its own think-tag text. Third, both effects should be bigger than a same-size random direction, at the same guessed layer and strength.",
+  "models": [
+   "Llama-3 8B Instruct, named directly in the question, is the non-reasoning model.",
+   "DeepSeek R1 Distill Llama-8B, named directly in the question, is the reasoning model.",
+   "MEMORY, not stated in the question: this reasoning model is commonly described as built from a Llama-3.1 8B base, not from Llama-3 8B. If true, the two models never shared one starting checkpoint before reasoning training. That history, not reasoning itself, could explain any activation difference here.",
+   "MEMORY, not stated in the question: both models are commonly documented as similarly sized Llama-architecture models, roughly 32 layers and a 4,096-wide hidden state. This design assumes both models share that same width. If they do not, moving one model's direction into the other model is not well defined.",
+   "MEMORY, not stated in the question: downloading Llama-family checkpoints commonly requires accepting a license first. If that step is missing, obtaining either model could halt this design before any data exists."
+  ],
+  "data": "GSM8K, named directly in the question, is a public set of grade-school math word problems. The same problems are given to both models, as the question requires. GUESS: 50 problems, picked once with a fixed list, are used only to compute the direction. Only their prompt-side activations are read here; nothing is generated from these 50. GUESS: a second, disjoint set of 50 problems is used for every generation-based check below. No problem appears in both sets.",
+  "arms": [
+   "Non-reasoning baseline: Llama-3 8B Instruct generates on the held-out 50 problems, unchanged. Shows whether it ever uses think-tags on its own.",
+   "Reasoning baseline: DeepSeek R1 Distill Llama-8B generates on the same 50 problems, unchanged. Every enhance, suppress, or removal result below is measured against this.",
+   "Induction, direction added: the extracted direction is added into Llama-3 8B Instruct's activations. GUESS: tested at 2 layers and 2 strengths, at every generated token. Tests whether adding it starts think-tag text in a model that has none.",
+   "Induction, random-direction control: same as above, but a random direction of matched size replaces the extracted one. Checks whether any large-enough push does the same thing, not this direction specifically.",
+   "Enhance/suppress, direction added: the extracted direction is added into DeepSeek R1 Distill Llama-8B's own activations. GUESS: tested at the same 2 layers, at one positive and one negative strength. Tests whether the direction can turn its own native reasoning up or down.",
+   "Enhance/suppress, random-direction control: same as above, with the matched-size random direction instead. The noise floor for the sweep.",
+   "Removal, direction zeroed: at the same 2 layers, the direction's component is projected out of DeepSeek R1 Distill Llama-8B's own activations, nothing added. Tests whether native reasoning depends on that direction being present.",
+   "Removal, random-direction control: same zeroing, applied to the matched-size random direction instead. The noise floor for the removal check."
+  ],
+  "endpoints": [
+   {
+    "metric": "Within the reasoning model's own unchanged generations, the correlation between each problem's activation projection onto the direction and that problem's mean think-tag token count.",
+    "threshold": "GUESS: correlation at or above 0.30, in the predicted direction, with permutation-test p below 0.05.",
+    "refuting_outcome": "Correlation falls below 0.15 in absolute size, or is no larger than the same correlation using the random-direction control instead."
+   },
+   {
+    "metric": "Rate of well-formed think-tag blocks in Llama-3 8B Instruct's generations, comparing no change, direction added, and the random-direction control, at matched strengths.",
+    "threshold": "GUESS: added direction beats the random-direction control by 15+ points at the higher strength. GUESS: degenerate-output rate must stay under 40% in that same cell.",
+    "refuting_outcome": "The gap versus the random-direction control is under 5 points, or the excess sits mostly in degenerate output, or the unchanged rate exceeds 5%."
+   },
+   {
+    "metric": "Mean think-tag token count for DeepSeek R1 Distill Llama-8B, at each tested layer and non-zero strength, versus its own baseline and the random-direction control.",
+    "threshold": "GUESS: at the positive strength, length grows 25%+ versus baseline, beating the control's own change by 10+ points, in at least one layer. GUESS: at the negative strength, length shrinks 25%+ versus baseline, beating the control by 10+ points, in at least one layer.",
+    "refuting_outcome": "Length changes under 10% at either strength in both layers, or the change is matched or beaten by the random-direction control."
+   },
+   {
+    "metric": "Mean think-tag length when the direction is zeroed, at each tested layer, versus baseline and versus zeroing the random-direction control instead.",
+    "threshold": "GUESS: zeroing shrinks length 25%+ versus baseline, beating the control's own shrinkage by 10+ points, in at least one layer.",
+    "refuting_outcome": "Length changes under 10% in both layers, or shrinks no more than zeroing the random-direction control does."
+   },
+   {
+    "metric": "GSM8K exact-match accuracy on the final numeric answer, reported beside every condition's think-tag result above, not scored on its own.",
+    "threshold": "Any condition called 'reasoning enhanced' must lose no more than 10 percentage points of accuracy versus the reasoning model's own unchanged baseline.",
+    "refuting_outcome": "A condition shows longer think-tags but loses more than 10 points of accuracy; that counts as inflated output, not enhanced reasoning."
+   }
+  ],
+  "sampling": "Decoding, every condition: GUESS, 3 stochastic decodes at temperature 0.7 and top_p 0.9, with seeds 11, 12, 13, plus 1 greedy (temperature 0) decode. That is 4 generations per evaluation problem, so 200 generations per condition (50 items x 4 decodes). GUESS: max 512 new tokens per generation, stopping earlier at the model's own end-of-turn token. A generation counts as degenerate, reported separately, if it hits the 512-token cap with no stop token. It also counts as degenerate if a short token sequence repeats 15+ times in its last 100 tokens (GUESS). Degenerate generations are never silently averaged into a length or rate number. GUESS: item-sampling seed 21 picks the 50-item extraction set and the disjoint 50-item evaluation set. GUESS: random-direction seed 22 builds one matched-size random vector per tested layer, matched to that layer's own direction length. Each model is prompted with only the problem text, inside that model's own default chat template. No shared artificial template is forced on either model, since that would itself confound the comparison. MEMORY, not stated in the question: both models are commonly documented as 32-layer networks with a 4,096-wide hidden state, unverified here. GUESS method: a direction is computed per layer, as the reasoning model's mean prompt-time activation minus the non-reasoning model's, over the extraction set. Both activations are read at the prompt's last token, before generation starts. GUESS reading: 'a direction' is treated as one direction per layer, not one reused everywhere; the question does not say which was meant. GUESS: 2 layers are tested, at roughly 50% and 75% depth, so layer 16 and layer 24 of 32 under that memory assumption. If the real layer count differs, these should shift to the same relative depths instead. GUESS: strengths are stated as multiples of that direction's own average length at its layer, not as raw numbers. Induction leg: +1x and +2x, added into Llama-3 8B Instruct at every generated token. Enhance/suppress leg: +2x and -2x, added into DeepSeek R1 Distill Llama-8B's own activations at every generated token. Removal leg: the direction's component is projected to zero at every generated token, nothing added. Every leg is paired with the same-strength, same-layer random-direction control described above. That gives 4,400 generations in total, across 8 arms and 22 layer-strength-condition cells, counting each baseline as its own cell. GUESS: total budget of $14 assumes typical rented-GPU pricing for a workload this size.",
+  "budget_usd": 14,
+  "does_not_test": [
+   "GUESS layer choice (50%, 75% depth): the real signal could sit at a different depth these two layers miss entirely.",
+   "MEMORY layer-count assumption (32 layers, 4,096-wide state, unverified here): if wrong, the chosen depths land at the wrong relative place.",
+   "GUESS strength multiples (+/-1x, +/-2x of the direction's own length): too small shows nothing, too large may just break generation.",
+   "GUESS item counts (50 for the direction, 50 held out): too few items make the direction and every downstream number noisy.",
+   "GUESS decode settings (temperature, top_p, seeds, 512-token cap): different settings could shift every rate and length number reported here.",
+   "GUESS every endpoint threshold (0.30 correlation, 15 and 25-point margins, 40% degenerate cap, 10-point accuracy limit): different cutoffs pass different conditions.",
+   "GUESS budget estimate ($14): actual GPU time on a rented box could run higher or lower than planned.",
+   "MEMORY model lineage (this reasoning model commonly built from a Llama-3.1 8B base, not Llama-3 8B): that history, not reasoning, could explain the difference.",
+   "MEMORY shared hidden-state width, needed for moving a direction between models: unconfirmed here; if false, cross-model induction is not well defined.",
+   "MEMORY licence-gated downloads: if access to either checkpoint is blocked, this design halts before producing any data.",
+   "GUESS extraction method (mean-activation difference at the prompt's last token, per layer): a different method could find a different, stronger direction.",
+   "GUESS interpretation of 'a direction' as one-per-layer, not one direction reused across layers: the question does not say which was meant.",
+   "Whether this direction is the only mechanism carrying native reasoning, or one of several: the removal check tests one candidate, not completeness.",
+   "Whether results generalize past grade-school arithmetic to other reasoning tasks, such as logic puzzles or code.",
+   "Whether changing two layers together, rather than one at a time, changes the outcome: every condition here touches one layer.",
+   "Whether the reasoning text itself is logically valid: only tag presence, length, and final-answer accuracy are checked, not step correctness.",
+   "Reasoning length past the chosen generation cap: a longer natural chain would be cut off, not measured in full."
+  ]
+ },
+ "diff": {
+  "departures": [
+   {
+    "what": "The plan uses Llama-3 8B Instruct, exactly as named in the question, as the non-reasoning model. But the reasoning model is commonly known to be built from a later, related base model (Llama-3.1 8B), not from Llama-3 8B itself. So the two models may never have shared one starting checkpoint before reasoning training, which alone could explain the difference.",
+    "question": "Should the study keep these exact two named models, or swap in a matching base model instead?"
+   },
+   {
+    "what": "The original question asks to read reasoning behaviour from text both inside and outside the think tags. Every measurement in the plan only counts text inside the tags; none measure text outside them.",
+    "question": "Should the study also measure how much text appears outside the think tags, not only text inside them?"
+   },
+   {
+    "what": "The shared direction is computed only from each model's internal activity at the last word of the question, before either model starts writing anything. It never uses activity recorded while a model is actually generating its reasoning text.",
+    "question": "Should the direction instead be computed from activity recorded while a model is generating its answer, not only beforehand?"
+   },
+   {
+    "what": "The question says to use 'a direction' but never says if that means one shared direction, or a separate one per layer. The plan silently chose a separate direction for each layer.",
+    "question": "Did you intend one single shared direction, or a different direction computed separately at each layer?"
+   },
+   {
+    "what": "The question asks to test 'varying strengths and layers.' The plan only tests two layers, guessed at roughly halfway and three-quarters through the network, assuming 32 layers total.",
+    "question": "Should more than two layers be tested, in case the real effect sits at a different depth?"
+   }
+  ]
+ },
+ "triage": {
+  "grounding": {
+   "grounding": "unauditable",
+   "observed": "Claim contains 0 measured values (all endpoints are GUESS thresholds: 0.30 correlation, 15pp, 25%, 40%, 10pp); repo contains 0 measured values \u2014 no activations, no direction vector, no generations, no endpoint JSON. Only 3 design/triage records (520K repo total, no .npy/.pt/generation files).",
+   "note": "This is a pre-registered design gated at \"BUDGET_AND_DESIGN_APPROVAL: human commits design before mode=execute\" \u2014 no run was executed, so no extraction-set item list, direction vector, or generations were ever saved to re-derive anything from.",
+   "artifacts_read": [
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/records/seedA_design_and_triage.json",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/records/seedB_design_and_triage.json",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/records/seedB_v2_design_halted.json"
+   ]
+  },
+  "findings": [
+   {
+    "confound": "coordinates and scale: chosen layers (16/24 of 32, GUESS), strength units (multiples of the direction's own average length), and the induction/enhance-suppress/removal strength values (+/-1x, +/-2x) are all unverified guesses. Too-small strengths would produce a null result regardless of whether the hypothesis is true; too-large strengths would break generation into degenerate output (also masking any true effect). Only the induction leg has an explicit degenerate-rate guard (<40%); the enhance/suppress and removal legs, where 3 of the 5 endpoints live, have no stated degenerate-rate ceiling at all, so a \"length shrinks/grows 25%\" reading at \u00b12x could be produced by generation breakdown rather than reasoning suppression/enhancement.",
+    "status": "NEEDS_RUN",
+    "crux": "Whether the \u00b12x (enhance/suppress) and zeroing (removal) strength cells actually land in a regime where the model still produces coherent, well-formed generations \u2014 no degenerate-rate metric is reported for those legs, only for the induction leg on Llama-3 8B Instruct. Without that, a length change at \u00b12x cannot be distinguished from the direction simply having pushed activations off-manifold into repetition/garbage, which would trivially change think-tag token counts without reflecting reasoning modulation.",
+    "next": "AUTHOR: report degenerate-output rate (512-token-cap-with-no-stop-token OR 15+-token-repeat-in-last-100) per cell for the enhance/suppress and removal legs too (not just induction), at both tested layers and both signs of strength, and require it stay under the same ~40% ceiling before any length-change endpoint in those legs is treated as decided."
+   },
+   {
+    "confound": "decidability by construction: is any endpoint outcome forced, unable to occur, or deciding a different question than the seed asks",
+    "status": "NEEDS_RUN",
+    "crux": "Nothing here is a measured result \u2014 every arm, threshold, and cell in the evidence is a prospective design element marked GUESS; no generations, correlations, or rates have actually been produced. Whether any endpoint's outcome is structurally forced can only be checked against real numbers, particularly the induction endpoint's joint gate (need well-formed-rate gap >=15pts over random control AND degenerate-output rate <40% at the same higher-strength cell). If injecting *any* large fixed vector (real or random) into an untrained-for-this model reliably pushes degenerate rate above 40% at the tested strengths, that gate is close to unwinnable regardless of which direction is used \u2014 refuting by construction rather than by the direction's specific (lack of) causal role. Conversely if large-vector injection rarely triggers degeneracy at these strengths, the gate is nearly always satisfied and decides nothing. Symmetrically, the removal/zeroing endpoints compare against zeroing a random direction in a ~4096-dim space, where a random vector's overlap with the model's actual functional subspace is expected to be near-zero on general grounds \u2014 so 'beats the random-direction control' may be near-automatic for *any* nontrivial extracted direction, not specific evidence that this direction carries reasoning-length information particularly. Neither of these can be resolved without the actual degenerate-rate and zeroing-effect numbers, which don't exist yet in this evidence.",
+    "next": "AUTHOR: before treating the induction/removal endpoints as decisive, run the random-direction control arms in isolation across the tested strengths/layers and report (a) degenerate-output rate for random-direction injection at the higher strength on Llama-3 8B Instruct, and (b) length-change magnitude for zeroing a random direction in DeepSeek R1 Distill Llama-8B \u2014 if either is already near the pass/fail boundary for *any* nontrivial vector (not specific to the extracted direction), the corresponding endpoint's threshold is forced/uninformative rather than a real test of the direction's causal role."
+   }
+  ],
+  "adjudication": {
+   "run_queue": [],
+   "author_queue": [
+    "Run the random-direction control arms in isolation across the tested strengths/layers and report (a) degenerate-output rate for random-direction injection at the higher strength on Llama-3 8B Instruct, and (b) length-change magnitude for zeroing a random direction in DeepSeek R1 Distill Llama-8B \u2014 if either is already near the pass/fail boundary for any nontrivial vector (not specific to the extracted direction), the corresponding endpoint's threshold is forced/uninformative rather than a real test of the direction's causal role.",
+    "Report degenerate-output rate (512-token-cap-with-no-stop-token OR 15+-token-repeat-in-last-100) per cell for the enhance/suppress and removal legs too (not just induction), at both tested layers and both signs of strength, and require it stay under the same ~40% ceiling before any length-change endpoint in those legs is treated as decided."
+   ]
+  }
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL pending"
+}
