@@ -122,7 +122,7 @@ EXTRA=$(ls items_grounded.py sitref_stimuli.py run_sitref.py analyze_sitref.py \
   DESIGN_SITREF.md DESIGN_SRCDEC.md DESIGN_SITREF_B.md DESIGN_SITREF_C.md \
   DESIGN_SITREF_D.md DESIGN_SUFFIX.md 2>/dev/null || true)
 echo "[scp] code -> box (extra: ${EXTRA:-none})"
-ssh $SSHOPT ubuntu@$IP "mkdir -p mats_r1d1/results_seedA/out"
+ssh $SSHOPT ubuntu@$IP "mkdir -p mats_r1d1/out mats_r1d1/results_seedA/out"
 scp $SSHOPT run_seedA.py frozen/provenance.py frozen/remote_run.sh records/seedA_v2_design_diff_triage.json \
   "$RUNNER" ubuntu@$IP:mats_r1d1/
 # (no prior-stage artifacts to ship for mats_r1d1)
