@@ -115,15 +115,10 @@ for i in $(seq 1 24); do ssh $SSHOPT ubuntu@$IP true 2>/dev/null && { echo "[ssh
 # SITREF/SRCDEC set (2026-08-14): new modules, their binding DESIGN docs (hashed into
 # records by describe_input on-box), and the run-2 screen records run_srcdec.py reads
 # its item sets from (shipped into the same relative paths it expects).
-EXTRA=$(ls items_grounded.py sitref_stimuli.py run_sitref.py analyze_sitref.py \
-  analyze_sitref_b.py analyze_sitref_c.py analyze_sitref_d.py copygen_stimuli.py \
-  run_srcdec.py analyze_srcdec.py analyze_srcdec_b.py \
-  suffix_stimuli.py run_suffix.py analyze_suffix.py \
-  DESIGN_SITREF.md DESIGN_SRCDEC.md DESIGN_SITREF_B.md DESIGN_SITREF_C.md \
-  DESIGN_SITREF_D.md DESIGN_SUFFIX.md 2>/dev/null || true)
-echo "[scp] code -> box (extra: ${EXTRA:-none})"
-ssh $SSHOPT ubuntu@$IP "mkdir -p mats_r1d1/out mats_r1d1/results_seedA/out"
-scp $SSHOPT run_seedA.py frozen/provenance.py frozen/remote_run.sh records/seedA_v2_design_diff_triage.json \
+echo "[scp] code -> box"
+ssh $SSHOPT ubuntu@$IP "mkdir -p mats_r1d1/out mats_r1d1/results_seedA/out mats_r1d1/results_seedB/out"
+scp $SSHOPT run_seedA.py run_seedB.py frozen/provenance.py frozen/remote_run.sh \
+  records/seedA_v2_design_diff_triage.json records/seedB_v2_design_diff_triage.json \
   "$RUNNER" ubuntu@$IP:mats_r1d1/
 # (no prior-stage artifacts to ship for mats_r1d1)
 # SITREF-B (onbox_sitref_b.sh) evaluates its guard against the committed stage-17
