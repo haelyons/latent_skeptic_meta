@@ -19,7 +19,7 @@ const mode = A.mode || 'design'
 const CAP_USD = A.cap_usd || 15
 if (!seed) return { error: 'pass { seed: "<question text>" }' }
 
-const CONTRACT = `Write for a reader who has never seen this project. Do not use code names, stage numbers, arm labels, acronyms, or field names from files as words: say what a thing is in plain words first, and only where needed for lookup add the code in parentheses. Numbers stay exact. As simple as possible, but no simpler: where a plain word would lose precision, keep the term and define it at first use.`
+const CONTRACT = `Write for a reader who has never seen this project. Do not use code names, stage numbers, arm labels, acronyms, or field names from files as words: say what a thing is in plain words first, and only where needed for lookup add the code in parentheses. Numbers stay exact. Keep every sentence under 25 words. As simple as possible, but no simpler: where a plain word would lose precision, keep the term and define it at first use.`
 
 const DESIGN_SCHEMA = {
   type: 'object', additionalProperties: false,
@@ -44,7 +44,8 @@ const DESIGN_PROMPT = (s) => `Design the minimal experiment that answers this qu
 QUESTION:
 ${s}
 
-Rules: name every arm including controls; give every endpoint a numeric threshold and a named refuting outcome that could actually occur; state decode settings, seeds, and n per cell; state plainly what the design deliberately does not test. Assume two ~8B models on one rented GPU box; keep budget_usd honest. ${CONTRACT}`
+Rules: name every arm including controls; give every endpoint a numeric threshold and a named refuting outcome that could actually occur; state decode settings, seeds, and n per cell; state plainly what the design deliberately does not test.
+Derivability rule: assert nothing about models, datasets, layers, scales, or lineage that the QUESTION text does not itself state. Every number you choose that the question does not fix (a layer, a strength, an item count) - mark it GUESS where it appears and list it in does_not_test with one line on how wrong it could be. Any fact recalled from memory (model lineage, sizes, gating) - mark it MEMORY the same way. Unmarked external claims are defects. Assume two ~8B models on one rented GPU box; keep budget_usd honest. ${CONTRACT}`
 
 phase('Design')
 const design = await agent(DESIGN_PROMPT(seed), { schema: DESIGN_SCHEMA, model: 'sonnet', label: 'design' })
@@ -52,20 +53,38 @@ if (!design) return { error: 'design agent returned nothing' }
 log(`Design: ${design.arms.length} arms, ${design.endpoints.length} endpoints, $${design.budget_usd}`)
 if (design.budget_usd > CAP_USD) return { halt: 'budget_over_cap', design }
 
+phase('Diff')
+const DIFF_SCHEMA = { type: 'object', additionalProperties: false, required: ['departures'],
+  properties: { departures: { type: 'array', items: { type: 'object', additionalProperties: false,
+    required: ['what', 'question'], properties: { what: { type: 'string' }, question: { type: 'string' } } } } } }
+const diff = await agent(`Here is a research question, and the experimental design an agent produced from it.
+
+QUESTION:\n${seed}\n\nDESIGN:\n${JSON.stringify(design)}
+
+List every place the design departs from, adds to, or quietly corrects the question: changed or dropped words, substituted models, invented numbers, silently resolved ambiguities. For each, one plain-words question addressed to the human who owns the question. Questions only - no fixes, no praise. At most 5, ranked by what the answer would change. ${CONTRACT}`,
+  { schema: DIFF_SCHEMA, model: 'sonnet', label: 'diff' })
+log(`Diff: ${diff ? diff.departures.length : 0} departure question(s)`)
+
 phase('Triage')
 // The design is the claim. Reuse the existing skeptic machinery unchanged.
 const claims = [{
   id: 'design-core',
   text: `If run exactly as specified, this design decides: ${design.hypothesis}. Endpoints: ${design.endpoints.map(e => `${e.metric} at ${e.threshold}, refuted by ${e.refuting_outcome}`).join('; ')}.`,
   evidence: JSON.stringify(design),
+  confounds: [
+    'decidability by construction: is any endpoint outcome forced, unable to occur, or deciding a different question than the seed asks',
+    'coordinates and scale: could the chosen layers, strengths, or units make every cell degenerate or null regardless of the hypothesis',
+  ],
 }]
 const triage = await workflow({ scriptPath: '/home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/latent_skeptic_test/triage_workflow.js' }, { claims })
 
 if (mode === 'design') {
-  return { seed, design, triage, gate: 'BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute' }
+  return { seed, design, diff, triage, gate: 'BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute' }
 }
 
-// ---- execute branch: reachable only after the human gate ----
+// ---- execute branch: this round the GPU phase is driven by the orchestrating
+// session (builder agents + lambda_run.sh, one box per seed, parallel);
+// records land in records/ via frozen/provenance.py. Stub retained. ----
 phase('Elicit')
 // (build/run/endpoint hops call frozen/lambda_run.sh via a runner agent with
 // the not_runnable law; records land in records/. Elicit pairs the new records
