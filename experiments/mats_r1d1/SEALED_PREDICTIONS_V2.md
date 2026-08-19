@@ -39,3 +39,15 @@ Net sealed claim: the improved experiment, run honestly at guessed coordinates,
 largely refutes the paper's framing - and if instead any endpoint PASSES its
 threshold against the matched-norm control, that is a stronger positive result
 than the paper's own, because every confound the paper left open is gated here.
+
+## Gate decisions and deviations (append-only ledger)
+- 2026-08-19: human raised the total cap to $100 for this round (seed B's $30
+  design may now pass its gate; A $14 + B $30 = $44 within cap).
+- 2026-08-19 DEVIATION, booked: the seed-A BUILD prompt was authored by the
+  orchestrating session, not assembled by the script - untracked spec content
+  entered outside a typed contract (the auto-think-tag scorer trap, batching
+  and VRAM guidance, a 3-hour target). The built files remain auditable
+  artifacts; the prompt is recorded in records/deviation_buildprompt_seedA.md.
+  Corrective: BUILD prompt moves into pipeline.js; launch/fetch stays a
+  deterministic shell command run verbatim by the orchestrator because the
+  launcher blocks for the whole box lifecycle, which no agent call can hold.
