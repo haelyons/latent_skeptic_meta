@@ -1,0 +1,130 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_seedA.sh
+=== payload dir: /home/ubuntu/mats_r1d1 ===
+=== onbox_seedA seed=A pipeline=v2 batch=16 out=results_seedA/out ===
+=== instance=c54d8f6f85b74a049a1db570e7167af7 host=193-122-152-110 git=e40354d5fc4daf0eab688ef45e7545067b965cd6 ===
+NVIDIA A100-SXM4-40GB, 40960 MiB, 570.148.08
+=== SETUP: adding what is missing on top of the image's CUDA torch ===
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+[setup] torch already present -> NOT reinstalled (see header)
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script normalizer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script datasets-cli is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB mem_GiB 39.5
+[setup] transformers 5.15.1 datasets 5.0.1 accelerate 1.14.0 numpy 1.26.4 pillow 12.3.0
+[setup] LlamaForCausalLM resolvable (both checkpoints are Llama-architecture)
+=== SELFTESTS (model-free; a broken instrument must show before GPU time) ===
+  provenance: rc=0  selftest: PASS
+  run_seedA: rc=0  selftest: PASS (76 checks)
+  plan: budget_usd (design GUESS)=14
+=== seedA_extract RUNNING (19:26:40Z) ===
+--- seedA_extract tail ---
+[load] meta-llama/Meta-Llama-3-8B-Instruct fp16 (token from HF_KEY_ONE)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Fetching 4 files:   0%|          | 0/4 [00:00<?, ?it/s]Fetching 4 files:  25%|██▌       | 1/4 [00:08<00:26,  8.84s/it]Fetching 4 files:  50%|█████     | 2/4 [00:19<00:20, 10.04s/it]Fetching 4 files: 100%|██████████| 4/4 [00:24<00:00,  5.22s/it]Fetching 4 files: 100%|██████████| 4/4 [00:24<00:00,  6.11s/it]
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<01:38,  2.95it/s]Loading weights:   8%|▊         | 22/291 [00:00<00:04, 58.13it/s]Loading weights:  14%|█▎        | 40/291 [00:00<00:03, 82.91it/s]Loading weights:  20%|█▉        | 58/291 [00:00<00:02, 102.74it/s]Loading weights:  26%|██▌       | 76/291 [00:00<00:01, 113.76it/s]Loading weights:  32%|███▏      | 94/291 [00:00<00:01, 123.65it/s]Loading weights:  38%|███▊      | 112/291 [00:01<00:01, 127.77it/s]Loading weights:  45%|████▍     | 130/291 [00:01<00:01, 138.69it/s]Loading weights:  51%|█████     | 148/291 [00:01<00:01, 137.64it/s]Loading weights:  56%|█████▋    | 164/291 [00:01<00:00, 141.83it/s]Loading weights:  62%|██████▏   | 180/291 [00:01<00:00, 143.06it/s]Loading weights:  67%|██████▋   | 195/291 [00:01<00:00, 141.22it/s]Loading weights:  73%|███████▎  | 211/291 [00:01<00:00, 139.19it/s]Loading weights:  79%|███████▊  | 229/291 [00:01<00:00, 132.33it/s]Loading weights:  85%|████████▍ | 247/291 [00:02<00:00, 138.21it/s]Loading weights:  91%|█████████ | 265/291 [00:02<00:00, 138.67it/s]Loading weights:  97%|█████████▋| 283/291 [00:02<00:00, 148.91it/s]Loading weights: 100%|██████████| 291/291 [00:02<00:00, 124.43it/s]
+[load] layers=32 d_model=4096 device=cuda:0
+[extract] nonreason/extract: (50, 33, 4096) in 1.2s -> seedA_acts_nonreason_extract.npy
+[extract] nonreason/eval: (50, 33, 4096) in 0.5s -> seedA_acts_nonreason_eval.npy
+[load] deepseek-ai/DeepSeek-R1-Distill-Llama-8B fp16 (token from HF_KEY_ONE)
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:24<00:24, 24.14s/it]Fetching 2 files: 100%|██████████| 2/2 [00:30<00:00, 13.94s/it]Fetching 2 files: 100%|██████████| 2/2 [00:30<00:00, 15.47s/it]
+Loading weights:   0%|          | 0/291 [00:00<?, ?it/s]Loading weights:   0%|          | 1/291 [00:00<01:44,  2.77it/s]Loading weights:   8%|▊         | 22/291 [00:00<00:04, 55.47it/s]Loading weights:  14%|█▎        | 40/291 [00:00<00:03, 82.19it/s]Loading weights:  20%|█▉        | 58/291 [00:00<00:02, 100.60it/s]Loading weights:  26%|██▌       | 76/291 [00:00<00:01, 113.60it/s]Loading weights:  32%|███▏      | 94/291 [00:01<00:01, 120.81it/s]Loading weights:  38%|███▊      | 112/291 [00:01<00:01, 130.60it/s]Loading weights:  45%|████▍     | 130/291 [00:01<00:01, 141.09it/s]Loading weights:  50%|████▉     | 145/291 [00:01<00:01, 141.53it/s]Loading weights:  55%|█████▍    | 160/291 [00:01<00:00, 136.87it/s]Loading weights:  60%|██████    | 175/291 [00:01<00:00, 133.06it/s]Loading weights:  66%|██████▋   | 193/291 [00:01<00:00, 141.68it/s]Loading weights:  71%|███████▏  | 208/291 [00:01<00:00, 138.42it/s]Loading weights:  77%|███████▋  | 225/291 [00:01<00:00, 140.12it/s]Loading weights:  82%|████████▏ | 240/291 [00:02<00:00, 137.94it/s]Loading weights:  88%|████████▊ | 256/291 [00:02<00:00, 143.29it/s]Loading weights:  93%|█████████▎| 271/291 [00:02<00:00, 129.77it/s]Loading weights: 100%|██████████| 291/291 [00:02<00:00, 123.09it/s]
+[load] layers=32 d_model=4096 device=cuda:0
+[extract] reason/extract: (50, 33, 4096) in 0.5s -> seedA_acts_reason_extract.npy
+[extract] reason/eval: (50, 33, 4096) in 0.5s -> seedA_acts_reason_eval.npy
+[extract] n_layers=32 d_model=4096 tested_layers=[16, 24] (~50%, 75% depth)
+[extract] DIRECTION_DEFINED -> results_seedA/out/pipeline-v2_seed-A_stage-extract.json
+=== seedA_extract OK ===
+=== seedA_generate RUNNING (19:28:20Z) ===
+--- seedA_generate tail ---
+[generate] reason: 13 cells x 50 items x 4 decodes = 2600 rows | prompt_opens_think=True | stop_ids=[128001, 128009]
+[generate] reason 1/13 base_reason: 200 rows in 259s | elapsed 4.3m | eta 51.8m
+[generate] reason 2/13 steer_dir_L16_s+2.0: 200 rows in 287s | elapsed 9.1m | eta 50.1m
+[generate] reason 3/13 steer_dir_L16_s-2.0: 200 rows in 288s | elapsed 13.9m | eta 46.3m
+[generate] reason 4/13 steer_dir_L24_s+2.0: 200 rows in 287s | elapsed 18.7m | eta 42.0m
+[generate] reason 5/13 steer_dir_L24_s-2.0: 200 rows in 286s | elapsed 23.4m | eta 37.5m
+[generate] reason 6/13 steer_rand_L16_s+2.0: 200 rows in 286s | elapsed 28.2m | eta 32.9m
+[generate] reason 7/13 steer_rand_L16_s-2.0: 200 rows in 287s | elapsed 33.0m | eta 28.3m
+[generate] reason 8/13 steer_rand_L24_s+2.0: 200 rows in 287s | elapsed 37.8m | eta 23.6m
+[generate] reason 9/13 steer_rand_L24_s-2.0: 200 rows in 245s | elapsed 41.9m | eta 18.6m
+[generate] reason 10/13 zero_dir_L16: 200 rows in 263s | elapsed 46.2m | eta 13.9m
+[generate] reason 11/13 zero_dir_L24: 200 rows in 259s | elapsed 50.6m | eta 9.2m
+[generate] reason 12/13 zero_rand_L16: 200 rows in 260s | elapsed 54.9m | eta 4.6m
+[generate] reason 13/13 zero_rand_L24: 200 rows in 260s | elapsed 59.2m | eta 0.0m
+[generate] reason: ROWS_COMPLETE 2600/2600 rows -> results_seedA/out/pipeline-v2_role-reason_seed-A_stage-generate.json
+=== seedA_generate OK ===
+=== seedA_endpoints RUNNING (21:02:21Z) ===
+--- seedA_endpoints tail ---
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[endpoints] 1800 non-reasoning rows + 2600 reasoning rows, 22 cells, tested layers [16, 24]
+[endpoints] E1: REFUTED -> endpoint-1_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E2: REFUTED -> endpoint-2_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E3: REFUTED -> endpoint-3_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E4: REFUTED -> endpoint-4_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E5: NOT_APPLICABLE_NO_CONDITION_CALLED_ENHANCED -> endpoint-5_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E1=REFUTED | E2=REFUTED | E3=REFUTED | E4=REFUTED | E5=NOT_APPLICABLE_NO_CONDITION_CALLED_ENHANCED
+=== seedA_endpoints OK ===
+=== COLLECT results_seedA/out -> out/ ===
+-rw-rw-r-- 1 ubuntu ubuntu     6170 Aug 19 21:02 endpoint-4_pipeline-v2_seed-A_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu     6170 Aug 19 21:02 endpoint-4_pipeline-v2_seed-A_stage-endpoints_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu    14626 Aug 19 21:02 endpoint-5_pipeline-v2_seed-A_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    14626 Aug 19 21:02 endpoint-5_pipeline-v2_seed-A_stage-endpoints_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     4123 Aug 19 21:02 pipeline-v2_role-nonreason_seed-A_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu     4123 Aug 19 21:02 pipeline-v2_role-nonreason_seed-A_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     4756 Aug 19 21:02 pipeline-v2_role-reason_seed-A_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu     4756 Aug 19 21:02 pipeline-v2_role-reason_seed-A_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     4250 Aug 19 21:02 pipeline-v2_seed-A_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu     4250 Aug 19 21:02 pipeline-v2_seed-A_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu    11567 Aug 19 21:02 run_detached.log
+-rw-rw-r-- 1 ubuntu ubuntu 27033728 Aug 19 21:02 seedA_acts_nonreason_eval.npy
+-rw-rw-r-- 1 ubuntu ubuntu 27033728 Aug 19 21:02 seedA_acts_nonreason_extract.npy
+-rw-rw-r-- 1 ubuntu ubuntu 27033728 Aug 19 21:02 seedA_acts_reason_eval.npy
+-rw-rw-r-- 1 ubuntu ubuntu 27033728 Aug 19 21:02 seedA_acts_reason_extract.npy
+-rw-rw-r-- 1 ubuntu ubuntu  1640348 Aug 19 21:02 seedA_direction.npz
+-rw-rw-r-- 1 ubuntu ubuntu      870 Aug 19 21:02 seedA_endpoints.log
+-rw-rw-r-- 1 ubuntu ubuntu     5073 Aug 19 19:28 seedA_extract.log
+-rw-rw-r-- 1 ubuntu ubuntu    44566 Aug 19 21:02 seedA_generate.log
+-rw-rw-r-- 1 ubuntu ubuntu  3915237 Aug 19 21:02 seedA_generations_nonreason.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  7012999 Aug 19 21:02 seedA_generations_reason.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu    65023 Aug 19 21:02 seedA_items.json
+-rw-rw-r-- 1 ubuntu ubuntu    65023 Aug 19 21:02 seedA_items_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     2531 Aug 19 19:26 seedA_plan.log
+-rw-rw-r-- 1 ubuntu ubuntu     7352 Aug 19 21:02 seedA_projections.json
+-rw-rw-r-- 1 ubuntu ubuntu     7352 Aug 19 21:02 seedA_projections_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     1341 Aug 19 21:02 seedA_run_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu        0 Aug 19 21:02 seedA_status.err
+-rw-rw-r-- 1 ubuntu ubuntu       15 Aug 19 19:26 selftest_provenance.log
+-rw-rw-r-- 1 ubuntu ubuntu      268 Aug 19 19:26 selftest_run_seedA.log
+=== EXIT CODES: selftest_provenance=0 selftest_run_seedA=0 seedA_extract=0 seedA_generate=0 seedA_endpoints=0 ===
+=== ALLDONE_SEEDA OK ===

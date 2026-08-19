@@ -73,3 +73,32 @@ than the paper's own, because every confound the paper left open is gated here.
   process mid-statement -> syntax error at line 188 -> trap tore down a box
   that had confirmed-started and was generating. ~$1 of GPU lost. Rule added:
   never edit an in-use launcher while any box runs; copy per-launch or freeze.
+
+## Seed A science outcomes — SCORED against the sealed P-sci predictions
+Run: round 4, rc=0, 4400 generations, 8 provenance records, box torn down.
+All five endpoints returned a decision; four REFUTED, one NOT_APPLICABLE.
+
+- P-sci1 (induction fails) — HELD. E2: Llama-3-8B-Instruct produces 0% well-formed
+  think-tags under the direction at every layer/strength; the "effect" at the
+  strong strengths is degenerate output (degenerate 76% at L16 s+2, 70% at
+  L24 s+1, 100% at L24 s+2). Decision REFUTED. F3 also HELD: the strong cells
+  blew the 40% degenerate ceiling exactly as sealed.
+- P-sci2 (sweep is push-size not direction identity) — HELD in the stronger
+  form: E3 REFUTED, no cell called reasoning-enhanced; steered R1 think-length
+  collapses (mean_think_tokens ~0, degenerate) rather than lengthening.
+- P-sci3 (necessity < 10%, no single-direction dependence) — HELD. E4 REFUTED,
+  both layers under the refute threshold; zeroing the direction does not
+  concentrate the effect.
+- P-sci4 (correlation fails) — HELD. E1 REFUTED, r below floor at both layers,
+  permutation p 0.77 / 0.50; the direction separates models, not per-problem
+  reasoning amount.
+- P-sci5 (accuracy tripwire fires) — NOT REACHED. E5 NOT_APPLICABLE because no
+  cell passed an enhancement threshold to test — a stricter refutation than
+  predicted: nothing got far enough to need the accuracy gate.
+
+Net sealed claim CONFIRMED: the improved experiment, run honestly at guessed
+coordinates, refutes the paper's framing on every measurable endpoint. Caveat
+held from E5 sealing: coordinates were GUESS (layers 16/24, norm-scaled
+strengths), and the paper's own effects were at layers 0-3 on a unit vector —
+so this refutes "a reasoning direction at these coordinates," not every
+possible coordinate. The design books that in does_not_test.

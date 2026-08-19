@@ -1,0 +1,155 @@
+{
+  "cell": {
+    "endpoint": 4,
+    "pipeline": "v2",
+    "seed": "A",
+    "stage": "endpoints"
+  },
+  "decision": "REFUTED",
+  "decision_rule": "THRESHOLD (design, verbatim): GUESS: zeroing shrinks length 25%+ versus baseline, beating the control's own shrinkage by 10+ points, in at least one layer. REFUTING OUTCOME (design, verbatim): Length changes under 10% in both layers, or shrinks no more than zeroing the random-direction control does. READING: Same readings as endpoint 3. 'Shrinks no more than zeroing the random-direction control does' is read as the control's percent change being at least as negative as the direction's.",
+  "env": {
+    "git_rev": null,
+    "host": "193-122-152-110",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-19T21:02:27+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 65023,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_items.json",
+      "present": true,
+      "sha256": "25a7f0bab1e1"
+    },
+    {
+      "bytes": 7352,
+      "n_items": 2,
+      "path": "results_seedA/out/seedA_projections.json",
+      "present": true,
+      "sha256": "46974b5efca3"
+    },
+    {
+      "bytes": 3915237,
+      "n_items": 1800,
+      "path": "results_seedA/out/seedA_generations_nonreason.jsonl",
+      "present": true,
+      "sha256": "4ab54945c9d2"
+    },
+    {
+      "bytes": 7012999,
+      "n_items": 2600,
+      "path": "results_seedA/out/seedA_generations_reason.jsonl",
+      "present": true,
+      "sha256": "e847d45ae669"
+    }
+  ],
+  "metric": "Mean think-tag length when the direction is zeroed, at each tested layer, versus baseline and versus zeroing the random-direction control instead.",
+  "notes": "Degenerate rows (512-token cap with no stop token, OR a <=6-token sequence repeated 15+ times in the last 100 tokens) are excluded from every length, rate and accuracy number and reported per cell. The design states a 40% ceiling only for the induction leg; for the enhance/suppress and removal legs the rate is reported, not gated, because adding a ceiling the design does not state would be a different design. A rerun of this stage on the same box, at the same batch size, reproduces these numbers. That is reproduction, not replication: same weights, same box, same seeds is one measurement, not two.",
+  "threshold": {
+    "numeric": {
+      "margin_pass_pct_points": 10.0,
+      "pct_pass": 25.0,
+      "pct_refute_below": 10.0
+    },
+    "refuting_outcome_text": "Length changes under 10% in both layers, or shrinks no more than zeroing the random-direction control does.",
+    "threshold_text": "GUESS: zeroing shrinks length 25%+ versus baseline, beating the control's own shrinkage by 10+ points, in at least one layer."
+  },
+  "values": {
+    "baseline": {
+      "accuracy_pct": 79.5275590551181,
+      "accuracy_pct_all_rows": 57.5,
+      "cell": "base_reason",
+      "degenerate_rate_pct": 36.5,
+      "mean_out_think_tokens": 235.70866141732284,
+      "mean_think_tokens": 137.26771653543307,
+      "n_degenerate": 73,
+      "n_nondegenerate": 127,
+      "n_rows": 200,
+      "n_wellformed_all_rows": 158,
+      "n_wellformed_nondegenerate": 127,
+      "wellformed_rate_pct": 100.0,
+      "wellformed_share_degenerate": 19.620253164556964
+    },
+    "baseline_mean_think_tokens": 137.26771653543307,
+    "layers_meeting_threshold": [],
+    "layers_under_refute_pct": [
+      16,
+      24
+    ],
+    "layers_where_control_shrinks_at_least_as_much": [],
+    "per_cell": {
+      "L16": {
+        "direction": {
+          "accuracy_pct": 78.78787878787878,
+          "accuracy_pct_all_rows": 60.0,
+          "cell": "zero_dir_L16",
+          "degenerate_rate_pct": 34.0,
+          "mean_out_think_tokens": 229.95454545454547,
+          "mean_think_tokens": 137.68939393939394,
+          "n_degenerate": 68,
+          "n_nondegenerate": 132,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 156,
+          "n_wellformed_nondegenerate": 132,
+          "wellformed_rate_pct": 100.0,
+          "wellformed_share_degenerate": 15.384615384615385
+        },
+        "margin_pct_points": -0.09434388629020551,
+        "meets_threshold": false,
+        "pct_change_direction": 0.30719342799879884,
+        "pct_change_random_control": 0.40153731428900435,
+        "random_control": {
+          "accuracy_pct": 78.74015748031496,
+          "accuracy_pct_all_rows": 57.0,
+          "cell": "zero_rand_L16",
+          "degenerate_rate_pct": 36.5,
+          "mean_out_think_tokens": 236.48031496062993,
+          "mean_think_tokens": 137.8188976377953,
+          "n_degenerate": 73,
+          "n_nondegenerate": 127,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 158,
+          "n_wellformed_nondegenerate": 127,
+          "wellformed_rate_pct": 100.0,
+          "wellformed_share_degenerate": 19.620253164556964
+        }
+      },
+      "L24": {
+        "direction": {
+          "accuracy_pct": 74.80916030534351,
+          "accuracy_pct_all_rows": 54.5,
+          "cell": "zero_dir_L24",
+          "degenerate_rate_pct": 34.5,
+          "mean_out_think_tokens": 243.06870229007635,
+          "mean_think_tokens": 137.35114503816794,
+          "n_degenerate": 69,
+          "n_nondegenerate": 131,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 158,
+          "n_wellformed_nondegenerate": 131,
+          "wellformed_rate_pct": 100.0,
+          "wellformed_share_degenerate": 17.088607594936708
+        },
+        "margin_pct_points": -0.9621562849347292,
+        "meets_threshold": false,
+        "pct_change_direction": 0.0607779489894407,
+        "pct_change_random_control": 1.0229342339241698,
+        "random_control": {
+          "accuracy_pct": 79.6875,
+          "accuracy_pct_all_rows": 57.0,
+          "cell": "zero_rand_L24",
+          "degenerate_rate_pct": 36.0,
+          "mean_out_think_tokens": 236.7265625,
+          "mean_think_tokens": 138.671875,
+          "n_degenerate": 72,
+          "n_nondegenerate": 128,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 158,
+          "n_wellformed_nondegenerate": 128,
+          "wellformed_rate_pct": 100.0,
+          "wellformed_share_degenerate": 18.9873417721519
+        }
+      }
+    }
+  }
+}
