@@ -1,0 +1,68 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_seedB.sh
+=== payload dir: /home/ubuntu/mats_r1d1 ===
+=== onbox_seedB seed=B pipeline=v2.1 batch=32 out=results_seedB/out ===
+=== instance=75917959d0ec435aa249e44d7ebdec09 host=129-146-3-217 git=7938ad49025ae497cc54d56ab912d0897aae7db1 ===
+NVIDIA A100-SXM4-40GB, 40960 MiB, 570.148.08
+=== virtual environment WITH --system-site-packages (keeps the image's card torch) ===
+[setup] python: /home/ubuntu/mats_r1d1/.venv_seedB/bin/python3
+=== SETUP: adding what is missing on top of the image's card-enabled torch ===
+[setup] torch already visible -> NOT reinstalled (see the header)
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB mem_GiB 39.5
+[setup] transformers 5.15.1 datasets 5.0.1 accelerate 1.14.0 numpy 1.26.4 pillow 12.3.0
+[setup] LlamaForCausalLM resolvable (both checkpoints are Llama-architecture)
+=== SELFTESTS (model-free; a broken instrument must show before card time) ===
+  provenance: rc=0  selftest: PASS
+  run_seedB: rc=0  selftest: PASS (93 checks)
+  plan: budget_usd (design GUESS)=30 cap_usd (record)=35
+=== seedB_extract RUNNING (18:01:32Z) ===
+--- seedB_extract tail ---
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+FATAL: could not load the prompt list walledai/AdvBench (split train): Dataset 'walledai/AdvBench' is a gated dataset on the Hub. Visit the dataset page at https://huggingface.co/datasets/walledai/AdvBench to ask for access.
+       The design names no source, so this public list is its GUESS choice. The run halts here rather than substituting a different list, which would silently change what was pre-registered.
+=== seedB_extract FAILED rc=1 (see out/seedB_extract.log) ===
+=== seedB_generate SKIPPED (a stage it depends on failed; it has no inputs) ===
+=== seedB_endpoints SKIPPED (a stage it depends on failed; it has no inputs) ===
+=== COLLECT results_seedB/out -> out/ ===
+total 36
+drwxrwxr-x 2 ubuntu ubuntu 4096 Aug 19 18:01 .
+drwxrwxr-x 8 ubuntu ubuntu 4096 Aug 19 18:01 ..
+-rw-rw-r-- 1 ubuntu ubuntu 5236 Aug 19 18:01 run_detached.log
+-rw-rw-r-- 1 ubuntu ubuntu  657 Aug 19 18:01 seedB_extract.log
+-rw-rw-r-- 1 ubuntu ubuntu 2713 Aug 19 18:01 seedB_plan.log
+-rw-rw-r-- 1 ubuntu ubuntu  748 Aug 19 18:01 seedB_run_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu    0 Aug 19 18:01 seedB_status.err
+-rw-rw-r-- 1 ubuntu ubuntu   15 Aug 19 18:01 selftest_provenance.log
+-rw-rw-r-- 1 ubuntu ubuntu 1411 Aug 19 18:01 selftest_run_seedB.log
+=== EXIT CODES: selftest_provenance=0 selftest_run_seedB=0 seedB_extract=1 seedB_generate=skipped seedB_endpoints=skipped ===
+=== ALLDONE_SEEDB WITH FAILURES ===

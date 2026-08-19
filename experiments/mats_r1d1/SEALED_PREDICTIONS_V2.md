@@ -51,3 +51,19 @@ than the paper's own, because every confound the paper left open is gated here.
   Corrective: BUILD prompt moves into pipeline.js; launch/fetch stays a
   deterministic shell command run verbatim by the orchestrator because the
   launcher blocks for the whole box lifecycle, which no agent call can hold.
+
+## Run outcomes (append-only)
+- Seed A: box round 3 (us-east-1) generating; rounds 1-2 failed on orchestrator
+  infra (missing out/ dir) and a provider unhealthy box - both torn down clean.
+- Seed B: on-box HALT at extract, rc=1, ~$0.30. Correct behaviour: the harmful
+  prompt list the design GUESSED (walledai/AdvBench) is gated on HF (gated=auto);
+  the runner refused to substitute another list, which would silently change the
+  pre-registration, and halted. Booked as F1-class (gating), but on a DATASET the
+  design invented, not on the models. This is the derivability discipline firing
+  on the box: seed B's premise rests on unnamed prompt sets; one is inaccessible.
+  DECISION FOR HUMAN: (a) request AdvBench access on the HF account and re-run,
+  (b) let the design's own agent pick a non-gated GUESS substitute and re-run
+  (changes the pre-registration - must be a new sealed design), or (c) let the
+  halt stand as seed B's outcome - a design built on unnamed data cannot run
+  without an out-of-band human choice, which is itself a finding about the
+  faithful-vs-flawed seed contrast.
