@@ -1,0 +1,146 @@
+{
+ "seed": "If we compare a non-reasoning model's (Llama-3 8B) activations from a reasoning model's activations (DeepSeek R1 Distill Llama3-8B) on harmful and harmless prompts, can we identify a direction in activation space that could influence reasoning capabilities? If we add the \"reasoning\" direction to the non-reasoning model would can this induce reasoning behaviour?",
+ "design": {
+  "hypothesis": "Comparing DeepSeek-R1-Distill-Llama-8B's internal activations (the per-layer, per-token vectors the network reads from and writes to while processing a prompt, sometimes called the \"residual stream\") against Llama-3.1-8B-Instruct's activations, on the same harmful and the same harmless prompts, can locate a single direction in that activation space that tracks \"this is a reasoning-trained model\" specifically -- not merely \"this model refuses harmful requests differently.\" That distinction is checked directly: the direction built only from harmful prompts and the direction built only from harmless prompts must agree with each other, otherwise what looks like a reasoning direction is really a refusal artifact. If that direction is then added into Llama-3.1-8B-Instruct's activations while it generates answers, the prediction is that the model will not only sound more like it is reasoning out loud (self-correction language, longer answers) but will also get more of a set of held-out step-by-step problems right than it does unmodified, and more than it does under an equal-size random nudge -- i.e. the direction would have to move actual problem-solving performance, not just surface style, to count as inducing reasoning behaviour.",
+  "models": [
+   "DeepSeek-R1-Distill-Llama-8B (Hugging Face id deepseek-ai/DeepSeek-R1-Distill-Llama-8B) -- the reasoning model. It was made by taking Meta's Llama 3.1 8B language model and fine-tuning it on long chain-of-thought traces produced by DeepSeek-R1; architecture is unchanged (32 layers, 4096-dimensional activations at each layer), which is required for a direction found in one model to even be the right shape to add into the other.",
+   "Llama-3.1-8B-Instruct (Hugging Face id meta-llama/Llama-3.1-8B-Instruct) -- the non-reasoning comparison model. We use the instruction-tuned release rather than the plain pretrained checkpoint the reasoning model was actually distilled from (Llama-3.1-8B-Base), because only an instruction-tuned model reliably follows the harmful/harmless request prompts at all, which is needed for the harmful-vs-harmless split to mean anything; the plain-pretrained-checkpoint version is listed under 'does not test' as a residual, known difference between the two models that is not about reasoning training."
+  ],
+  "data": "Two prompt sets, both fixed before any model is run. (1) An extraction set of 200 short instruction prompts: 100 \"harmful\" requests (things like weapon-making or intrusion instructions, drawn from a standard harmful-instruction-request collection) and 100 \"harmless\" requests matched to them in length and phrasing style (drawn from a standard benign-instruction collection). Every one of the 200 prompts is given to both models wrapped in the identical instruction-following template -- Llama-3.1's own chat template, used for both models -- so wording and formatting are byte-identical between the two models and cannot by themselves explain any activation difference found. (2) A held-out capability set of 40 short arithmetic/logic word problems, each with one short, mechanically checkable correct final answer (a number or a one-word answer), disjoint from the 200 extraction prompts and containing nothing harmful, so that any behaviour change measured on it cannot be a disguised refusal effect.",
+  "arms": [
+   "Reasoning-model harmless-prompt extraction: DeepSeek-R1-Distill-Llama-8B processes the 100 harmless prompts; activations are recorded, nothing is generated.",
+   "Reasoning-model harmful-prompt extraction: DeepSeek-R1-Distill-Llama-8B processes the 100 harmful prompts; activations are recorded, nothing is generated.",
+   "Non-reasoning-model harmless-prompt extraction: Llama-3.1-8B-Instruct processes the same 100 harmless prompts; activations are recorded, nothing is generated.",
+   "Non-reasoning-model harmful-prompt extraction: Llama-3.1-8B-Instruct processes the same 100 harmful prompts; activations are recorded, nothing is generated.",
+   "Unmodified baseline (control): Llama-3.1-8B-Instruct answers the 40 held-out problems with no activation change; every other generation arm below is compared against this one.",
+   "Add-reasoning-direction (the main test): Llama-3.1-8B-Instruct answers the 40 held-out problems while, at every generated token, the candidate direction (built from the four extraction arms above) is added into one fixed middle layer's activations at a fixed positive strength.",
+   "Subtract-reasoning-direction (sign-flip control): identical to the arm above but the same candidate direction is subtracted instead of added, at the same strength; checks that only the positive direction produces any effect, ruling out 'any push at this layer does something.'",
+   "Add-matched-random-direction (control): Llama-3.1-8B-Instruct answers the 40 held-out problems with a random direction of exactly the same length as the candidate direction added at the same layer; tests whether any sufficiently large, generic nudge -- not specifically the reasoning direction -- produces the apparent effect.",
+   "Add-refusal-direction (control): Llama-3.1-8B-Instruct answers the 40 held-out problems with its own harmful-minus-harmless direction added (built only from the two non-reasoning-model extraction arms above, with no cross-model comparison at all) at the same layer and length; tests whether any direction tied to the harmful/harmless split, rather than specifically to being a reasoning-trained model, produces the apparent effect.",
+   "Unmodified reference (calibration, not a causal test): DeepSeek-R1-Distill-Llama-8B answers the same 40 problems unmodified; shows what real reasoning behaviour and accuracy look like on this exact item set and decoding setup, to calibrate the scoring rules used in every other arm.",
+   "Necessity control: DeepSeek-R1-Distill-Llama-8B answers the same 40 problems with the candidate direction subtracted at the same layer and strength as the main test arm; tests whether taking the direction away from the model that naturally reasons makes that model reason and score worse."
+  ],
+  "endpoints": [
+   {
+    "metric": "Agreement between the harmful-prompt-only version of the model-difference direction and the harmless-prompt-only version, measured as cosine similarity between the two vectors at the chosen layer.",
+    "threshold": "cosine similarity >= 0.70 -> treat as one stable direction, safe to call it a reasoning-model-vs-non-reasoning-model direction rather than a refusal artifact.",
+    "refuting_outcome": "cosine similarity < 0.40 between the two versions: the supposed 'reasoning' direction actually depends on whether the prompt was harmful or harmless, meaning it is a refusal-related artifact of the harmful/harmless split, not a general reasoning-vs-non-reasoning axis."
+   },
+   {
+    "metric": "Rate of non-degenerate reasoning-style markers in generated answers: text contains at least one of a fixed phrase list (\"wait\", \"let me reconsider\", \"let me re-check\", \"actually,\", \"hold on\", \"hmm,\", \"on second thought\") and is at least 60 tokens long; generations where a 'thinking' tag appears but is followed by under 20 tokens before the answer, or that repeat a three-word phrase more than five times in a row, are excluded and counted separately as degenerate output rather than scored either way. Rate compared between the add-reasoning-direction arm and the unmodified baseline arm, 320 answers per arm (40 problems x 8 samples).",
+    "threshold": "add-reasoning-direction rate exceeds baseline rate by at least 25 percentage points, significant at p < 0.01 by a paired sign test over the 320 matched (problem, sample) pairs.",
+    "refuting_outcome": "the add-reasoning-direction rate is statistically indistinguishable (p >= 0.05) from the add-matched-random-direction arm and/or the add-refusal-direction arm: any large enough generic push at that layer produces the same increase in hedging/self-correction language, so the marker increase is not specific to the reasoning direction even if it clears the bar against baseline."
+   },
+   {
+    "metric": "Exact-match accuracy on the 40 held-out problems (final answer extracted by a fixed, pre-specified regex; first stated answer per generation counts), compared pairwise across the add-reasoning-direction arm, the unmodified baseline arm, and the add-matched-random-direction arm, 320 answers per arm.",
+    "threshold": "add-reasoning-direction accuracy is at least 10 percentage points higher than both the unmodified baseline arm and the add-matched-random-direction arm, each significant at p < 0.05 by a paired sign test over the 320 matched (problem, sample) pairs.",
+    "refuting_outcome": "add-reasoning-direction accuracy is flat or lower than the unmodified baseline arm: the model talks more like it is reasoning (passes the marker-rate endpoint above) without actually solving more problems correctly -- a style/register change rather than a capability change."
+   },
+   {
+    "metric": "Exact-match accuracy on the same 40 problems, comparing the necessity-control arm (reasoning model with the direction subtracted) against the unmodified reference arm (reasoning model unmodified), 320 answers per arm.",
+    "threshold": "necessity-control accuracy is at least 10 percentage points lower than the unmodified reference arm, significant at p < 0.05 by a paired sign test over the 320 matched (problem, sample) pairs.",
+    "refuting_outcome": "necessity-control accuracy is statistically indistinguishable (p >= 0.05) from the unmodified reference arm: removing the direction from the model that naturally reasons does not hurt its performance, so the direction found is not necessary for that model's own reasoning behaviour, weakening the causal story even if the addition side succeeds."
+   }
+  ],
+  "sampling": "Extraction arms: one forward pass per prompt, nothing generated, so there is no sampling temperature to set; 100 prompts per condition, 400 passes total across both models. Generation arms: temperature 0.7, top-p 0.9, up to 512 new tokens per answer. Every one of the 40 held-out problems is answered 8 times per arm using 8 fixed decoding seeds (20260819, 20260820, 20260821, 20260822, 20260823, 20260824, 20260825, 20260826) applied in the same order in every arm, so \"sample 3 of problem 12\" uses the identical seed in every arm and comparisons are paired rather than independent draws -- this is why every statistical test above is a paired test, not a two-sample test. That gives 320 generations per generation arm and 2,240 generations across the seven generation arms. One overall seed (20260819) also fixes, once, the random draw and ordering of the 200 extraction prompts and the 40 held-out problems before any model is run, so the item sets themselves are not re-randomized between arms.",
+  "layers_strengths": "The candidate direction is read out, and later injected, at the output of layer 15 of the network's 32 layers (roughly the midpoint), chosen before looking at any result because prior activation-steering work finds mid-network layers carry the most transferable behavioural directions; no layer sweep is run, so this is a fixed a-priori choice, not something tuned on this experiment's own data. Injection strength is fixed by a measured rule rather than trial and error: the candidate direction is rescaled to unit length, then multiplied so its length equals the average length of the real layer-15 activation vectors measured on the 200 extraction prompts in the non-reasoning model -- a \"push of about the same size as the model's own typical activation\" -- and the matched-random-direction control and the refusal-direction control are rescaled to that exact same length, so all three interventions are compared at equal push size.",
+  "budget_usd": 10,
+  "does_not_test": [
+   "Whether a single direction is the right description of 'reasoning' in this network, versus a small bundle of several directions acting together -- only one vector is built and tested.",
+   "Whether a layer other than the fixed middle layer would produce a larger or smaller effect -- no layer sweep is run.",
+   "What happens under the reasoning model's own native prompt format, which normally opens its answer with a 'thinking' section -- both models are prompted with the same shared instruction-following template instead, specifically to remove formatting differences as a confound, so this experiment says nothing about the direction's effect under the reasoning model's default presentation.",
+   "Whether any effect found generalises beyond this specific 40-problem arithmetic/logic set -- no claim is made about coding tasks, open-ended writing, or common-sense reasoning.",
+   "Whether the same result would hold for a different model pair, a larger scale (for example 70-billion-parameter versions), or a different reasoning-distilled model family -- only this one 8-billion-parameter pair is tested.",
+   "Whether any extra reasoning-style text produced by the intervention is a faithful account of how the model actually reached its answer -- only whether surface style markers and final-answer correctness change, not whether the visible 'thinking' genuinely drove the answer.",
+   "Multi-turn or long-running reasoning -- every problem here is a single, one-turn question.",
+   "Which specific part of the network (a particular attention head, a small group of neurons) carries this direction -- the whole design stays at the level of one activation-space vector, not a circuit-level explanation.",
+   "Whether using the exact checkpoint the reasoning model was distilled from (Llama-3.1-8B-Base, before any instruction-tuning) instead of the instruction-tuned Llama-3.1-8B-Instruct used here would change the result -- the instruction-tuned release is used so both models can be given, and can meaningfully respond to, the same harmful/harmless instructions; this is a known, named difference between the two models that is separate from reasoning training."
+  ]
+ },
+ "triage": {
+  "claims": [
+   {
+    "id": "design-core",
+    "grounding": {
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_r1d1/README.md",
+      "/home/hal/dev/interp/dm_hack/mats_r1d1/records",
+      "/home/hal/dev/interp/dm_hack/mats_r1d1/frozen/index.py",
+      "/home/hal/dev/interp/dm_hack/mats_r1d1/seeds/seed_a.md"
+     ],
+     "grounding": "unauditable",
+     "note": "The evidence is a design/pre-registration JSON only; no run ever produced artifacts (records/ is empty; no activation caches, generations, or result JSONs anywhere in the repo), so none of the four endpoint numbers exist to re-derive.",
+     "observed": "Claimed: cosine >=0.70, marker-rate +25pp, accuracy +10pp, necessity -10pp (320 gens/arm x 7 arms = 2240). Re-derived: nothing \u2014 0 generations, 0 activation files, 0 result JSONs on disk."
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation: adding a fixed-strength, fixed-layer vector into Llama-3.1-8B-Instruct's residual stream (calibrated only to match the non-reasoning model's own layer-15 activation norm) can push the model's activations into a region never seen during training, producing generic verbosity/hedging/self-correction artifacts and possibly answer-corruption that look like \"induced reasoning\" or \"reasoning-vs-non-reasoning axis\" but are really just a side-effect of perturbing activations off-distribution, not evidence of a reasoning-specific direction.",
+      "status": "NEEDS_RUN",
+      "crux": "The evidence block is entirely a pre-registered protocol/design (endpoints, thresholds, arms, sampling seeds, budget) with no actual measured cosine similarity, marker rates, or accuracy numbers reported for any arm. Whether off-distribution ablation explains the claim depends on how the add-reasoning-direction arm's accuracy/marker-rate compares to the add-matched-random-direction and add-refusal-direction arms (both already specified as norm-matched controls precisely to rule out generic off-distribution pushes) \u2014 but none of those comparisons have been executed or reported yet."
+     },
+     {
+      "confound": "Downstream compensation (self-repair): an injected direction at a single fixed layer (15/32) may be partially undone by later layers before affecting output, which would suppress a genuine causal effect (show up as a false-null on the accuracy/necessity endpoints) rather than fabricate the claimed positive effect. The design has no layer sweep and records no post-injection downstream-activation diagnostics, so a null or weak result on the necessity-control or add-direction accuracy endpoints could not be distinguished from genuine non-necessity vs. self-repair masking a true effect.",
+      "status": "NEEDS_RUN",
+      "crux": "No actual measured outcome is present in the evidence (no cosine similarity, marker-rate, or accuracy numbers are reported as having occurred) \u2014 only the pre-registered protocol, arms, and thresholds. Without a committed result there is no number to check self-repair against in either direction."
+     },
+     {
+      "confound": "selection bias",
+      "status": "NEEDS_RUN",
+      "crux": "No measured outcome numbers (cosine similarity between harmful-only/harmless-only directions, marker-rate percentages, or accuracy percentages) appear anywhere in the evidence \u2014 only the pre-registered design, arms, and thresholds are given, so there is nothing yet to check my confound against."
+     },
+     {
+      "confound": "readout artifact: the candidate direction and its injection strength are both derived from one fixed, unvalidated readout recipe (layer 15 output, an unspecified token-pooling rule, activation-norm rescaling) with no layer sweep or alternate-pooling comparison in the design",
+      "status": "NEEDS_RUN",
+      "crux": "whether the harmful/harmless cosine-similarity check and the behavioral endpoints would still hold if the direction were extracted with a different pooling rule or at a different layer, which the pre-registered design never tests"
+     },
+     {
+      "confound": "regime specificity \u2014 the concern that any located \"reasoning direction\" and its behavioral effect would only hold for this one layer (15/32), this one model pair, this one shared instruction-template (not the reasoning model's native thinking-tag format), and this one 40-item arithmetic/logic set, while being sold as evidence of a general reasoning-vs-non-reasoning axis.",
+      "status": "RULED_OUT",
+      "crux": "Whether the claim, as written, actually asserts anything beyond the tested regime. It does not: the design's own `does_not_test` list pre-commits to disclaiming layer-generality (\"no layer sweep is run\"), model/scale-generality (\"only this one 8-billion-parameter pair is tested\"), prompt-format generality (native reasoning-model format explicitly excluded), and task generality (40-item set only, no claim beyond it). The claim is scoped to \"if run exactly as specified\" on exactly this layer/pair/template/problem-set."
+     },
+     {
+      "confound": "Construct validity: the design's central risk is that the \"model-difference\" direction (DeepSeek-R1-Distill-Llama-8B minus Llama-3.1-8B-Instruct activations) tracks refusal/safety-tuning differences between the two checkpoints rather than \"reasoning-training\" per se, since the two models differ in far more than reasoning distillation (different RLHF/safety pipelines, different exposure to harmful-request refusal patterns during their respective post-training). The design's own harmful-only vs harmless-only cosine-similarity check is precisely the test for this confound.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the harmful-prompt-only and harmless-prompt-only versions of the model-difference direction actually achieve cosine similarity >=0.70 (supporting \"one stable reasoning direction\") or <0.40 (refuting it as a refusal artifact) at layer 15 -- this is the number that would rule construct validity in or out, and no such number, nor any other endpoint value (marker rates, accuracies), appears anywhere in the supplied evidence. The EVIDENCE block is entirely the pre-registered protocol (models, data, arms, endpoints, sampling, layer/strength choice, budget, does_not_test) with zero measured results."
+     },
+     {
+      "confound": "scale incomparability: the candidate direction is a diff-of-means of raw activation vectors across two differently fine-tuned models (DeepSeek-R1-Distill vs Llama-3.1-Instruct); if per-layer activation norms differ systematically between the two models independent of prompt content, that norm gap would be picked up by the diff-of-means, would be identical across harmful and harmless prompt splits (so it would pass the harmful/harmless cosine-agreement check at >=0.70), and would masquerade as a stable 'reasoning' direction while actually being a scale artifact.",
+      "status": "NEEDS_RUN",
+      "crux": "No per-model layer-15 activation norm statistics or any actual measured cosine similarity/accuracy numbers are reported in the evidence (only the pre-registered protocol) \u2014 so there's no committed number showing the extracted direction isn't dominated by a cross-model scale gap that would be invariant to the harmful/harmless split and thus indistinguishable from a real 'reasoning' direction by the harmful-vs-harmless check alone."
+     },
+     {
+      "confound": "Whether the reported cosine similarity between the harmful-only and harmless-only difference-of-means directions (and any of the accuracy/marker-rate deltas) clears its threshold merely because averaging noisy per-prompt activation differences over ~100 samples in a 4096-dim space happens to produce moderately high cosine overlap even absent a real shared \"reasoning\" direction \u2014 i.e., the observed agreement/effect sits inside the sampling noise band rather than reflecting a genuine stable signal.",
+      "status": "NEEDS_RUN",
+      "crux": "The evidence block is entirely a pre-registered design/protocol (models, arms, endpoints, thresholds, sampling plan) \u2014 it contains no actual measured cosine-similarity value, marker-rate, or accuracy number from any arm having been run. Without a committed number for the harmful-vs-harmless cosine similarity (or for the accuracy/marker endpoints), there is nothing to check against a noise floor, and no way to tell whether an eventual 0.70+ (or a middling 0.4\u20130.7) result would reflect signal or an artifact of averaging noise over n=100 prompts in 4096 dimensions."
+     },
+     {
+      "confound": "ceiling or floor effect",
+      "status": "NEEDS_RUN",
+      "crux": "No measured numbers exist yet in the evidence (only the pre-registered design/thresholds) \u2014 in particular there is no reported baseline accuracy for the unmodified Llama-3.1-8B-Instruct arm on the 40 held-out problems. If that baseline sits near 0% (floor) or near 100% (ceiling), a \"+10pp over baseline\" result for add-reasoning-direction would be either mechanically unreachable/trivial or could be produced by any generic perturbation that merely adds noise/variance around a floor, without the direction being specifically about reasoning \u2014 the matched-random-direction and necessity-control arms only guard against a generic-push confound, not against a floor/ceiling artifact in the underlying accuracy distribution itself."
+     },
+     {
+      "confound": "single-case overfit: the direction is extracted from exactly one fixed draw of 200 harmful/harmless prompts and evaluated on exactly one fixed draw of 40 held-out problems, at one pre-chosen layer, for one model pair \u2014 with no independent replication of any of these draws.",
+      "status": "NEEDS_RUN",
+      "crux": "The sampling protocol fixes the extraction prompt set and held-out problem set with a single overall seed (20260819) before any model is run, and varies only the 8 decoding seeds for generation \u2014 it never repeats direction-extraction or held-out evaluation on an independent draw of prompts/problems, a different layer, or a different model pair, so no committed number can distinguish a general reasoning direction from one that merely fits this one fixed split."
+     }
+    ],
+    "run_queue": [
+     "RUN: execute the pre-registered protocol (all four extraction arms + seven generation arms, including add-reasoning-direction, add-matched-random-direction, add-refusal-direction; 320 answers/arm, seeds 20260819-20260826) and report the four endpoint numbers (harmful-vs-harmless cosine similarity, marker-rate gap + p-value, accuracy gap vs baseline and vs random-direction control, necessity-control accuracy gap), including the paired sign-test comparison of exact-match accuracy and marker-rate between arms."
+    ],
+    "author_queue": [
+     "AUTHOR: a layer-sweep / downstream-activation-persistence check \u2014 measure the projection of the injected direction on layer-15 residual activations at layers 16, 20, 24, 28, 32 during the add- and subtract-direction generation arms, to see whether the injected offset is attenuated (compensated) before reaching later layers, which would explain a flat/null necessity-control or add-direction accuracy result as self-repair rather than as evidence the direction is behaviorally inert.",
+     "AUTHOR: re-run direction extraction and the four generation arms (baseline, add-direction, add-random, add-refusal) with an alternate readout (e.g. mean-pooled vs last-token activations, and a 1-2 layer sweep around layer 15) to check whether the cosine-similarity and accuracy/marker-rate results are stable across readout choice rather than an artifact of the single chosen recipe.",
+     "AUTHOR: before/alongside the harmful-vs-harmless cosine check, compute each model's mean layer-15 activation norm (harmful pool and harmless pool separately) for both models, and re-derive the candidate direction after normalizing each model's activations to unit norm (or z-scoring per-dimension) prior to taking the cross-model difference-of-means; report cosine similarity between the norm-corrected direction and the raw (uncorrected) direction, and re-run the harmful/harmless agreement check on the norm-corrected version \u2014 if the raw and norm-corrected directions diverge substantially (cosine < 0.7) or the norm-corrected version fails the harmful/harmless agreement threshold that the raw version passed, the original result is a scale artifact.",
+     "AUTHOR: a null/noise-floor baseline for the cosine-similarity endpoint \u2014 split each of the 100 harmful and 100 harmless prompt sets into two random halves (fixed seed), compute the diff-of-means direction from each half within the same condition, and report the cosine similarity between same-condition split-halves; this gives the noise floor for 'how much cosine similarity arises purely from finite-sample averaging' to compare against the harmful-vs-harmless cross-condition similarity once that number is actually measured.",
+     "AUTHOR: before interpreting the \u00b110pp accuracy thresholds, report the unmodified-baseline and unmodified-reasoning-reference accuracy rates on the 40-problem set (and their variance across the 8 seeds) to confirm neither sits within ~10pp of 0% or 100%; if baseline is already \u226590% or \u226410%, the pairwise 10pp-threshold endpoints are floor/ceiling-compromised regardless of the sign test's p-value.",
+     "AUTHOR: replicate the direction-extraction (100 harmful/100 harmless prompts) and the 40-problem held-out evaluation on at least one independent random draw of extraction/held-out items (and ideally an alternate mid-layer), checking whether the cosine-similarity agreement and the accuracy/marker-rate gaps reproduce outside the single pre-registered split."
+    ],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute"
+}
