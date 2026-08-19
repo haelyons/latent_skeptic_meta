@@ -102,3 +102,23 @@ held from E5 sealing: coordinates were GUESS (layers 16/24, norm-scaled
 strengths), and the paper's own effects were at layers 0-3 on a unit vector —
 so this refutes "a reasoning direction at these coordinates," not every
 possible coordinate. The design books that in does_not_test.
+
+## Post-phase (elicit + takeaways) — outcome, read 2026-08-19
+- Elicitation leg exercised on LIVE results for the first time. 8 ranked
+  questions; takeaways written, both gates pass (density 1.1/1000, 0 unscoped).
+- Sharpest elicited catch (its #2) GROUNDS against the artifact: steering norm
+  vs model mean-activation norm is 12.1/9.7 = 1.26x at L16 and 24.6/23.9 = 1.03x
+  at L24, so the 2x cells inject a vector larger than the model's whole normal
+  activity there. The coordinate/off-manifold confound (F3, sealed E5 caveat)
+  is now quantified from the direction file, by an agent given only results.
+- TOP-ranked elicited question + triage (reproduces): the design record still
+  reads gate "approval pending, zero results exist" while a full scored run
+  sits beside it. The pipeline caught its OWN operator's process violation:
+  seed A was run to completion without the approval being written back into the
+  record. Booked as an orchestrator bookkeeping defect (mine). This is the
+  observer catching an unstated-assumption/HARKing vector unprompted - the
+  capability this retro set out to build.
+- 1 agent-side failure (StructuredOutput retry cap, one verify branch of 44);
+  surfaced by the harness, other 43 completed, endpoints unaffected.
+- Approval now recorded: human gate given 2026-08-19 (raised cap to 100, both
+  seeds approved); this note is the write-back the run should have carried.
