@@ -67,3 +67,9 @@ than the paper's own, because every confound the paper left open is gated here.
   halt stand as seed B's outcome - a design built on unnamed data cannot run
   without an out-of-band human choice, which is itself a finding about the
   faithful-vs-flawed seed contrast.
+- Seed A round 3 KILLED by orchestrator error: I edited lambda_run_mats.sh
+  (seed-B payload fix) while the seed-A launcher was still executing that same
+  file. Bash reads scripts by byte offset; the length change shifted the live
+  process mid-statement -> syntax error at line 188 -> trap tore down a box
+  that had confirmed-started and was generating. ~$1 of GPU lost. Rule added:
+  never edit an in-use launcher while any box runs; copy per-launch or freeze.
