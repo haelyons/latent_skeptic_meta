@@ -122,3 +122,25 @@ possible coordinate. The design books that in does_not_test.
   surfaced by the harness, other 43 completed, endpoints unaffected.
 - Approval now recorded: human gate given 2026-08-19 (raised cap to 100, both
   seeds approved); this note is the write-back the run should have carried.
+
+## Seed C (scale) gate + execution directives — 2026-08-20
+- Human: budget approved; 2b/9b/27b base+it checkpoints confirmed to exist.
+- Human: run PARALLEL across multiple GPUs (one box per size), not serial on
+  one 80GB box. This overrides the design's does_not_test line 1 ("one 80GB GPU
+  serially") — an EXECUTION choice, not a change to arms/endpoints/thresholds,
+  so the pre-registration stands. Parallel-by-size is clean: each size's
+  self-vs-other asymmetry is computed within that size; no cross-box shared
+  vector, no determinism hazard.
+- Boxes: 2b + 9b on 40GB (a100_sxm4); 27b on an 80GB box (h100 or a100-80gb).
+- Endpoints (digit-mass gate, self-minus-other, 9b replication anchor) run as a
+  local combine step over all three sizes' fetched rows — model-free arithmetic.
+## Seed C predictions filed before build/run
+- P-c-sci1: 9b-it replication anchor lands in [0.75,1.05] (harness matches record).
+- P-c-sci2: 2b-it FAILS the digit-mass gate (<0.5) -> instrument-unmeasurable,
+  reported as such, NOT as effect-absent (the measurability outcome).
+- P-c-sci3: base checkpoints (all sizes) fail or near-fail the digit-mass gate
+  (the 4.5-attractor seen at 9b-base generalises).
+- P-c-sci4: where measurable (9b-it, likely 27b-it), self-minus-other drop is
+  present and same-signed; magnitude NOT cleanly monotone in size (recipe vs
+  size confound booked).
+- P-c-infra1: 27b box is the long pole; >=1 box-health or capacity retry likely.
