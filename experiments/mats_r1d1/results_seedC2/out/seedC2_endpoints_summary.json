@@ -1,0 +1,77 @@
+{
+  "anchor_9b_it": {
+    "status": "COMPUTED",
+    "recovered_ref": -0.9340460995435045,
+    "recorded_gap": -0.9,
+    "band": [
+      -1.15,
+      -0.65
+    ],
+    "confirmed": true,
+    "digit_mass_usable": true,
+    "pipeline_trust": "OK"
+  },
+  "digit_mass_gate": {
+    "9b": {
+      "digit_mass_mean": 1.0002022152068093,
+      "n_rows": 100,
+      "floor": 0.5,
+      "usable": true
+    }
+  },
+  "ref_self_minus_other": {
+    "9b": {
+      "status": "COMPUTED",
+      "ref": -0.9340460995435045,
+      "self_fail_minus_succ": -0.881289569049831,
+      "other_fail_minus_succ": 0.05275653049367346,
+      "arm_expected_rating": {
+        "SELF-FAIL": 6.425284485753262,
+        "SELF-SUCC": 7.306574054803093,
+        "OTHER-FAIL": 7.140614952731747,
+        "OTHER-SUCC": 7.087858422238074
+      },
+      "call": "PRESENT"
+    }
+  },
+  "coverage": {
+    "2b": {
+      "status": "untested",
+      "reason": "no rows for this size (checkpoint not loaded or stage not run)"
+    },
+    "9b": {
+      "status": "tested-usable"
+    },
+    "27b": {
+      "status": "untested",
+      "reason": "no rows for this size (checkpoint not loaded or stage not run)"
+    }
+  },
+  "per_arm": {
+    "9b_NEUTRAL-PAD": {
+      "digit_mass_mean": 1.0002348901703955,
+      "expected_rating_mean": 7.06820899960216,
+      "n_families": 20
+    },
+    "9b_OTHER-FAIL": {
+      "digit_mass_mean": 1.0003477674195893,
+      "expected_rating_mean": 7.140614952731747,
+      "n_families": 20
+    },
+    "9b_OTHER-SUCC": {
+      "digit_mass_mean": 1.0002894721168558,
+      "expected_rating_mean": 7.087858422238074,
+      "n_families": 20
+    },
+    "9b_SELF-FAIL": {
+      "digit_mass_mean": 0.9999740705010481,
+      "expected_rating_mean": 6.425284485753262,
+      "n_families": 20
+    },
+    "9b_SELF-SUCC": {
+      "digit_mass_mean": 1.000164875826158,
+      "expected_rating_mean": 7.306574054803093,
+      "n_families": 20
+    }
+  }
+}

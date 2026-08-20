@@ -1,0 +1,132 @@
+{
+  "cell": {
+    "endpoint": "digit_mass_gate",
+    "seed": "C2_scale",
+    "stage": "endpoints"
+  },
+  "decision": "USABLE=['9b']",
+  "decision_rule": "a size is usable only if mean digit mass >= 0.5; a size below the floor is reported as 'read-out unusable at that size', an instrument fact, not evidence the effect is absent",
+  "env": {
+    "git_rev": "b1d545b",
+    "host": "johns-world",
+    "python": "3.14.4",
+    "timestamp_utc": "2026-08-20T13:40:45+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 43164,
+      "n_items": 50,
+      "path": "stimulus_sitref_primary.json",
+      "present": true,
+      "sha256": "f4194891ffab"
+    },
+    {
+      "bytes": 11792,
+      "n_items": 50,
+      "path": "records/seedC2_scale_design_diff_triage.json",
+      "present": true,
+      "sha256": "cdf7dded643e"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "adea65f218c0"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "adea65f218c0"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-OTHER-FAIL_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "ed9c040244d4"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-OTHER-FAIL_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "ed9c040244d4"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-OTHER-SUCC_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "67e974395f04"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-OTHER-SUCC_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "67e974395f04"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-SELF-FAIL_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "d9eaea7767b6"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-SELF-FAIL_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "d9eaea7767b6"
+    },
+    {
+      "bytes": 2723,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-SELF-SUCC_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "0ed6b23a39f7"
+    },
+    {
+      "bytes": 2723,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-SELF-SUCC_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "0ed6b23a39f7"
+    }
+  ],
+  "metric": "mean share of next-token probability on the ten digit tokens at the rating slot, averaged over all 50 prompts (the wellbeing question), per size",
+  "notes": "",
+  "threshold": {
+    "digit_mass_floor": 0.5
+  },
+  "values": {
+    "coverage": {
+      "27b": {
+        "reason": "no rows for this size (checkpoint not loaded or stage not run)",
+        "status": "untested"
+      },
+      "2b": {
+        "reason": "no rows for this size (checkpoint not loaded or stage not run)",
+        "status": "untested"
+      },
+      "9b": {
+        "status": "tested-usable"
+      }
+    },
+    "gate": {
+      "9b": {
+        "digit_mass_mean": 1.0002022152068093,
+        "floor": 0.5,
+        "n_rows": 100,
+        "usable": true
+      }
+    },
+    "usable_sizes": [
+      "9b"
+    ]
+  }
+}

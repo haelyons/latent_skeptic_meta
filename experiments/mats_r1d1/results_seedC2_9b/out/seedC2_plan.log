@@ -1,0 +1,7 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+seed=C2_scale sizes=('2b', '9b', '27b') variant=it (instruction-tuned only)
+prompts loaded VERBATIM from stimulus_sitref_primary.json: 50 (5 arms x 10 task types)
+per size: 50 forward passes (extract) and 50 generations (generate); one model load per stage
+effect per size: REF = (SELF-FAIL - SELF-SUCC) - (OTHER-FAIL - OTHER-SUCC), pooled over 10 task types; NEUTRAL-PAD collected but never used
+thresholds: digit_mass_floor=0.5, present_at<=-0.5, absent within +/-0.2, anchor band=[-1.15,-0.65], recorded_gap=-0.9

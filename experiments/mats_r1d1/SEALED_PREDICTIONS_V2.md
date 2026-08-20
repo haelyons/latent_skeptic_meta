@@ -180,3 +180,10 @@ partial (long pole yes, retry no).
 
 A faithful seed-C rerun requires shipping welfare_probe's committed SITREF
 stimulus to the box — a payload+design change, i.e. a new sealed run.
+
+## Seed C2 ANCHOR PASSED — 2026-08-20
+9b-it recovered REF = -0.934 vs recorded -0.9, in band [-1.15,-0.65], confirmed.
+The ONLY change from seed C (which got 4.58, anchor failed) was embedding the
+exact committed prompts in the seed instead of describing them. Data-in-the-seed
+reproduces the record to 2dp; data-described-in-the-seed did not. Fix proven.
+9b box rc=0, torn down. Fanning out 2b-it + 27b-it parallel.

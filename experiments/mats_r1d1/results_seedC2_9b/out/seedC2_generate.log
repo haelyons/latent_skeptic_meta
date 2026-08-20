@@ -1,0 +1,11 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[load] google/gemma-2-9b-it fp16 (token from HF_KEY_ONE)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/464 [00:00<?, ?it/s]Loading weights:   6%|▌         | 26/464 [00:00<00:01, 241.36it/s]Loading weights:  11%|█         | 51/464 [00:00<00:01, 223.96it/s]Loading weights:  16%|█▌        | 74/464 [00:00<00:01, 224.57it/s]Loading weights:  21%|██        | 97/464 [00:00<00:01, 220.07it/s]Loading weights:  26%|██▌       | 120/464 [00:00<00:01, 208.34it/s]Loading weights:  31%|███       | 142/464 [00:00<00:01, 204.30it/s]Loading weights:  35%|███▌      | 163/464 [00:00<00:01, 203.48it/s]Loading weights:  40%|███▉      | 184/464 [00:00<00:01, 197.07it/s]Loading weights:  44%|████▍     | 204/464 [00:00<00:01, 197.60it/s]Loading weights:  48%|████▊     | 224/464 [00:01<00:01, 189.43it/s]Loading weights:  55%|█████▍    | 253/464 [00:01<00:00, 217.13it/s]Loading weights:  59%|█████▉    | 275/464 [00:01<00:00, 213.84it/s]Loading weights:  64%|██████▍   | 297/464 [00:01<00:00, 209.54it/s]Loading weights:  69%|██████▉   | 319/464 [00:01<00:00, 209.65it/s]Loading weights:  73%|███████▎  | 341/464 [00:01<00:00, 206.24it/s]Loading weights:  78%|███████▊  | 362/464 [00:01<00:00, 206.47it/s]Loading weights:  83%|████████▎ | 384/464 [00:01<00:00, 208.81it/s]Loading weights:  88%|████████▊ | 406/464 [00:01<00:00, 207.62it/s]Loading weights:  92%|█████████▏| 428/464 [00:02<00:00, 204.91it/s]Loading weights:  97%|█████████▋| 449/464 [00:02<00:00, 201.18it/s]Loading weights: 100%|██████████| 464/464 [00:02<00:00, 208.94it/s]
+[generate] 9b-it-NEUTRAL-PAD: 10/10 usable answers
+[generate] 9b-it-OTHER-FAIL: 10/10 usable answers
+[generate] 9b-it-OTHER-SUCC: 10/10 usable answers
+[generate] 9b-it-SELF-FAIL: 10/10 usable answers
+[generate] 9b-it-SELF-SUCC: 10/10 usable answers
+[generate] rows -> results_seedC2_9b/out/seedC2_generate_rows_9b.jsonl
