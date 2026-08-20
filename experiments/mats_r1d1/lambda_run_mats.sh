@@ -116,9 +116,9 @@ for i in $(seq 1 24); do ssh $SSHOPT ubuntu@$IP true 2>/dev/null && { echo "[ssh
 # records by describe_input on-box), and the run-2 screen records run_srcdec.py reads
 # its item sets from (shipped into the same relative paths it expects).
 echo "[scp] code -> box"
-ssh $SSHOPT ubuntu@$IP "mkdir -p mats_r1d1/out mats_r1d1/results_seedA/out mats_r1d1/results_seedB/out"
-scp $SSHOPT run_seedA.py run_seedB.py frozen/provenance.py frozen/remote_run.sh \
-  records/seedA_v2_design_diff_triage.json records/seedB_v2_design_diff_triage.json \
+ssh $SSHOPT ubuntu@$IP "mkdir -p mats_r1d1/out mats_r1d1/$RDIR/out"
+scp $SSHOPT run_seedA.py run_seedB.py run_seedC.py frozen/provenance.py frozen/remote_run.sh \
+  records/seedA_v2_design_diff_triage.json records/seedB_v2_design_diff_triage.json records/seedC_scale_design_diff_triage.json \
   "$RUNNER" ubuntu@$IP:mats_r1d1/
 # (no prior-stage artifacts to ship for mats_r1d1)
 # SITREF-B (onbox_sitref_b.sh) evaluates its guard against the committed stage-17
