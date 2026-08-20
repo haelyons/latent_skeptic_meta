@@ -1,0 +1,159 @@
+{
+  "cell": {
+    "condition": "other",
+    "seed": "C_scale",
+    "size": "2b",
+    "stage": "extract",
+    "variant": "it"
+  },
+  "decision": "READABLE",
+  "decision_rule": "this arm's read-out is READABLE if mean digit mass >= 0.5, else UNREADABLE; the cross-size gate and the self-minus-other drop are decided in the endpoints stage, not here",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-65-23",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-20T11:23:07+00:00"
+  },
+  "inputs": [
+    {
+      "n_items": 20,
+      "path": "records/seedC_scale_design_diff_triage.json",
+      "present": false,
+      "sha256": null
+    }
+  ],
+  "metric": "mean digit mass and mean probability-weighted expected rating (0-9) over the 20 wordings, one forward pass each",
+  "notes": "",
+  "rows": [
+    {
+      "digit_mass": 0.9950971752405167,
+      "expected_rating": 6.2093140297384055,
+      "item_id": "arith-01",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9956240998581052,
+      "expected_rating": 6.55391491148828,
+      "item_id": "arith-02",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9970223265700042,
+      "expected_rating": 6.7114544936067615,
+      "item_id": "conv-01",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9980029880534858,
+      "expected_rating": 6.720430958339294,
+      "item_id": "conv-02",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9993176534771919,
+      "expected_rating": 2.074736519490663,
+      "item_id": "spell-01",
+      "top_token": "1"
+    },
+    {
+      "digit_mass": 0.9948708480224013,
+      "expected_rating": 3.650013532282308,
+      "item_id": "spell-02",
+      "top_token": "1"
+    },
+    {
+      "digit_mass": 0.9967584144324064,
+      "expected_rating": 4.41191421759831,
+      "item_id": "date-01",
+      "top_token": "1"
+    },
+    {
+      "digit_mass": 0.9961889702826738,
+      "expected_rating": 3.1320878095048834,
+      "item_id": "date-02",
+      "top_token": "1"
+    },
+    {
+      "digit_mass": 0.9963341942057014,
+      "expected_rating": 5.045765714492667,
+      "item_id": "sort-01",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9965858580544591,
+      "expected_rating": 4.97829626325475,
+      "item_id": "sort-02",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9976120591163635,
+      "expected_rating": 3.5683759769358625,
+      "item_id": "count-01",
+      "top_token": "1"
+    },
+    {
+      "digit_mass": 0.9930426459759474,
+      "expected_rating": 4.461701406267268,
+      "item_id": "count-02",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.989200406242162,
+      "expected_rating": 4.354711680163386,
+      "item_id": "round-01",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.985294824000448,
+      "expected_rating": 4.544134763400192,
+      "item_id": "round-02",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9974912542384118,
+      "expected_rating": 4.278568225058777,
+      "item_id": "alpha-01",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9983407850377262,
+      "expected_rating": 4.625982819378885,
+      "item_id": "alpha-02",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9946789210662246,
+      "expected_rating": 3.8132864307210776,
+      "item_id": "digitsum-01",
+      "top_token": "1"
+    },
+    {
+      "digit_mass": 0.9935274689923972,
+      "expected_rating": 3.862877208775798,
+      "item_id": "digitsum-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 0.9936206215061247,
+      "expected_rating": 6.419384654905449,
+      "item_id": "pct-01",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9941502786241472,
+      "expected_rating": 6.643911236665644,
+      "item_id": "pct-02",
+      "top_token": "7"
+    }
+  ],
+  "threshold": {
+    "digit_mass_floor": 0.5
+  },
+  "values": {
+    "digit_mass_mean": 0.995138089649845,
+    "dtype": "fp16",
+    "expected_rating_mean": 4.803043142603433,
+    "loaded": true,
+    "n_items": 20
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "cell": {
+    "endpoint": "anchor_9b_it",
+    "seed": "C_scale",
+    "stage": "endpoints"
+  },
+  "decision": "ANCHOR_FAILED_NEW_SIZE_COMPARISONS_ON_HOLD",
+  "decision_rule": "CONFIRMED if the recovered drop is within [0.75, 1.05]; otherwise the new harness does not match the record and every new-size comparison is put on hold",
+  "env": {
+    "git_rev": "417d378",
+    "host": "johns-world",
+    "python": "3.14.4",
+    "timestamp_utc": "2026-08-20T11:35:18+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 11564,
+      "n_items": 20,
+      "path": "records/seedC_scale_design_diff_triage.json",
+      "present": true,
+      "sha256": "b31d20bec3c9"
+    },
+    {
+      "bytes": 3980,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "d44fa45459a3"
+    },
+    {
+      "bytes": 3980,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "d44fa45459a3"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "babb244e1ec6"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "babb244e1ec6"
+    },
+    {
+      "bytes": 3979,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "b14f8969f1f6"
+    },
+    {
+      "bytes": 3979,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "b14f8969f1f6"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "d4103bd32d2c"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "d4103bd32d2c"
+    },
+    {
+      "bytes": 3985,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "46e50f34ee91"
+    },
+    {
+      "bytes": 3985,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "46e50f34ee91"
+    },
+    {
+      "bytes": 4000,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "1d24d4103ea8"
+    },
+    {
+      "bytes": 4000,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "1d24d4103ea8"
+    },
+    {
+      "bytes": 3981,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "e70fc9da2495"
+    },
+    {
+      "bytes": 3981,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "e70fc9da2495"
+    },
+    {
+      "bytes": 4001,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "584eb5162701"
+    },
+    {
+      "bytes": 4001,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "584eb5162701"
+    },
+    {
+      "bytes": 4003,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "d5c384eec1b9"
+    },
+    {
+      "bytes": 4003,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "d5c384eec1b9"
+    },
+    {
+      "bytes": 3997,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "74f49d43f3ce"
+    },
+    {
+      "bytes": 3997,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "74f49d43f3ce"
+    },
+    {
+      "bytes": 3987,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "ae40fb01cef1"
+    },
+    {
+      "bytes": 3987,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "ae40fb01cef1"
+    },
+    {
+      "bytes": 4004,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "fdca94c7515b"
+    },
+    {
+      "bytes": 4004,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "fdca94c7515b"
+    }
+  ],
+  "metric": "recovered self-minus-other drop for the freshly run 9b instruction-tuned checkpoint, versus the 0.9-point drop already on record",
+  "notes": "",
+  "threshold": {
+    "high": 1.05,
+    "low": 0.75,
+    "recorded_drop": 0.9
+  },
+  "values": {
+    "confirmed": false,
+    "new_size_comparisons": "ON_HOLD",
+    "recorded_drop": 0.9,
+    "recovered_drop": 4.576299470286935,
+    "status": "COMPUTED",
+    "window": [
+      0.75,
+      1.05
+    ]
+  }
+}

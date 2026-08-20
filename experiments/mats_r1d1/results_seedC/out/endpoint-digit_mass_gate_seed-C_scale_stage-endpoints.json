@@ -1,0 +1,265 @@
+{
+  "cell": {
+    "endpoint": "digit_mass_gate",
+    "seed": "C_scale",
+    "stage": "endpoints"
+  },
+  "decision": "USABLE=['27b-base', '27b-it', '2b-base', '2b-it', '9b-base', '9b-it']",
+  "decision_rule": "a checkpoint is usable only if mean digit mass >= 0.5 in BOTH conditions; a checkpoint below the floor is reported as 'readout unusable at that size', an instrument fact, not evidence the effect is absent",
+  "env": {
+    "git_rev": "417d378",
+    "host": "johns-world",
+    "python": "3.14.4",
+    "timestamp_utc": "2026-08-20T11:35:18+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 11564,
+      "n_items": 20,
+      "path": "records/seedC_scale_design_diff_triage.json",
+      "present": true,
+      "sha256": "b31d20bec3c9"
+    },
+    {
+      "bytes": 3980,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "d44fa45459a3"
+    },
+    {
+      "bytes": 3980,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "d44fa45459a3"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "babb244e1ec6"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "babb244e1ec6"
+    },
+    {
+      "bytes": 3979,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "b14f8969f1f6"
+    },
+    {
+      "bytes": 3979,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "b14f8969f1f6"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "d4103bd32d2c"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "d4103bd32d2c"
+    },
+    {
+      "bytes": 3985,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "46e50f34ee91"
+    },
+    {
+      "bytes": 3985,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "46e50f34ee91"
+    },
+    {
+      "bytes": 4000,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "1d24d4103ea8"
+    },
+    {
+      "bytes": 4000,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "1d24d4103ea8"
+    },
+    {
+      "bytes": 3981,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "e70fc9da2495"
+    },
+    {
+      "bytes": 3981,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "e70fc9da2495"
+    },
+    {
+      "bytes": 4001,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "584eb5162701"
+    },
+    {
+      "bytes": 4001,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "584eb5162701"
+    },
+    {
+      "bytes": 4003,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "d5c384eec1b9"
+    },
+    {
+      "bytes": 4003,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "d5c384eec1b9"
+    },
+    {
+      "bytes": 3997,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "74f49d43f3ce"
+    },
+    {
+      "bytes": 3997,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "74f49d43f3ce"
+    },
+    {
+      "bytes": 3987,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "ae40fb01cef1"
+    },
+    {
+      "bytes": 3987,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "ae40fb01cef1"
+    },
+    {
+      "bytes": 4004,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "fdca94c7515b"
+    },
+    {
+      "bytes": 4004,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "fdca94c7515b"
+    }
+  ],
+  "metric": "mean share of next-token probability on the ten digit tokens at the rating slot, per checkpoint and condition",
+  "notes": "",
+  "threshold": {
+    "digit_mass_floor": 0.5
+  },
+  "values": {
+    "coverage": {
+      "27b-base": {
+        "status": "tested-usable"
+      },
+      "27b-it": {
+        "status": "tested-usable"
+      },
+      "2b-base": {
+        "status": "tested-usable"
+      },
+      "2b-it": {
+        "status": "tested-usable"
+      },
+      "9b-base": {
+        "status": "tested-usable"
+      },
+      "9b-it": {
+        "status": "tested-usable"
+      }
+    },
+    "gate": {
+      "27b-base": {
+        "digit_mass_other": 2.7724561244249344,
+        "digit_mass_self": 6.550646317005158,
+        "floor": 0.5,
+        "usable": true
+      },
+      "27b-it": {
+        "digit_mass_other": 0.9996656192221053,
+        "digit_mass_self": 1.0007696462158493,
+        "floor": 0.5,
+        "usable": true
+      },
+      "2b-base": {
+        "digit_mass_other": 5.899462912976742,
+        "digit_mass_self": 5.3046193197369576,
+        "floor": 0.5,
+        "usable": true
+      },
+      "2b-it": {
+        "digit_mass_other": 0.995138089649845,
+        "digit_mass_self": 0.9938727450848092,
+        "floor": 0.5,
+        "usable": true
+      },
+      "9b-base": {
+        "digit_mass_other": 4.9317205652594565,
+        "digit_mass_self": 7.046104881167412,
+        "floor": 0.5,
+        "usable": true
+      },
+      "9b-it": {
+        "digit_mass_other": 0.9869452590360197,
+        "digit_mass_self": 0.9978088258925709,
+        "floor": 0.5,
+        "usable": true
+      }
+    },
+    "usable_checkpoints": [
+      "27b-base",
+      "27b-it",
+      "2b-base",
+      "2b-it",
+      "9b-base",
+      "9b-it"
+    ]
+  }
+}

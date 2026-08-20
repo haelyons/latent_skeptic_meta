@@ -144,3 +144,39 @@ possible coordinate. The design books that in does_not_test.
   present and same-signed; magnitude NOT cleanly monotone in size (recipe vs
   size confound booked).
 - P-c-infra1: 27b box is the long pole; >=1 box-health or capacity retry likely.
+
+## Seed C SCORED — 2026-08-20. Clean parallel run, anchor guard FIRED.
+Execution: 3 boxes parallel (2b/9b us-a100, 27b us-h100-80GB), all rc=0, all
+torn down, ~$8. P-c-infra1: 27b was the long pole but needed no retry.
+
+RESULT: the pre-registered 9b-it replication anchor FAILED — recovered
+self-minus-other drop 4.58 vs recorded 0.9 (window [0.75,1.05]). By the
+design's own rule, ALL cross-size comparisons are ON_HOLD. No scale claim.
+
+ROOT CAUSE (verified from raw prompts, seedC_extract_rows_9b.jsonl): the runner
+RECONSTRUCTED its own arithmetic staged-failure prompt (item "arith-01") instead
+of the committed SITREF stimulus, which lives in welfare_probe/sitref_stimuli.py
+and was never shipped to the box (the pipeline ships mats_r1d1 files only). So
+this measured A self/other asymmetry, not THE SITREF one. Same root as seed B's
+halt: a study whose stimulus lives outside the shipped payload cannot be
+faithfully extended. Seed B caught it at load; seed C's anchor caught it after —
+both refused to hand back an unfaithful result.
+
+REAL FINDINGS (provisional — ON_HOLD, on the reconstructed stimulus):
+- The 4.5 attractor is confirmed empirically: all three BASE checkpoints emit a
+  uniform digit distribution (each digit ~0.100) -> E=4.500 -> zero signal.
+  Matches the Fable elicitation's Q3 exactly.
+- The digit-mass gate does NOT catch the attractor: base passed "usable"
+  (mass >= 0.5) while dead-uniform. The gate is necessary, not sufficient; a
+  uniformity/entropy screen is the missing instrument. Sharper than P-c-sci3.
+- -it checkpoints (all sizes) show large self<other drops (~4.8) on the
+  reconstructed stimulus; does NOT bear on the SITREF scale question.
+
+Prediction scores: P-c-sci1 FAILED (anchor 4.58, guard fired — but as
+harness-mismatch, not a 9b claim). P-c-sci2 FAILED (2b-it passed the mass gate,
+showed PRESENT). P-c-sci3 phenomenon CONFIRMED (4.5 attractor), detection-mechanism
+prediction WRONG (passes the mass gate). P-c-sci4 moot (ON_HOLD). P-c-infra1
+partial (long pole yes, retry no).
+
+A faithful seed-C rerun requires shipping welfare_probe's committed SITREF
+stimulus to the box — a payload+design change, i.e. a new sealed run.
