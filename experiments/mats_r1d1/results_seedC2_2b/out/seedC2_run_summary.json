@@ -1,0 +1,41 @@
+{
+  "runner": "onbox_seedC2.sh",
+  "seed": "C2_scale",
+  "size": "2b",
+  "variant": "it",
+  "design_record": "records/seedC2_scale_design_diff_triage.json",
+  "stimulus": "stimulus_sitref_primary.json (50 prompts, loaded verbatim)",
+  "stages_on_box": [
+    "extract",
+    "generate"
+  ],
+  "endpoints_stage": "run LOCALLY after all three sizes are fetched (cross-size)",
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedC2": "0",
+    "seedC2_extract": "0",
+    "seedC2_generate": "0"
+  },
+  "any_failed": false,
+  "n_provenance_records": 10,
+  "decisions": {
+    "arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract": "READABLE",
+    "arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-generate": "AUDIT_10/10_usable",
+    "arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract": "READABLE",
+    "arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-generate": "AUDIT_10/10_usable",
+    "arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract": "READABLE",
+    "arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-generate": "AUDIT_10/10_usable",
+    "arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract": "READABLE",
+    "arm-SELF-FAIL_seed-C2_scale_size-2b_stage-generate": "AUDIT_10/10_usable",
+    "arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract": "READABLE",
+    "arm-SELF-SUCC_seed-C2_scale_size-2b_stage-generate": "AUDIT_10/10_usable"
+  },
+  "row_files": {
+    "seedC2_extract_rows_2b.jsonl": 50,
+    "seedC2_generate_rows_2b.jsonl": 50
+  },
+  "batch_size": "8",
+  "instance_id": "84936bc4bc6a4641a224df0f451201a7",
+  "git_commit": "a3a1b30e5dbc382000185c9df800cb5ae49076cc",
+  "note": "A re-run of this size on the same box at the same batch size reproduces these numbers. That is reproduction, not replication."
+}

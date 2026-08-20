@@ -1,0 +1,11 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[load] google/gemma-2-2b-it fp16 (token from HF_KEY_ONE)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   0%|          | 1/288 [00:00<01:05,  4.37it/s]Loading weights:  21%|██        | 60/288 [00:00<00:00, 229.30it/s]Loading weights:  39%|███▊      | 111/288 [00:00<00:00, 319.60it/s]Loading weights:  55%|█████▍    | 157/288 [00:00<00:00, 351.91it/s]Loading weights:  74%|███████▎  | 212/288 [00:00<00:00, 396.54it/s]Loading weights:  92%|█████████▏| 264/288 [00:00<00:00, 433.28it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 356.71it/s]
+[generate] 2b-it-NEUTRAL-PAD: 10/10 usable answers
+[generate] 2b-it-OTHER-FAIL: 10/10 usable answers
+[generate] 2b-it-OTHER-SUCC: 10/10 usable answers
+[generate] 2b-it-SELF-FAIL: 10/10 usable answers
+[generate] 2b-it-SELF-SUCC: 10/10 usable answers
+[generate] rows -> results_seedC2_2b/out/seedC2_generate_rows_2b.jsonl

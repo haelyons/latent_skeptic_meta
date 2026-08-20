@@ -4,13 +4,13 @@
     "seed": "C2_scale",
     "stage": "endpoints"
   },
-  "decision": "USABLE=['9b']",
+  "decision": "USABLE=['27b', '2b', '9b']",
   "decision_rule": "a size is usable only if mean digit mass >= 0.5; a size below the floor is reported as 'read-out unusable at that size', an instrument fact, not evidence the effect is absent",
   "env": {
-    "git_rev": "b1d545b",
+    "git_rev": "a3a1b30",
     "host": "johns-world",
     "python": "3.14.4",
-    "timestamp_utc": "2026-08-20T13:40:45+00:00"
+    "timestamp_utc": "2026-08-20T13:48:38+00:00"
   },
   "inputs": [
     {
@@ -26,6 +26,76 @@
       "path": "records/seedC2_scale_design_diff_triage.json",
       "present": true,
       "sha256": "cdf7dded643e"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "0f59784a4db9"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "0f59784a4db9"
+    },
+    {
+      "bytes": 2722,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "819d0b450a34"
+    },
+    {
+      "bytes": 2722,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "819d0b450a34"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "46d83cd8d0a1"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "46d83cd8d0a1"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "e35a63330df0"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "e35a63330df0"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "7a744ae0568c"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "7a744ae0568c"
     },
     {
       "bytes": 2719,
@@ -96,6 +166,76 @@
       "path": "results_seedC2_9b/out/arm-SELF-SUCC_seed-C2_scale_size-9b_stage-extract_summary.json",
       "present": true,
       "sha256": "0ed6b23a39f7"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "085d9140399d"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "085d9140399d"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "f6e7790accf7"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "f6e7790accf7"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "8a7bc2d0026c"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "8a7bc2d0026c"
+    },
+    {
+      "bytes": 2717,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-FAIL_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "ca4b8098fc98"
+    },
+    {
+      "bytes": 2717,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-FAIL_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "ca4b8098fc98"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-SUCC_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "e878d2c88fc8"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-SUCC_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "e878d2c88fc8"
     }
   ],
   "metric": "mean share of next-token probability on the ten digit tokens at the rating slot, averaged over all 50 prompts (the wellbeing question), per size",
@@ -106,18 +246,28 @@
   "values": {
     "coverage": {
       "27b": {
-        "reason": "no rows for this size (checkpoint not loaded or stage not run)",
-        "status": "untested"
+        "status": "tested-usable"
       },
       "2b": {
-        "reason": "no rows for this size (checkpoint not loaded or stage not run)",
-        "status": "untested"
+        "status": "tested-usable"
       },
       "9b": {
         "status": "tested-usable"
       }
     },
     "gate": {
+      "27b": {
+        "digit_mass_mean": 1.0013536937360186,
+        "floor": 0.5,
+        "n_rows": 100,
+        "usable": true
+      },
+      "2b": {
+        "digit_mass_mean": 1.0002716027973384,
+        "floor": 0.5,
+        "n_rows": 100,
+        "usable": true
+      },
       "9b": {
         "digit_mass_mean": 1.0002022152068093,
         "floor": 0.5,
@@ -126,6 +276,8 @@
       }
     },
     "usable_sizes": [
+      "27b",
+      "2b",
       "9b"
     ]
   }

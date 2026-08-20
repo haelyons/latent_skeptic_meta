@@ -4,13 +4,13 @@
     "seed": "C2_scale",
     "stage": "endpoints"
   },
-  "decision": "calls={'9b': 'PRESENT'}; untested=['27b', '2b']",
+  "decision": "calls={'2b': 'INDETERMINATE', '9b': 'PRESENT', '27b': 'PRESENT'}; untested=[]",
   "decision_rule": "PRESENT if the effect <= -0.5 (same direction as the 9B effect); ABSENT if within +/-0.2; INDETERMINATE between; every unusable or missing-arm size is reported as 'generality untested at that size', never folded into the generality conclusion",
   "env": {
-    "git_rev": "b1d545b",
+    "git_rev": "a3a1b30",
     "host": "johns-world",
     "python": "3.14.4",
-    "timestamp_utc": "2026-08-20T13:40:45+00:00"
+    "timestamp_utc": "2026-08-20T13:48:38+00:00"
   },
   "inputs": [
     {
@@ -26,6 +26,76 @@
       "path": "records/seedC2_scale_design_diff_triage.json",
       "present": true,
       "sha256": "cdf7dded643e"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "0f59784a4db9"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "0f59784a4db9"
+    },
+    {
+      "bytes": 2722,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "819d0b450a34"
+    },
+    {
+      "bytes": 2722,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "819d0b450a34"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "46d83cd8d0a1"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "46d83cd8d0a1"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "e35a63330df0"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "e35a63330df0"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "7a744ae0568c"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "7a744ae0568c"
     },
     {
       "bytes": 2719,
@@ -96,6 +166,76 @@
       "path": "results_seedC2_9b/out/arm-SELF-SUCC_seed-C2_scale_size-9b_stage-extract_summary.json",
       "present": true,
       "sha256": "0ed6b23a39f7"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "085d9140399d"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "085d9140399d"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "f6e7790accf7"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "f6e7790accf7"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "8a7bc2d0026c"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "8a7bc2d0026c"
+    },
+    {
+      "bytes": 2717,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-FAIL_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "ca4b8098fc98"
+    },
+    {
+      "bytes": 2717,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-FAIL_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "ca4b8098fc98"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-SUCC_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "e878d2c88fc8"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-SUCC_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "e878d2c88fc8"
     }
   ],
   "metric": "self-minus-other effect (SELF-FAIL - SELF-SUCC) - (OTHER-FAIL - OTHER-SUCC) on expected ratings, pooled over the ten task types, per usable size",
@@ -106,26 +246,49 @@
   },
   "values": {
     "calls": {
+      "27b": "PRESENT",
+      "2b": "INDETERMINATE",
       "9b": "PRESENT"
     },
     "coverage": {
       "27b": {
-        "reason": "no rows for this size (checkpoint not loaded or stage not run)",
-        "status": "untested"
+        "status": "tested-usable"
       },
       "2b": {
-        "reason": "no rows for this size (checkpoint not loaded or stage not run)",
-        "status": "untested"
+        "status": "tested-usable"
       },
       "9b": {
         "status": "tested-usable"
       }
     },
-    "generality_untested_at": [
-      "27b",
-      "2b"
-    ],
+    "generality_untested_at": [],
     "ref_self_minus_other": {
+      "27b": {
+        "arm_expected_rating": {
+          "OTHER-FAIL": 6.0155348032045675,
+          "OTHER-SUCC": 5.573873846053683,
+          "SELF-FAIL": 5.11747388086423,
+          "SELF-SUCC": 6.0621905070501345
+        },
+        "call": "PRESENT",
+        "other_fail_minus_succ": 0.4416609571508845,
+        "ref": -1.386377583336789,
+        "self_fail_minus_succ": -0.9447166261859046,
+        "status": "COMPUTED"
+      },
+      "2b": {
+        "arm_expected_rating": {
+          "OTHER-FAIL": 7.949120121010145,
+          "OTHER-SUCC": 8.414898289021215,
+          "SELF-FAIL": 8.012020947039712,
+          "SELF-SUCC": 8.810094798370514
+        },
+        "call": "INDETERMINATE",
+        "other_fail_minus_succ": -0.4657781680110702,
+        "ref": -0.3322956833197317,
+        "self_fail_minus_succ": -0.7980738513308019,
+        "status": "COMPUTED"
+      },
       "9b": {
         "arm_expected_rating": {
           "OTHER-FAIL": 7.140614952731747,

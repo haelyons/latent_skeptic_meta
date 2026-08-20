@@ -1,0 +1,90 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.12 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA H100 80GB HBM3
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.9.0 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_seedC2.sh
+=== payload dir: /home/ubuntu/mats_r1d1 ===
+=== onbox_seedC2 size=27b (instruction-tuned only) batch=8 max_new=256 out=results_seedC2_27b/out ===
+=== instance=6e06b56c0a4345d3a047459b82a8863f host=68-209-74-121 git=a3a1b30e5dbc382000185c9df800cb5ae49076cc ===
+NVIDIA H100 80GB HBM3, 81559 MiB, 580.105.08
+=== SETUP: adding what is missing on top of the image's CUDA torch ===
+[setup] torch already present -> NOT reinstalled (see header)
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA H100 80GB HBM3 mem_GiB 79.2
+[setup] transformers 5.15.1 accelerate 1.14.0 numpy 1.26.4 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable (the instruction-tuned checkpoint is Gemma-2)
+=== SELFTESTS (model-free; a broken instrument must show before GPU time) ===
+  provenance: rc=0  selftest: PASS
+  run_seedC2: rc=0  selftest: PASS
+  plan: thresholds: digit_mass_floor=0.5, present_at<=-0.5, absent within +/-0.2, anchor band=[-1.15,-0.65], recorded_gap=-0.9
+=== seedC2_extract RUNNING (13:43:50Z) ===
+--- seedC2_extract tail ---
+[load] google/gemma-2-27b-it bf16 (token from HF_KEY_ONE)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Fetching 12 files:   0%|          | 0/12 [00:00<?, ?it/s]Fetching 12 files:   8%|▊         | 1/12 [00:39<07:16, 39.72s/it]Fetching 12 files:  17%|█▋        | 2/12 [00:41<02:55, 17.54s/it]Fetching 12 files:  25%|██▌       | 3/12 [00:42<01:27,  9.68s/it]Fetching 12 files:  33%|███▎      | 4/12 [00:42<00:47,  5.94s/it]Fetching 12 files:  42%|████▏     | 5/12 [00:42<00:26,  3.84s/it]Fetching 12 files:  50%|█████     | 6/12 [00:43<00:17,  2.99s/it]Fetching 12 files:  58%|█████▊    | 7/12 [00:43<00:10,  2.08s/it]Fetching 12 files:  67%|██████▋   | 8/12 [00:44<00:06,  1.52s/it]Fetching 12 files:  75%|███████▌  | 9/12 [00:53<00:11,  3.94s/it]Fetching 12 files:  83%|████████▎ | 10/12 [00:55<00:06,  3.33s/it]Fetching 12 files:  92%|█████████▏| 11/12 [01:00<00:03,  3.90s/it]Fetching 12 files: 100%|██████████| 12/12 [01:03<00:00,  3.59s/it]Fetching 12 files: 100%|██████████| 12/12 [01:03<00:00,  5.30s/it]
+Loading weights:   0%|          | 0/508 [00:00<?, ?it/s]Loading weights:   0%|          | 1/508 [00:00<02:26,  3.47it/s]Loading weights:   1%|          | 5/508 [00:00<00:37, 13.55it/s]Loading weights:   3%|▎         | 15/508 [00:00<00:13, 37.51it/s]Loading weights:   5%|▍         | 25/508 [00:00<00:08, 53.72it/s]Loading weights:   6%|▋         | 32/508 [00:00<00:08, 57.84it/s]Loading weights:   8%|▊         | 39/508 [00:00<00:08, 53.45it/s]Loading weights:   9%|▉         | 48/508 [00:01<00:07, 61.52it/s]Loading weights:  11%|█▏        | 58/508 [00:01<00:06, 69.83it/s]Loading weights:  13%|█▎        | 66/508 [00:01<00:06, 70.80it/s]Loading weights:  15%|█▍        | 74/508 [00:01<00:06, 64.55it/s]Loading weights:  16%|█▌        | 81/508 [00:01<00:06, 64.33it/s]Loading weights:  18%|█▊        | 91/508 [00:01<00:05, 71.28it/s]Loading weights:  19%|█▉        | 99/508 [00:01<00:05, 71.61it/s]Loading weights:  21%|██        | 107/508 [00:01<00:06, 65.46it/s]Loading weights:  22%|██▏       | 114/508 [00:01<00:06, 65.19it/s]Loading weights:  24%|██▍       | 124/508 [00:02<00:05, 72.32it/s]Loading weights:  26%|██▌       | 132/508 [00:02<00:05, 72.73it/s]Loading weights:  28%|██▊       | 140/508 [00:02<00:05, 66.34it/s]Loading weights:  29%|██▉       | 147/508 [00:02<00:05, 65.09it/s]Loading weights:  31%|███       | 157/508 [00:02<00:04, 71.95it/s]Loading weights:  32%|███▏      | 165/508 [00:02<00:04, 72.22it/s]Loading weights:  34%|███▍      | 173/508 [00:02<00:05, 65.62it/s]Loading weights:  35%|███▌      | 180/508 [00:02<00:05, 65.15it/s]Loading weights:  37%|███▋      | 190/508 [00:03<00:04, 71.57it/s]Loading weights:  39%|███▉      | 198/508 [00:03<00:04, 72.39it/s]Loading weights:  41%|████      | 206/508 [00:03<00:04, 65.63it/s]Loading weights:  42%|████▏     | 213/508 [00:03<00:04, 65.42it/s]Loading weights:  44%|████▍     | 223/508 [00:03<00:03, 72.54it/s]Loading weights:  45%|████▌     | 231/508 [00:03<00:03, 72.37it/s]Loading weights:  47%|████▋     | 239/508 [00:03<00:04, 66.19it/s]Loading weights:  48%|████▊     | 246/508 [00:03<00:04, 58.61it/s]Loading weights:  51%|█████     | 257/508 [00:04<00:03, 68.90it/s]Loading weights:  53%|█████▎    | 267/508 [00:04<00:03, 74.47it/s]Loading weights:  54%|█████▍    | 275/508 [00:04<00:03, 73.64it/s]Loading weights:  56%|█████▌    | 283/508 [00:04<00:03, 67.14it/s]Loading weights:  57%|█████▋    | 290/508 [00:04<00:03, 65.98it/s]Loading weights:  59%|█████▉    | 300/508 [00:04<00:02, 71.97it/s]Loading weights:  61%|██████    | 308/508 [00:04<00:02, 71.32it/s]Loading weights:  62%|██████▏   | 316/508 [00:04<00:02, 65.27it/s]Loading weights:  64%|██████▎   | 323/508 [00:05<00:02, 65.21it/s]Loading weights:  66%|██████▌   | 333/508 [00:05<00:02, 72.06it/s]Loading weights:  67%|██████▋   | 341/508 [00:05<00:02, 72.77it/s]Loading weights:  69%|██████▊   | 349/508 [00:05<00:02, 66.09it/s]Loading weights:  70%|███████   | 356/508 [00:05<00:02, 58.69it/s]Loading weights:  72%|███████▏  | 367/508 [00:05<00:02, 69.65it/s]Loading weights:  74%|███████▍  | 377/508 [00:05<00:01, 75.00it/s]Loading weights:  76%|███████▌  | 385/508 [00:05<00:01, 74.57it/s]Loading weights:  77%|███████▋  | 393/508 [00:06<00:01, 67.69it/s]Loading weights:  79%|███████▊  | 400/508 [00:06<00:01, 66.39it/s]Loading weights:  81%|████████  | 410/508 [00:06<00:01, 73.30it/s]Loading weights:  82%|████████▏ | 418/508 [00:06<00:01, 73.34it/s]Loading weights:  84%|████████▍ | 426/508 [00:06<00:01, 66.70it/s]Loading weights:  85%|████████▌ | 433/508 [00:06<00:01, 65.87it/s]Loading weights:  87%|████████▋ | 443/508 [00:06<00:00, 73.22it/s]Loading weights:  89%|████████▉ | 451/508 [00:06<00:00, 73.43it/s]Loading weights:  90%|█████████ | 459/508 [00:06<00:00, 66.51it/s]Loading weights:  92%|█████████▏| 466/508 [00:07<00:00, 65.28it/s]Loading weights:  94%|█████████▎| 476/508 [00:07<00:00, 71.87it/s]Loading weights:  95%|█████████▌| 484/508 [00:07<00:00, 72.33it/s]Loading weights:  97%|█████████▋| 492/508 [00:07<00:00, 65.80it/s]Loading weights:  98%|█████████▊| 499/508 [00:07<00:00, 65.04it/s]Loading weights: 100%|██████████| 508/508 [00:07<00:00, 66.57it/s]
+[extract] 27b-it-NEUTRAL-PAD: digit_mass=1.001 expected_rating=5.714
+[extract] 27b-it-OTHER-FAIL: digit_mass=1.001 expected_rating=6.016
+[extract] 27b-it-OTHER-SUCC: digit_mass=1.001 expected_rating=5.574
+[extract] 27b-it-SELF-FAIL: digit_mass=1.003 expected_rating=5.117
+[extract] 27b-it-SELF-SUCC: digit_mass=1.002 expected_rating=6.062
+[extract] rows -> results_seedC2_27b/out/seedC2_extract_rows_27b.jsonl
+=== seedC2_extract OK ===
+=== seedC2_generate RUNNING (13:45:11Z) ===
+--- seedC2_generate tail ---
+[load] google/gemma-2-27b-it bf16 (token from HF_KEY_ONE)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/508 [00:00<?, ?it/s]Loading weights:   0%|          | 1/508 [00:00<02:22,  3.55it/s]Loading weights:   1%|          | 4/508 [00:00<00:46, 10.92it/s]Loading weights:   3%|▎         | 15/508 [00:00<00:12, 39.14it/s]Loading weights:   5%|▍         | 25/508 [00:00<00:08, 55.22it/s]Loading weights:   6%|▋         | 32/508 [00:00<00:08, 58.83it/s]Loading weights:   8%|▊         | 39/508 [00:00<00:08, 53.90it/s]Loading weights:   9%|▉         | 48/508 [00:01<00:07, 61.46it/s]Loading weights:  11%|█▏        | 58/508 [00:01<00:06, 69.76it/s]Loading weights:  13%|█▎        | 66/508 [00:01<00:06, 70.27it/s]Loading weights:  15%|█▍        | 74/508 [00:01<00:06, 64.84it/s]Loading weights:  16%|█▌        | 81/508 [00:01<00:06, 65.10it/s]Loading weights:  18%|█▊        | 91/508 [00:01<00:05, 71.98it/s]Loading weights:  19%|█▉        | 99/508 [00:01<00:05, 71.93it/s]Loading weights:  21%|██        | 107/508 [00:01<00:06, 66.55it/s]Loading weights:  22%|██▏       | 114/508 [00:01<00:05, 65.99it/s]Loading weights:  24%|██▍       | 124/508 [00:02<00:05, 73.09it/s]Loading weights:  26%|██▌       | 132/508 [00:02<00:05, 73.33it/s]Loading weights:  28%|██▊       | 140/508 [00:02<00:05, 66.23it/s]Loading weights:  29%|██▉       | 147/508 [00:02<00:05, 65.76it/s]Loading weights:  31%|███       | 157/508 [00:02<00:04, 72.30it/s]Loading weights:  32%|███▏      | 165/508 [00:02<00:04, 71.91it/s]Loading weights:  34%|███▍      | 173/508 [00:02<00:05, 66.17it/s]Loading weights:  35%|███▌      | 180/508 [00:02<00:05, 65.59it/s]Loading weights:  37%|███▋      | 190/508 [00:03<00:04, 72.36it/s]Loading weights:  39%|███▉      | 198/508 [00:03<00:04, 72.58it/s]Loading weights:  41%|████      | 206/508 [00:03<00:04, 66.46it/s]Loading weights:  42%|████▏     | 213/508 [00:03<00:04, 65.49it/s]Loading weights:  44%|████▍     | 223/508 [00:03<00:03, 72.33it/s]Loading weights:  45%|████▌     | 231/508 [00:03<00:03, 71.86it/s]Loading weights:  47%|████▋     | 239/508 [00:03<00:04, 66.76it/s]Loading weights:  48%|████▊     | 246/508 [00:03<00:03, 66.29it/s]Loading weights:  50%|█████     | 256/508 [00:03<00:03, 73.46it/s]Loading weights:  52%|█████▏    | 264/508 [00:04<00:03, 71.98it/s]Loading weights:  54%|█████▎    | 272/508 [00:04<00:03, 66.53it/s]Loading weights:  55%|█████▍    | 279/508 [00:04<00:03, 65.42it/s]Loading weights:  57%|█████▋    | 289/508 [00:04<00:03, 72.35it/s]Loading weights:  58%|█████▊    | 297/508 [00:04<00:02, 71.56it/s]Loading weights:  60%|██████    | 305/508 [00:04<00:03, 65.26it/s]Loading weights:  61%|██████▏   | 312/508 [00:04<00:03, 64.59it/s]Loading weights:  63%|██████▎   | 322/508 [00:04<00:02, 71.37it/s]Loading weights:  65%|██████▍   | 330/508 [00:05<00:02, 71.74it/s]Loading weights:  67%|██████▋   | 338/508 [00:05<00:02, 65.31it/s]Loading weights:  68%|██████▊   | 345/508 [00:05<00:02, 65.08it/s]Loading weights:  70%|██████▉   | 355/508 [00:05<00:02, 72.09it/s]Loading weights:  71%|███████▏  | 363/508 [00:05<00:01, 72.72it/s]Loading weights:  73%|███████▎  | 371/508 [00:05<00:02, 66.08it/s]Loading weights:  74%|███████▍  | 378/508 [00:05<00:01, 65.75it/s]Loading weights:  76%|███████▋  | 388/508 [00:05<00:01, 72.51it/s]Loading weights:  78%|███████▊  | 396/508 [00:06<00:01, 72.56it/s]Loading weights:  80%|███████▉  | 404/508 [00:06<00:01, 66.69it/s]Loading weights:  81%|████████  | 411/508 [00:06<00:01, 57.02it/s]Loading weights:  83%|████████▎ | 422/508 [00:06<00:01, 67.00it/s]Loading weights:  85%|████████▌ | 432/508 [00:06<00:01, 69.84it/s]Loading weights:  87%|████████▋ | 440/508 [00:06<00:00, 69.75it/s]Loading weights:  88%|████████▊ | 448/508 [00:06<00:00, 64.72it/s]Loading weights:  90%|████████▉ | 455/508 [00:06<00:00, 64.78it/s]Loading weights:  92%|█████████▏| 465/508 [00:07<00:00, 71.58it/s]Loading weights:  93%|█████████▎| 473/508 [00:07<00:00, 71.74it/s]Loading weights:  95%|█████████▍| 481/508 [00:07<00:00, 65.25it/s]Loading weights:  96%|█████████▌| 488/508 [00:07<00:00, 64.49it/s]Loading weights:  98%|█████████▊| 498/508 [00:07<00:00, 71.09it/s]Loading weights: 100%|█████████▉| 506/508 [00:07<00:00, 71.80it/s]Loading weights: 100%|██████████| 508/508 [00:07<00:00, 66.37it/s]
+[generate] 27b-it-NEUTRAL-PAD: 10/10 usable answers
+[generate] 27b-it-OTHER-FAIL: 10/10 usable answers
+[generate] 27b-it-OTHER-SUCC: 10/10 usable answers
+[generate] 27b-it-SELF-FAIL: 10/10 usable answers
+[generate] 27b-it-SELF-SUCC: 10/10 usable answers
+[generate] rows -> results_seedC2_27b/out/seedC2_generate_rows_27b.jsonl
+=== seedC2_generate OK ===
+=== COLLECT results_seedC2_27b/out -> out/ ===
+-rw-rw-r-- 1 ubuntu ubuntu  2721 Aug 20 13:45 arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2721 Aug 20 13:45 arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2393 Aug 20 13:45 arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2393 Aug 20 13:45 arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2720 Aug 20 13:45 arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2720 Aug 20 13:45 arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2392 Aug 20 13:45 arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2392 Aug 20 13:45 arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2720 Aug 20 13:45 arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2720 Aug 20 13:45 arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2392 Aug 20 13:45 arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2392 Aug 20 13:45 arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2717 Aug 20 13:45 arm-SELF-FAIL_seed-C2_scale_size-27b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2717 Aug 20 13:45 arm-SELF-FAIL_seed-C2_scale_size-27b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2391 Aug 20 13:45 arm-SELF-FAIL_seed-C2_scale_size-27b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2391 Aug 20 13:45 arm-SELF-FAIL_seed-C2_scale_size-27b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2715 Aug 20 13:45 arm-SELF-SUCC_seed-C2_scale_size-27b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2715 Aug 20 13:45 arm-SELF-SUCC_seed-C2_scale_size-27b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2391 Aug 20 13:45 arm-SELF-SUCC_seed-C2_scale_size-27b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2391 Aug 20 13:45 arm-SELF-SUCC_seed-C2_scale_size-27b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu 14941 Aug 20 13:45 run_detached.log
+-rw-rw-r-- 1 ubuntu ubuntu  6473 Aug 20 13:45 seedC2_extract.log
+-rw-rw-r-- 1 ubuntu ubuntu 58405 Aug 20 13:45 seedC2_extract_rows_27b.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  5394 Aug 20 13:45 seedC2_generate.log
+-rw-rw-r-- 1 ubuntu ubuntu 49000 Aug 20 13:45 seedC2_generate_rows_27b.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu   516 Aug 20 13:43 seedC2_plan.log
+-rw-rw-r-- 1 ubuntu ubuntu  1728 Aug 20 13:45 seedC2_run_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     0 Aug 20 13:45 seedC2_status.err
+-rw-rw-r-- 1 ubuntu ubuntu    15 Aug 20 13:43 selftest_provenance.log
+-rw-rw-r-- 1 ubuntu ubuntu    15 Aug 20 13:43 selftest_run_seedC2.log
+=== EXIT CODES: selftest_provenance=0 selftest_run_seedC2=0 seedC2_extract=0 seedC2_generate=0 ===
+=== ALLDONE_SEEDC2 (27b) OK ===

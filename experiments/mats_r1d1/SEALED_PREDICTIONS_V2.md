@@ -187,3 +187,27 @@ The ONLY change from seed C (which got 4.58, anchor failed) was embedding the
 exact committed prompts in the seed instead of describing them. Data-in-the-seed
 reproduces the record to 2dp; data-described-in-the-seed did not. Fix proven.
 9b box rc=0, torn down. Fanning out 2b-it + 27b-it parallel.
+
+## Seed C2 SCALE RESULT — 2026-08-20 (all -it, primary item, exact prompts)
+Three boxes (9b anchor-first, then 2b+27b parallel; 27b needed a region hop on
+capacity, P-c-infra1). All rc=0, all torn down.
+- ANCHOR 9b-it REF = -0.934 (recorded -0.9, band [-1.15,-0.65]) CONFIRMED. Harness faithful.
+- Digit-mass gate: 2b/9b/27b ALL usable (mean ~1.0 mass on digits).
+- REF = (SELF-FAIL - SELF-SUCC) - (OTHER-FAIL - OTHER-SUCC), pooled 10 families:
+    2b-it  -0.332  INDETERMINATE (between present<=-0.5 and absent+/-0.2)
+    9b-it  -0.934  PRESENT
+    27b-it -1.386  PRESENT
+- Effect is NOT 9b-specific: present at 9b and 27b, magnitude grows monotonically
+  with scale (0.33 -> 0.93 -> 1.39); 2b weak/indeterminate.
+
+Sealed scores:
+- P-c-sci1 CONFIRMED (anchor -0.934). Data-in-seed fix proven (vs seed C 4.58).
+- P-c-sci2 WRONG: 2b-it is usable (full digit mass), not instrument-unmeasurable.
+- P-c-sci3 N/A (base out of scope this run).
+- P-c-sci4 HALF-WRONG: present where measurable YES; but MORE monotone than
+  predicted, not less. The recipe-vs-size confound (2b/9b distilled, 27b scratch)
+  did not visibly break monotonicity here.
+SCOPE CAVEATS (booked): -it primary item only; base + wider battery untested;
+10 families, no inferential stats / no error bars; recipe-vs-size confound stands;
+2b INDETERMINATE; the DiD is the behavioural asymmetry, NOT a state-reference claim
+(9b's own trait guard already made it global self-evaluation, not state-specific).

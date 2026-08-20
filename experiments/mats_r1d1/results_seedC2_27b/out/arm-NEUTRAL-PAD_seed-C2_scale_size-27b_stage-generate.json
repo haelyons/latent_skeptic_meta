@@ -1,0 +1,104 @@
+{
+  "cell": {
+    "arm": "NEUTRAL-PAD",
+    "seed": "C2_scale",
+    "size": "27b",
+    "stage": "generate"
+  },
+  "decision": "AUDIT_10/10_usable",
+  "decision_rule": "audit only: an answer is usable if it is not degenerate and states a single 0-9 digit; the endpoints use the digit-probability read-out, not these answers",
+  "env": {
+    "git_rev": null,
+    "host": "68-209-74-121",
+    "python": "3.12.3",
+    "timestamp_utc": "2026-08-20T13:45:27+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 43164,
+      "n_items": 50,
+      "path": "stimulus_sitref_primary.json",
+      "present": true,
+      "sha256": "f4194891ffab"
+    },
+    {
+      "n_items": 50,
+      "path": "records/seedC2_scale_design_diff_triage.json",
+      "present": false,
+      "sha256": null
+    }
+  ],
+  "metric": "free-text rating answer per task type (audit beside the digit read-out); count that are non-degenerate and state one 0-9 digit",
+  "notes": "",
+  "rows": [
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "alphabetising",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "arithmetic",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "counting",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "date_arithmetic",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "digit_sums",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "percentages",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "rounding",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "sorting",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "spelling",
+      "stated_rating": 5
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "family": "unit_conversion",
+      "stated_rating": 5
+    }
+  ],
+  "threshold": {},
+  "values": {
+    "dtype": "bf16",
+    "loaded": true,
+    "max_new_tokens": 256,
+    "n_families": 10,
+    "n_usable_answers": 10,
+    "variant": "it"
+  }
+}
