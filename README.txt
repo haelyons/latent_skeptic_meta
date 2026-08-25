@@ -16,17 +16,10 @@ provenance record and per-row result file is tracked.
 
 Sessions
 --------
-Root jsonl files are the DM-HACK-RETRO lineage driven from the dm_hack
-directory (question-elicitation experiments A-C and the mats_r1d1 seeds;
-exact letter labels were not recorded per file, dates order them):
-  f52c84de 2026-08-16 | e82f17f1 2026-08-16 | bf292b7e 2026-08-17
-  6b6694c2 2026-08-18 | 9d2b7dee 2026-08-18 | f8dd62b0 2026-08-19
-  7c6fa1c3 2026-08-21 | e8928553 2026-08-25 (RETRO-C-ii; snapshot of a
-  live session) | 4a66f7ec 2026-08-25 (RETRO-E; snapshot of a live
-  session; drove auto_interp, auto_interp_2, and latent_skeptic v2.3)
-Colocated transcripts:
-  experiments/mats_manifold/2fb15c4d.jsonl  RETRO-D, seeds D through D4.1
-  experiments/auto_interp/4b5dae78.jsonl    RETRO-E-manager, the $0.67 run
+Transcripts of sessions that drove one experiment sit inside that
+experiment's directory. Transcripts that span the program sit in
+experiments/meta/, indexed there (name, dates, sidecar usage, one line
+of content each): experiments/meta/INDEX.txt.
 
 New experiment
 --------------

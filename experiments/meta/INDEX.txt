@@ -1,0 +1,58 @@
+Cross-experiment session transcripts. One file per Claude Code session;
+filename is the session UUID; snapshots dated 2026-08-25 (live sessions
+keep growing at ~/.claude/projects/). "sidecar" = the session's
+subagents/ directory of subagent and workflow transcripts; counts are as
+of the snapshot; sidecars are NOT copied here and live beside the
+original jsonl under ~/.claude/projects/<project-key>/<uuid>/.
+
+f52c84de  unnamed          2026-08-15..16  sidecar 35
+  Scaffold session: drafted the research-sprint entry structure that the
+  retro program then inhabited. Pre-dates session naming.
+
+e82f17f1  unnamed          2026-08-16      sidecar 63
+  Material review 1: read the sprint brief and sources cold, "form your
+  own view" - input layer of the elicitation study.
+
+bf292b7e  unnamed          2026-08-17      sidecar 29
+  Material review 2: same protocol over the document set; the de facto
+  A-era (the letter A was never recorded as a name).
+
+9d2b7dee  DM-HACK-RETRO-b  2026-08-18      sidecar 6
+  Battery built and piloted: H-top hypothesis, arms, filed predictions
+  (welfare_probe retro; now experiments/elicitation).
+
+6b6694c2  DM-HACK-RETRO-b-ii  2026-08-18   sidecar 7
+  Battery continuation: rerun B, arm C, SKEPTIC_SUBSTITUTION - the
+  naming-gate result.
+
+f8dd62b0  DM-HACK-RETRO-c  2026-08-19      sidecar 52
+  Harness assembled (prompts, gates, latent_skeptic_test subtractions);
+  Sonnet elicitation run; sealed predictions filed; drove mats_r1d1
+  seeds A and B (v1 and v2 pipelines). Git: latent_skeptic_test,
+  mats_r1d1 early history.
+
+7c6fa1c3  DM-HACK-RETRO (bare)  2026-08-21  sidecar 0
+  Submission assembly: XPLORE_FROM_LATENTS document work only.
+
+e8928553  DM-HACK-RETRO-C-ii  2026-08-25   sidecar 147, live
+  Continuation of the c line across the whole record; snapshot of a
+  session that was still running when copied.
+
+4a66f7ec  DM-HACK-RETRO-E  2026-08-25      sidecar 9, live
+  This meta-analysis: v2.3-a/b branches authored (git: latent_skeptic
+  v2.3-a, v2.3-b), wording-rerun protocol + excluded operator pilot
+  (pilot workflows in sidecar), Nanda generate-filter calibration,
+  E-manager delegation, instability finding, this repo's assembly.
+  Opens with an aborted mats_manifold prompt at line 7 - false start,
+  ignore.
+
+Colocated elsewhere (1:1 sessions):
+  experiments/mats_manifold/2fb15c4d...jsonl  DM-HACK-RETRO-D
+    Seeds D through D4.1; the question-refinement lineage.
+  experiments/auto_interp/4b5dae78...jsonl    DM-HACK-RETRO-E-manager
+    The delegated $0.67 run; its two pipeline executions are in its own
+    sidecar under the auto-interp project key.
+
+Not established: which session made the latent_skeptic origin/v2.2
+question-format port (grep finds it in none of these; likely a session
+outside this set).
