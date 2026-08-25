@@ -7,16 +7,12 @@ detail.
 
 Tool-under-use is latent_skeptic/ 
 
-Each directory under experiments/ is one experiment, and includes the
-initial question, claim and experiment ledgers, results, the transcript 
-if the session that drove it, side by side. Broader transcripts in meta/.
-
 To answer "how was this done": ledger -> records -> transcript last. 
 
-Raw results (prompts, generations, per-row records, mean vectors) are
-tracked - you can just look; the latent_verify lesson. Only single files
-at git-LFS scale stay out (currently the 2.4GB of 13B activation dumps
-under auto_interp), rederivable by GPU run.
+Raw results (prompts, generations, per-row records, vectors) are tracked -
+you can just look. Only single files at git-LFS scale are .gitignored
+(currently nine 13B activation dumps, 2.4GB, under auto_interp),
+rederivable cheaply with a GPU run.
 
 Sessions
 --------
