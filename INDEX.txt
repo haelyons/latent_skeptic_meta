@@ -1,0 +1,1 @@
+session -> experiment map. one line each: name | dates | dir(s) | one clause.

@@ -1,0 +1,6 @@
+.keys
+**/venv/
+__pycache__/
+**/results_*/out/*.npz
+**/results_*/out/*.pt
+**/*activations*.tar*
