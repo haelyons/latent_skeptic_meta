@@ -1,6 +1,6 @@
 .keys
 **/venv/
 __pycache__/
-**/results_*/out/*.npz
-**/results_*/out/*.pt
-**/*activations*.tar*
+# rule: raw results (prompts, generations, rows, vectors) are tracked - you can just look.
+# only single files at git-LFS scale (~50MB+) stay out; currently just the 13B activation dumps:
+experiments/auto_interp/out/results_probe/out/acts_*.npz

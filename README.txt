@@ -3,16 +3,20 @@ latent_skeptic_meta
 
 Private, permanently. The session transcripts in this repo contain full
 tool output, local paths, keys-adjacent commands, and infrastructure
-detail. Never public, never mirrored.
+detail.
 
-The tool is latent_skeptic/ (submodule, pinned; an experiment that used a
-different version says so in its own records). Each directory under
-experiments/ is one experiment: question, ledgers, records, results, and
-the transcript of the session that drove it, side by side. Transcripts
-that drove several experiments sit at the root. To answer "how was this
-done": ledger first, records second, transcript last. Heavy raw artifacts
-(activations, generations archives) stay on disk but out of git; every
-provenance record and per-row result file is tracked.
+Tool-under-use is latent_skeptic/ 
+
+Each directory under experiments/ is one experiment, and includes the
+initial question, claim and experiment ledgers, results, the transcript 
+if the session that drove it, side by side. Broader transcripts in meta/.
+
+To answer "how was this done": ledger -> records -> transcript last. 
+
+Raw results (prompts, generations, per-row records, mean vectors) are
+tracked - you can just look; the latent_verify lesson. Only single files
+at git-LFS scale stay out (currently the 2.4GB of 13B activation dumps
+under auto_interp), rederivable by GPU run.
 
 Sessions
 --------
