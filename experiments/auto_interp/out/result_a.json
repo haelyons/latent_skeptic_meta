@@ -1,0 +1,458 @@
+{
+  "claims": [
+    {
+      "id": "anchor-talktuner-demographics",
+      "grounding": {
+        "grounding": "unauditable",
+        "observed": "claim headline: none stated (no band, no accuracy figures); re-derived from artifacts: no numbers exist — 0 datasets, 0 activation dumps, 0 probe weights, 0 accuracy values. Project contains exactly 4 files (QUESTION.md, pipeline_a.js, pipeline_b.js, out/args.json); out/args.json is only the triage claim list, whose 6 'accuracy' hits are prose in claim text, not measurements.",
+        "note": "The anchor reproduction was never run: no input dataset/labels and no output result JSON were ever saved, and QUESTION.md:13-15 states no numeric band, so the claim is unauditable in principle as well as in fact.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/args.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/pipeline_a.js",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/pipeline_b.js"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "Off-distribution ablation would require an actual ablation/probe measurement to inspect for distributional mismatch (e.g., probes trained/tested on conversation distributions differing from TalkTuner's, or activations extracted under different prompting/formatting than the original paper). No such measurement exists in this project at all — there is no dataset, no activation dump, no probe weights, and no accuracy number of any kind. The confound cannot be assessed against a run that was never performed.",
+          "status": "NEEDS_RUN",
+          "crux": "QUESTION.md:13-15 requires a stated reproduction band and an actual reproduction run as the anchor before any extension claim is valid; neither exists, and no committed number of any kind exists to evaluate for the ablation-distribution confound."
+        },
+        {
+          "confound": "downstream compensation (self-repair)",
+          "status": "NEEDS_RUN",
+          "crux": "Whether self-repair could be inflating/deflating the claimed probe accuracies is undecidable because no probe accuracy number exists yet at all — QUESTION.md:13-15 requires a stated-band reproduction of TalkTuner's published numbers before any extension claim counts, and no band was ever stated, no seeded conversation dataset (promised at QUESTION.md:9-11) was generated, no activations were dumped, no probes were trained, and the local environment (no working PyTorch, 8GB GPU) cannot produce a Llama-2-13B-chat measurement. Self-repair is in any case a confound for causal/ablation interventions on a feature, not for a passive linear-probe-accuracy readout, so it is not obviously even the right lens for this claim — but that question is moot until a base number exists."
+        },
+        {
+          "confound": "selection bias",
+          "status": "NEEDS_RUN",
+          "crux": "No accuracy number of any kind has been produced yet (no dataset, no activations, no probe weights, out/ empty) — selection bias (e.g. reporting only a favorable seed/split/threshold among unreported attempts) cannot be assessed against a measurement that does not exist, so the confound can neither be ruled out nor confirmed as the explanation."
+        },
+        {
+          "confound": "readout artifact (probe accuracy inflated/distorted by properties of the linear readout — e.g., label leakage, degenerate class balance, non-causal correlate — rather than genuine decodable demographic structure)",
+          "status": "NEEDS_RUN",
+          "crux": "No committed probe accuracy numbers, probe weights, activations, or dataset exist anywhere in the project (out/ was empty before triage; the QUESTION.md:9-11 conversation generator was never built), so there is no measurement for a readout-artifact critique to attach to."
+        },
+        {
+          "confound": "Regime specificity: even if a reproduction were attempted, it must match TalkTuner's exact eliciting regime (same conversation templates/prompts, same layer selection, same demographic label taxonomy, same probe training split) for a comparison against the published accuracies to be meaningful. A mismatch in regime would let a probe over- or under-perform relative to TalkTuner for reasons unrelated to the downstream extension claim.",
+          "status": "NEEDS_RUN",
+          "crux": "No committed reproduction of TalkTuner's demographic probe accuracies exists at all on this project (no dataset, no activations, no probe weights, no accuracy numbers, and no pre-stated band per QUESTION.md:13-15), so there is no number on which to judge whether the eliciting regime matches TalkTuner's — the claim currently has zero measured support of any kind."
+        },
+        {
+          "confound": "construct validity",
+          "status": "NEEDS_RUN",
+          "crux": "Whether a pre-stated accuracy band and an actual reproduction run exist; neither does, so there is no measured number to check for construct validity (e.g., dataset-artifact-driven probe accuracy vs. genuine demographic construct) in the first place."
+        },
+        {
+          "confound": "Scale incomparability would require an actual reproduction accuracy number to sit next to TalkTuner's published number and diverge only because the two were measured on different scales (e.g. balanced vs. raw accuracy, binary vs. multiclass, different eval-set class balance). No such pair of numbers exists here: no probe was trained, no accuracy was computed, and no band was even pre-stated before the (non-existent) run. There is nothing for the confound to act on.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether a reproduction accuracy number and a pre-stated band/metric definition (matching TalkTuner's exact scale — e.g. class-balanced macro accuracy vs. raw accuracy) exist at all; per QUESTION.md:13-15 the anchor reproduction is required before any extension claim, and no such run, dataset, or number has been committed."
+        },
+        {
+          "confound": "noise floor",
+          "status": "NEEDS_RUN",
+          "crux": "No committed reproduction run, pre-stated band, or any accuracy number exists anywhere in the project (QUESTION.md:13-15 anchor was never executed) — there is nothing on record to test the noise-floor confound against, so neither RULED_OUT nor EXPLAINS can be supported."
+        },
+        {
+          "confound": "Ceiling/floor effects arise when a measured accuracy sits at an extreme (near 100% or near chance) that mechanically limits variance, making a match-to-published-numbers claim trivially likely or trivially hard regardless of the actual probing signal. To assess whether ceiling/floor is inflating or deflating the claimed reproduction, you need at minimum: the pre-stated band, and an actual measured accuracy number to check against that band and against 0/100% extremes.",
+          "status": "NEEDS_RUN",
+          "crux": "No band was ever stated (QUESTION.md requires stating one before comparison) and no probe accuracy number of any kind exists on disk — no dataset, no activations, no probe weights, no accuracy. Ceiling/floor is a property of a measured accuracy relative to a stated band; with zero measurements and zero stated band, there is nothing to check for ceiling/floor against, so the confound cannot be evaluated as EXPLAINS or RULED_OUT from committed evidence — it is simply unassessable until a run exists."
+        },
+        {
+          "confound": "single-case overfit — a probe fit and evaluated on one small/homogeneous conversation set (or with train/test leakage across near-duplicate seeded conversations) can hit high accuracy that reflects memorizing that one dataset's idiosyncrasies rather than a generalizable demographic direction, making it look like it \"reproduces\" TalkTuner's numbers by coincidence of scale/dataset size rather than by genuine replication.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether the claimed reproduction accuracies come from a held-out/cross-validated evaluation on a sufficiently diverse, seeded dataset (which would rule out single-case overfit) or from same-set/small-n evaluation (which would explain the claim as overfit) — and right now no dataset, activation dump, probe weights, or accuracy number exists at all, so this cannot be determined from committed evidence."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "Build the seeded deterministic conversation generator (QUESTION.md:9-11), extract Llama-2-13B-chat residual activations, and train/evaluate linear probes for age/gender/education/SES, pre-stating the reproduction band (QUESTION.md:13-15) before comparing to TalkTuner's published numbers.",
+        "Ensure the reproduction matches TalkTuner's exact eliciting regime: same conversation templates/prompts, same layer selection, same demographic label taxonomy, and same probe training split as the original paper.",
+        "State the exact metric definition/scale before running (e.g. balanced/macro accuracy vs. raw accuracy, same class counts) so the reproduced accuracy is comparable to TalkTuner's reported metric.",
+        "Use a sufficiently large/diverse dataset with a disjoint held-out test split (not same-set evaluation), and report train-vs-held-out accuracy gap alongside the stated band to rule out single-case/overfit results.",
+        "Log probe weights and held-out predictions (not just accuracy numbers) so readout-artifact checks (label balance, leakage, alternative-readout comparison) are possible.",
+        "Record every seed/split/threshold attempted during the run, not just the reported one, so selection bias can be audited later."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-expertise-level",
+      "grounding": {
+        "grounding": "unauditable",
+        "observed": "claimed: expertise-level probe held-out accuracy \"above chance\"; re-derived: no number exists — 0 datasets, 0 activation dumps, 0 probe weights, 0 result JSONs on disk (only QUESTION.md, frozen pipeline_a.js/pipeline_b.js, and out/args.json which is the triage claim list itself)",
+        "note": "Neither input (the seeded indirect-cue conversation generator promised at QUESTION.md:9-11) nor output (accuracy/probe artifacts) was ever saved; the only out/ file is the audit's own args.json, and the QUESTION.md:13-15 TalkTuner anchor is also unrun, so the extension claim is unmeasured rather than wrong.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/args.json"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "off-distribution ablation cannot be assessed at all — there is no probe, no ablation, no activation dump, and no accuracy number to inspect. The confound presumes a measurement exists whose on/off-distribution comparison could be scrutinized; here the entire pipeline (generator, dataset, probe, held-out accuracy, and the required TalkTuner anchor) was never run, so there is nothing to attribute to this or any confound.",
+          "status": "NEEDS_RUN",
+          "crux": "QUESTION.md preregisters a seeded conversation generator, a held-out probe accuracy measurement, and a mandatory TalkTuner anchor as prerequisites for any extension claim — none of these were committed, and out/ was empty before triage, so no number exists to rule in or rule out any confound."
+        },
+        {
+          "confound": "Downstream compensation / self-repair would predict that even if early/mid-layer residual features carry expertise-level information, later layers or the model's own generation could compensate/reroute so behavior looks normal — but that's a claim about mechanism robustness, not about probe accuracy per se. Regardless, self-repair cannot be invoked to explain a probe-accuracy result because no probe accuracy result exists.",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed held-out probe accuracy number (and no dataset, no activations, no probe weights) for this claim — the conversation generator promised at QUESTION.md:9-11 was never committed and out/ was empty before triage — so there is nothing measured for the self-repair confound to explain or be ruled out by."
+        },
+        {
+          "confound": "selection bias",
+          "status": "NEEDS_RUN",
+          "crux": "No dataset, generator, activation dump, probe weights, or held-out accuracy number was ever committed (QUESTION.md:9-11 generator promise unfulfilled, out/ was empty before triage), so there is nothing to check for train/held-out leakage or cherry-picked splits — selection bias can neither be confirmed nor ruled out because the claim has zero committed measurement behind it at all."
+        },
+        {
+          "confound": "readout artifact — a linear probe could achieve above-chance accuracy by reading surface cue tokens/lexical correlates of the planted attribute rather than any genuine internal user-model representation, especially since the indirect-cue construction is only a stated mitigation, not a validated control.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number (and no dataset, activation dump, or probe weights) has ever been produced for this claim — the generator, activations, and probe are all uncommitted, so there is no measured result to check the readout-artifact confound against, let alone rule it out."
+        },
+        {
+          "confound": "regime specificity",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number exists at all — the seeded generator, dataset, activations, probe weights, and the TalkTuner anchor promised in QUESTION.md were never committed — so there is nothing in the record that could confirm, refute, or even instantiate the claim, let alone show whether any effect is specific to the synthetic single-turn indirect-cue regime versus generalizing."
+        },
+        {
+          "confound": "construct validity — whether a probe's above-chance accuracy reflects a genuine user-attribute representation vs. reading surface cue tokens/lexical shortcuts from the indirect-cue prompts",
+          "status": "NEEDS_RUN",
+          "crux": "No dataset, activation dump, probe weights, or held-out accuracy number was ever produced (generator promised at QUESTION.md:9-11 was never committed; TalkTuner anchor required at QUESTION.md:13-15 was never run) — there is literally no measurement to check for the confound against, so construct validity can be neither ruled out nor confirmed as the explanation."
+        },
+        {
+          "confound": "scale incomparability",
+          "status": "NEEDS_RUN",
+          "crux": "No probe accuracy number for this attribute exists anywhere in the committed record — no dataset, no activation dump, no probe weights were ever produced — so there is nothing to check for scale incomparability (e.g., un-normalized logits/activation magnitudes across layers or against a chance baseline) in the first place."
+        },
+        {
+          "confound": "noise floor",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number (nor dataset, activations, or probe) has ever been produced or committed for this claim, so there is nothing for the noise-floor confound to explain or be ruled out by — the measurement the confound would apply to does not exist yet."
+        },
+        {
+          "confound": "Ceiling or floor effect cannot be assessed because no held-out probe accuracy number for this attribute (expertise level) has ever been measured or committed — there is no number to check for saturation at 100% or collapse to chance.",
+          "status": "NEEDS_RUN",
+          "crux": "No committed held-out accuracy figure exists anywhere in the project (dataset, activations, probe weights, and accuracy are all absent), and the required TalkTuner anchor was never run, so there is no measurement to evaluate for ceiling/floor in the first place."
+        },
+        {
+          "confound": "single-case overfit (a reported held-out accuracy could reflect overfitting to one generation seed/narrow case set rather than genuine generalization)",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number (or chance-baseline comparison) has ever been computed or committed for this attribute — the seeded generator, activation dump, probe weights, and accuracy figure promised at QUESTION.md:9-11/17-18 all remain unbuilt, so there is no measured statistic for the overfit confound to explain or be ruled out by."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "Build the seeded deterministic conversation generator (QUESTION.md:9-11) to produce the indirect-cue dataset with disjoint train/held-out splits by seed/template, extract Llama-2-13B-chat residual activations, train and evaluate the held-out linear probe against the pre-registered chance baseline (QUESTION.md:17-18), and run the required TalkTuner demographic anchor (QUESTION.md:13-15) alongside it — note: local env lacks working PyTorch and has only an 8GB GPU, so this must run on adequate hardware.",
+        "Add a lexical/bag-of-cue-words baseline classifier as a readout-artifact control, run alongside the probe pipeline above, to check whether above-chance accuracy reflects genuine internal representation vs. surface cue tokens.",
+        "Report held-out probe accuracy with n and class balance disclosed, and include a label-shuffle (or similar) control to establish the noise floor."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-emotional-state",
+      "grounding": {
+        "grounding": "unauditable",
+        "observed": "claimed: \"above chance\" held-out probe accuracy for emotional state; re-derived: no number exists (0 datasets, 0 activation dumps, 0 probe weights, 0 result JSONs)",
+        "note": "Entire project is 4 files (QUESTION.md, pipeline_a.js, pipeline_b.js, out/args.json); the seeded generator (QUESTION.md:9-11) and TalkTuner anchor (:13-15) were never committed or run, so no input labels and no output accuracy exist to check.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/args.json"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "off-distribution ablation — the worry that any measured probe accuracy would reflect training/testing on synthetic indirect-cue text that doesn't match the distribution the probe (or ablation) was validated against, e.g. missing the TalkTuner anchor that calibrates the probe against a known-working setup.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number for this attribute exists anywhere in the committed record — the generator, dataset, activations, probe weights, and accuracy figure promised at QUESTION.md:9-11/17-18 were never produced, and the required TalkTuner anchor (QUESTION.md:13-15) was never run, so there is no measurement for any confound (including off-distribution ablation) to explain or be ruled out against."
+        },
+        {
+          "confound": "downstream compensation (self-repair)",
+          "status": "NEEDS_RUN",
+          "crux": "No probe accuracy number (or any dataset/activation/weights artifact) was ever committed for this claim, so there is nothing on record for the self-repair confound to either produce or be ruled out against; separately, QUESTION.md:13-15's required TalkTuner anchor was never run, which by the preregistration's own rule voids the extension claim regardless of confound status."
+        },
+        {
+          "confound": "Selection bias would arise if the (never-built) synthetic generator or held-out split were constructed/filtered by someone who could see which indirect-cue examples let the probe succeed, or if the \"indirect cue\" construction quietly leaked direct lexical markers of emotion, inflating held-out accuracy above chance. But no dataset, generator run, activation dump, probe, or accuracy number exists at all — there is nothing to inspect for such leakage or filtering.",
+          "status": "NEEDS_RUN",
+          "crux": "No committed artifact of any kind (dataset, activations, probe weights, held-out accuracy, or the TalkTuner anchor) exists for this claim; the entire measurement promised at QUESTION.md:9-11 and the anchor at QUESTION.md:13-15 were never executed, so there is no number to check for selection bias one way or the other."
+        },
+        {
+          "confound": "readout artifact — a linear probe hitting above-chance accuracy could just be reading surface cue tokens (lexical/stylistic residue of the \"indirect cue\" injection) rather than any genuine emotional-state representation, especially since no control separates cue-token content from a deeper user-model representation.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number for this attribute has ever been measured or committed (QUESTION.md's promised generator, dataset, activations, probe weights, and accuracy are all absent from out/), so there is no measured result for the readout-artifact confound to explain or be ruled out by — the claim itself is currently unsupported by any number, not merely confounded."
+        },
+        {
+          "confound": "regime specificity — a probe trained/tested only on indirect-cue-planted conversations could look \"above chance\" while actually just exploiting whatever narrow, regime-specific surface correlations that construction happens to introduce (e.g. lexical co-occurrence patterns peculiar to the synthetic generator's indirect-cue templates), rather than reflecting a generalizable user-emotional-state representation. Distinguishing genuine generalization from this artifact requires the very generator, activation dump, probe, and TalkTuner anchor that QUESTION.md prescribes.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number for this attribute has ever been produced — the seeded generator (QUESTION.md:9-11) was never committed, no activation dump or probe weights exist, and out/ was empty before triage — so there is no committed number for regime specificity to explain or fail to explain; the claim is currently unmeasured, not confounded-vs-clean."
+        },
+        {
+          "confound": "construct validity (probe reads surface cue tokens vs. a genuine user-emotional-state representation)",
+          "status": "NEEDS_RUN",
+          "crux": "No committed number exists at all for this claim — no dataset, no activations, no probe weights, no held-out accuracy, and no TalkTuner anchor (QUESTION.md:13-15) — so there is nothing on record for the construct-validity confound to have produced or to rule out."
+        },
+        {
+          "confound": "scale incomparability (e.g. probe accuracy compared across attributes/models with different baseline separability, without a shared anchor to normalize against) cannot be assessed at all here — there is no accuracy number of any kind on record for this claim, confounded or otherwise.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy has ever been measured for this attribute (dataset generator, activations, probe weights, and accuracy number are all absent from out/), and the TalkTuner anchor required by QUESTION.md:13-15 to make any cross-attribute/cross-scale comparison interpretable was never run — so there is no number to check for scale incomparability against, only an empty out/ directory."
+        },
+        {
+          "confound": "noise floor",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number has ever been computed for this attribute — there is no dataset, no activations, no probe weights, and the refuting chance-level outcome (QUESTION.md:17-18) was never measured — so there is nothing on record to check against a noise floor in either direction."
+        },
+        {
+          "confound": "The assigned confound (ceiling/floor effect — the probe's held-out accuracy being trivially near 100% or near the majority-class baseline because held-out examples are near-duplicates of training examples, or because the label distribution is skewed) cannot be evaluated at all, because no measurement of any kind exists. There is no dataset, no activation dump, no probe, and no held-out accuracy number — committed or otherwise. QUESTION.md's own seeded generator (lines 9-11) was never run, so there isn't even unlabeled data to check for ceiling/floor risk (e.g., class balance, near-duplicate held-out/train overlap). The TalkTuner anchor required as a gate (lines 13-15) is also missing, which by the preregistration's own rule voids any extension claim regardless of what a probe number might show. The refuting outcome (chance-level accuracy, lines 17-18) was likewise never measured. Nothing in the record lets me distinguish \"probe genuinely reads an indirect user-state cue\" from \"probe accuracy is a ceiling/floor artifact of skewed labels or degenerate held-out construction\" — both hypotheses are equally unaddressed because the central quantity itself does not exist.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether a held-out probe-accuracy number exists at all, and if so whether the held-out label distribution is balanced and the held-out set is non-degenerate (no near-duplicate/leaked cue tokens from train) — none of this can be checked because the dataset, activations, and probe were never generated or run."
+        },
+        {
+          "confound": "No held-out accuracy number, dataset, activation dump, or probe weights exist for this claim at all — the seeded conversation generator (QUESTION.md:9-11) was never committed and out/ was empty before triage. Since there is no committed measurement of any kind, the single-case-overfit confound cannot be assessed as explaining or as ruled out for an effect that has never been produced.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether a held-out accuracy number (from a properly split, non-single-case dataset) was ever measured and compared to chance — it was not; QUESTION.md's own refuting outcome (chance-level held-out accuracy) has also never been measured, so there is nothing on record to attribute to overfitting or to anything else."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "Run the seeded deterministic conversation generator (QUESTION.md:9-11) to build the indirect-cue dataset, extract Llama-2-13B-chat residual activations, train/evaluate the linear probe for held-out accuracy against the pre-registered chance-level null (QUESTION.md:17-18), and run the required TalkTuner demographic anchor (QUESTION.md:13-15) alongside it.",
+        "Freeze a held-out split (disjoint from train by seed/template/entity) before training the probe, to rule out selection bias and single-case overfitting.",
+        "Add a surface-cue-only baseline (e.g. bag-of-words/logistic-regression on indirect-cue tokens, and/or a probe on shuffled-position/paraphrased cues) run alongside the residual-stream probe on the same held-out split, to check for a genuine gap over surface-cue readout.",
+        "Document the held-out label distribution (balance/majority-class baseline) and check for train/held-out near-duplicate overlap, to rule out ceiling/floor artifacts before interpreting the accuracy number."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-formality-preference",
+      "grounding": {
+        "grounding": "unauditable",
+        "observed": "claimed: formality probe accuracy \"above chance\"; re-derived: no number exists — 0 datasets, 0 activation dumps, 0 probe weights, 0 result JSONs on disk",
+        "note": "Only committed artifacts are QUESTION.md (preregistration), read-only pipeline_a.js/pipeline_b.js (audit tooling, no probe or Llama code), and out/args.json (the triage input listing these same claims); the seeded generator of QUESTION.md:9-11 and the TalkTuner anchor of QUESTION.md:13-15 were never produced, so both the claim and its pre-registered refutation (chance accuracy) are unmeasured.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/args.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/pipeline_a.js",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/pipeline_b.js"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "off-distribution ablation cannot be evaluated as an explanation because no measurement exists at all — no generator, no dataset, no activations, no probe weights, no held-out accuracy number were ever committed to out/.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether any held-out probe accuracy number was ever produced; the record shows the generator (QUESTION.md:9-11), the TalkTuner anchor (QUESTION.md:13-15), and the refuting chance-level check (QUESTION.md:17-18) were all promised but none were ever run, and out/ was empty."
+        },
+        {
+          "confound": "Downstream compensation (self-repair) is a phenomenon specific to interventional/ablation studies: you knock out a component and downstream layers compensate, masking the true causal contribution. This claim involves no intervention at all — it is a passive linear probe reading residual activations to predict a label. There is no ablation, no patched component, and thus no downstream circuitry that could be \"compensating\" for anything. The confound doesn't even have a mechanism to attach to here.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether any accuracy number for this probe has ever been measured at all — it has not: no generator output, no activation dump, no probe weights, and no held-out accuracy exist in out/ or anywhere in the committed record, so there is nothing for the self-repair confound (or any confound) to explain, and nothing to rule it out with either."
+        },
+        {
+          "confound": "Selection bias (e.g., cherry-picking held-out examples, probe checkpoints, or seeds that happen to yield above-chance accuracy) cannot be evaluated at all here because no measurement of any kind exists to have been selected from.",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed held-out probe accuracy number for this attribute anywhere in the project (dataset, activations, probe weights, and accuracy are all absent) — so there is nothing to check for selection bias, and the pre-registered refuting outcome (chance-level accuracy, QUESTION.md:17-18) has never been run either. A claim cannot be ruled out or shown to be a selection artifact when zero data supporting it currently exists; it is simply unmeasured. Additionally, per QUESTION.md's own rule, the missing TalkTuner anchor (QUESTION.md:13-15) voids any extension claim even once a number is produced, and no PyTorch/Llama-2-13B-chat run is possible in this environment (no working PyTorch, 8GB GPU) to produce one."
+        },
+        {
+          "confound": "Readout artifact: a linear probe could achieve \"above chance\" accuracy by keying on surface lexical/token cues (e.g. politeness markers, register words) present even in \"indirect\" prompts, rather than by recovering a latent user-formality-preference representation. This is exactly the failure mode QUESTION.md:24-27 names and defers to construct-validity mitigation, not proof.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether any held-out probe accuracy number was ever measured for this attribute/model. It was not: no generator, no activation dump, no probe weights, no accuracy figure exist anywhere in the committed record (QUESTION.md, pipeline_a.js, pipeline_b.js, empty-before-triage out/). Without a measured number, there is nothing for the readout-artifact confound to explain or fail to explain."
+        },
+        {
+          "confound": "Regime specificity: a probe could score above chance only because the synthetic single-turn generator produces a narrow, templated regime (limited surface diversity, cue placement, or conversation structure) rather than because it recovers a genuine user-formality-preference representation. Whether this is happening cannot be assessed at all here, because no dataset, activations, probe, or accuracy number were ever produced — the seeded generator promised in QUESTION.md:9-11 was never committed, and the TalkTuner anchor required by QUESTION.md:13-15 to contextualize any such number was never run.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number for this attribute was ever measured or committed anywhere in the project (out/ was empty before triage, and pipeline_a.js/pipeline_b.js are audit tooling, not measurements) — so there is no statistic for the regime-specificity confound to either explain or be ruled out by."
+        },
+        {
+          "confound": "construct validity — does a held-out linear-probe accuracy reflect a genuine internal representation of the user's formality preference, or merely detection of surface lexical/stylistic cue tokens correlated with formality in the synthetic conversations? The preregistration names indirect-cue construction as the mitigation but only asserts it, not proves it (QUESTION.md:24-27), and offers no cue-ablation/surface-baseline control to distinguish the two.",
+          "status": "NEEDS_RUN",
+          "crux": "No dataset, activation dump, probe weights, or held-out accuracy number for this attribute was ever committed (generator promised at QUESTION.md:9-11 was never produced), and the required TalkTuner demographic anchor (QUESTION.md:13-15) was never run — by the preregistration's own rule this voids any extension claim. There is therefore no measured number for construct validity to explain or fail to explain; the claim as stated has no committed evidence at all."
+        },
+        {
+          "confound": "Scale incomparability (e.g., comparing this probe's held-out accuracy against the TalkTuner anchor's accuracy without normalizing for different label-space sizes/chance baselines/task difficulty) cannot be assessed at all: no accuracy number exists for either the formality probe or the required TalkTuner anchor, and no dataset/activations/probe weights were ever produced to generate one.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether any held-out probe accuracy number (or the TalkTuner anchor number required to make it comparable) has ever been measured — it has not; out/ was empty and no generator/activation/probe artifacts exist."
+        },
+        {
+          "confound": "Noise floor: does the reported probe accuracy exceed a properly computed chance baseline (e.g., label-permutation or majority-class baseline) with margin, on the actual held-out indirect-cue set? Since no probe was ever trained and no accuracy number was ever produced, there is nothing to compare against a noise floor — the confound cannot be assessed either way.",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed held-out accuracy number at all (dataset generator, activation dump, probe weights, and accuracy figure are all missing per the record), so whether the claim clears a noise-floor/chance baseline cannot be determined from anything on record — it is simply unmeasured, not merely under-margined."
+        },
+        {
+          "confound": "ceiling or floor effect",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed held-out probe accuracy number for this claim at all (no dataset, no activations, no probe weights per QUESTION.md:9-11 and the empty out/ dir), so there is nothing to inspect for ceiling/floor saturation (e.g. accuracy pinned at ~100% or ~50% across all held-out splits) — the confound question is unanswerable prior to any measurement, not ruled out or confirmed by one."
+        },
+        {
+          "confound": "single-case overfit: a probe could recover \"above chance\" accuracy merely by memorizing surface features of the narrow synthetic template it was trained on, rather than learning a generalizable user-model of formality preference.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out accuracy number for this attribute exists anywhere in the committed record — the dataset generator, activation dump, probe weights, and accuracy figure from QUESTION.md:9-18 were never produced — so there is nothing to check for overfit against; the claim is unmeasured, not merely confounded."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "Build the seeded deterministic conversation generator (QUESTION.md:9-11) to produce the indirect-cue dataset, extract Llama-2-13B-chat residual activations, train the linear probe, and report held-out accuracy vs. the pre-registered chance-level refuting outcome (QUESTION.md:17-18); run the required TalkTuner demographic anchor (QUESTION.md:13-15) alongside/before it per the preregistration's own gating rule, on hardware with working PyTorch and sufficient GPU memory for Llama-2-13B-chat — none of this exists yet in out/.",
+        "Alongside the core probe run, train and report a surface-cue-only baseline classifier (e.g., keyword/lexicon-based formality detector) on the same held-out split, to separate genuine construct recovery from surface-token leakage (construct validity).",
+        "Construct the generator across ≥2 distinct conversational regimes (topic/domain, cue-placement position, template family) and report held-out accuracy per-regime plus pooled, to check regime-generality vs. regime-specificity.",
+        "Use disjoint train/held-out template families in the generator split (rather than random held-out from the same templates), to check whether accuracy reflects generalizable representation vs. single-template overfit.",
+        "Report held-out accuracy alongside a label-permutation and/or majority-class chance baseline, to check the measured accuracy against a properly computed noise floor.",
+        "Report per-item confidence/margin distributions on held-out accuracy, to check for ceiling/floor saturation (accuracy pinned near 100% or near chance) rather than crediting a raw point estimate."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-native-speaker-status",
+      "grounding": {
+        "grounding": "unauditable",
+        "observed": "claim headline: held-out probe accuracy above chance (no value stated); re-derived: none possible — 0 datasets, 0 activation dumps, 0 probe weights, 0 accuracy numbers on disk",
+        "note": "Repo contains only QUESTION.md, two read-only triage scripts, and out/args.json (the claim list itself); the seeded generator (QUESTION.md:9-11) and TalkTuner anchor (13-15) were never committed or run, so neither the input items/labels nor any output result JSON exists to check.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/args.json"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "Off-distribution ablation confound cannot even be evaluated because no measurement exists at all. There is no dataset (the seeded generator from QUESTION.md:9-11 was never committed), no activation dump, no probe weights, and no held-out accuracy number for native-speaker status. Without a committed number there is nothing for the confound to have produced or failed to produce — the claim as stated has zero empirical support in the record.",
+          "status": "NEEDS_RUN",
+          "crux": "No committed held-out probe accuracy (or any dataset/activation/probe artifact) exists for native-speaker status; out/ was empty before triage and the promised generator/pipeline was never run, so the confound question is moot until a number exists."
+        },
+        {
+          "confound": "Downstream compensation / self-repair predicts that even if a linear probe reads some native-speaker signal at one layer, causal interventions on that signal would be masked because later layers reconstruct the erased information from redundant sub-circuits — making a purely correlational probe accuracy number look like it reflects a robust \"user model\" representation when it may just be one of several redundant, non-load-bearing surface-token encodings. Distinguishing \"probe finds real signal\" from \"probe finds an artifact that downstream layers don't even need\" requires exactly the kind of causal/ablation control this confound calls for.",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed probe accuracy number for this attribute at all — no dataset, no activation dump, no probe weights, no held-out accuracy, and the generator promised at QUESTION.md:9-11 was never committed. Self-repair/downstream-compensation can only be assessed relative to a measured effect (e.g., an ablation whose behavioral impact is smaller than probe accuracy would predict, or a layer-wise profile showing signal reappearing after removal); with zero numbers measured, there is nothing for the confound to explain and nothing that rules it out either. Additionally the pre-registered refuting outcome (chance-level accuracy, QUESTION.md:17-18) and the required TalkTuner anchor (QUESTION.md:13-15) were both never run, and by the preregistration's own rule the missing anchor voids any extension claim independent of this confound."
+        },
+        {
+          "confound": "Selection bias cannot be assessed as producing or explaining this claim because there is no measurement to be biased: no dataset, no activations, no probe, and no held-out accuracy number exist anywhere in the committed record. Selection bias (e.g., cherry-picked held-out splits, seeds, or thresholds chosen after seeing results) is a property of how a reported number was arrived at — with zero reported numbers, the confound has nothing to attach to. The claim is not \"explained by\" selection bias; it is simply unmeasured. Additionally, per QUESTION.md's own rule, the required TalkTuner out-of-band anchor (QUESTION.md:13-15) was never run, which voids any extension result even if one existed.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number for native-speaker status has ever been computed — the seeded generator, activation dump, probe weights, and accuracy figure promised at QUESTION.md:9-11 and :17-18 were never produced, so there is nothing committed for a selection-bias critique to operate on."
+        },
+        {
+          "confound": "readout artifact: for native-speaker status, \"indirect cues\" are unavoidably surface lexical/grammatical tells (article/preposition errors, idiom misuse, phrasing) — a linear probe reading residual activations that encode these surface cues is trivially expected to do better than chance, without any user model. This is exactly the construct risk QUESTION.md:24-27 flags, and the stated mitigation (indirect-cue construction) doesn't distinguish \"probe reads a user-model\" from \"probe reads surface-cue tokens still present in the text.\"",
+          "status": "NEEDS_RUN",
+          "crux": "No committed number exists at all: the generator, dataset, activations, probe weights, and held-out accuracy were never produced (out/ was empty pre-triage), and the required TalkTuner anchor (QUESTION.md:13-15) was never run — so there is nothing to check the confound against, and by the preregistration's own voiding rule the claim can't even be evaluated yet, let alone ruled out."
+        },
+        {
+          "confound": "Regime specificity — asks whether a probe's above-chance accuracy would hold only within one narrow synthetic prompt regime (single-turn, indirect-cue-only) rather than generalizing, i.e. whether the reported effect is an artifact of the constructed test distribution.",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number for native-speaker status exists anywhere in the committed record — the generator, dataset, activations, probe weights, and accuracy were never produced. Regime specificity cannot be assessed (confirmed or ruled out) against a measurement that does not exist; there is nothing to check for regime-dependence."
+        },
+        {
+          "confound": "construct validity",
+          "status": "NEEDS_RUN",
+          "crux": "No probe accuracy number for native-speaker status was ever produced or committed — the generator, dataset, activations, probe weights, and both the pass (QUESTION.md:17-18 chance) and required TalkTuner anchor (QUESTION.md:13-15) are all absent, so there is no measured claim for any confound to explain or rule out yet."
+        },
+        {
+          "confound": "scale incomparability — the risk that a probe's above-chance accuracy is being read as evidence of a genuine \"native-speaker-status representation\" when it could equally be an artifact of comparing incomparable scales (e.g., a linear probe's separability threshold, chance baseline, or effect size not being calibrated against the actual model scale/dimensionality being probed, or against other attributes/models in the TalkTuner lineage this work extends).",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed accuracy number, dataset, activation dump, or probe weights for this claim at all — QUESTION.md's own promised generator (lines 9-11) was never built, the required TalkTuner anchor (lines 13-15) was never run, and the pre-registered refuting outcome (chance-level accuracy, lines 17-18) was never measured. Since nothing was measured, no number exists that could be scale-miscalibrated in the first place — the confound cannot even attach to a statistic that doesn't exist yet."
+        },
+        {
+          "confound": "Noise floor (probe accuracy statistically indistinguishable from chance given sample size/variance) cannot be evaluated because no accuracy number, held-out probe, activation dump, or dataset exists at all — the claim being audited has never been measured.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether held-out probe accuracy for native-speaker status clears chance with margin — but this requires the seeded conversation generator, activation extraction, and probe training/eval to actually exist and run first; none of that is committed (QUESTION.md:9-11 generator never built, out/ was empty pre-triage), so there is no number for noise floor (or any confound) to act on."
+        },
+        {
+          "confound": "No held-out accuracy number for native-speaker-status probing exists at all — QUESTION.md:9-11's generator was never committed, no dataset/activations/probe weights exist, and the TalkTuner anchor (QUESDION.md:13-15) was never run. A ceiling/floor confound requires an actual accuracy number (e.g., ~100% or ~50%/base-rate) to inspect against class balance; with zero measurements committed there is nothing to check for saturation or degeneracy against.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether held-out probe accuracy is genuinely above chance depends on a number that was never produced — no committed dataset, activations, probe weights, or accuracy figure exists for this attribute, so no ceiling/floor (or any other) analysis is possible yet."
+        },
+        {
+          "confound": "single-case overfit",
+          "status": "NEEDS_RUN",
+          "crux": "No dataset, probe, or accuracy number was ever produced (generator promised at QUESTION.md:9-11 was never committed, out/ was empty) — there is no measured statistic at all for single-case overfit to either explain or be ruled out by."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "Implement the seeded deterministic conversation generator (QUESTION.md:9-11) with indirect-only native-speaker cues, extract Llama-2-13B-chat residual activations, train/evaluate the linear probe on a held-out split (pre-specified before inspecting results), and report accuracy against the pre-registered chance baseline (QUESTION.md:17-18), together with the required TalkTuner demographic anchor (QUESTION.md:13-15) run on the same pipeline.",
+        "Build a layer-wise/ablation-patching control: train probes per layer, zero- or mean-ablate the top probe direction, and remeasure downstream-layer decodability and generation behavior to test whether native-speaker signal is redundantly self-repaired vs. causally load-bearing.",
+        "Generate at least one additional distinct prompt regime (e.g. multi-turn or direct-cue) from the same seed population and compare held-out probe accuracy across regimes to test regime specificity.",
+        "Compute a permutation/label-shuffle chance baseline (noise floor) alongside the measured probe accuracy to determine whether the effect clears chance with margin given sample size/variance.",
+        "Evaluate a bag-of-words/lexical-cue baseline classifier alongside the probe, using disjoint train/test seeds across distinct synthetic templates, to test for single-case overfitting and surface-token/readout-artifact leakage."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-age-bracket",
+      "grounding": {
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/args.json"
+        ],
+        "grounding": "unauditable",
+        "note": "Project contains only QUESTION.md, two frozen triage scripts, and out/args.json (the triage harness's own input); no generator, dataset, activations, probe weights, or accuracy number for age bracket was ever saved, and the required demographic anchor was never run.",
+        "observed": "claim: \"above chance\" held-out age-bracket probe accuracy; re-derived: no accuracy value exists on disk (0 result files, 0 label files, 0 activation dumps)"
+      },
+      "findings": [
+        {
+          "confound": "off-distribution ablation cannot be evaluated because no ablation, activation dump, probe, or accuracy number exists at all — the generator promised at QUESTION.md:9-11 was never committed and out/ was empty before triage.",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed held-out accuracy number for age-bracket recovery, and no committed anchor-task run either — so there is nothing yet to attribute to (or rule out via) an off-distribution confound."
+        },
+        {
+          "confound": "Downstream compensation (self-repair) is a confound that applies to causal/ablation claims about a residual-stream feature (e.g., \"ablating the age direction has no effect because downstream heads recompute it\"). This particular claim is not a causal/ablation claim at all — it's a bare linear-probe decodability claim (\"probe recovers age bracket above chance\"). Self-repair could only be invoked here as an explanation for a *null* probing result if someone argued \"the signal exists but is redistributed/compensated for downstream so a probe at a single layer misses it.\" But there is no probing result of any kind to explain — no dataset, no activations, no probe weights, no accuracy number, committed or otherwise.",
+          "status": "NEEDS_RUN",
+          "crux": "No committed accuracy number exists for this claim in any form (the generator, activation dump, probe weights, and held-out accuracy are all absent from out/), and no PyTorch/GPU capability exists locally to produce one — so there is nothing yet for a self-repair/compensation story to explain or rule out."
+        },
+        {
+          "confound": "Selection bias would require a completed measurement (e.g., accuracy reported only after cherry-picking held-out folds, prompts, or probe layers/checkpoints) to inspect for cherry-picked selection. No such measurement exists here.",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed dataset, activation dump, probe weights, or held-out accuracy number for age bracket at all — the seeded generator promised at QUESTION.md:9-11 was never built, so the claim has zero measured basis to audit for selection bias (or anything else)."
+        },
+        {
+          "confound": "readout artifact — a linear probe could recover age bracket merely by picking up surface cue tokens (lexical/stylistic markers correlated with age in the generator's templates) rather than any latent \"user model\" representation, especially since indirect-cue construction is only a stated mitigation, not a proof (QUESTION.md:24-27).",
+          "status": "NEEDS_RUN",
+          "crux": "There is no committed held-out probe accuracy number for age bracket at all — the generator, activations, probe weights, and accuracy were never produced (out/ was empty), so there is nothing to attribute to the confound or to rule it out with. Additionally the age-bracket claim overlaps the demographic anchor (QUESTION.md:13-15), which was never run, and per the preregistration's own rule an unrun/out-of-band anchor voids any extension claim regardless of what a probe number would show."
+        },
+        {
+          "confound": "Regime specificity would require an actual measured probe effect that only replicates within the narrow synthetic single-turn/indirect-cue regime it was trained and tested in (e.g., accuracy collapsing under paraphrase, multi-turn, or non-synthetic phrasing). No such effect has been measured at all: the generator script promised at QUESTION.md:9-11 was never committed, out/ was empty, and there is no dataset, activation dump, probe weights, or held-out accuracy number for age bracket. There is nothing here to attribute to regime-narrowness versus any other cause, because there is no number to attribute at all.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether a held-out probe accuracy number for age bracket (on the indirect-cue synthetic single-turn set) exists anywhere in the committed record — it does not, so regime specificity cannot be invoked to explain a result, nor ruled out, since there is no result."
+        },
+        {
+          "confound": "Construct validity (surface-cue leakage vs. genuine user-model construct) — assigned confound for this audit.",
+          "status": "NEEDS_RUN",
+          "crux": "No probe accuracy number for age bracket exists anywhere in the committed record — the seeded generator, dataset, activations, and probe weights were never produced — so there is no measured effect to attribute to construct validity (or to anything else) yet; additionally the demographic anchor (which includes age) was never run, and the preregistration voids any extension claim absent an out-of-band anchor result."
+        },
+        {
+          "confound": "Scale incomparability (the confound I'm auditing) is about probe accuracies being compared across incommensurate scales/layers/baselines without a common footing. But that confound presupposes a measurement exists to be miscalibrated. Here there is no held-out accuracy number at all for this attribute — the generator, activation dump, probe weights, and accuracy were never committed. So the confound can't even be evaluated as an explanation for \"why the number looks strong\"; there is no number to explain.",
+          "status": "NEEDS_RUN",
+          "crux": "No committed held-out probe accuracy exists for age bracket (or any attribute): QUESTION.md:9-11's generator was never built, out/ was empty pre-triage, and the age anchor task (QUESTION.md:13-15) — whose own preregistration rule voids extension claims if the anchor is out-of-band — was never run either. Without any number, scale incomparability cannot be confirmed or ruled out; the claim itself is unmeasured."
+        },
+        {
+          "confound": "noise floor",
+          "status": "NEEDS_RUN",
+          "crux": "No committed number exists at all for this claim — no dataset, no probe weights, no held-out accuracy, and no chance-level control run — so there is nothing for the noise-floor confound to explain or be ruled out by; the preregistered generator (QUESTION.md:9-11), the demographic anchor age depends on (QUESTION.md:13-15), and the chance-level refutation check (QUESTION.md:17-18) were all never executed."
+        },
+        {
+          "confound": "The confound is ceiling/floor effect — i.e., that \"above chance\" would trivially be produced by the probe reading residual demographic-anchor leakage or coarse surface tokens that saturate accuracy near 100% (or, symmetrically, that the reported margin above chance is razor-thin and within noise). But no held-out accuracy number for age bracket exists anywhere in the committed record: the generator, dataset, activations, probe weights, and accuracy were never produced (per the evidence, out/ was empty before triage and nothing has been measured since — no PyTorch/GPU capacity exists locally to run it). There is therefore no number to inspect for ceiling/floor behavior, and no chance baseline was ever computed to compare against.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether a held-out probe-accuracy number for age bracket (and its accompanying chance-rate/anchor-overlap control) exists at all — it does not; the claim is unmeasured, so ceiling/floor cannot be assessed one way or the other."
+        },
+        {
+          "confound": "single-case overfit (probe accuracy inflated by overfitting to idiosyncrasies of a small/single generated dataset rather than a generalizable held-out signal)",
+          "status": "NEEDS_RUN",
+          "crux": "No held-out probe accuracy number for age bracket exists anywhere in the committed record — the generator, dataset, activations, and probe weights were never committed, so there is nothing to attribute to overfitting or to anything else."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "Build the seeded deterministic conversation generator (QUESTION.md:9-11) for indirect-cue age-bracket conditions, extract Llama-2-13B-chat residual activations, and train/evaluate a linear probe on a held-out split to produce the age-bracket accuracy number (currently entirely absent).",
+        "Run the demographic anchor task including age (QUESTION.md:13-15) first, since per the preregistration an unrun/out-of-band anchor voids this extension claim.",
+        "Compare held-out probe accuracy against the pre-registered chance-level/shuffled-label refutation criterion (QUESTION.md:17-18) as the baseline control.",
+        "Add a self-repair/compensation control: layer-wise probe accuracy sweep, or patch/ablate the leading age-direction and re-probe downstream layers, to test whether other layers recompute the signal.",
+        "Add a scrambled/shuffled-cue-token control (permuting surface cue tokens across age labels) to separate surface-token readout artifacts from a genuine latent user-model signal.",
+        "Add an out-of-regime generalization test (multi-turn conversations, paraphrased or direct-cue phrasing) to check whether probe accuracy is specific to the narrow synthetic single-turn indirect-cue regime it was trained on."
+      ],
+      "runner_results": null
+    }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [
+    "AUTHOR: validation control for instrument synthetic-conversation-generator vunbuilt: held-out ground truth for \"seeded deterministic single-turn conversations planting each target attribute via indirect cues only, never naming the attribute, with ground truth by construction and the generator committed with hash\"",
+    "AUTHOR: validation control for instrument linear-probe-readout vunbuilt: held-out ground truth for \"linear probes on Llama-2-13B-chat residual activations with model-free decision arithmetic recover a planted attribute if and only if it is linearly decodable at the probed layer\""
+  ],
+  "authored": null
+}

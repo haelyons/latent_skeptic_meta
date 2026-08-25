@@ -1,0 +1,84 @@
+== position labeller ==
+  columns on a two-line text                                 ok
+  token counts on a two-line text                            ok
+  line numbers on a two-line text                            ok
+  implied opening boundary, first line columns               ok
+  implied opening boundary, first line token counts          ok
+  swallowed line break, columns                              ok
+  swallowed line break, token counts                         ok
+  swallowed line break, line numbers                         ok
+  line-break token takes the next column                     ok
+  empty span is unlabelled                                   ok
+  empty span is not counted                                  ok
+== degenerate-input detector ==
+  length-cap case flags                                      ok
+  under the length cap does not flag                         ok
+  repeated-sequence case flags                               ok
+  seven back-to-back copies counted                          ok
+  prose-like tokens are clean                                ok
+  both cases can flag together                               ok
+== exact-match checks and exact slot assignment ==
+  hash equal                                                 ok
+  hash one character off                                     ok
+  configuration match                                        ok
+  configuration layer mismatch                               ok
+  configuration width mismatch                               ok
+  lowest window value maps to slot 0                         ok
+  highest window value maps to the last slot                 ok
+  one below the window is outside                            ok
+  one above the window is outside                            ok
+  a fractional label is never accepted                       ok
+  a true value is never accepted as 1                        ok
+  slot counts                                                ok
+  slot indices                                               ok
+  window start when the lowest value is empty                ok
+  window start when everything is populated                  ok
+  no full window                                             ok
+== ripple statistic ==
+  profile at distance 1                                      ok
+  profile at distance 20                                     ok
+  a straight line detrends to zero                           ok
+  a 12-step wave peaks at 5 cycles over 60 steps             ok
+  that peak is a period of 12                                ok
+  cycle counts inside a band                                 ok
+  an empty band yields no cycle counts                       ok
+  planted ripple period recovered                            ok
+  planted ripple searched over three cycle counts            ok
+  empty band halts                                           ok
+== endpoint arithmetic on planted values ==
+  endpoint 1 all three match                                 ok
+  endpoint 1 hash differs                                    ok
+  endpoint 1 layer count differs                             ok
+  endpoint 2 band top 60                                     ok
+  endpoint 2 band top exactly 43                             ok
+  endpoint 2 band top 35                                     ok
+  endpoint 3 quality 0.724                                   ok
+  endpoint 3 quality 0.574 exactly                           ok
+  endpoint 3 quality 0.874 exactly                           ok
+  endpoint 3 quality 0.573                                   ok
+  endpoint 3 quality 0.9                                     ok
+  endpoint 3 quality below zero                              ok
+  rank of a value above every draw                           ok
+  rank of a value above all but nine                         ok
+  rank of a value above all but ten                          ok
+  rank counts ties against the observed value                ok
+  endpoint 4 rank 1                                          ok
+  endpoint 4 rank 10                                         ok
+  endpoint 4 rank 11                                         ok
+  endpoint 5 periods 60 and 31                               ok
+  endpoint 5 periods 60 and 57.5                             ok
+  endpoint 5 periods 60 and 56.5                             ok
+  endpoint 5 periods 60 and 57.5 with one clearing           ok
+  endpoint 5 periods differ by exactly 3                     ok
+  endpoint 5 control absent                                  ok
+  endpoint 6 periods within 5                                ok
+  endpoint 6 periods differ by more than 5                   ok
+  endpoint 6 probe absent                                    ok
+  endpoint 6 with a comparison, both clear and agree         ok
+  endpoint 6 with a comparison, one clears                   ok
+== supporting checks ==
+  record writer importable                                   ok
+  sum of squared errors from running totals                  ok
+  fit quality from running totals                            ok
+  planted weights recovered                                  ok
+selftest: PASS

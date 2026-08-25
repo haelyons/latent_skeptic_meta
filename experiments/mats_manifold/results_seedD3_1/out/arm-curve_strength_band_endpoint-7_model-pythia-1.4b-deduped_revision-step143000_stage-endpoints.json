@@ -1,0 +1,72 @@
+{
+  "cell": {
+    "arm": "curve_strength_band",
+    "endpoint": 7,
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "INSIDE_BAND_RECORDED",
+  "decision_rule": "Recorded, and it decides nothing. This rung's floor-gate quality is placed against 0.876302, the same instrument at the same checkpoint on the earlier text, inside a band of 0.796 to 0.956. Landing outside the band changes no reading and voids nothing. The only gate remains the 0.60 floor. The committed gate record requires the number to be named in the write-up either way.",
+  "env": {
+    "git_rev": null,
+    "host": "132-226-88-169",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T13:30:06+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592594,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v3.json",
+      "present": true,
+      "sha256": "05db25f7a97d"
+    },
+    {
+      "bytes": 18266,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "72da78cd8de2"
+    },
+    {
+      "bytes": 2998,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+      "present": true,
+      "sha256": "4578bdd49cd5"
+    },
+    {
+      "bytes": 11755533818,
+      "n_items": 25,
+      "path": "results_seedD3_1/work/totals.npz",
+      "present": true,
+      "sha256": "6bbdcba67493"
+    }
+  ],
+  "metric": "This rung's floor-gate quality against the previous rung's 0.876302, inside a recorded band of 0.796 to 0.956.",
+  "notes": "The band of 0.796 to 0.956 is recorded and gates nothing. The only gate is the 0.60 floor. The two numbers compared are the same instrument at the same checkpoint on different text, measured on different rented boxes. The previous rung measured 0.876302 at readout 5 on the earlier text file, at this same checkpoint. This rung measures fresh text that is disjoint from it by construction. The band's half-width of 0.08 is the design's own guess and is binding as a recorded quantity only. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "band_high": 0.956,
+    "band_low": 0.796,
+    "gates_nothing": true
+  },
+  "values": {
+    "band_half_width": 0.08,
+    "band_high": 0.956,
+    "band_low": 0.796,
+    "chosen_readout": 5,
+    "difference_from_prior_rung": 0.003577,
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.879879,
+    "floor_gate_readout": 5,
+    "held_out_quality_pooled_widths_20_to_140": 0.879879,
+    "inside_band": true,
+    "prior_rung_readout": 5,
+    "prior_rung_same_checkpoint_other_text": 0.876302,
+    "the_only_gate_is_the_floor": 0.6,
+    "this_check_gates_nothing": true,
+    "this_record_voided_by_floor_gate": false
+  }
+}

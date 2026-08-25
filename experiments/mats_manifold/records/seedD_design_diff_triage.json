@@ -1,0 +1,128 @@
+{
+ "seed": "A prior study (Gurnee et al., \"When Models Manipulate Manifolds\", Transformer Circuits, Oct 2025, transformer-circuits.pub/2025/linebreaks) found that a language model's residual stream carries a one-dimensional curve representing the count of characters since the last newline in line-wrapped text. Its section 2.5 argues the curve's rippled geometry optimally trades capacity (dimensionality) against distinguishability of nearby counts, and explains the ripple as Gibbs-style truncation (\"ringing\"). That study was on one closed model (Claude 3.5 Haiku, probe R-squared 0.985).\n\nA reproduction (Sinii and Balagansky, \"Chasing the Counting Manifold in Open LLMs\", Feb 2026, huggingface.co/spaces/t-tech/manifolds) measured the curve on open models. On the final checkpoint of Pythia-410m-deduped it reports: best linear-probe R-squared 0.724 for character count, at layer 6; the first three principal components of the count representation carry 97.4 percent of its variance; and, contradicting the original, the best layer is never in the first two layers of any tested model. The reproduction never tested the ripple. Nobody has computed a ripple statistic on any open model.\n\nThis question covers exactly one cell: the public model EleutherAI/pythia-410m-deduped at HuggingFace revision step143000 (the final pretraining checkpoint), base model, no fine-tuning, no interventions. It is the gate cell for a possible later sweep over all 154 training checkpoints; that sweep, its equilibrium-versus-fossil question, and any training-data exposure measurement are out of scope here. The model config downloaded at run time is authoritative for layer count and width; 24 layers and hidden size 1024 are MEMORY (Pythia paper, arXiv 2304.01373, table 1) and a mismatch is a halt, not a patch.\n\nThe probe stimuli are provided verbatim in the committed file stimulus_linewrap.json (sha256 1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca): 24 documents of about 2,400 characters of public-domain ASCII prose, each materialized at seven wrap widths of 20, 40, 60, 80, 100, 120, and 140 characters per line; documents 0 through 17 are marked train, 18 through 23 test; the split is by book order, so train and test share no sentence. Load the file exactly. Do not paraphrase, regenerate, re-wrap, or reconstruct any document; if the file is absent, halt rather than invent a stimulus.\n\nThe first two lines of document 0 at width 60, shown so the manipulation is visible (the same characters appear at width 20 as five short lines):\n\nIt will be seen that this mere painstaking burrower and\ngrub-worm of a poor devil of a Sub-Sub appears to have gone\n\nDefinitions, fixed here:\n\n1. The label of a token position is the number of characters on its line up to and including that token's last character; the count restarts at zero after each newline. (GUESS: the reproduction's exact labeling convention is unpublished; a consistent off-by-one variant should shift R-squared only slightly.)\n\n2. Curve readout: ridge regression from the residual stream after layer l at each labeled token position to the label, fit on train documents pooled over all seven widths, R-squared on test documents, reported for every layer. Ridge regularization strength is not fixed here; whatever is chosen is a GUESS and must be chosen before any test-set number is seen.\n\n3. Ripple readout, computed at the layer with the best test R-squared: take the width-140 documents only; compute the mean residual-stream vector per label value 0 through 139 (test documents; about 108 full-width lines contribute one position to each label); subtract the grand mean; form the 140-by-140 cosine similarity matrix; take the profile m(delta), the mean of entries delta above the diagonal, for delta 1 through 70; subtract a centered moving average of window 21 (GUESS); take the discrete Fourier transform of the residual profile. Ripple amplitude is the largest power at any period between 4 and 35 characters (GUESS); ripple wavelength is that period.\n\n4. Null distribution for the ripple: repeat definition 3 exactly, but with label values randomly permuted within each document before the per-label means are taken, 200 times (GUESS). The observed amplitude is compared against this null.\n\n5. Secondary record, not a gate: the same profile-and-transform applied to the cosine matrix of the 140 class-weight vectors of a multinomial logistic probe (one class per label value, fit on train width-140 positions). Recorded because the original paper's ringing lives in fitted-feature geometry, and definition 3's raw-activation version is a cheaper stand-in (a deliberate substitution, named here so it cannot be silent).\n\nKnown competing explanation, to be addressed or explicitly scoped out: at a single width, characters-since-newline and tokens-since-newline are strongly correlated, so an apparent ripple could be token-position structure rather than character-count structure.\n\nQuestion: at this final checkpoint, (1) does the character-count curve replicate at the anchor level - test R-squared within 0.15 of the reproduction's 0.724 at the best layer (GUESS: the band is authored here, without access to the reproduction's stimuli, to absorb stimulus mismatch), with the best layer not among the first two - and (2) is the ripple amplitude of definition 3 separable from the permutation null of definition 4? A failed (1) is a fact about this instrument (stimulus or probe mismatch with the reproduction) and blocks any checkpoint sweep; it is not evidence about the model. A failed (2) with a passed (1) is a substantive result: the ripple account does not transfer to this model at this scale. A passed (2) opens the gate for the sweep.",
+ "design": {
+  "hypothesis": "On Pythia-410m-deduped, checkpoint step143000, the character-count curve should replicate the reproduction's anchor. Best-layer test R-squared should land within 0.15 of 0.724, with the best layer outside the first two. Separately, the ripple amplitude in definition 3 should separate from a 200-draw permutation null. A failed replication blocks the checkpoint sweep and says nothing about the model itself; a passed replication with no ripple is a substantive negative result about scale.",
+  "models": [
+   "EleutherAI/pythia-410m-deduped, HuggingFace revision step143000 (final pretraining checkpoint), base model, no fine-tuning, no interventions. 24 layers and hidden size 1024 are MEMORY (Pythia paper, arXiv 2304.01373, table 1); if the downloaded config disagrees, the run halts before any other arm executes."
+  ],
+  "data": "Stimuli come only from the committed file stimulus_linewrap.json, loaded verbatim, never regenerated or re-wrapped; its SHA-256 hash (1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca) is checked before use, and the run halts if the file is absent or the hash disagrees. It holds 24 public-domain ASCII prose documents of about 2,400 characters, each materialized at seven wrap widths (20, 40, 60, 80, 100, 120, 140 characters per line), giving 168 stimulus variants. Documents 0-17 are train (126 variants); documents 18-23 are test (42 variants); the split is by book order, so train and test share no sentence. The ripple check and its token-position control use only the six width-140 test documents, contributing about 108 full-width lines across labels 0 through 139. The secondary, non-gating probe fits on the 18 width-140 train documents.",
+  "arms": [
+   "Stimulus integrity check: load stimulus_linewrap.json verbatim; verify its SHA-256 hash; halt if absent or mismatched, never regenerate text.",
+   "Model integrity check: download EleutherAI/pythia-410m-deduped at revision step143000; verify 24 layers and hidden size 1024 (MEMORY); halt on mismatch.",
+   "Anchor arm: ridge probe from the residual stream after each of the 24 layers to the character-count label, trained on documents 0-17 pooled over all seven widths, scored on documents 18-23.",
+   "Ripple arm: at the anchor's best layer, per-label mean activations from the six width-140 test documents, cosine matrix, delta-profile, moving-average subtracted, Fourier-transformed; largest power for period 4-35 characters (definition 3).",
+   "Permutation-null control: identical ripple pipeline, but character-count labels are shuffled within each document before averaging, repeated 200 times (definition 4).",
+   "Token-position control: identical ripple pipeline, but the label is tokens-since-newline (tokenizer's own segmentation) instead of characters-since-newline, same width-140 documents and same layer; addresses the named confound directly.",
+   "Secondary, non-gating arm: multinomial logistic probe over the 140 label classes, fit on width-140 train positions; same ripple-and-transform pipeline applied to its class-weight cosine matrix (definition 5)."
+  ],
+  "endpoints": [
+   {
+    "metric": "Loaded stimulus file's SHA-256 hash; downloaded model config's layer count and hidden size.",
+    "threshold": "Hash equals 1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca; layers equal 24; hidden size equals 1024 (both MEMORY).",
+    "refuting_outcome": "Any mismatch, or a missing stimulus file: halt immediately and report a setup failure, not a result about the model."
+   },
+   {
+    "metric": "Test R-squared of the ridge probe at its best-scoring layer, for the character-count label.",
+    "threshold": "R-squared falls between 0.574 and 0.874 (0.724 plus or minus 0.15, GUESS band), and the best layer is not the first or second layer (indexing convention itself a GUESS).",
+    "refuting_outcome": "R-squared falls outside 0.574-0.874, or the best layer is one of the first two: this instrument (stimulus, probe, layout) fails to replicate the reproduction; the checkpoint sweep is blocked; this is a fact about the setup, not the model."
+   },
+   {
+    "metric": "Observed ripple amplitude (largest Fourier power, period 4-35 characters, definition 3) ranked against 200 permutation-null amplitudes (definition 4).",
+    "threshold": "Observed amplitude exceeds all but the top 5 percent of the 200 null draws (rank 10 or better of 200; alpha 0.05, GUESS cutoff).",
+    "refuting_outcome": "Observed amplitude ranks below the top 5 percent of null draws: no separable ripple; if the anchor endpoint passed, this is a substantive negative result for the ripple account at this model and scale."
+   },
+   {
+    "metric": "Ripple wavelength and amplitude under character-count labels versus under token-position labels (the confound-control arm), same layer and documents.",
+    "threshold": "Wavelengths differ by more than 3 characters (GUESS margin), or the token-labelled amplitude fails its own 200-draw permutation null while the character-labelled one passes.",
+    "refuting_outcome": "Wavelengths match within 3 characters and both clear their nulls: the ripple cannot be pinned to character count rather than token position, undercutting the ripple claim even if the null-separation endpoint passed."
+   },
+   {
+    "metric": "Agreement between the raw-activation ripple profile (definition 3) and the logistic class-weight ripple profile (definition 5) on presence and wavelength.",
+    "threshold": "Both profiles clear, or both fail, the permutation-null test; if both clear, their wavelengths differ by 5 characters or fewer (GUESS margin).",
+    "refuting_outcome": "The two profiles disagree on presence or absence: the cheaper raw-activation stand-in does not track fitted-probe geometry, limiting definition 3 as a substitute for the original paper's ringing measure. Non-gating: recorded, does not block the sweep either way."
+   }
+  ],
+  "sampling": "No text generation anywhere: every measurement is one deterministic forward pass per stimulus document, teacher-forced on the fixed text; no temperature, no top-p, no sampling decisions apply. Numeric precision (float32 or bf16) is a GUESS left to whatever the loaded config recommends. Ridge strength is chosen once, before any test-set number is seen, by 5-fold cross-validation on train documents only over a grid of 0.1, 1, 10, 100, 1000 (GUESS grid). Permutation draws and cross-validation folds both use a fixed seed, 20260821 (GUESS, arbitrary but reproducible), for exact repeatability. Per-cell counts: the anchor arm pools 126 train stimulus variants (18 documents times 7 widths) against 42 test variants (6 times 7); the ripple and token-position arms use the 6 width-140 test documents, about 108 full-width lines populating labels 0 to 139; the permutation null draws 200 shuffles; the secondary probe fits once on the 18 width-140 train documents, with no null computed for it, matching the question's framing of it as a record, not a gate.",
+  "budget_usd": 8,
+  "does_not_test": [
+   "The 154-checkpoint sweep, the equilibrium-versus-fossil question, and any training-data exposure measurement are explicitly out of scope; this design covers only step143000.",
+   "Claude 3.5 Haiku or any other closed model is not run here; no direct comparison to the original paper's reported R-squared of 0.985 is made.",
+   "Any Pythia size other than 410m-deduped is not run here; a result at this scale does not generalize to other sizes.",
+   "Definition 1's label convention is a GUESS about the reproduction's unpublished rule; an off-by-one variant could shift R-squared by a small, unquantified amount.",
+   "The ridge strength is a GUESS chosen by train-only cross-validation; a poor grid could shift the best layer by one or two positions or shift R-squared by a few hundredths.",
+   "Definition 3's moving-average window of 21 (GUESS) can suppress or reveal a true ripple whose wavelength sits near 21 characters, biasing detection at exactly that period.",
+   "Definition 3's searched period band, 4 to 35 characters (GUESS), makes any true ripple outside that band invisible, including one near the wrap widths themselves.",
+   "Definition 4's 200-draw permutation null (GUESS count) sets a significance floor near 0.5 percent and cannot resolve significance finer than that.",
+   "The endpoint's null-rejection cutoff, top 5 percent of 200 draws (GUESS), is not fixed by the question; a stricter or looser cutoff could flip a near-boundary call.",
+   "No causal test is attempted: no activation patching, no ablation; only correlation between label and geometry is measured.",
+   "24 layers and hidden size 1024 are MEMORY facts (Pythia paper, table 1); a mismatch with the downloaded config is treated as a halt, not as a tested hypothesis.",
+   "Document topic or genre effects are not tested; all 24 documents are public-domain ASCII prose from one committed file, not sampled across broader text types.",
+   "The token-position control uses the tokenizer's own segmentation; alternative token-counting conventions (for example excluding whitespace tokens) are not tested and could change the confound comparison.",
+   "Whether 'first two layers' means index 0 and 1 or index 1 and 2 is a GUESS; this only matters if the best layer is exactly the boundary layer, where the pass or fail call could flip."
+  ]
+ },
+ "diff": {
+  "departures": [
+   {
+    "what": "A wavy pattern in the model's internal activity is called the ripple. The question never says how different from random chance the ripple must be to count as real. The plan sets its own rule: it must beat 190 of 200 random-shuffle trials, the top 5 percent.",
+    "question": "Is beating 95 percent of 200 random-shuffle trials strict enough to call the ripple real, or should a different cutoff be used?"
+   },
+   {
+    "what": "The character-count prediction model needs a setting that controls how much it can overfit noise, often called regularization strength. The question requires this setting be chosen before any test result is seen, but does not say how. The plan invents its own method: try five candidate strengths (0.1, 1, 10, 100, 1000) using a five-way split of the training documents only.",
+    "question": "Should the study test exactly these five strengths with a five-way split of training data, or is another method preferred?"
+   },
+   {
+    "what": "A related open-model study found the best-performing depth in the network is never one of the first two layers. The question repeats this check, but layer counting can start at 0 or at 1. It is also unclear whether 'the first layer' means the raw input or the output of the first processing block.",
+    "question": "Should layer counting start at 0 or 1, and does 'the first layer' mean the raw input or the first block's output?"
+   },
+   {
+    "what": "The question raises a rival explanation: the wavy pattern might track sub-word units (tokens) since the last line break, not characters. It asks this be checked, but leaves the method open. The plan counts tokens using the model's own text-splitting rule. It calls two wavelengths 'the same' only within a 3-character margin.",
+    "question": "Should token counting follow the model's own text-splitting, and is a 3-character margin right for calling two wavelengths the same?"
+   },
+   {
+    "what": "The question sets no spending limit for this study. It also does not say what numeric precision to compute with; lower precision runs faster but adds rounding error. The plan adds an 8-dollar total spending cap and leaves precision to whatever the downloaded model setup suggests.",
+    "question": "Is an 8-dollar spending cap acceptable, and is it fine to leave numeric precision to whatever the model setup suggests?"
+   }
+  ]
+ },
+ "triage": {
+  "claims": [
+   {
+    "id": "design-core",
+    "grounding": {
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/stimulus_linewrap.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/SEALED_PREDICTIONS.md",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/seeds/seed_d_ripple.md",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/counting_manifold_formation_proposal.md",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/frozen/"
+     ],
+     "grounding": "unauditable",
+     "observed": "INPUT verified: sha256(stimulus_linewrap.json)=1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca (exact match), 24 docs, widths [20,40,60,80,100,120,140], train_docs=18 -> 168 variants (126 train / 42 test) as specified. OUTPUT: no R-squared, no per-layer curve, no ripple amplitude, no permutation-null draws exist anywhere in the tree; 0.724 / layer 6 appear only as cited prior-reproduction numbers in prose (counting_manifold_formation_proposal.md, seeds/seed_d_ripple.md), not as measured artifacts.",
+     "note": "Design is pre-registered but unexecuted: only the stimulus input and its matching hash exist (endpoint 1's stimulus half reproduces); no model config, probe, or ripple result files were ever saved, so the 0.724 band, best-layer, and 200-draw null endpoints cannot be checked (side note: all 24 \"documents\" are segments of one book, Moby Dick, not 24 distinct works as the evidence text implies)."
+    },
+    "findings": [
+     {
+      "confound": "Decidability-by-construction: the top-level claim is written so that every branch of the ripple sub-test is pre-interpreted as claim-consistent. The claim states: (a) if the anchor/replication endpoint fails, the run \"blocks the checkpoint sweep and says nothing about the model\" \u2014 a non-committal outcome that cannot refute anything; (b) if it passes and the ripple clears its permutation null, that's the ripple hypothesis confirmed; (c) if it passes and the ripple does NOT clear its null, the claim itself pre-labels this \"a substantive negative result about scale\" \u2014 i.e., also claim-consistent. So of the three logically possible top-level outcomes, two are narrated as confirmatory/informative-negative (both \"wins\" for the research program) and the third is simply void rather than disconfirming. There is no outcome-of-the-ripple-arm that the claim treats as refuting the claim itself; the ripple endpoint's own refuting_outcome (\"no separable ripple... substantive negative result\") is folded into the claim's success condition rather than left as a genuine falsifier of the stated hypothesis. This matches the H2 gate: \"a claim every outcome supports is framing.\" (The per-endpoint refuting outcomes listed in the design are individually real and falsifiable \u2014 e.g., the R2 band, the layer restriction, the permutation rank cutoff, the token-position wavelength-match check \u2014 so the sub-tests are not each individually forced; it is specifically the top-level claim's narrative wrapper that immunizes itself against the ripple arm's result by declaring both possible ripple outcomes \"informative.\")",
+      "status": "EXPLAINS",
+      "crux": "The claim's own wording pre-assigns a favorable interpretation to both possible ripple-arm outcomes (ripple-present = confirms hypothesis; ripple-absent = \"substantive negative result about scale\"), leaving only a non-committal void (failed replication) as the sole way the design produces no claim-supporting conclusion \u2014 so the ripple endpoint, despite having a real per-endpoint refuting_outcome in the design table, cannot actually falsify the top-level claim as stated."
+     },
+     {
+      "confound": "coordinates and scale: could chosen layers, strengths, or units make every cell degenerate or null regardless of the hypothesis",
+      "status": "NEEDS_RUN",
+      "crux": "No executed numbers exist yet in the record (no hash-check outcome, no test R-squared, no best-layer index, no ripple-amplitude percentile) \u2014 only the pre-registered protocol and its GUESS parameters (ridge grid 0.1-1000, moving-average window 21, search band 4-35 chars) that could plausibly produce a scale-driven degenerate/null result independent of the hypothesis."
+     }
+    ],
+    "run_queue": [
+     "Execute the committed anchor+ripple pipeline (ridge probe R-squared by layer, definition-3 Fourier ripple amplitude vs 200-draw permutation null) on Pythia-410m-deduped step143000 using stimulus_linewrap.json, and report the actual R-squared/best-layer and ripple rank-of-200 numbers against the pre-specified 0.574-0.874 and top-5%-of-200 thresholds."
+    ],
+    "author_queue": [],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute"
+}

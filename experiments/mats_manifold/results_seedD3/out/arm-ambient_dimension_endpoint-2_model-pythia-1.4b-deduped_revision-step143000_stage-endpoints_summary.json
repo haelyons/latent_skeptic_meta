@@ -1,0 +1,123 @@
+{
+  "cell": {
+    "arm": "ambient_dimension",
+    "endpoint": 2,
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "DIMENSION_REACHES_4",
+  "decision_rule": "The number of directions holding 95 percent of the spread in the per-count average vectors, at the chosen readout, must reach 4 at one or more of the probe windows 140, 200 and 280. Staying at 3 or fewer at every window is DIMENSION_BELOW_4, which extends the 410-million-weight result. The counts at 90 and at 99 percent are recorded beside this and carry no threshold.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-163-70",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T15:32:41+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 21727,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_design_diff_triage.json",
+      "present": true,
+      "sha256": "60ef29b05769"
+    },
+    {
+      "bytes": 1669,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3.md",
+      "present": true,
+      "sha256": "bc6b69231f64"
+    }
+  ],
+  "metric": "Directions holding 95 percent of the spread in the per-count average vectors, at the chosen readout, per probe window.",
+  "notes": "The counting convention is the smallest number of directions reaching 95 percent of the spread, which is the gate record's answer 1 and every prior run's convention. The same counts at 90 and at 99 percent are recorded above and decide nothing; the reading uses 95 only. The threshold of 4 is the design's own guess, motivated by about 6 directions in the published pattern against 1 to 3 in the 410-million-weight model. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "reaches_at_any_window": 4,
+    "variance_target": 0.95
+  },
+  "values": {
+    "ambient_dimension_at_95_percent_by_aperture": {
+      "140": 3,
+      "200": 15,
+      "280": 1
+    },
+    "ambient_dimension_by_variance_target_recorded_only": {
+      "140": {
+        "0.9": 1,
+        "0.95": 3,
+        "0.99": 81
+      },
+      "200": {
+        "0.9": 1,
+        "0.95": 15,
+        "0.99": 127
+      },
+      "280": {
+        "0.9": 1,
+        "0.95": 1,
+        "0.99": 129
+      }
+    },
+    "dimension_threshold": 4,
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.876302,
+    "floor_gate_readout": 5,
+    "largest_ambient_dimension_at_95_percent": 15,
+    "prior_410m_ambient_dimension_by_aperture": {
+      "140": 2,
+      "200": 3,
+      "280": 1
+    },
+    "published_pattern_dimension": 6,
+    "readout": 5,
+    "this_record_voided_by_floor_gate": false,
+    "variance_share_first_ten_by_aperture": {
+      "140": [
+        0.914181,
+        0.023991,
+        0.013011,
+        0.003351,
+        0.001761,
+        0.00157,
+        0.001411,
+        0.001195,
+        0.000995,
+        0.000834
+      ],
+      "200": [
+        0.910316,
+        0.015512,
+        0.008742,
+        0.002519,
+        0.002063,
+        0.001703,
+        0.001382,
+        0.001289,
+        0.001266,
+        0.000962
+      ],
+      "280": [
+        0.953598,
+        0.004038,
+        0.002398,
+        0.001254,
+        0.000976,
+        0.000855,
+        0.000729,
+        0.000657,
+        0.000571,
+        0.000535
+      ]
+    },
+    "variance_target_gated": 0.95
+  }
+}

@@ -1,0 +1,14 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+=== stage extract ===
+[extract] text file /home/ubuntu/mats_manifold/stimulus_linewrap.json
+[extract] hash 1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca (expected 1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca) match=True
+[extract] access token from HF_TOKEN
+[extract] config layers=24 hidden=1024 context=2048 recommended dtype=float16
+[record] SETUP_OK -> results_seedD/out/arm-integrity_check_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[extract] loading the model in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3544.67it/s]
+[record] EXTRACT_OK -> results_seedD/out/arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[extract] 168 variants, 105971 labelled positions, 14.4 s
+=== stage extract done in 33.9 s ===

@@ -1,0 +1,73 @@
+{
+  "cell": {
+    "arm": "negative_control",
+    "endpoint": 2,
+    "model": "pythia-410m-deduped",
+    "revision": "step0",
+    "stage": "extract"
+  },
+  "decision": "VOID_CONTROL_FAILED",
+  "decision_rule": "Held-out fit quality at the initialization checkpoint (step0), pooled over the same seven widths, at that checkpoint's own best readout, must stay below 0.3. At or above 0.3 the fit is reading surface text statistics rather than a trained counter: VOID_CONTROL_FAILED, the whole sweep is void and the run stops.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-116-153",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T20:00:21+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 20212,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_design_diff_triage.json",
+      "present": true,
+      "sha256": "0f450072d015"
+    },
+    {
+      "bytes": 3203,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4.md",
+      "present": true,
+      "sha256": "6707c87b8d7d"
+    }
+  ],
+  "metric": "Held-out pooled quality at the initialization checkpoint, before any training.",
+  "notes": "A quality at or above the ceiling would mean the fit reads surface text statistics, or that a label has leaked, rather than that a trained counter exists. The selected best readout and the selected ridge strength are logged beside the pooled quality and the boundary ratio, and a selection sitting at an end of its search range is flagged. The ends are readout 0, readout 24, strength 1 and strength 100000. The committed gate record adopts this control as binding, and states in advance that the initialization checkpoint is expected to trip it, because a random model has no meaningful best readout. There the flag is confirmation, not alarm. The coordinate flags on this record are therefore expected, and the committed gate record says so in advance. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "below": 0.3
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.781031,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": 0.781031,
+    "anchor_gate_tolerance": 0.02,
+    "best_layer": 24,
+    "boundary_ratio": -0.080316,
+    "ceiling": 0.3,
+    "coordinate_flags": [
+      "best_layer_at_readout_24"
+    ],
+    "coordinate_flags_expected_here": true,
+    "held_out_quality_pooled_widths_20_to_140": 0.344634,
+    "margin_below_ceiling": -0.044634,
+    "negative_control_ceiling": 0.3,
+    "negative_control_decision": "VOID_CONTROL_FAILED",
+    "negative_control_quality": 0.344634,
+    "profile_correlations": [
+      0.194574,
+      0.011107,
+      0.000705,
+      0.365608
+    ],
+    "revision": "step0",
+    "ridge_strength": 10000.0,
+    "this_record_voided_by_a_gate": true,
+    "training_step": 0
+  }
+}

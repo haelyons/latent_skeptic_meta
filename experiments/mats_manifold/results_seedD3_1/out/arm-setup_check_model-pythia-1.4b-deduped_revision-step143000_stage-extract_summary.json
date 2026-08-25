@@ -1,0 +1,71 @@
+{
+  "cell": {
+    "arm": "setup_check",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "extract"
+  },
+  "decision": "SETUP_OK",
+  "decision_rule": "The text file's hash must equal the committed hash exactly, the layer count must equal 24, and the hidden size must equal 2048. Anything else is SETUP_FAILURE and halts the run before any measurement.",
+  "env": {
+    "git_rev": null,
+    "host": "132-226-88-169",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T13:20:03+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592594,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v3.json",
+      "present": true,
+      "sha256": "05db25f7a97d"
+    },
+    {
+      "bytes": 18266,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "72da78cd8de2"
+    },
+    {
+      "bytes": 2998,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+      "present": true,
+      "sha256": "4578bdd49cd5"
+    }
+  ],
+  "metric": "Committed text file hash, and the downloaded configuration's layer count and hidden size.",
+  "notes": "Layer count 24 and hidden size 2048 are recalled from the Pythia paper, arXiv 2304.01373 table 1, and checked against the download, which is authoritative. A mismatch halts before any measurement. The text is loaded exactly as committed and is never regenerated or re-wrapped. It is fresh text, disjoint by construction from both earlier text files of this chain, and nothing in it is specific to any model. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "hidden_size": 2048,
+    "n_layers": 24,
+    "stimulus_sha256": "05db25f7a97dd9c3963c7eeb3b8d9738c707a2929a18b2503e56b1f43003aea1"
+  },
+  "values": {
+    "access_token_source": "HF_KEY_ONE",
+    "context_limit": 2048,
+    "design_record_expected_sha256": "72da78cd8de2954a510abf563e3a8c380bf7a094701bc27881636305822d7ef5",
+    "design_record_found": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+    "disjoint_from": {
+      "files": [
+        "stimulus_linewrap.json",
+        "stimulus_linewrap_v2.json"
+      ],
+      "how": "replayed v1 packing (81 paragraphs) then v2 packing (207 more), started after both"
+    },
+    "gate_record_expected_sha256": "8962451bd30a17ef850e2d7ae5a2b6f0cef0bbed0b1a184e0dd70dbce42b269f",
+    "gate_record_found": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+    "hidden_size": 2048,
+    "hidden_size_expected": 2048,
+    "model_id": "EleutherAI/pythia-1.4b-deduped",
+    "n_layers": 24,
+    "n_layers_expected": 24,
+    "revision": "step143000",
+    "stimulus_hash_match": true,
+    "stimulus_sha256": "05db25f7a97dd9c3963c7eeb3b8d9738c707a2929a18b2503e56b1f43003aea1",
+    "stimulus_sha256_expected": "05db25f7a97dd9c3963c7eeb3b8d9738c707a2929a18b2503e56b1f43003aea1",
+    "text_source": "Project Gutenberg eBook #2701 (Moby Dick), plain text"
+  }
+}

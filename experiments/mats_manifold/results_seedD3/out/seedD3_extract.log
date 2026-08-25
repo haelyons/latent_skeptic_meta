@@ -1,0 +1,16 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+=== stage extract ===
+[extract] text file /home/ubuntu/mats_manifold/stimulus_linewrap_v2.json
+[extract] hash b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd (expected b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd) match=True
+[extract] access token from HF_KEY_ONE
+[extract] configuration layers=24 hidden=2048 context=2048
+[record] SETUP_OK -> results_seedD3/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json
+[extract] loading the model in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 5383.86it/s]
+[extract] running totals: 14 groups times 25 readouts at hidden 2048 = 11.8 GB
+[extract] per-position vectors are saved for the three probe windows [140, 200, 280] on held-out documents only, at every readout
+[record] EXTRACT_OK -> results_seedD3/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json
+[extract] 432 variants, 339749 positions in the fit totals, 63644 outside them, 289.1 s
+=== stage extract done in 331.5 s ===

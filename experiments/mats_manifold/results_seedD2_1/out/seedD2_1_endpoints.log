@@ -1,0 +1,27 @@
+=== stage endpoints ===
+[endpoints] chosen readout 6, pooled quality over widths 20 to 140 0.781031 -> ANCHOR_IN_BAND
+[endpoints] at that readout: width 140 0.664024, width 200 0.087857, width 280 -0.528865 (recorded, never gated)
+[record] ANCHOR_IN_BAND -> results_seedD2_1/out/arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 140: largest power 4.18187e-05 at period 120.00 characters, rank 199 of 200 -> NULL_NOT_CLEARED (4.3 s)
+[record] NULL_NOT_CLEARED -> results_seedD2_1/out/aperture-140_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 200: largest power 2.25605e-06 at period 180.00 characters, rank 201 of 200 -> NULL_NOT_CLEARED (5.8 s)
+[record] NULL_NOT_CLEARED -> results_seedD2_1/out/aperture-200_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 280: largest power 4.07472e-05 at period 130.00 characters, rank 34 of 200 -> NULL_NOT_CLEARED (8.2 s)
+[record] NULL_NOT_CLEARED -> results_seedD2_1/out/aperture-280_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 140 token control: period 7.00 tokens, 28.56 characters, rank 201 of 200 (3.1 s)
+[endpoints] width 140 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED -> results_seedD2_1/out/aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 200 token control: period 18.00 tokens, 74.33 characters, rank 201 of 200 (3.2 s)
+[endpoints] width 200 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED -> results_seedD2_1/out/aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 280 token control: period 28.00 tokens, 116.72 characters, rank 201 of 200 (3.4 s)
+[endpoints] width 280 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED -> results_seedD2_1/out/aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] measurable range at width 280 -> RANGE_PATTERN_UNMATCHED
+[record] RANGE_PATTERN_UNMATCHED -> results_seedD2_1/out/aperture-280_arm-measurable_range_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] NEGATIVE_NOT_CLASSIFIABLE -> results_seedD2_1/out/arm-widths_clearing_count_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED -> results_seedD2_1/out/arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED -> results_seedD2_1/out/arm-ratio_gap_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] NEGATIVE_NOT_CLASSIFIABLE -> results_seedD2_1/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] summary {"setup_check": "SETUP_OK", "calibration": "CALIBRATION_OK", "endpoint_1_anchor_gate": "ANCHOR_IN_BAND", "endpoint_2_wobble_vs_shuffle": {"140": "NULL_NOT_CLEARED", "200": "NULL_NOT_CLEARED", "280": "NULL_NOT_CLEARED"}, "endpoint_3_widths_clearing_count": "NEGATIVE_NOT_CLASSIFIABLE", "endpoint_4_wavelength_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED", "endpoint_5_ratio_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED", "endpoint_6_measurable_range": "RANGE_PATTERN_UNMATCHED", "endpoint_7_token_position_control": {"140": "CHARACTER_COUNT_DISTINGUISHED", "200": "CHARACTER_COUNT_DISTINGUISHED", "280": "CHARACTER_COUNT_DISTINGUISHED"}, "chosen_readout": 6, "held_out_quality_pooled_widths_20_to_140": 0.781031, "held_out_quality_w140_only": 0.664024, "held_out_quality_w200": 0.087857, "held_out_quality_w280": -0.528865, "ridge_strength": 1000.0, "ridge_argmax_interior_on_grid": true, "n_widths_clearing": 0, "wavelengths_chars": {"140": 120.0, "200": 180.0, "280": 130.0}, "ambient_dimension_by_aperture": {"140": 2, "200": 3, "280": 1}, "largest_gap_chars": null, "largest_ratio_gap": null, "generation_performed": false, "headline": "NEGATIVE_NOT_CLASSIFIABLE", "anchor_gate_decision": "ANCHOR_IN_BAND", "anchor_gate_quality_pooled_widths_20_to_140": 0.781031, "anchor_gate_band_low": 0.701, "anchor_gate_band_high": 0.861, "anchor_gate_readout": 6, "this_record_voided_by_anchor_gate": false}
+=== stage endpoints done in 37.4 s ===

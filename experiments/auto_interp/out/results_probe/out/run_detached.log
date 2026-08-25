@@ -1,0 +1,113 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_probe.sh
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+[model] loading meta-llama/Llama-2-13b-chat-hf fp16
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files:  33%|███▎      | 1/3 [00:29<00:59, 29.53s/it]Fetching 3 files:  67%|██████▋   | 2/3 [00:41<00:18, 18.99s/it]Fetching 3 files: 100%|██████████| 3/3 [00:47<00:00, 13.33s/it]Fetching 3 files: 100%|██████████| 3/3 [00:47<00:00, 15.91s/it]
+Loading weights:   0%|          | 0/363 [00:00<?, ?it/s]Loading weights:   5%|▌         | 19/363 [00:00<00:01, 181.87it/s]Loading weights:  10%|█         | 38/363 [00:00<00:02, 129.17it/s]Loading weights:  14%|█▍        | 52/363 [00:00<00:02, 114.64it/s]Loading weights:  18%|█▊        | 64/363 [00:00<00:02, 113.77it/s]Loading weights:  21%|██        | 76/363 [00:00<00:02, 111.30it/s]Loading weights:  24%|██▍       | 88/363 [00:00<00:02, 106.53it/s]Loading weights:  27%|██▋       | 99/363 [00:00<00:02, 107.22it/s]Loading weights:  30%|███       | 110/363 [00:00<00:02, 107.73it/s]Loading weights:  33%|███▎      | 121/363 [00:01<00:02, 106.78it/s]Loading weights:  36%|███▋      | 132/363 [00:01<00:02, 100.71it/s]Loading weights:  40%|███▉      | 145/363 [00:01<00:02, 106.98it/s]Loading weights:  43%|████▎     | 157/363 [00:01<00:01, 106.79it/s]Loading weights:  46%|████▋     | 168/363 [00:01<00:01, 100.65it/s]Loading weights:  50%|████▉     | 180/363 [00:01<00:01, 105.70it/s]Loading weights:  53%|█████▎    | 193/363 [00:01<00:01, 106.97it/s]Loading weights:  56%|█████▌    | 204/363 [00:01<00:01, 101.26it/s]Loading weights:  60%|█████▉    | 216/363 [00:01<00:01, 106.24it/s]Loading weights:  63%|██████▎   | 227/363 [00:02<00:01, 106.82it/s]Loading weights:  66%|██████▌   | 238/363 [00:02<00:01, 106.42it/s]Loading weights:  69%|██████▊   | 249/363 [00:02<00:01, 100.59it/s]Loading weights:  72%|███████▏  | 261/363 [00:02<00:00, 105.66it/s]Loading weights:  75%|███████▍  | 272/363 [00:02<00:00, 106.80it/s]Loading weights:  78%|███████▊  | 283/363 [00:02<00:00, 106.86it/s]Loading weights:  81%|████████  | 294/363 [00:02<00:00, 101.95it/s]Loading weights:  85%|████████▍ | 307/363 [00:02<00:00, 108.49it/s]Loading weights:  88%|████████▊ | 319/363 [00:02<00:00, 109.35it/s]Loading weights:  91%|█████████ | 330/363 [00:03<00:00, 103.81it/s]Loading weights:  94%|█████████▍| 343/363 [00:03<00:00, 109.86it/s]Loading weights:  98%|█████████▊| 355/363 [00:03<00:00, 109.93it/s]Loading weights: 100%|██████████| 363/363 [00:03<00:00, 108.34it/s]
+[extract] anchor_age 16/1000
+[extract] anchor_age 176/1000
+[extract] anchor_age 336/1000
+[extract] anchor_age 496/1000
+[extract] anchor_age 656/1000
+[extract] anchor_age 816/1000
+[extract] anchor_age 976/1000
+[extract] anchor_age done (1000, 41, 5120)
+[extract] anchor_education 16/750
+[extract] anchor_education 176/750
+[extract] anchor_education 336/750
+[extract] anchor_education 496/750
+[extract] anchor_education 656/750
+[extract] anchor_education done (750, 41, 5120)
+[extract] anchor_gender 16/600
+[extract] anchor_gender 176/600
+[extract] anchor_gender 336/600
+[extract] anchor_gender 496/600
+[extract] anchor_gender done (600, 41, 5120)
+[extract] anchor_ses 16/750
+[extract] anchor_ses 176/750
+[extract] anchor_ses 336/750
+[extract] anchor_ses 496/750
+[extract] anchor_ses 656/750
+[extract] anchor_ses done (750, 41, 5120)
+[extract] ext_agebracket 16/1000
+[extract] ext_agebracket 176/1000
+[extract] ext_agebracket 336/1000
+[extract] ext_agebracket 496/1000
+[extract] ext_agebracket 656/1000
+[extract] ext_agebracket 816/1000
+[extract] ext_agebracket 976/1000
+[extract] ext_agebracket done (1000, 41, 5120)
+[extract] ext_emotion 16/600
+[extract] ext_emotion 176/600
+[extract] ext_emotion 336/600
+[extract] ext_emotion 496/600
+[extract] ext_emotion done (600, 41, 5120)
+[extract] ext_expertise 16/600
+[extract] ext_expertise 176/600
+[extract] ext_expertise 336/600
+[extract] ext_expertise 496/600
+[extract] ext_expertise done (600, 41, 5120)
+[extract] ext_formality 16/384
+[extract] ext_formality 176/384
+[extract] ext_formality 336/384
+[extract] ext_formality done (384, 41, 5120)
+[extract] ext_native 16/384
+[extract] ext_native 176/384
+[extract] ext_native 336/384
+[extract] ext_native done (384, 41, 5120)
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[probe] anchor_age: test_acc=0.947 chance=0.250 layer=27 perm=[0.1885245901639344, 0.19672131147540983] -> IN_BAND
+[probe] anchor_education: test_acc=0.940 chance=0.333 layer=23 perm=[0.546448087431694, 0.4098360655737705] -> IN_BAND+PERM_ANOMALY
+[probe] anchor_gender: test_acc=0.447 chance=0.500 layer=6 perm=[0.49333333333333335, 0.5266666666666666] -> OUT_OF_BAND
+[probe] anchor_ses: test_acc=1.000 chance=0.333 layer=32 perm=[0.3825136612021858, 0.20218579234972678] -> IN_BAND
+[probe] ext_agebracket: test_acc=0.906 chance=0.250 layer=20 perm=[0.30327868852459017, 0.21721311475409835] -> RECOVERED
+[probe] ext_emotion: test_acc=1.000 chance=0.500 layer=10 perm=[0.62, 0.4666666666666667] -> RECOVERED
+[probe] ext_expertise: test_acc=0.833 chance=0.500 layer=12 perm=[0.3933333333333333, 0.4533333333333333] -> RECOVERED
+[probe] ext_formality: test_acc=1.000 chance=0.500 layer=3 perm=[0.6041666666666666, 0.71875] -> RECOVERED+PERM_ANOMALY
+[probe] ext_native: test_acc=0.812 chance=0.500 layer=2 perm=[0.5208333333333334, 0.6875] -> RECOVERED
+[poscontrol] topic: test_acc=1.000 chance=0.062 -> RECOVERED
+[ALL] anchor_in_band=False
+[ALL] {"anchor_age": {"test_acc": 0.9467213114754098, "best_layer": 27, "chance": 0.25, "perm": [0.1885245901639344, 0.19672131147540983], "decision": "IN_BAND"}, "anchor_education": {"test_acc": 0.9398907103825137, "best_layer": 23, "chance": 0.3333333333333333, "perm": [0.546448087431694, 0.4098360655737705], "decision": "IN_BAND+PERM_ANOMALY"}, "anchor_gender": {"test_acc": 0.44666666666666666, "best_layer": 6, "chance": 0.5, "perm": [0.49333333333333335, 0.5266666666666666], "decision": "OUT_OF_BAND"}, "anchor_ses": {"test_acc": 1.0, "best_layer": 32, "chance": 0.3333333333333333, "perm": [0.3825136612021858, 0.20218579234972678], "decision": "IN_BAND"}, "ext_agebracket": {"test_acc": 0.9057377049180327, "best_layer": 20, "chance": 0.25, "perm": [0.30327868852459017, 0.21721311475409835], "decision": "RECOVERED"}, "ext_emotion": {"test_acc": 1.0, "best_layer": 10, "chance": 0.5, "perm": [0.62, 0.4666666666666667], "decision": "RECOVERED"}, "ext_expertise": {"test_acc": 0.8333333333333334, "best_layer": 12, "chance": 0.5, "perm": [0.3933333333333333, 0.4533333333333333], "decision": "RECOVERED"}, "ext_formality": {"test_acc": 1.0, "best_layer": 3, "chance": 0.5, "perm": [0.6041666666666666, 0.71875], "decision": "RECOVERED+PERM_ANOMALY"}, "ext_native": {"test_acc": 0.8125, "best_layer": 2, "chance": 0.5, "perm": [0.5208333333333334, 0.6875], "decision": "RECOVERED"}, "poscontrol_topic": {"test_acc": 1.0, "chance": 0.0625, "decision": "RECOVERED"}}

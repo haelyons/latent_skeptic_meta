@@ -1,0 +1,89 @@
+{
+  "cell": {
+    "arm": "run_summary",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "NEGATIVE_NOT_CLASSIFIABLE",
+  "decision_rule": "A failed validity gate voids everything. Otherwise, two or more clearing widths are classified as INVARIANT when all period gaps are at most 10 characters, else PROPORTIONAL when all period-to-width ratio gaps are at most 0.1, else MIXED. Exactly one clearing width is UNDETERMINED by design. None clearing defers to the measurable-range check.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-34-21",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T13:37:07+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 24416,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "189f87148c64"
+    },
+    {
+      "bytes": 1658,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2_1.md",
+      "present": true,
+      "sha256": "50297fb3110d"
+    }
+  ],
+  "metric": "One call per endpoint, and the headline fork, from the records written beside this one.",
+  "notes": "A failed validity gate makes every wobble number here uninterpretable as evidence about the model, so the whole run is void in that case. Exactly one width clearing is left undetermined by design, not decided. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {},
+  "values": {
+    "ambient_dimension_by_aperture": {
+      "140": 2,
+      "200": 3,
+      "280": 1
+    },
+    "anchor_gate_band_high": 0.861,
+    "anchor_gate_band_low": 0.701,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality_pooled_widths_20_to_140": 0.781031,
+    "anchor_gate_readout": 6,
+    "calibration": "CALIBRATION_OK",
+    "chosen_readout": 6,
+    "endpoint_1_anchor_gate": "ANCHOR_IN_BAND",
+    "endpoint_2_wobble_vs_shuffle": {
+      "140": "NULL_NOT_CLEARED",
+      "200": "NULL_NOT_CLEARED",
+      "280": "NULL_NOT_CLEARED"
+    },
+    "endpoint_3_widths_clearing_count": "NEGATIVE_NOT_CLASSIFIABLE",
+    "endpoint_4_wavelength_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED",
+    "endpoint_5_ratio_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED",
+    "endpoint_6_measurable_range": "RANGE_PATTERN_UNMATCHED",
+    "endpoint_7_token_position_control": {
+      "140": "CHARACTER_COUNT_DISTINGUISHED",
+      "200": "CHARACTER_COUNT_DISTINGUISHED",
+      "280": "CHARACTER_COUNT_DISTINGUISHED"
+    },
+    "generation_performed": false,
+    "headline": "NEGATIVE_NOT_CLASSIFIABLE",
+    "held_out_quality_pooled_widths_20_to_140": 0.781031,
+    "held_out_quality_w140_only": 0.664024,
+    "held_out_quality_w200": 0.087857,
+    "held_out_quality_w280": -0.528865,
+    "largest_gap_chars": null,
+    "largest_ratio_gap": null,
+    "n_widths_clearing": 0,
+    "ridge_argmax_interior_on_grid": true,
+    "ridge_strength": 1000.0,
+    "setup_check": "SETUP_OK",
+    "this_record_voided_by_anchor_gate": false,
+    "wavelengths_chars": {
+      "140": 120.0,
+      "200": 180.0,
+      "280": 130.0
+    }
+  }
+}

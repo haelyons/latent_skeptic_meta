@@ -1,0 +1,98 @@
+{
+  "cell": {
+    "arm": "formation_timing",
+    "endpoint": 3,
+    "model": "pythia-1.4b-deduped",
+    "revision": "sweep_twelve_checkpoints",
+    "stage": "endpoints"
+  },
+  "decision": "EARLY_AT_OR_BEFORE_STEP16000",
+  "decision_rule": "The first checkpoint whose pooled quality reaches the formation threshold, the baseline floor B plus half the distance from B to the committed anchor quality, is the formation step. At or before step16000 it counts as early; after step16000 it counts as late. The committed gate record assigns that crossing this job in its second answer of record. The first checkpoint reaching the nine-tenths crossing is recorded beside it, with its own comparison against step16000, because the design object's third endpoint states the comparison that way. Both are recorded; this call follows the half-distance crossing.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T22:33:38+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    },
+    {
+      "bytes": 16192,
+      "n_items": 12,
+      "path": "results_seedD4_1/out/sweep_table.json",
+      "present": true,
+      "sha256": "ebe5074c109a"
+    }
+  ],
+  "metric": "The first checkpoint whose pooled quality reaches the baseline-relative half-distance threshold, against step16000.",
+  "notes": "Two crossings are computed, both measured up from the baseline floor toward the committed anchor quality. The pooled quality first reaching the half-distance point locates when the counter becomes usable; that crossing decides whether formation counts as early or late against step16000. The pooled quality first reaching the nine-tenths point marks where the stability test starts, for both channels. The committed gate record assigns each crossing that job in its second and fourth answers of record. The design object's third endpoint states the early-late comparison against the nine-tenths crossing instead, so both comparisons are recorded and the reading follows the committed answer. A late formation routes the reading to the late variant even when the stability test passes, which weakens the early-formation half of the fossil account. Recorded beside the call and gating nothing: the same two crossings computed against this run's own measured final quality instead of the committed anchor quality. If either integrity gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "at_or_before_step": 16000
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": 0.514227,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": 0.876302,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "baseline_decision": "BASELINE_RECORDED",
+    "baseline_quality": 0.341495,
+    "baseline_void_floor": 0.6134113999999999,
+    "call_from_the_formed_marker_recorded_only": "EARLY_AT_OR_BEFORE_STEP16000",
+    "committed_anchor_quality": 0.876302,
+    "cutoff_step": 16000,
+    "formation_revision": "step512",
+    "formation_share_of_gap": 0.5,
+    "formation_step": 512,
+    "formation_step_from_measured_final_recorded_only": 512,
+    "formation_threshold": 0.6088985,
+    "formed_revision": "step512",
+    "formed_share_of_gap": 0.9,
+    "formed_step": 512,
+    "formed_step_from_measured_final_recorded_only": 512,
+    "formed_threshold": 0.8228213,
+    "pooled_quality_by_step": {
+      "0": 0.341495,
+      "1000": 0.851364,
+      "128000": 0.87429,
+      "143000": 0.876302,
+      "16000": 0.764327,
+      "2000": 0.765581,
+      "32000": 0.829878,
+      "4000": 0.715426,
+      "512": 0.827079,
+      "64000": 0.867423,
+      "8000": 0.725391,
+      "96000": 0.872099
+    },
+    "this_record_voided_by_a_gate": false
+  }
+}

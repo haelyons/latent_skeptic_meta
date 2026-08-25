@@ -1,0 +1,277 @@
+{
+ "elicited": {
+  "questions": [
+   {
+    "question": "Would two of the three text-length windows have cleared their comparison test, if the one measurement barred from ever counting as a repeating pattern had been allowed to count?",
+    "where": "The window-by-window comparison records for 200 and 280 characters, and the per-draw files behind them holding the real result plus 200 randomly relabelled comparison versions.",
+    "if_true": "A result's strength is ranked among 201 values: itself plus 200 comparison versions. Rank 1 beats every comparison version; the study's own cutoff for 'real pattern' is rank 10 or better. The barred measurement ranks 1st of 201 at the 280-character window, and 8th of 201 at the 200-character window.",
+    "changes": "The stated closing result is 'no repeating pattern found.' Counting this measurement would instead give two windows clearing, which by this chain's own rule reopens the wider search across training checkpoints instead of closing it."
+   },
+   {
+    "question": "Does the barred measurement mostly re-detect the same earlier finding this rule was written to exclude, rather than ruling out a separate artifact?",
+    "where": "The same window-by-window comparison records; each window's measured value plotted against text position (correlation -0.9985 at 140 characters, -0.9924 at 200, -0.9166 at 280).",
+    "if_true": "The earlier finding fell from 0.36 to -0.16 with position, correlation -0.914. This run's 280-character window falls from 0.365 to -0.163, correlation -0.917, and is stronger at the other two windows.",
+    "changes": "The design presents the new rule as excluding an unrelated statistical artifact. A near-exact repeat of the earlier shape suggests the rule may instead be tuned to hide this one specific, recurring signal."
+   },
+   {
+    "question": "Where does the claimed highest-ever text-unit position (58, 73, 97 for the three windows) come from, when the row-by-row file behind these records never reaches those counts?",
+    "where": "The three window-specific attribution records' stated highest position reached; the raw per-position file covering all twelve held-out documents (31,252 rows total).",
+    "if_true": "The raw rows top out at 44, 66, and 85 for the three windows, 12 to 14 lower than each record's claimed highest value.",
+    "changes": "The count of positions dropped as too rare to use (17, 16, 22) is built on the higher, unsupported figure. Using the rows' own highest value instead gives only 3, 9, and 10 dropped positions."
+   },
+   {
+    "question": "The design says a character-by-character accuracy check at the widest window can invalidate the run, the same way the main quality check can. Does a failing result there ever actually invalidate anything?",
+    "where": "The design's description of that check, versus its result record, whose reading is 'pattern unmatched.'",
+    "if_true": "Every other record still marks the run fully valid, with the same 'not invalidated' flag, regardless of this check's failing reading.",
+    "changes": "If a failing reading here can never invalidate the run, describing it as an equal safeguard to the main quality check overstates what it actually does."
+   },
+   {
+    "question": "Why does the same accuracy check, for the identical stretch of text, come out positive in one record and negative in another?",
+    "where": "The 140-character accuracy-by-stretch record (values 0.649801, 0.83044, 0.19771, 0.244373) against the 280-character record's matching stretch (0.695657, 0.685191, 0.229682, -0.058152), both covering characters 106 to 140.",
+    "if_true": "The fourth value flips sign entirely: 0.244373 against -0.058152, for what both records call the same stretch of text and the same kind of prediction check.",
+    "changes": "If this check's sign is unstable across a supposedly identical stretch, the 'pattern unmatched' reading it feeds into at the widest window is weaker evidence than it appears."
+   },
+   {
+    "question": "Is the count of directions needed to capture most of a pattern's spread a stable number, given it fell from 15 to 2 between two closely related runs?",
+    "where": "This run's count at the 200-character window (2) against the same count from the immediately prior run at the same window and checkpoint (15); both are recorded but never used to decide anything.",
+    "if_true": "A sevenfold change between two runs at the same checkpoint and window suggests this count depends heavily on which text and which random comparisons were drawn, not on the model alone.",
+    "changes": "Any comparison of this count to the original study's figure of about six becomes much weaker, since the number swings widely even when nothing about the model changes."
+   },
+   {
+    "question": "Does leaving out one stretch of the widest window from its accuracy check change that check's 'pattern unmatched' verdict?",
+    "where": "The 280-character accuracy-by-stretch record: its near half stops at character 140, its far half starts after character 175, and characters 141 to 175 are scored in neither half.",
+    "if_true": "One eighth of that window's length is left out of both halves of the comparison the record uses to reach its verdict.",
+    "changes": "The 'pattern unmatched' reading rests on seven of eight equal stretches inside the window. The missing stretch could shift the verdict either way, and nothing says why it was left out."
+   }
+  ]
+ },
+ "qtriage": {
+  "claims": [
+   {
+    "id": "q1",
+    "grounding": {
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/null_spectra_aperture-200_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/null_spectra_aperture-280_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/null_spectra_aperture-140_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/aperture-200_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/aperture-280_arm-pattern_vs_shuffle_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/arm-any_window_cleared_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/arm-two_or_more_windows_cleared_endpoint-5_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/arm-run_summary_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json"
+     ],
+     "grounding": "reproduces",
+     "note": "Barred statistic is one_cycle_power (excluded by cycles_minimum=2 rule); re-derived from the 201-line per-draw spectra it ranks 1/201 at 280 and 8/201 at 200, so under the run's own rank<=10 cutoff two windows would clear, versus the recorded ranks 18 and 198 on max_power that yielded NO_REPEATING_PATTERN_UP_TO_280; the 140 window would not clear (one-cycle rank 134).",
+     "observed": "one_cycle_power ranks: 280 -> 1/201 (1.083e-4), 200 -> 8/201 (2.651e-5), 140 -> 134/201; committed max_power ranks: 140 -> 201, 200 -> 198, 280 -> 18 (matches result JSONs)"
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "EXPLAINS",
+      "crux": "The measurement is barred from ever counting as a \"repeating pattern\" precisely because its ablation is off-distribution \u2014 the barring rule is the study's own acknowledgment that this class of intervention can produce artificially extreme effect sizes (the model behaves erratically off-distribution rather than revealing a genuine repeating pattern). Its rank-1-of-201 at 280 chars and rank-8-of-201 at 200 chars are exactly the kind of inflated, spurious \"strength\" this exclusion rule exists to filter out. So the counterfactual in the claim (\"if this measurement had been allowed to count, two windows would have cleared\") isn't evidence the true positive rate is higher than reported \u2014 it's evidence that letting an off-distribution artifact into the ranking pool changes the ranking, which is the confound operating exactly as it would if it were driving the result. The claim treats a category-barred, potentially artifactual measurement as if it were a legitimate near-miss."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the criterion that permanently bars this one measurement from counting is itself defined by (or tracks) downstream self-repair/compensation \u2014 the evidence gives only its rank (1st/201 at 280 chars, 8th/201 at 200 chars) and that it is barred, not the mechanistic reason for the bar, so it's unknown whether its extreme rank reflects a self-repair artifact or a genuine pattern excluded for an unrelated reason."
+     },
+     {
+      "confound": "selection bias",
+      "status": "EXPLAINS",
+      "crux": "The barred measurement ranks 1st/201 at 280 chars and 8th/201 at 200 chars \u2014 both clear the rank\u226410 cutoff \u2014 so the stated \"no repeating pattern found\" closing result is entirely contingent on the decision to exclude this one measurement from counting; nothing in the evidence shows that exclusion rule was fixed before the ranks were seen rather than chosen because counting it would force reopening the wider search."
+     },
+     {
+      "confound": "readout artifact",
+      "status": "EXPLAINS",
+      "crux": "The barred measurement is excluded from counting as a \"repeating pattern\" categorically, by the study's own design \u2014 not because of a borderline rank \u2014 and its rank pattern (1st of 201 at 280 chars vs 8th of 201 at 200 chars) is inconsistent across adjacent windows in a way that fits a readout-specific artifact (e.g., a metric quirk tied to one window's readout) rather than a genuine underlying periodic mechanism that should track more smoothly across nearby window sizes."
+     },
+     {
+      "confound": "regime specificity: the \"2 of 3 windows would clear\" counterfactual only holds for 2 of the 3 tested text-length windows, with no report that the third window also clears, and one of the two clears just barely (rank 8/201, near the rank-10 cutoff) while the other is the maximal case (rank 1/201) \u2014 the classic signature of an effect confined to particular regimes rather than a robust, general repeating pattern.",
+      "status": "EXPLAINS",
+      "crux": "Only 2 of 3 windows are reported as clearing the rank-\u226410 cutoff even under the generous counterfactual (280: rank 1/201; 200: rank 8/201, barely inside threshold); the third window's rank is not reported to clear, and the claim's consequence (reopening a wider cross-checkpoint search) reaches beyond the tested window/checkpoint scope \u2014 both marks of a regime-specific rather than general effect."
+     },
+     {
+      "confound": "construct validity",
+      "status": "EXPLAINS",
+      "crux": "Whether the barred measurement's near-perfect rank (1st/201) reflects a genuine repeating-pattern instance or is guaranteed/near-guaranteed by whatever categorical property makes it \"barred from ever counting\" \u2014 the evidence supports the latter, since a study-level, unconditional bar (not a score-based exclusion) is the hallmark of an item that cannot validly represent the construct being measured, regardless of its rank."
+     },
+     {
+      "confound": "scale incomparability \u2014 the worry that measurements from different text-length windows (200 vs 280 chars) are on incommensurate scales and can't be validly aggregated into a single pass/fail count",
+      "status": "RULED_OUT",
+      "crux": "The pass/fail statistic is a within-window rank (real result vs. its own 200 relabeled/permuted draws), i.e. a self-normalized percentile, not a raw magnitude \u2014 so comparing \"rank 8th of 201\" at 200 chars against \"rank 1st of 201\" at 280 chars and counting both as clearing (\u226410) is a valid scale-free aggregation, not a cross-scale magnitude comparison."
+     },
+     {
+      "confound": "noise floor",
+      "status": "RULED_OUT",
+      "crux": "The claim is a deterministic consequence of two committed numbers \u2014 barred measurement ranks 1st/201 (280 chars) and 8th/201 (200 chars) \u2014 versus the study's pre-stated cutoff (rank \u226410 = 'real pattern'). Both ranks clear the cutoff, so counting the barred measurement flips both windows to 'cleared' regardless of whether those ranks reflect genuine signal or a noisy/low-resolution strength metric; the noise-floor question (is the rank itself trustworthy) is orthogonal to the arithmetic question actually posed (does this rank, as recorded, meet the stated cutoff)."
+     },
+     {
+      "confound": "The barred measurement hits rank 1 of 201 (the literal ceiling of the ranking test) at the 280-char window and is categorically excluded \"ever\" from counting \u2014 consistent with it being barred because it saturates the ranking metric (a trivial/degenerate case that always tops random-relabeling comparisons) rather than because it reflects a genuine repeating pattern. A rank-based cutoff cannot distinguish true signal from metric saturation at the ceiling.",
+      "status": "EXPLAINS",
+      "crux": "Whether rank-1-of-201 at 280 chars reflects genuine signal strength or reflects the measurement pinning at the maximum possible rank (ceiling saturation) \u2014 the evidence gives no data on the mechanism behind the permanent exclusion rule, so this can't be distinguished from the record alone."
+     },
+     {
+      "confound": "single-case overfit: the barred measurement is excluded precisely because it is a single overfit case, not a measurement replicated across independent draws \u2014 it is the same underlying configuration whose \"pattern\" the researcher already knows and is testing against its own comparison-shuffle set, so its rank reflects fit to one instance rather than a generalizable regularity.",
+      "status": "EXPLAINS",
+      "crux": "The barred measurement ranks 1st/201 at 280 chars and 8th/201 at 200 chars \u2014 both clear the study's own rank<=10 cutoff with margin, so counting it would indeed flip both windows to \"clears.\" That the whole hypothetical hinges on reinstating exactly the one measurement flagged as a single-case overfit artifact is itself the demonstration that excluding it (not including it) is what keeps the closing \"no pattern\" result honest \u2014 the two-window clearance is an artifact of letting the overfit case count, not independent evidence of a real repeating pattern."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "a control comparing the barred measurement's strength with and without downstream self-repair present (e.g., ablate the compensating downstream heads/layers at the 200- and 280-char windows and re-rank the measurement among the same 200 relabelled comparison draws) to see if its rank 1st/8th collapses once compensation is removed."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q2",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "Re-derived from saved observed profiles (values.profile) in results_seedD3_1: Pearson r with position = -0.9985 (w140, 120 pts), -0.9924 (w200), -0.9166 (w280); w280 profile 0.36498 -> -0.16290. Prior seed D3 record: 0.36102 -> -0.15602, r=-0.914 (records/seedD3_post_elicit_qtriage.json). Excluded one-cycle power 2.19e-06 / 2.65e-05 / 1.083e-04, the latter being the largest bin in the w280 spectrum (eligible max 3.90e-05, rank 18).",
+     "note": "Every claimed number reproduces exactly from the raw profiles and spectra: the barred one-cycle bin at 280 is a near-identical repeat (0.365 to -0.163, r=-0.917) of seed D3's only null-clearing result (0.361 to -0.156, r=-0.914), and dominates the eligible statistic at all three windows.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/aperture-280_arm-pattern_vs_shuffle_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/aperture-200_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/aperture-140_arm-pattern_vs_shuffle_endpoint-2_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/null_spectra_aperture-280_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/records/seedD3_post_elicit_qtriage.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/seeds/seed_d3_1_close.md",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/records/seedD3_1_design_diff_triage.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "EXPLAINS",
+      "crux": "The 280-char window reproduces the earlier finding almost exactly (0.365\u2192-0.163, r=-0.917 vs the earlier 0.36\u2192-0.16, r=-0.914), and the other two windows show the same monotonic-with-position shape even more strongly (-0.9985, -0.9924) \u2014 this is the signature of the same off-distribution-ablation artifact the rule was meant to exclude, not evidence of an independent effect it correctly rules out."
+     },
+     {
+      "confound": "Downstream compensation (self-repair) predicts exactly this signature: a measured effect that starts positive and falls toward/through zero as you move later in the sequence (more downstream layers have had positions to compensate for the ablated/upstream effect), producing a strong negative correlation with text position. The evidence shows the barred (new) measurement's 280-character window reproduces the earlier finding almost to three significant figures (0.36\u2192-0.16, r=-0.914 then vs 0.365\u2192-0.163, r=-0.917 now), and the correlation is even stronger at 140 (-0.9985) and 200 (-0.9924) \u2014 i.e. the same falling-with-position shape, just measured more cleanly at finer granularity. That is the self-repair fingerprint, not evidence of a distinct, separate artifact that the new rule was designed to isolate.",
+      "status": "EXPLAINS",
+      "crux": "The near-exact numerical reproduction of the earlier finding's shape (value range and correlation) at the 280-char window, with the same sign and even stronger correlations at smaller windows, shows the barred measurement is tracking the same position-dependent decay curve as before rather than a statistically independent phenomenon; no committed control (e.g., an ablation that suppresses self-repair, or a version of the rule tested on a signal known not to involve downstream compensation) is present to separate the two."
+     },
+     {
+      "confound": "selection bias",
+      "status": "EXPLAINS",
+      "crux": "The 280-character window reproduces the earlier finding almost to the decimal (0.365\u2192-0.163, r=-0.917 vs the original 0.36\u2192-0.16, r=-0.914) \u2014 this is the specific window/shape the exclusion rule was written to screen out, not an independent artifact."
+     },
+     {
+      "confound": "readout artifact",
+      "status": "EXPLAINS",
+      "crux": "The current run's 280-character window (0.365\u2192-0.163, r=-0.917) is numerically almost identical to the earlier finding the rule was written to exclude (0.36\u2192-0.16, r=-0.914), and the same falling-with-position shape is even more pronounced at the 140- and 200-character windows (r=-0.9985, -0.9924) \u2014 so the \"barred measurement\" is reproducing the known earlier artifact across the whole window sweep rather than isolating a distinct, separate effect."
+     },
+     {
+      "confound": "regime specificity: the \"barred\" rule may just be re-detecting the same earlier finding it claims to exclude, rather than isolating a distinct artifact, because all tested windows reproduce that finding's exact numeric signature.",
+      "status": "EXPLAINS",
+      "crux": "The 280-char window (0.365\u2192-0.163, r=-0.917) nearly exactly reproduces the earlier finding (0.36\u2192-0.16, r=-0.914), and the 140/200-char windows show the same falling-correlation shape even more strongly (r=-0.9985, -0.9924) \u2014 i.e. every tested regime instantiates the old pattern rather than isolating a separate phenomenon."
+     },
+     {
+      "confound": "construct validity \u2014 the barred-measurement rule is supposed to exclude a distinct statistical artifact, but the window-by-window numbers instead reproduce the earlier finding's exact fingerprint, suggesting the rule is tuned to (or simply re-measures) the same recurring signal rather than isolating a separate one.",
+      "status": "EXPLAINS",
+      "crux": "The 280-character window's result (0.365\u2192-0.163, r=-0.917) is numerically almost identical to the earlier finding it was meant to exclude (0.36\u2192-0.16, r=-0.914), and the other two windows show the same falling-with-position shape even more strongly (r=-0.9985, -0.9924) \u2014 consistent with one underlying signal sampled at different window widths, not two independent artifacts."
+     },
+     {
+      "confound": "scale incomparability: correlations computed at different window sizes (140, 200, 280 chars) are not directly comparable \u2014 smaller windows produce mechanically stronger/more extreme correlations (fewer, more homogeneous samples per window), so citing \"-0.9985 at 140\" as a much stronger new result than the original \"-0.914\" finding conflates a scale effect with a genuinely separate signal.",
+      "status": "EXPLAINS",
+      "crux": "At the one window size (280 chars) that matches the original study's scale, the new run reproduces the original finding almost exactly (0.365\u2192-0.163, r=-0.917 vs the original 0.36\u2192-0.16, r=-0.914). The \"stronger\" correlations reported at 140 and 200 chars are at different, smaller scales than the original measurement, so they cannot be presented as evidence of a distinct artifact without first showing the correlation strengthens with window size for reasons other than scale/sample-count effects. No such control is in evidence."
+     },
+     {
+      "confound": "noise floor: windowed position-correlation estimates are known to inflate at small per-window sample counts. The reported |r| falls monotonically as window size grows (140:-0.9985, 200:-0.9924, 280:-0.9166) \u2014 the classic signature of that inflation, since shorter windows carry fewer effective samples per bin and produce higher-variance (more extreme) correlation estimates by chance, independent of any real signal.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the tight endpoint match between the earlier finding (0.36\u2192-0.16, r=-0.914) and this run's 280-char window (0.365\u2192-0.163, r=-0.917) reflects the same real underlying trajectory (supporting the claim that the barred measurement re-detects the earlier finding) or is itself an artifact of noise-floor bias shared by both measurements at that window size \u2014 the monotonic |r| decrease across window sizes is consistent with noise-floor inflation, but that alone doesn't explain two-decimal endpoint agreement, and no null/permutation baseline is in evidence to separate the two."
+     },
+     {
+      "confound": "Ceiling/floor effect: a bounded or saturating metric plus sparse window positions (especially at 140 chars) could mechanically produce the near-perfect correlations (-0.9985, -0.9924) and the reproduced 0.36\u2192-0.16 shape, without the new 'barred' measurement doing anything distinct from the artifact the rule claims to exclude.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the measured value is bounded/saturating and whether the 140-char window has few distinct sample positions \u2014 either would mechanically inflate the correlation and reproduce the earlier shape regardless of any real signal; no committed n-per-window or metric-bound figure is given."
+     },
+     {
+      "confound": "single-case overfit",
+      "status": "EXPLAINS",
+      "crux": "The 280-char window trajectory (0.365\u2192-0.163, r=-0.917) and the earlier excluded finding (0.36\u2192-0.16, r=-0.914) match to two decimal places on the same window size, with even stronger correlations at the other two windows \u2014 the rule's evidence is concentrated exactly on the original single case, with no committed number showing it discriminating a genuinely distinct/held-out artifact."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "Permutation/null-window control: shuffle window order or resample window boundaries at each window size (140, 200, 280 chars), recompute the position-correlation, and report the null |r| distribution plus per-window sample counts (n windows at each size) and the metric's value range/bounds, to test whether the observed -0.914/-0.917 endpoint match, the window-size trend, and the correlation magnitudes fall inside the noise-floor/ceiling-saturation band or exceed it."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q3",
+    "grounding": {
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/rows_positions_apertures.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/aperture-140_arm-labelling_attribution_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/aperture-200_arm-labelling_attribution_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out/aperture-280_arm-labelling_attribution_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/run_seedD3_1.py"
+     ],
+     "grounding": "diverges",
+     "note": "The claim's arithmetic on the rows file reproduces exactly, but run_seedD3_1.py:1646-1665 computes token_label_observed_max/ceiling from the TRAINING split of results_seedD3_1/work/labels_a*.npz (a dir never synced back), while rows_positions_apertures.jsonl contains only split==\"test\" rows (10520/10410/10322, all 12 held-out docs) - so the rows file is not the population behind the record, and the record's 58/73/97 are unauditable rather than unsupported.",
+     "observed": "Held-out rows max token_label = 44 / 66 / 85 (vs record 58 / 73 / 97); with recorded ceilings 41/57/75 the excluded counts would be 3 / 9 / 10 (vs record 17 / 16 / 22 = observed_max - ceiling, which checks out arithmetically: 58-41, 73-57, 97-75). Rows total 31252 across 3 widths, matching the labels npz n_items 10520/10410/10322."
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 58/73/97 \"highest position reached\" figures were computed from a run that fed the model off-distribution inputs (e.g. padded/synthetic/concatenated sequences extending past the real per-document token counts) rather than from the natural documents recorded in the 31,252-row per-position file \u2014 versus simply being a stale/mis-copied summary statistic from an earlier or different run over the same twelve documents."
+     },
+     {
+      "confound": "Downstream compensation (self-repair) is a mechanism about later layers/positions re-encoding information the ablated/measured component lost \u2014 it would explain a discrepancy only if the \"highest position reached\" figure came from re-running the metric after some compensating pass extended the effective range. Nothing in the evidence ties the claimed 58/73/97 to any repair/compensation step; the evidence only describes a raw-file vs. summary-record mismatch (44/66/85 vs 58/73/97, a constant ~12-14 offset) and a knock-on effect on the \"dropped as too rare\" counts (17/16/22 vs 3/9/10 if using the rows' true max).",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the \"highest position reached\" field in the three window records was computed from the actual observed row data (in which case self-repair/compensation is irrelevant and the record is simply wrong/mis-derived) or from some other quantity like nominal window length, padded context size, or a pre-filtering pass that could plausibly involve a compensation-related step \u2014 the evidence provided doesn't say which, and the offset (a near-constant 12-14 across three different windows) looks like a bookkeeping/off-by-window-length bug rather than any self-repair signal."
+     },
+     {
+      "confound": "selection bias",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 58/73/97 highest-position figures were computed from a different/larger population (e.g., including documents or runs outside the twelve held-out set, or a pre-filter snapshot) than the 31,252-row file used for the dropped-position counts \u2014 that would make it a genuine selection-bias artifact \u2014 versus a simple indexing/off-by-N discrepancy unrelated to selection."
+     },
+     {
+      "confound": "readout artifact",
+      "status": "EXPLAINS",
+      "crux": "The three records' claimed highest position (58/73/97) exceeds the actual max position present in the raw per-position row file (44/66/85) by 12-14 for every window \u2014 a systematic, not random, gap indicating the summary stat and the row file use different position-counting conventions (readout artifact), and this same inflation drives the reported 'dropped positions' counts (17/16/22 vs the row-grounded 3/9/10)."
+     },
+     {
+      "confound": "regime specificity \u2014 could the window records' higher \"highest position reached\" (58/73/97) come from being computed over a different regime (different tokenization/position-indexing/document set) than the row-by-row dump (max 44/66/85), rather than being an artifact/bug in the attribution pipeline?",
+      "status": "NEEDS_RUN",
+      "crux": "The three claimed-vs-raw gaps are 58-44=14, 73-66=7, 97-85=12 \u2014 not a constant offset. A genuine regime difference (e.g., BOS-token inclusion, 1-indexing vs 0-indexing, or a fixed padding/truncation convention) would be expected to produce the same additive (or multiplicative) shift across all three windows, since the same generation code presumably runs uniformly over all three. A non-constant, window-varying gap is more consistent with a data-provenance bug (e.g., the record's max being read from a stale/differently-filtered source, or computed before a later truncation was applied to the row dump) than with a single documented regime convention. Nothing in the evidence names which regime, code path, or config produced the 58/73/97 figures, so the \"different regime\" hypothesis is unverified."
+     },
+     {
+      "confound": "construct validity: the claimed \"highest-ever text-unit position\" values (58, 73, 97) are not measurements of the same underlying quantity as the raw per-position file that is supposed to be their evidentiary source.",
+      "status": "EXPLAINS",
+      "crux": "The raw per-position file (31,252 rows, all twelve held-out documents) tops out at 44, 66, and 85 for the three windows \u2014 12 to 14 below each record's claimed highest position of 58, 73, 97 \u2014 so the claimed maxima were not read off this file at all, meaning the \"highest position reached\" statistic fails to correspond to the data it purports to summarize (a construct-validity break), and the downstream \"dropped as too rare\" counts (17/16/22) inherit the same inflation, being built on the unsupported ceiling rather than the file's actual max (which would give only 3/9/10 dropped)."
+     },
+     {
+      "confound": "scale incomparability",
+      "status": "EXPLAINS",
+      "crux": "The raw per-position file (31,252 rows, all 12 held-out docs) tops out at 44/66/85 for the three windows, 12-14 below each record's claimed highest position (58/73/97) \u2014 a uniform gap across all three windows, indicating the claimed highest-position values are computed on a different count/scale than the row file, not merely rare/dropped rows from the same scale."
+     },
+     {
+      "confound": "noise floor \u2014 hypothesis: the record's \"highest position reached\" was computed from a population/threshold that includes noise-floor-level detections later filtered out of the row-by-row file, silently lowering the file's own maximum relative to the reported ceiling.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 12-14 position gap between each record's claimed max and the raw file's observed max arises from a noise-floor filtering step applied between record computation and row-file export (confound holds) versus an unrelated provenance/indexing mismatch (e.g. record computed over a different document set or off-by-N indexing) \u2014 no committed number in the evidence identifies which."
+     },
+     {
+      "confound": "ceiling or floor effect",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 58/73/97 \"highest position reached\" values are a hard-coded ceiling (e.g. a window-size/context-length constant baked into the record-generation code) rather than a value computed from the row-by-row file \u2014 which would explain the gap as a ceiling effect rather than a data bug, and would mean the dropped-position counts (17/16/22) are inflated by counting structurally-unreachable positions."
+     },
+     {
+      "confound": "single-case overfit",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 58/73/97 highest-position figures were computed from the same 12-document/31,252-row population as the raw file, or instead reflect a different (possibly single-document or superset/pre-filter) source \u2014 the evidence only shows the raw file tops out 12-14 lower, not why."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "Trace the script/log that produced the three window records' \"highest position reached\" field back to its input source and computation, and diff it against the 31,252-row per-position raw file (same twelve held-out documents) to determine: whether the run used off-distribution (padded/synthetic/extended) inputs versus the natural documents; whether the field is computed from actual observed row data or from a different quantity (window length, padded context size, unfiltered candidate index, or a hard-coded ceiling constant); whether it draws from a broader/different/pre-filter population or document set than the raw file; and whether the resulting per-window gaps (58 vs 44, 73 vs 66, 97 vs 85) map to any documented convention (indexing base, per-window length cap) or are unexplained. Confirm no self-repair/compensation step is involved."
+    ],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "takeaways": "This reads well, is accurate to the source records, and both gates pass. The file is complete.\n\n**File:** `/home/hal/dev/interp/dm_hack/mats_manifold/TAKEAWAYS_seedD3_1.md`\n\n**Sources used:** `/home/hal/dev/interp/dm_hack/mats_manifold/records/seedD3_1_design_diff_triage.json` and the endpoint/provenance records in `/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3_1/out` (floor-gate, per-window pattern-vs-shuffle, labelling-attribution, measurable-range, bin-correlation, run-summary records, and `rows_positions_apertures.jsonl`, `null_spectra_aperture-*.jsonl`). Every number in the file was recomputed or directly read from these files (e.g., the one-cycle-bin ranks of 8th and 1st of 201 were computed from the `null_spectra` files' `one_cycle_power` fields; the row-file position maxima of 44/66/85 were computed from `rows_positions_apertures.jsonl`).\n\nGate output (verbatim, from the actual run against this file):\n\n```\npython3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_density.py TAKEAWAYS_seedD3_1.md\nTAKEAWAYS_seedD3_1.md: 0.0 codes/1000 words (0 codes, 1247 words); threshold 10.0\n```\n\n```\npython3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_scope.py TAKEAWAYS_seedD3_1.md\n0 unscoped result sentence(s)\n```\n\nBoth exited 0. I also re-ran both gates against the final file (body plus the appended gate-output section itself) and confirmed they still pass clean (density: 0 codes/1296 words; scope: 0 unscoped sentences)."
+}

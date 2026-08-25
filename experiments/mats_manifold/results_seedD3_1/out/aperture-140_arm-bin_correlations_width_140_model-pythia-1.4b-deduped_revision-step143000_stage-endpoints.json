@@ -1,0 +1,106 @@
+{
+  "cell": {
+    "aperture": 140,
+    "arm": "bin_correlations_width_140",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "RECORDED_NO_DECISION",
+  "decision_rule": "Recorded only, with no threshold and no pass-or-fail call: the Pearson correlation between the main fit's predicted count and the true count, inside each bin of 35 label values across characters 1 to 140, at the chosen readout and the 140-character probe window. The previous rung's gate record fixes this as purely descriptive.",
+  "env": {
+    "git_rev": null,
+    "host": "132-226-88-169",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T13:30:52+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592594,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v3.json",
+      "present": true,
+      "sha256": "05db25f7a97d"
+    },
+    {
+      "bytes": 18266,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "72da78cd8de2"
+    },
+    {
+      "bytes": 2998,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+      "present": true,
+      "sha256": "4578bdd49cd5"
+    },
+    {
+      "bytes": 714317,
+      "n_items": 10520,
+      "path": "results_seedD3_1/work/labels_a140.npz",
+      "present": true,
+      "sha256": "5baa783c74f7"
+    }
+  ],
+  "metric": "Pearson correlation between the main fit's predicted count and the true count, inside each bin of 35 label values across characters 1 to 140.",
+  "notes": "The 410-million-weight rung found fine resolution collapsing early even inside its fitted range, at width 280: 0.648 then 0.219, 0.153 and 0.271. Whether the same collapse holds at width 140 bears on whether a fine-scale pattern was ever measurable, and no run had recorded it. This check is recorded only. It carries no threshold and decides nothing, as the previous rung's gate record settles. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "rows": [
+    {
+      "bin_high": 35,
+      "bin_low": 1,
+      "n_positions": 2610,
+      "pearson_correlation": 0.649801
+    },
+    {
+      "bin_high": 70,
+      "bin_low": 36,
+      "n_positions": 2546,
+      "pearson_correlation": 0.83044
+    },
+    {
+      "bin_high": 105,
+      "bin_low": 71,
+      "n_positions": 2553,
+      "pearson_correlation": 0.19771
+    },
+    {
+      "bin_high": 140,
+      "bin_low": 106,
+      "n_positions": 2748,
+      "pearson_correlation": 0.244373
+    }
+  ],
+  "threshold": {},
+  "values": {
+    "bin_correlations": [
+      0.649801,
+      0.83044,
+      0.19771,
+      0.244373
+    ],
+    "bin_edges": [
+      "1 to 35",
+      "36 to 70",
+      "71 to 105",
+      "106 to 140"
+    ],
+    "bin_width": 35,
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.879879,
+    "floor_gate_readout": 5,
+    "n_bins": 4,
+    "prior_410m_width_280_low_bins": [
+      0.648,
+      0.219,
+      0.153,
+      0.271
+    ],
+    "readout": 5,
+    "ridge_strength": 1000.0,
+    "statistic": "Pearson correlation between predicted and true count",
+    "this_record_voided_by_floor_gate": false
+  }
+}

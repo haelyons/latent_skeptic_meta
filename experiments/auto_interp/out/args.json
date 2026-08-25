@@ -1,0 +1,53 @@
+{
+  "claims": [
+    {
+      "id": "anchor-talktuner-demographics",
+      "text": "Linear probes on Llama-2-13B-chat residual activations reproduce TalkTuner's published demographic probe accuracies for age, gender, education, and socioeconomic status within a pre-stated band.",
+      "evidence": "No committed measurement exists for this claim. The complete committed record of this project is: QUESTION.md (the 27-line preregistration at /home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md), the frozen triage scripts pipeline_a.js and pipeline_b.js (audit tooling, not measurements), and an out/ directory that was empty before triage. The anchor requirement is QUESTION.md:13-15: first reproduce TalkTuner's published demographic probe accuracies on the same model within a stated band, and an out-of-band anchor voids every extension claim; no band has been stated and no reproduction run exists on disk. The seeded deterministic conversation generator promised at QUESTION.md:9-11 was never committed; there is no dataset, no activation dump, no probe weights, and no accuracy number of any kind. No control scripts exist in this project, and the local environment has no working PyTorch and only an 8 GB GPU, so no Llama-2-13B-chat measurement has been or can be produced here.",
+      "confounds": []
+    },
+    {
+      "id": "probe-expertise-level",
+      "text": "A linear probe on Llama-2-13B-chat residual activations recovers the user's expertise level above chance on held-out synthetic single-turn conversations in which the attribute is planted only via indirect cues.",
+      "evidence": "No committed measurement exists for this claim. The complete committed record of this project is: QUESTION.md (the 27-line preregistration at /home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md), the frozen triage scripts pipeline_a.js and pipeline_b.js (audit tooling, not measurements), and an out/ directory that was empty before triage. The seeded deterministic conversation generator promised at QUESTION.md:9-11 was never committed; there is no dataset, no activation dump, no probe weights, and no held-out accuracy number for this attribute. The TalkTuner demographic anchor required by QUESTION.md:13-15 was never run, and by the preregistration's own rule an out-of-band anchor voids every extension claim. The refuting outcome was pre-registered as held-out probe accuracy at chance (QUESTION.md:17-18) and has also never been measured. Declared construct risk: a probe may read surface cue tokens rather than a user model; indirect-cue construction is the stated mitigation, not a proof (QUESTION.md:24-27). No control scripts exist in this project, and the local environment has no working PyTorch and only an 8 GB GPU, so no Llama-2-13B-chat measurement has been or can be produced here.",
+      "confounds": []
+    },
+    {
+      "id": "probe-emotional-state",
+      "text": "A linear probe on Llama-2-13B-chat residual activations recovers the user's emotional state above chance on held-out synthetic single-turn conversations in which the attribute is planted only via indirect cues.",
+      "evidence": "No committed measurement exists for this claim. The complete committed record of this project is: QUESTION.md (the 27-line preregistration at /home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md), the frozen triage scripts pipeline_a.js and pipeline_b.js (audit tooling, not measurements), and an out/ directory that was empty before triage. The seeded deterministic conversation generator promised at QUESTION.md:9-11 was never committed; there is no dataset, no activation dump, no probe weights, and no held-out accuracy number for this attribute. The TalkTuner demographic anchor required by QUESTION.md:13-15 was never run, and by the preregistration's own rule an out-of-band anchor voids every extension claim. The refuting outcome was pre-registered as held-out probe accuracy at chance (QUESTION.md:17-18) and has also never been measured. Declared construct risk: a probe may read surface cue tokens rather than a user model; indirect-cue construction is the stated mitigation, not a proof (QUESTION.md:24-27). No control scripts exist in this project, and the local environment has no working PyTorch and only an 8 GB GPU, so no Llama-2-13B-chat measurement has been or can be produced here.",
+      "confounds": []
+    },
+    {
+      "id": "probe-formality-preference",
+      "text": "A linear probe on Llama-2-13B-chat residual activations recovers the user's formality preference above chance on held-out synthetic single-turn conversations in which the attribute is planted only via indirect cues.",
+      "evidence": "No committed measurement exists for this claim. The complete committed record of this project is: QUESTION.md (the 27-line preregistration at /home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md), the frozen triage scripts pipeline_a.js and pipeline_b.js (audit tooling, not measurements), and an out/ directory that was empty before triage. The seeded deterministic conversation generator promised at QUESTION.md:9-11 was never committed; there is no dataset, no activation dump, no probe weights, and no held-out accuracy number for this attribute. The TalkTuner demographic anchor required by QUESTION.md:13-15 was never run, and by the preregistration's own rule an out-of-band anchor voids every extension claim. The refuting outcome was pre-registered as held-out probe accuracy at chance (QUESTION.md:17-18) and has also never been measured. Declared construct risk: a probe may read surface cue tokens rather than a user model; indirect-cue construction is the stated mitigation, not a proof (QUESTION.md:24-27). No control scripts exist in this project, and the local environment has no working PyTorch and only an 8 GB GPU, so no Llama-2-13B-chat measurement has been or can be produced here.",
+      "confounds": []
+    },
+    {
+      "id": "probe-native-speaker-status",
+      "text": "A linear probe on Llama-2-13B-chat residual activations recovers the user's native-speaker status above chance on held-out synthetic single-turn conversations in which the attribute is planted only via indirect cues.",
+      "evidence": "No committed measurement exists for this claim. The complete committed record of this project is: QUESTION.md (the 27-line preregistration at /home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md), the frozen triage scripts pipeline_a.js and pipeline_b.js (audit tooling, not measurements), and an out/ directory that was empty before triage. The seeded deterministic conversation generator promised at QUESTION.md:9-11 was never committed; there is no dataset, no activation dump, no probe weights, and no held-out accuracy number for this attribute. The TalkTuner demographic anchor required by QUESTION.md:13-15 was never run, and by the preregistration's own rule an out-of-band anchor voids every extension claim. The refuting outcome was pre-registered as held-out probe accuracy at chance (QUESTION.md:17-18) and has also never been measured. Declared construct risk: a probe may read surface cue tokens rather than a user model; indirect-cue construction is the stated mitigation, not a proof (QUESTION.md:24-27); for native-speaker status in particular any indirect cue is necessarily realized in the surface text itself. No control scripts exist in this project, and the local environment has no working PyTorch and only an 8 GB GPU, so no Llama-2-13B-chat measurement has been or can be produced here.",
+      "confounds": []
+    },
+    {
+      "id": "probe-age-bracket",
+      "text": "A linear probe on Llama-2-13B-chat residual activations recovers the user's age bracket above chance on held-out synthetic single-turn conversations in which the attribute is planted only via indirect cues.",
+      "evidence": "No committed measurement exists for this claim. The complete committed record of this project is: QUESTION.md (the 27-line preregistration at /home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md), the frozen triage scripts pipeline_a.js and pipeline_b.js (audit tooling, not measurements), and an out/ directory that was empty before triage. The seeded deterministic conversation generator promised at QUESTION.md:9-11 was never committed; there is no dataset, no activation dump, no probe weights, and no held-out accuracy number for this attribute. Age bracket also appears in the demographic anchor set (age, QUESTION.md:13-15), so this attribute overlaps the anchor task itself; the anchor was never run, and by the preregistration's own rule an out-of-band anchor voids every extension claim. The refuting outcome was pre-registered as held-out probe accuracy at chance (QUESTION.md:17-18) and has also never been measured. Declared construct risk: a probe may read surface cue tokens rather than a user model; indirect-cue construction is the stated mitigation, not a proof (QUESTION.md:24-27). No control scripts exist in this project, and the local environment has no working PyTorch and only an 8 GB GPU, so no Llama-2-13B-chat measurement has been or can be produced here.",
+      "confounds": []
+    }
+  ],
+  "instruments": [
+    {
+      "id": "synthetic-conversation-generator",
+      "version": "unbuilt",
+      "asserts": "seeded deterministic single-turn conversations planting each target attribute via indirect cues only, never naming the attribute, with ground truth by construction and the generator committed with hash"
+    },
+    {
+      "id": "linear-probe-readout",
+      "version": "unbuilt",
+      "asserts": "linear probes on Llama-2-13B-chat residual activations with model-free decision arithmetic recover a planted attribute if and only if it is linearly decodable at the probed layer"
+    }
+  ],
+  "execute_runs": false
+}

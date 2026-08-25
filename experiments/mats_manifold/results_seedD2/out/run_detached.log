@@ -1,0 +1,123 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_seedD2.sh
+=== onbox_seedD2 model=EleutherAI/pythia-410m-deduped revision=step143000 results=results_seedD2 ===
+=== instance=80aa729f8ae8440f9e3d9aa7e5c750ca host=161-153-8-80 commit=unknown ===
+NVIDIA A100-SXM4-40GB, 40960 MiB, 570.148.08
+[inputs] design record: seedD2_design_diff_triage.json, hash bca0ff7b59bf... expected
+[inputs] gate record: GATE_COMMIT_seedD2.md (the five committed answers)
+=== SELFTESTS (no model, no graphics card; a broken instrument must show first) ===
+  provenance.py: rc=0  selftest: PASS
+  run_seedD2.py: rc=0  selftest: PASS
+=== PACKAGES (verify what remote_run.sh left; add only what is missing) ===
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[packages] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[packages] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 GPTNeoXForCausalLM resolvable
+=== DISK: 482190 MB free where results are written ===
+=== seedD2_extract RUNNING ===
+--- seedD2_extract tail ---
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+=== stage extract ===
+[extract] text file /home/ubuntu/mats_manifold/stimulus_linewrap_v2.json
+[extract] hash b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd (expected b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd) match=True
+[extract] access token from HF_TOKEN
+[extract] configuration layers=24 hidden=1024 context=2048
+[record] SETUP_OK -> results_seedD2/out/arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[extract] loading the model in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3581.04it/s]
+[record] EXTRACT_OK -> results_seedD2/out/arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[extract] 432 variants, 403393 labelled positions, 39.2 s
+=== stage extract done in 59.0 s ===
+=== seedD2_extract OK ===
+=== seedD2_calibrate RUNNING ===
+--- seedD2_calibrate tail ---
+=== stage calibrate ===
+[calibrate] ridge strength 1000 (interior on the grid: True), best training readout 6, cross-validated quality 0.6728
+[calibrate] width 140: character labels 1 to 140, profile length 120, 30 periods; token labels 1 to 41, profile length 21, 5 periods
+[calibrate] width 200: character labels 1 to 200, profile length 180, 45 periods; token labels 1 to 56, profile length 36, 9 periods
+[calibrate] width 280: character labels 1 to 280, profile length 260, 65 periods; token labels 1 to 76, profile length 56, 14 periods
+[record] CALIBRATION_OK -> results_seedD2/out/arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+=== stage calibrate done in 31.4 s ===
+=== seedD2_calibrate OK ===
+=== seedD2_endpoints RUNNING ===
+--- seedD2_endpoints tail ---
+[record] CONFOUNDED_WITH_TOKEN_POSITION -> results_seedD2/out/aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 200 token control: period 18.00 tokens, 74.33 characters, rank 2 of 200 (3.2 s)
+[endpoints] width 200 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED -> results_seedD2/out/aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 280 token control: period 56.00 tokens, 233.43 characters, rank 1 of 200 (3.4 s)
+[endpoints] width 280 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED -> results_seedD2/out/aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] measurable range at width 280 -> RANGE_PATTERN_UNMATCHED
+[record] RANGE_PATTERN_UNMATCHED -> results_seedD2/out/aperture-280_arm-measurable_range_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] AT_LEAST_ONE_CLEARED -> results_seedD2/out/arm-widths_clearing_count_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] WAVELENGTH_GAP_EXCEEDS_10 -> results_seedD2/out/arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] RATIO_GAP_EXCEEDS_0.1 -> results_seedD2/out/arm-ratio_gap_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] VOID_ANCHOR_FAILED -> results_seedD2/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] summary {"setup_check": "SETUP_OK", "calibration": "CALIBRATION_OK", "endpoint_1_anchor_gate": "ANCHOR_OUT_OF_BAND", "endpoint_2_wobble_vs_shuffle": {"140": "NULL_CLEARED", "200": "NULL_CLEARED", "280": "NULL_CLEARED"}, "endpoint_3_widths_clearing_count": "AT_LEAST_ONE_CLEARED", "endpoint_4_wavelength_gap": "WAVELENGTH_GAP_EXCEEDS_10", "endpoint_5_ratio_gap": "RATIO_GAP_EXCEEDS_0.1", "endpoint_6_measurable_range": "RANGE_PATTERN_UNMATCHED", "endpoint_7_token_position_control": {"140": "CONFOUNDED_WITH_TOKEN_POSITION", "200": "CHARACTER_COUNT_DISTINGUISHED", "280": "CHARACTER_COUNT_DISTINGUISHED"}, "best_readout": 5, "held_out_quality_w140": 0.549167, "held_out_quality_pooled": 0.657823, "ridge_strength": 1000.0, "ridge_argmax_interior_on_grid": true, "n_widths_clearing": 3, "wavelengths_chars": {"140": 40.0, "200": 16.363636363636363, "280": 130.0}, "ambient_dimension_by_aperture": {"140": 100, "200": 148, "280": 201}, "largest_gap_chars": 113.6364, "largest_ratio_gap": 0.382468, "headline": "VOID_ANCHOR_FAILED"}
+=== stage endpoints done in 39.1 s ===
+=== seedD2_endpoints OK ===
+=== COLLECT results_seedD2/out -> out/ ===
+-rw-rw-r-- 1 ubuntu ubuntu    2676 Aug 21 12:02 arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu    2676 Aug 21 12:02 arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu    1831 Aug 21 12:02 arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    1831 Aug 21 12:02 arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu    2172 Aug 21 12:02 arm-widths_clearing_count_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    2172 Aug 21 12:02 arm-widths_clearing_count_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu    6272 Aug 21 12:02 calibration.json
+-rw-rw-r-- 1 ubuntu ubuntu    6272 Aug 21 12:02 calibration_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu 1314750 Aug 21 12:02 mean_vectors_aperture-140_labels-characters.npz
+-rw-rw-r-- 1 ubuntu ubuntu  359598 Aug 21 12:02 mean_vectors_aperture-140_labels-tokens.npz
+-rw-rw-r-- 1 ubuntu ubuntu 1969950 Aug 21 12:02 mean_vectors_aperture-200_labels-characters.npz
+-rw-rw-r-- 1 ubuntu ubuntu  494238 Aug 21 12:02 mean_vectors_aperture-200_labels-tokens.npz
+-rw-rw-r-- 1 ubuntu ubuntu 2933150 Aug 21 12:02 mean_vectors_aperture-280_labels-characters.npz
+-rw-rw-r-- 1 ubuntu ubuntu  679358 Aug 21 12:02 mean_vectors_aperture-280_labels-tokens.npz
+-rw-rw-r-- 1 ubuntu ubuntu 1138373 Aug 21 12:02 null_spectra_aperture-140_labels-characters.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  198041 Aug 21 12:02 null_spectra_aperture-140_labels-tokens.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1695136 Aug 21 12:02 null_spectra_aperture-200_labels-characters.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  341175 Aug 21 12:02 null_spectra_aperture-200_labels-tokens.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 2495245 Aug 21 12:02 null_spectra_aperture-280_labels-characters.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  539392 Aug 21 12:02 null_spectra_aperture-280_labels-tokens.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 5955038 Aug 21 12:02 rows_positions_apertures.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1687800 Aug 21 12:02 rows_variants.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu    9201 Aug 21 12:02 run_detached.log
+-rw-rw-r-- 1 ubuntu ubuntu     708 Aug 21 12:02 seedD2_calibrate.log
+-rw-rw-r-- 1 ubuntu ubuntu    4069 Aug 21 12:02 seedD2_endpoints.log
+-rw-rw-r-- 1 ubuntu ubuntu    1200 Aug 21 12:01 seedD2_extract.log
+-rw-rw-r-- 1 ubuntu ubuntu    2990 Aug 21 12:02 seedD2_onbox_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu       0 Aug 21 12:02 seedD2_status.err
+-rw-rw-r-- 1 ubuntu ubuntu      15 Aug 21 12:00 selftest_provenance.log
+-rw-rw-r-- 1 ubuntu ubuntu   11516 Aug 21 12:00 selftest_run_seedD2.log
+5.9G	results_seedD2/work
+=== EXIT CODES: selftest_provenance=0 selftest_run_seedD2=0 packages=0 disk=0 seedD2_extract=0 seedD2_calibrate=0 seedD2_endpoints=0 ===
+=== ALLDONE_SEEDD2 OK ===

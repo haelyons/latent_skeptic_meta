@@ -1,0 +1,456 @@
+{
+  "claims": [
+    {
+      "id": "anchor-talktuner-demographics",
+      "grounding": {
+        "grounding": "reproduces",
+        "note": "All four anchor accuracies, band arithmetic, test-family disjointness (f09-f11 only), row labels vs dataset.jsonl, and the three instrument sha256s reproduce exactly; gender OUT_OF_BAND confirmed independently from raw fp16 activations; education PERM_ANOMALY present as stated.",
+        "observed": "Re-derived from per-item rows: age 0.9467 (244 rows; claim 0.9467), education 0.9399 (claim 0.9399), ses 1.0000 (claim 1.0000), gender 0.4467 = 67/150 (claim 0.4467); poscontrol topic 1.0000. My own numpy logistic probe on acts_anchor_gender.npz layer 6: val 0.98 / test 0.48 vs their 0.980 / 0.4467 (layer 27 would have given test 0.92). probe_summary_ALL.json anchor_in_band=false.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/PREREG.md",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/dataset.jsonl",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/dataset_manifest.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/convgen_selftest.txt",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_anchor_age.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_anchor_gender.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_anchor_education.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_anchor_ses.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_poscontrol_topic.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ALL.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/acts_anchor_gender.npz"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "off-distribution ablation",
+          "status": "RULED_OUT",
+          "crux": "The protocol contains no ablation step at all — it is a linear-probe readout (last-token residual after an appended fixed prompt, logistic regression per layer), with layer selection on val families and a single report on template-disjoint test families (dataset_manifest.json). \"Off-distribution ablation\" as a mechanism (activations pushed off-distribution by an intervention/ablation, inflating apparent accuracy) has no foothold here since nothing is ablated; the only distribution-shift risk in this design is train/val/test template leakage, which the manifest's 7/2/3 disjoint-family split and the passed permutation gates for the IN_BAND anchors (age 0.189/0.197, ses 0.383/0.202, both well under the |mean-chance|<=0.104 committed threshold) are built to catch and did not flag."
+        },
+        {
+          "confound": "Downstream compensation / self-repair is a phenomenon observed under causal intervention: when a component (head, layer, direction) is ablated or patched, later layers partially restore the lost information/behavior, which can make accuracy or effect-size measurements look smaller than the \"true\" causal contribution of the ablated part. It requires an intervention step whose effect is measured at a later point.",
+          "status": "RULED_OUT",
+          "crux": "The protocol described (run_probe_study.py) is pure observational linear probing on frozen fp16 residual activations at the last token of an appended prompt, across all 41 layers, with per-layer logistic regression chosen on val and reported once on test — no ablation, patching, steering, or any other intervention on the network's forward pass appears anywhere in the described method or artifacts (dataset.jsonl, acts_{task}.npz, probe_summary_*.json). Self-repair requires a perturbation for downstream layers to compensate for; there is none here."
+        },
+        {
+          "confound": "selection bias — the study could produce a spurious \"reproduces the band\" claim if the test items/layer were selected in a way that favors success (favorable subset, layer chosen on the same data it's tested on, or discarding anomalies)",
+          "status": "RULED_OUT",
+          "crux": "Layer selection happens on val cue-families and is reported once on a template-disjoint test split, with a prestated permutation gate — and both failure modes selection bias would predict (val/test divergence for gender; inflated permutation accuracy for education) were caught and reported as disqualifying rather than hidden, yielding the committed anchor_in_band=false rather than a falsely-inflated positive."
+        },
+        {
+          "confound": "readout artifact: the TalkTuner-faithful readout (last-token residual of one fixed appended prompt \"I think the {attribute} of this user is\") may pick up superficial/template-bound cues correlated with the label in the 7 train + 2 val cue families rather than a genuine, generalizing attribute direction, so accuracy on the template-disjoint 3 test families collapses.",
+          "status": "EXPLAINS",
+          "crux": "anchor_gender's val accuracy (0.980, same layer 6) versus test accuracy (0.4467, below the 0.50 chance floor) is exactly the signature of a readout that fit surface/template features present in train+val families and failed to transfer to the disjoint test families — i.e., the probe was reading an artifact of phrasing/family structure captured by this fixed single-prompt last-token readout, not a genuine gender direction. recheck_rows.py MATCH and retrain_probe.sh REPRODUCES confirm the number is computed and reproduced correctly (not a bug), and the poscontrol topic probe (1.0000, clean perm) shows the pipeline/readout *can* extract a real signal when one exists — but neither control shows the gender readout itself is measuring the target attribute rather than family-specific surface structure, so the collapse remains consistent with (not ruled out from) a readout artifact rather than genuine non-encoding of gender. Because anchor_gender being OUT_OF_BAND is exactly what drives anchor_in_band=false, this confound plausibly produces the claim's headline (non-)result."
+        },
+        {
+          "confound": "Regime specificity: probes may learn features tied to the narrow synthetic/template regime (indirect-cue conversation templates) rather than a generalizable demographic direction, producing accuracy that looks good in-regime but fails to transfer even within the same task/model.",
+          "status": "EXPLAINS",
+          "crux": "anchor_gender: val accuracy 0.980 vs test accuracy 0.4467 (below chance 0.50) at the identical chosen layer (6), where val and test are drawn from disjoint cue-template families by the preregistered 7/2/3 split — the probe generalizes within its training regime's template families but collapses on unseen template families, the defining signature of regime specificity, and this single collapse is what makes anchor_in_band=false for the whole claim."
+        },
+        {
+          "confound": "construct validity — whether the \"indirect cue\" probe target actually captures the underlying demographic attribute (gender) as a stable, transferable construct, versus latching onto surface features specific to the cue-family templates used to elicit it",
+          "status": "EXPLAINS",
+          "crux": "anchor_gender: val accuracy 0.980 at layer 6 collapses to test accuracy 0.4467 (below chance 0.50) on the template-disjoint test cue families, with test-set permutation baselines at 0.493/0.527 — i.e., whatever the probe learned from train/val cue families carried no signal into unseen cue families. That is the signature of a probe fitting cue-family-specific correlates rather than a genuine, generalizable representation of \"gender,\" which is exactly what a construct-validity confound predicts, and no committed control addresses this: recheck_rows.py only re-verifies arithmetic (MATCH) and retrain_probe.sh only confirms the same layer/activations reproduce the same numbers (REPRODUCES) — neither tests whether the test-family cues instantiate the same construct as train/val families. The anchor_education PERM_ANOMALY (permuted-label test accuracies 0.546/0.410 far above chance 0.333) independently shows family-identity leakage into probe accuracy, reinforcing that \"accuracy\" on these splits partly reflects template/family structure rather than the demographic construct itself."
+        },
+        {
+          "confound": "Scale incomparability would mean the published TalkTuner accuracies and this replication's accuracies aren't measured on comparable scales (different chance levels, different test-set composition/size, different accuracy definitions across tasks), so a flat published-minus-0.12 band is not a fair yardstick and apparent IN_BAND/OUT_OF_BAND calls could be artifacts of that scale mismatch rather than real reproduction success/failure.",
+          "status": "RULED_OUT",
+          "crux": "For anchor_gender the same probe, same layer (6), same accuracy scale and same n-convention scores 0.980 on val families but 0.4467 (below chance 0.50) on template-disjoint test families. This is a within-study, same-metric, same-layer comparison — nothing about published-vs-replicated scale differs between the val and test numbers — yet the score collapses. That rules out a cross-study scale/metric mismatch as the driver of the OUT_OF_BAND gender result: the collapse is explained by generalization failure across template families, not by scale incomparability. The education PERM_ANOMALY (permuted-label accuracy 0.546/0.410 vs chance 0.333) is likewise a within-run permutation-test artifact, not a published-vs-replica scale issue."
+        },
+        {
+          "confound": "Noise floor: the worry that reported test accuracies (both the IN_BAND ones and the anomalous ones) merely reflect chance-level performance dressed up by a small, high-variance test set (n_test 150-244), rather than genuine learned probe signal.",
+          "status": "RULED_OUT",
+          "crux": "The protocol's own permutation-null baseline per task is the direct noise-floor instrument, and every task's outcome diverges from its permutation null for a documented non-noise reason: age (test 0.9467 vs perm 0.189/0.197) and SES (test 1.0000 vs perm 0.383/0.202) clear the noise floor by a huge margin, ruling out chance-level performance as the explanation for their IN_BAND status; gender's failure is not noise either — its permutation baseline sits near chance (0.493/0.527) but the actual test accuracy of 0.4467 falls *below* that, while val accuracy at the identical layer was 0.980, so the mechanism is documented template/distribution-shift overfitting (full confusion in the rows), not floor noise; education's anomaly is the inverse of noise floor — its permuted-label accuracy (0.546/0.410) is itself far above chance (0.333), meaning even scrambled labels are separable, i.e. leakage/artifact structure, not indistinguishable-from-noise performance. In no task does the data look like signal-free noise."
+        },
+        {
+          "confound": "Ceiling/floor effects could make the reported band matches uninformative: a task too easy could push any correlated signal to ceiling (masking whether TalkTuner's actual mechanism is being reproduced), or too hard could flatten scores at a floor regardless of probe quality.",
+          "status": "RULED_OUT",
+          "crux": "Whether anchor_ses's ceiling accuracy (1.0000) reflects a genuine, label-dependent signal or a trivial/leaky shortcut that would saturate regardless of true labels — the permutation control distinguishes these and shows the former."
+        },
+        {
+          "confound": "single-case/family overfit: with only 12 total cue families split 7 train/2 val/3 test, a probe can memorize surface patterns in the tiny held-out family set rather than learning a generalizing demographic direction, inflating (or, on failure, catastrophically collapsing) reported test accuracy.",
+          "status": "EXPLAINS",
+          "crux": "Gender's val accuracy 0.980 (same layer 6) collapsed to test 0.4467 (below 0.50 chance) on the template-disjoint test families, proving that this pipeline's family-disjoint split does NOT prevent overfit/non-generalization; no per-family breakdown exists to show ses's ceiling (test=1.0000, only 3 held-out families, n=183) or age's 0.9467 are immune to the same mechanism."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "an alternate readout probe for anchor_gender that averages/mean-pools residuals over the full appended message (or over the last-k tokens) instead of the single last token, retrained at the same recorded layer on the identical train/val/test split, to test whether accuracy on the disjoint test families recovers — only the single fixed last-token readout is on record."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-expertise-level",
+      "grounding": {
+        "grounding": "reproduces",
+        "observed": "Re-derived from the 150 committed per-item rows: test acc 0.8333 (125/150), n_test 150, chance 0.50 — matches claimed 0.8333. Rows' labels independently match dataset.jsonl test-split labels 150/150; test families {f09,f10,f11} are disjoint from train {f00-f06} / val {f07,f08}; split sizes 350/100/150 as claimed. Perm controls 0.3933/0.4533 lie inside prestated band 0.5±0.1225 (3*se, se=0.0408); threshold 0.5+max(0.10,3*se)=0.6225 -> RECOVERED. Independent mean-difference probe on the raw layer-12 activations (acts_ext_expertise.npz, 600x41x5120) gives 0.8133 test acc, confirming the signal is in the saved activations and not only in the summary. Gate confirmed independently: probe_summary_ALL.json anchor_in_band=false, anchor_gender test 0.4467.",
+        "note": "Headline number reproduces from raw rows and from raw activations, but the preregistered anchor gate is genuinely failed (anchor_gender 0.4467), so per QUESTION.md:13-15 the number is committed and not claimable as attribute recovery; test items also carry explicit lexical expertise cues (\"taught workshops for over a decade\" vs \"still need step by step pictures\"), so the declared surface-cue construct risk is live.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ext_expertise.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ALL.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_anchor_gender.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_poscontrol_topic.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/acts_ext_expertise.npz",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/dataset.jsonl",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/dataset_manifest.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/convgen_selftest.txt"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "Off-distribution ablation would require an intervention step (patching/ablating a feature or direction, then testing whether the causal effect only shows up because the ablation was performed on inputs unlike training data). Nothing in this evidence describes any ablation, patching, or intervention at all — the pipeline described (PREREG.md, generator lint, probe_summary_ext_expertise.json, recheck_rows.py, retrain_probe.sh) is entirely a supervised linear-probe train/val/test split with permutation baselines, evaluated on held-out synthetic conversations. There is no lesion/patch step whose out-of-distribution application could be inflating or deflating the reported 0.8333 accuracy.",
+          "status": "RULED_OUT",
+          "crux": "The reported number is a probe classification accuracy from a train/test split with permutation controls, not the output of any ablation/patching procedure — so \"off-distribution ablation\" has no locus to act on in this measured pipeline."
+        },
+        {
+          "confound": "downstream compensation (self-repair)",
+          "status": "RULED_OUT",
+          "crux": "Self-repair requires a causal intervention (ablation/patching) whose downstream effect later layers can compensate for; this study only fits a linear probe on unperturbed raw residual activations (probe_summary_ext_expertise.json; retrain_probe.sh reproduces from raw committed activations) with no ablation/patching step anywhere in the pipeline, so there is no intervention for downstream layers to compensate for."
+        },
+        {
+          "confound": "selection bias",
+          "status": "NEEDS_RUN",
+          "crux": "Layer 12 was chosen because it hit val=1.000 (a suspiciously perfect score) among however many layers were swept, and the committed record only reports the winning layer's test accuracy (0.8333). The permutation controls (0.393/0.453) test label-shuffling null, not layer-selection null — they don't tell us what test accuracy would look like for a layer picked without dev-set peeking, or what the other layers' test accuracies were. Without a per-layer test-accuracy table (or a nested-CV / held-out layer-selection re-run), we cannot tell whether 0.8333 reflects true recovery at a fixed a priori layer or is inflated by searching across layers and reporting only the val-best one — a textbook selection-from-unreported-attempts pattern that H2 says a bare threshold-clearance does not resolve."
+        },
+        {
+          "confound": "Readout artifact: the linear probe may be exploiting superficial surface cues (topic-slotted jargon-density tokens) rather than reading out a genuine internal \"user model\" of expertise, and the reported 0.8333 accuracy could be an artifact of the measurement instrument (the probe/pipeline) rather than evidence of attribute recovery.",
+          "status": "EXPLAINS",
+          "crux": "The prereg anchor check — whose sole purpose is to validate that the same probing instrument reliably reads out an attribute that should be trivially easy to recover — failed (anchor_gender test_acc 0.4467, required >=0.82, out/results_probe/out/probe_summary_ALL.json anchor_in_band=false). QUESTION.md:13-15 states this voids every extension claim. This means the readout instrument itself is not established as valid on this run, so the 0.8333 expertise number cannot be distinguished from an artifact of a probing apparatus that fails even on an easy control; the declared construct risk (surface cue tokens vs. genuine user model, QUESTION.md:24-27) is explicitly unresolved, and the topic positive control (1.0000 vs chance 0.0625) only shows the probe readily latches onto surface/topic cues, consistent with (not against) the readout-artifact explanation."
+        },
+        {
+          "confound": "Regime specificity — the probe's 83.33% test accuracy could be an artifact of overfitting to the narrow synthetic template/generation regime used to build the training data, rather than reflecting any generalizable expertise-recovery signal.",
+          "status": "RULED_OUT",
+          "crux": "Whether the held-out test set that produced 0.8333 was drawn from template families disjoint from those used for training/val selection — if so, memorization of narrow template surface regularities would show up as chance-level held-out accuracy, but it doesn't."
+        },
+        {
+          "confound": "construct validity — does the linear probe recover a genuine internal representation of \"user expertise,\" or does it just read out surface lexical/statistical cues (jargon density, register) that were the literal mechanism used to plant the attribute?",
+          "status": "EXPLAINS",
+          "crux": "QUESTION.md:24-27 names the exact mechanism this confound predicts — \"the probe may read surface cue tokens (here, topic-slotted jargon-density cue sentences) rather than a user model\" — and the evidence itself concedes indirect-cue construction is \"the mitigation, not a proof.\" Template-disjointness rules out literal template memorization, not surface-cue reading, since the cues (jargon density) ARE the planted signal by construction. The positive control (topic probe 1.0000 vs chance 0.0625) only shows the readout pipeline can decode strongly-present surface features at ceiling — it doesn't show the expertise probe is doing anything different from that same surface-feature decoding. No committed number (e.g., a cue-scrambled/ablated variant, or a cross-cue-family holdout showing the probe fails when the specific jargon-density tokens are removed but expertise is still implied contextually) distinguishes \"probe reads a user-expertise construct\" from \"probe reads jargon-density tokens.\" Separately, the prereg's own anchor-based validity gate for this exact pipeline failed (anchor_gender test 0.4467 vs band ≥0.82), which is independent corroboration that this measurement apparatus does not reliably track the intended latent attribute even when a gate is prespecified to check it."
+        },
+        {
+          "confound": "Scale incomparability would mean the reported 83.33% test accuracy is being judged against a chance/threshold baseline computed on a mismatched scale (e.g., a chance rate borrowed from a different n-way task, or an accuracy metric not commensurate with the permutation-null distribution).",
+          "status": "RULED_OUT",
+          "crux": "Whether the 0.50 chance baseline, the se-derived threshold (0.6225), and the empirical permutation nulls (0.393/0.453) are all on the same scale as the reported binary test accuracy (0.8333, n_test=150)."
+        },
+        {
+          "confound": "noise floor (test-set chance variance / small-n sampling noise around chance=0.50)",
+          "status": "RULED_OUT",
+          "crux": "Whether 0.8333 test accuracy (n=150) is distinguishable from chance-level sampling noise given the prestated se=0.0408; it is ~8.2 se above chance, permutation controls (0.393/0.453) confirm the noise floor is correctly centered near 0.50, and the number reproduces exactly via independent recheck/retrain scripts."
+        },
+        {
+          "confound": "ceiling or floor effect: does the reported 0.8333 test accuracy reflect a metric pinned at its ceiling (~1.0, task trivially easy / ranking collapse) or floor (~chance, no real spread), which would make \"recovers above chance\" an artifact of a degenerate scale rather than real discrimination?",
+          "status": "RULED_OUT",
+          "crux": "Test accuracy sits at 0.8333 — well below the 1.0 ceiling and well above the ~0.50 chance floor — while the permutation controls (0.393/0.453) independently occupy the floor region, showing the metric has genuine range and the observed 0.8333 is not a pinned/degenerate value at either extreme."
+        },
+        {
+          "confound": "single-case overfit predicts the 0.8333 test accuracy is an artifact of the probe having memorized specific surface forms/templates seen during training rather than genuinely recovering expertise from indirect cues on novel cases.",
+          "status": "RULED_OUT",
+          "crux": "The prereg design used template-disjoint test families (train/test drawn from non-overlapping template sets, generator lint PASS in out/convgen_selftest.txt), so the held-out n=150 test cases are not surface-repeats of training cases; combined with permutation-label controls landing at 0.393/0.453 (near the 0.50 chance line) while the real-label probe scores 0.8333, the signal cannot be explained by the probe having overfit to a small set of memorized single cases/templates — a memorized-artifact probe would not clear a template-disjoint test set by ~5 SE while shuffled labels stay at chance."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "report test_acc for every layer in the sweep (not just layer 12) alongside each layer's val_acc, so the margin between the val-selected layer's test accuracy and the distribution of other layers' test accuracies can be checked against the permutation band; if PREREG.md fixed layer 12 a priori (not chosen post hoc from the sweep), point to that line instead and this reverts to RULED_OUT."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-emotional-state",
+      "grounding": {
+        "grounding": "reproduces",
+        "observed": "claim: test_acc 1.0000, n_test 150, chance 0.50, perms 0.620/0.467. Re-derived from rows: 150/150 correct = 1.0000, balanced 75 calm / 75 frustrated, test families f09-f11 disjoint from train f00-f06 and val f07-f08. Independent nearest-centroid probe on layer 10 of out/acts_ext_emotion.npz (600x41x5120): test acc 0.9933; 5 label-permutation refits 0.593/0.427/0.520/0.560/0.507 (mean 0.521, in chance +/-0.122). Forbidden-stem lint on the 600 emotion texts: 0 leaks. anchor_gender 0.4467 vs published 0.94, anchor_in_band=false confirmed in probe_summary_ALL.json.",
+        "note": "Headline reproduces from raw activations and rows, but each test family is a single fixed template whose frustrated cue is verbatim surface text (\"An hour of trying and everything is STILL broken\"), so ceiling accuracy is consistent with reading those tokens; and the preregistered anchor gate (QUESTION.md:13-15) voids the extension claim as attribute recovery.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ext_emotion.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ALL.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_anchor_gender.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/acts_ext_emotion.npz",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/dataset.jsonl",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "Off-distribution ablation: perfect (1.0/150) held-out accuracy on synthetic, template-disjoint \"indirect cue\" conversations is consistent with the probe exploiting surface-level stylistic tells (punctuation/capitalization intensity) baked into the generator rather than recovering a genuine internal user-emotion representation.",
+          "status": "EXPLAINS",
+          "crux": "QUESTION.md:24-27 explicitly documents the unresolved construct risk that \"frustration cues include punctuation and capitalization patterns realized in surface text; the probe may read those tokens rather than a user model\" — and no committed control (e.g., punctuation/case-normalization ablation, or a naturalistic non-synthetic held-out set) was run to rule this out, so the ceiling accuracy remains fully consistent with a surface-cue/off-distribution shortcut rather than genuine emotional-state recovery."
+        },
+        {
+          "confound": "Self-repair/downstream-compensation would predict that even if the mechanism that actually reads the indirect emotional cues were disrupted or absent at an earlier layer, later layers could still produce a linearly-decodable \"emotion\" signal via redundant/compensatory computation — meaning a high test accuracy at \"best layer 10\" doesn't distinguish genuine encoding of the planted attribute from a downstream reconstruction/compensation artifact. Testing this confound requires a causal intervention (ablation, patching, or noising of the putative encoding site) to see whether the decodable signal is robust to disruption in a way consistent with compensation, versus collapsing as expected for a faithful single-site readout.",
+          "status": "NEEDS_RUN",
+          "crux": "The evidence contains only passive probe-accuracy numbers (test_acc, permutation controls, cross-check/retrain reproductions) and a topic-probe positive control — no ablation, patching, or lesion experiment on any layer is on record, so there is no committed number that can confirm or rule out that the layer-10 signal is a downstream-compensation reconstruction rather than a faithful readout of an earlier encoding site."
+        },
+        {
+          "confound": "Selection bias: this \"RECOVERED, at ceiling\" emotion-probe result is one of multiple prereg'd extension claims running under a single anchor gate. The anchor (gender) that was supposed to validate the whole probing pipeline failed (anchor_gender 0.4467 vs required band >=0.82, probe_summary_ALL.json), and QUESTION.md:13-15 explicitly states this failure voids every extension claim, including this one. So the pipeline was run across several attribute extensions, the gate that should screen out an invalid pipeline failed, and yet the one extension that hit ceiling (1.0000/150) is the one being surfaced as \"RECOVERED\" — exactly the selection-bias pattern of reporting the attempt that worked while the validity check that would have applied uniformly across attempts failed. Additionally, the declared construct risk (QUESTION.md:24-27) that frustration cues are realized in surface punctuation/capitalization tokens, combined with the positive-control topic probe also hitting ceiling (1.0000 vs chance 0.0625), shows the probe/generator combination reliably produces perfect separability whenever cues survive in the templates — consistent with the \"held-out\" test set not being adversarial to the actual (lexical) shortcut, despite template-disjoint families and lint.",
+          "status": "EXPLAINS",
+          "crux": "QUESTION.md:13-15 states the preregistered anchor failed (anchor_gender 0.4467 vs band >=0.82) and this voids every extension claim in the run — so the emotion-probe ceiling result is a committed number from a pipeline whose own gate says its extension claims aren't claimable, which is consistent with the claim surviving via selection among extensions/attempts rather than genuine attribute recovery."
+        },
+        {
+          "confound": "readout artifact — the probe may key on surface punctuation/capitalization/lexical style correlated with the frustrated/calm label rather than a genuine user-state representation.",
+          "status": "EXPLAINS",
+          "crux": "QUESTION.md:24-27 explicitly flags that frustration cues include punctuation/capitalization patterns in surface text and the probe may read those tokens rather than a user model — this exact risk is preregistered as unresolved, and the forbidden-pattern lint bans only emotion-naming stems, not surface style features, so nothing on record rules out a purely lexical/orthographic readout producing the 1.0000 ceiling accuracy."
+        },
+        {
+          "confound": "regime specificity: the reported 1.0000 test accuracy was measured on one narrow, single generator's regime (synthetic, single-turn, template-disjoint test families, indirect cues) with no committed evidence the probe's separability holds outside that regime (e.g., multi-turn, non-synthetic, differently-authored cue set).",
+          "status": "EXPLAINS",
+          "crux": "The declared construct risk (QUESTION.md:24-27) states the frustration cues realize as punctuation/capitalization patterns in surface text, and the topic-probe positive control also hits ceiling (1.0000 vs chance 0.0625) on this same generator — i.e., this synthetic regime is shown to make near-trivial linear separation available for an unrelated attribute too, consistent with the emotion probe exploiting regime-specific surface artifacts of this one generator rather than a genuine, regime-independent user-state readout. No committed number tests the probe against a second, independently-authored regime (different generator/modality/turn structure), so nothing rules this confound out."
+        },
+        {
+          "confound": "construct validity — the preregistration's own declared risk (QUESTION.md:24-27) states frustration cues are realized via punctuation/capitalization patterns in the surface text, so a linear probe reading token/surface features (not a genuine emotional-state representation) would produce identical ceiling accuracy. Nothing in the committed evidence separates \"probe reads latent user-state\" from \"probe reads surface orthographic tokens correlated with the templated label.\"",
+          "status": "NEEDS_RUN",
+          "crux": "Whether test_acc=1.0 reflects a representation of user emotional state or merely recovery of surface punctuation/capitalization tokens that the generator uses to realize \"frustrated\" vs \"calm\" cues — no committed control strips or balances those surface features across classes, so the number cannot distinguish the two."
+        },
+        {
+          "confound": "scale incomparability — accuracy compared against a chance/threshold not actually calibrated to this task's own scale",
+          "status": "RULED_OUT",
+          "crux": "Chance was measured empirically on the identical binary task/scale/n via permutation controls (mean 0.543, band chance±0.122 → threshold 0.6225), not borrowed from a mismatched scale (e.g. the 8-way topic-probe chance of 0.0625 used elsewhere as instrument sanity check); test_acc 1.0000 clears this same-scale empirical threshold with large margin."
+        },
+        {
+          "confound": "noise floor: could the reported 1.0000 accuracy merely reflect an inflated/uninformative chance baseline (e.g. n_test too small, permutation not run, or empirical floor much higher than the stated 0.50) rather than true recovery?",
+          "status": "RULED_OUT",
+          "crux": "The preregistered permutation controls (label-shuffled) give the empirical noise floor directly: 0.620 and 0.467 (mean 0.543), which falls inside the prestated chance ± 0.122 gate — confirming the floor really is ~chance, not inflated. The observed test accuracy of 1.0000 (n_test=150) clears that empirical floor by a wide margin (0.457 above the higher permutation run, 0.3775 above the prestated threshold 0.6225), so a noise-floor artifact cannot account for the statistic itself."
+        },
+        {
+          "confound": "ceiling or floor effect",
+          "status": "EXPLAINS",
+          "crux": "test_acc = 1.0000 out of n_test=150 (probe_summary_ext_emotion.json) is the maximum possible value with zero headroom — a textbook ceiling signature. At ceiling, the metric cannot distinguish \"the probe recovered a genuine user-emotional-state representation\" from \"the synthetic single-turn task was trivially separable\" (e.g. via the declared construct risk: frustration cues realized as punctuation/capitalization surface tokens, QUESTION.md:24-27). The permutation controls (0.620/0.467) only show the labels aren't shuffled-random; they say nothing about whether the non-permuted task is saturating easy. No committed evidence (harder/adversarial split, paraphrase-only cues with punctuation/caps stripped, effect-size or margin analysis below ceiling) rules out that the perfect score reflects a too-easy test distribution rather than emotional-state recovery."
+        },
+        {
+          "confound": "Single-case overfit here means the probe could be memorizing template-bound surface tokens (punctuation/capitalization patterns that realize the \"frustration\" cue) rather than recovering a genuine user-emotion representation. The protocol asserts \"template-disjoint test families,\" but that is a qualitative design claim, not a quantified control — no committed number reports how many distinct template families exist, how accuracy breaks down per family, or what accuracy remains after scrubbing the flagged surface tokens (punctuation/capitalization) from the inputs.",
+          "status": "EXPLAINS",
+          "crux": "QUESTION.md:24-27 explicitly declares the construct risk that \"frustration cues include punctuation and capitalization patterns realized in surface text; the probe may read those tokens rather than a user model.\" Combined with test accuracy at ceiling (1.0000/150), this is exactly the signature single-case/template overfitting would produce, and nothing in the committed evidence (permutation controls test label-shuffling, not cue-scrubbing or cross-template generalization) rules it out."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "Ablation/patching control: perturb (zero- or mean-ablate, or noise) the emotion-relevant directions/activations at layer 10 (and earlier candidate layers) on the held-out set, then re-run the frozen probe pipeline on downstream layers to check whether accuracy collapses (no self-repair) or is reconstructed at later layers (self-repair/compensation).",
+        "Surface-cue normalization control: re-run the probe (or a bag-of-surface-features baseline) on activations/text with punctuation and capitalization normalized/balanced across the frustrated/calm classes, to check whether test_acc collapses toward chance once those surface cues are removed."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-formality-preference",
+      "grounding": {
+        "grounding": "reproduces",
+        "observed": "Re-derived from rows in probe_summary_ext_formality.json: 96/96 correct = test_acc 1.0000, n_test 96 (claim: 1.0000/96); perm_test_accs [0.60417, 0.71875] -> mean 0.66146 vs claim 0.661; se=sqrt(.25/96)=0.05103, gate max(0.05,3se)=0.15309 (claim 0.153), RECOVERED threshold 0.5+0.15309=0.65309 (claim 0.6531). Input side: dataset.jsonl has 384 ext_formality items, 192/192 balanced, splits 224/64/96 matching n_train/n_val/n_test, families train{0-6}/val{7,8}/test{9-11} = template-disjoint. probe_summary_ALL.json anchor_in_band=false, anchor_gender OUT_OF_BAND.",
+        "note": "Every headline number re-derives exactly from the raw rows/values, including the failed permutation gate and the voiding anchor gate; the raw test texts confirm the claim's own caveat that the label is carried in whole-message register (e.g. \"heyy ... asking for me obvs\" vs \"Good morning. If it is not an imposition, kindly advise:\"), i.e. surface form, not an indirect cue, and only 2 permutation trials back the 0.661 mean.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ext_formality.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ALL.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/dataset.jsonl",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/PREREG.md"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "off-distribution ablation would require a causal intervention step — ablating/zeroing a direction found off-distribution and measuring downstream degradation on in-distribution data. Nothing in this record involves any ablation: the entire pipeline described (PREREG.md protocol, out/results_probe/out/probe_summary_ext_formality.json) is train-a-linear-probe / test-classification-accuracy on held-out synthetic conversations, plus permutation controls (shuffled-label retraining) as the instrument check. There is no activation-patching, direction-zeroing, or ablate-and-remeasure step anywhere in the cited evidence.",
+          "status": "RULED_OUT",
+          "crux": "The assigned confound presupposes an ablation intervention; this experiment is a passive probe-training/testing design with permutation controls, not an ablation study, so the mechanism cannot apply."
+        },
+        {
+          "confound": "downstream compensation (self-repair)",
+          "status": "RULED_OUT",
+          "crux": "Self-repair is compensatory reorganization that occurs after an upstream ablation/patch; this protocol only trains/tests linear probes on raw, unperturbed activations (probe_summary_ext_formality.json; controls/retrain_probe.sh reproduces from raw activations) with no ablation step anywhere in the pipeline, so there is no intervention for any downstream layer to compensate for."
+        },
+        {
+          "confound": "selection bias",
+          "status": "EXPLAINS",
+          "crux": "Permutation (shuffled-label) controls score 0.604/0.719 (mean 0.661), exceeding the prereg's own |mean-chance|<=0.153 anomaly gate — i.e. probes trained on scrambled labels still decode 'formality' well above the 0.50 chance line. That pattern is the signature of a selection artifact (test/train folds or template assignment correlated with something other than the true label, e.g. skeleton-family imbalance across the split) rather than genuine attribute recovery: if labels don't matter, held-out class structure/selection is doing the work, not the linear probe reading a user-formality signal."
+        },
+        {
+          "confound": "readout artifact: a linear probe trained on register-laden residual activations may be reading low-level, template-realized surface features of the formality skeleton (word choice, punctuation, sentence-length statistics) rather than any latent representation of \"the user's formality preference,\" making the near-perfect test accuracy uninformative about preference-tracking.",
+          "status": "EXPLAINS",
+          "crux": "The permutation-control instrument check is the load-bearing fact: probes trained on shuffled labels still score 0.604/0.719 (mean 0.661) on true test labels at the same best layer (3), which exceeds the prestated anomaly gate |mean-chance|<=0.153. This means the layer-3 representation contains a feature so strongly and trivially correlated with the label-independent surface structure of the two template skeletons that even a mislabeled probe exploits it — i.e., the classifier is reading a formality-correlated surface/readout artifact, not evidence of a user-model or preference representation. Combined with the preregistered anchor itself failing (anchor_in_band=false), which per QUESTION.md voids every extension claim including this one, the committed record's own decision is RECOVERED+PERM_ANOMALY = not claimable, exactly the outcome the readout-artifact confound predicts and PREREG's gate was designed to catch."
+        },
+        {
+          "confound": "The claim's own committed record already flags the exact failure mode: at the best layer (3), probes trained on SHUFFLED labels still score 0.604–0.719 on true test labels, blowing through the prestated |mean−chance|<=0.153 gate (probe_summary_ext_formality.json). That means the \"1.00 test accuracy\" is not distinguishing a genuine formality-preference signal from trivial, generator-specific surface/register features baked into this one synthetic regime (formal-skeleton vs casual-skeleton templates, template-disjoint only within that same generator family). A linear probe reading token-level register cues from this particular synthetic-generation regime is, by the record's own construct-risk note, indistinguishable from one reading a genuine user model — and the anchor task (probe_summary_ALL.json: anchor_in_band=false) that would calibrate the whole pipeline against a known-answer baseline also failed, per QUESTION.md:13-15 voiding every extension claim including this one. So the perfect held-out accuracy is fully consistent with (and by the preregistered instrument is attributed to) an artifact of the specific test regime/generator rather than a formality-preference signal that would hold across regimes.",
+          "status": "EXPLAINS",
+          "crux": "Permutation-control accuracy (0.604/0.719, mean 0.661) at the claimed best layer exceeds the prestated anomaly gate (max(0.05,3*se)=0.153) and the anchor sanity check failed (anchor_in_band=false) — both are committed, prereg'd instrument checks whose explicit purpose is to catch exactly this: a probe latching onto low-level surface/register artifacts of one synthetic-generation regime rather than a genuine, regime-general preference signal. Per PREREG the record's own decision is RECOVERED+PERM_ANOMALY / not claimable, so the 1.00 accuracy is explained by regime-specific artifact, not evidence against it."
+        },
+        {
+          "confound": "construct validity: formality is defined as whole-message register (formal vs casual skeleton), so a linear probe reading token-level/lexical register cues is indistinguishable from one reading a genuine \"user preference\" representation — the class label is realized in surface form, not in any latent preference construct.",
+          "status": "EXPLAINS",
+          "crux": "out/results_probe/out/probe_summary_ext_formality.json: permutation controls (shuffled-label probes) score 0.604/0.719 (mean 0.661) at the same layer, exceeding the prestated gate |mean-chance|<=0.153 — i.e. probes trained on scrambled labels still classify true test labels far above chance, which is only possible if the \"signal\" is a surface register feature (formal/casual skeleton) separable independent of the true attribute label, exactly the construct-invalidity failure mode declared in QUESTION.md:24-27. The prereg's own anchor gate also failed (anchor_in_band=false), voiding the extension per QUESTION.md:13-15."
+        },
+        {
+          "confound": "scale incomparability",
+          "status": "EXPLAINS",
+          "crux": "The claim's \"above chance\" comparison uses a naive 0.50 baseline, but the prereg's own permutation-control instrument establishes the actual null distribution for this feature space at mean 0.661 (0.604/0.719) — nearly 32 points higher than the naive chance scale. That is a direct case of scale incomparability: test_acc=1.0000 looks dramatically \"above chance\" only against the wrong (0.50) scale. Measured against the correct scale (the permutation-derived null), the prereg's own gate (|mean-chance|<=0.153) fails, and the record is explicitly logged as RECOVERED+PERM_ANOMALY, not claimable."
+        },
+        {
+          "confound": "noise floor",
+          "status": "EXPLAINS",
+          "crux": "The permutation controls (shuffled-label probes) score 0.604/0.719 (mean 0.661) against a chance rate of 0.50 — this is the noise floor for this template-disjoint, low-level register task, and it sits far above chance and even above the prestated RECOVERED threshold of 0.6531 itself. That means the instrument's own floor is elevated, so the reported test_acc 1.0000 cannot be attributed to a genuine formality-preference signal versus surface-level artifacts the shuffled-label probe already exploits."
+        },
+        {
+          "confound": "Ceiling effect: the task saturates so strongly (real probe test_acc = 1.0000, a hard ceiling) that even permutation controls (shuffled-label probes) score 0.604–0.719, well above the chance baseline of 0.50 and above the prestated |mean-chance|<=0.153 gate. This is the textbook ceiling signature: the classification problem (whole-message register, template-disjoint but style-realized) is so linearly separable on surface/token-level features that ANY probe — including ones trained on nonsense labels — hits near-ceiling performance. The \"above chance\" claim is therefore not distinguishing genuine attribute recovery from a saturated, low-level surface-form artifact; it's exactly what a ceiling effect predicts.",
+          "status": "EXPLAINS",
+          "crux": "out/results_probe/out/probe_summary_ext_formality.json: test_acc=1.0000 (ceiling) while permutation controls = 0.604/0.719 (mean 0.661), exceeding the prereg gate max(0.05,3*se)=0.153 — meaning shuffled-label probes also saturate above chance, showing the task/signal is at a ceiling that swamps the real-vs-null distinction. Per prereg this is explicitly RECOVERED+PERM_ANOMALY = not claimable, and the anchor gate (probe_summary_ALL.json: anchor_in_band=false) independently voids the extension claim per QUESTION.md:13-15."
+        },
+        {
+          "confound": "single-case overfit: the probe may recover \"formality\" only by memorizing surface features of a small number of repeated base cases/templates in the test set, rather than generalizing across distinct held-out cases carrying the attribute via indirect cues.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether n_test=96 is built from many genuinely distinct held-out cases (with indirect cues) or a small number of base cases/templates duplicated with surface paraphrase — no committed number gives the count of distinct underlying cases in the test set or a per-case/leave-one-case-out accuracy breakdown, so single-case overfit cannot be confirmed or excluded from what's on record."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "a control that reports the number of distinct base cases/user-profiles underlying n_test=96 and computes leave-one-case-out (or per-case) accuracy on the ext_formality test split, to check whether the 1.0 test accuracy collapses when no two test items share a base case/template."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-native-speaker-status",
+      "grounding": {
+        "grounding": "reproduces",
+        "observed": "re-derived from 96 saved rows: 78/96 = 0.8125 test acc (claim 0.8125), n_test 96, threshold 0.5+3*se = 0.65309 (claim 0.6531); balanced 48/48; perm accs [0.5208, 0.6875] mean 0.6042; best layer 2, val 1.000; anchor_in_band=false confirmed in probe_summary_ALL.json",
+        "note": "Headline number and gate both reproduce from raw artifacts: test rows' labels match dataset.jsonl exactly, families are split-disjoint (train f00-f06 / val f07-f08 / test f09-f11), no attribute-naming leak in test text; the preregistered anchor is out of band (gender OUT_OF_BAND, education PERM_ANOMALY), so RECOVERED is a voided decodability statement only, consistent with best layer 2 being a surface-grammar read.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ext_native.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ALL.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/dataset.jsonl",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/QUESTION.md",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/PREREG.md"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "The assigned confound (off-distribution ablation) posits that a reported effect is an artifact of running an ablation intervention on inputs/activations that are off the model's natural training distribution, producing spurious behavior that looks like a real capability/effect. This mechanism requires an ablation step in the pipeline.",
+          "status": "RULED_OUT",
+          "crux": "The reported number (test_acc 0.8125) comes purely from training/testing a linear probe on raw residual activations and comparing to label-permutation controls — no zeroing, mean-, or resample-ablation of any activation/feature is performed anywhere in the pipeline described in the evidence (PREREG.md protocol, out/results_probe/out/probe_summary_ext_native.json, controls/recheck_rows.py, controls/retrain_probe.sh). Since the claim's mechanism is decode-from-raw-activations, not intervene-then-observe, there is no ablation step for 'off-distribution' to corrupt."
+        },
+        {
+          "confound": "Self-repair (downstream compensation) is a phenomenon specific to causal/interventional paradigms: you ablate, patch, or ablate-and-measure a component, and downstream layers recompute/compensate, which can mask or inflate the *causal* effect you're measuring. The evidence here describes no such intervention anywhere in the pipeline. The only operations are: (1) fit a linear probe on frozen residual activations at each layer and evaluate held-out accuracy, (2) `controls/recheck_rows.py` re-deriving the reported number from the JSON, and (3) `controls/retrain_probe.sh ext_native` refitting the probe from raw activations. None of these ablate, zero out, mean-ablate, or patch any component, so there is no perturbation for a downstream layer to 'repair'. Probe accuracy is a pure decodability statistic on unperturbed forward passes; self-repair has no causal lever to act through in this design. (Separately and independent of my confound, the evidence states the preregistered anchor failed (probe_summary_ALL.json: anchor_in_band=false), which per QUESTION.md voids the extension claim on its own scope/validity grounds — but that is a different failure mode than self-repair.)",
+          "status": "RULED_OUT",
+          "crux": "The measured quantity is decodability of a linear probe on unperturbed residual activations; the pipeline (probe fit/eval, recheck_rows.py, retrain_probe.sh) contains no ablation, patching, or other intervention step, so there is no compensatory downstream recomputation for self-repair to produce or mask."
+        },
+        {
+          "confound": "Selection bias would require either (a) test items/templates leaking into train (a biased split inflating accuracy via memorization) or (b) the reported 0.8125 being cherry-picked from unreported runs/seeds/layers. Both are foreclosed by committed facts: template-disjoint test families rule out (a), and recheck_rows.py (MATCH) plus retrain_probe.sh ext_native (REPRODUCES) rule out (b) — the number is exactly reproducible from raw activations, not a surviving outlier from a larger unreported search.",
+          "status": "RULED_OUT",
+          "crux": "Template-disjoint test families plus two independent reproduction checks (recheck_rows.py MATCH; retrain_probe.sh REPRODUCES) on out/results_probe/out/probe_summary_ext_native.json jointly foreclose both leaky-split and cherry-picked-report variants of selection bias; the residual threat to this claim is surface-token leakage (best layer 2, PREREG admits cue is realized only in surface grammar text) and the failed preregistered anchor (anchor_in_band=false), which are separate confounds, not selection bias."
+        },
+        {
+          "confound": "readout artifact — probe may recover native-speaker status not by reading a learned representation of \"who the user is\" but by reading superficial surface-level lexical/grammatical tokens that are the direct implementation of the cue (fluent skeletons vs L1-transfer grammar-error skeletons) rather than any deeper user-model.",
+          "status": "EXPLAINS",
+          "crux": "PREREG itself states that for native-speaker status the cue is necessarily realized in surface text (grammar-error patterns), so the design cannot in principle distinguish probe-reads-user-model from probe-reads-surface-tokens for this attribute; this is corroborated by the committed best_layer=2 (a very early layer, where residual activations are dominated by token/lexical features rather than integrated discourse-level user representations). No committed ablation (e.g., paraphrase-preserving-grammar-errors-while-removing-topic-cues, or non-linguistic/late-layer-only readout) exists in the evidence to separate the two hypotheses — the evidence as given is fully consistent with (indeed predicts) a surface-token readout producing exactly this accuracy/layer pattern."
+        },
+        {
+          "confound": "Regime specificity: the design can only plant native-speaker status via surface grammar-error cues (fluent vs L1-transfer skeletons), and PREREG itself states this attribute cannot in principle be realized non-lexically, so the design cannot distinguish \"probe recovers a latent user-model representation\" from \"probe reads surface token/grammar statistics.\" The committed best-layer result (layer 2, very early residual stream) is exactly what a surface-token/orthographic-cue reader would produce, not what a deep user-modeling representation would produce (which typically peaks mid-late layers in this model family). This is consistent with, not contrary to, the regime-specificity confound.",
+          "status": "EXPLAINS",
+          "crux": "PREREG's own admission that for native-speaker status the cue is necessarily realized in surface text, combined with the committed best_layer=2 result, means the 0.8125 accuracy is fully explained by a shallow surface-cue/grammar-pattern reader rather than by recovery of a modeled user attribute — the claim as stated (\"recovers user's native-speaker status\") overclaims relative to what the design can support, which is a decodability-of-surface-cues statement only."
+        },
+        {
+          "confound": "construct validity: does the probe recover a \"native-speaker status\" user-attribute representation, or does it just decode surface grammar-error tokens that are the operationalization of the attribute itself?",
+          "status": "EXPLAINS",
+          "crux": "PREREG explicitly states that for native-speaker status the cue is necessarily realized in surface text (grammar-error skeletons vs fluent skeletons), so the design cannot in principle distinguish probe-reads-user-model from probe-reads-surface-tokens; best layer = 2 (very early, near-embedding layer) is exactly what a surface-token/lexical decoder would produce rather than an abstracted user-attribute representation. The claim as stated (\"recovers the user's native-speaker status\") implies a user-model construct, but the only thing the instrument can measure is decodability of the style cue itself — construct validity is broken by design, not saved by any control in the evidence."
+        },
+        {
+          "confound": "Scale incomparability would mean the \"best layer 2 (val 1.000)\" selection and the 0.8125 test accuracy reflect raw activation-magnitude/scale differences across layers (early layers often have larger, less-normalized residual norms) rather than genuine layer-2 signal — i.e., layer selection and probe fitting favored a layer because of its feature scale, not because it truly encodes the attribute best.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether activations were standardized/normalized per-layer before the cross-layer sweep and probe fit. Nothing in the committed record (PREREG.md description, probe_summary_ext_native.json, recheck_rows.py/retrain_probe.sh outputs) states that per-layer feature scaling was applied or ablated; the reproduction scripts only confirm the reported numbers re-derive and retrain identically, not that the layer-selection procedure is scale-invariant."
+        },
+        {
+          "confound": "noise floor / chance-level performance masquerading as recovery, given small n_test and a chance distribution characterized by only 2 permutation draws",
+          "status": "NEEDS_RUN",
+          "crux": "The only evidence bearing on the noise floor is two permutation-control accuracies (0.521, 0.688; mean 0.604) against n_test=96. That is far too few draws to characterize the null (chance) distribution's tail: the two observed values already span 0.167 and one (0.688) sits above the prestated 0.6531 'RECOVERED' threshold, meaning a pure noise/shuffle draw can itself clear the gate that supposedly certifies signal. With such high observed variance in the null from just 2 samples, we cannot compute a real p-value or percentile rank for 0.8125, so we cannot say whether 0.8125 is safely outside the noise distribution's plausible range or merely a favorable draw from a noisy small-n_test evaluation."
+        },
+        {
+          "confound": "Ceiling/floor effect would mean the measured statistic is uninformative because it sits pinned at the top (1.0) or bottom (chance/0.50) of the possible range, making the \"above chance\" claim spurious (e.g., near-ceiling accuracy for all classes, or the metric saturating so it can't distinguish signal from noise).",
+          "status": "RULED_OUT",
+          "crux": "The reported test_acc=0.8125 (n_test=96) sits mid-range between floor/chance (0.50) and ceiling (1.0), and is well separated from the permutation-control distribution (0.521, 0.688; mean 0.604) as well as from the prereg threshold (0.6531), so the statistic is not pinned at either extreme and retains discriminating range in both directions."
+        },
+        {
+          "confound": "single-case overfit: only one GPU run/one train-val-test split was performed. No multi-seed or resampled replication of the probe pipeline is in evidence. The committed permutation controls (label-shuffled null) scored 0.521 and 0.688 — and 0.688 by itself clears the prestated RECOVERED threshold of 0.6531. That means the decision procedure, applied to a single run, is already unable to reliably distinguish the observed 0.8125 test accuracy from noise: a single unlucky/lucky split under a null (shuffled) label assignment would itself have been called RECOVERED. Best layer was picked as the one with val=1.000 on what is presumably a small validation set (n_test only 96 overall), which is a classic single-split overfit signature — chase the split that happens to separate perfectly, then report the paired test number. The recheck/retrain controls (recheck_rows MATCH, retrain_probe REPRODUCES) only confirm the pipeline is deterministic and bug-free, not that the effect replicates across independent data draws or seeds — determinism is not generalization.",
+          "status": "EXPLAINS",
+          "crux": "One of the two committed permutation-control runs (0.688) already exceeds the prestated RECOVERED threshold (0.6531) despite using shuffled (null) labels; with n_test=96 and no multi-seed/multi-split replication reported, this margin is consistent with the 0.8125 result being a single-run/single-split artifact rather than a robust, replicable effect — the study provides no evidence distinguishing the two."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "Rerun the layer sweep with per-layer standardized (z-scored) activations feeding the same probe pipeline (extend controls/retrain_probe.sh to accept a --standardize flag) and check whether layer 2 remains best-val and whether ext_native test accuracy stays >=0.6531; if a different layer wins or accuracy drops toward the permutation band, the reported 0.8125/layer-2 result is a scale artifact.",
+        "Run an expanded permutation-control battery (e.g. 100-1000 label-shuffle refits using the same generator/split, not just 2) on out/results_probe data to build an empirical null distribution for test_acc at n_test=96, then report the percentile rank / p-value of 0.8125 against that distribution instead of the 2-sample mean/gate currently used."
+      ],
+      "runner_results": null
+    },
+    {
+      "id": "probe-age-bracket",
+      "grounding": {
+        "grounding": "reproduces",
+        "observed": "re-derived from 244 saved rows: 221/244 = 0.90574 test acc (claim 0.9057); perm mean (0.30328+0.21721)/2 = 0.26025 (claim 0.260, |diff|=0.0102 < 0.083); chance 0.25 with 61/61/61/61 balanced classes; best layer 20 val 0.71429",
+        "note": "Both sides check out: dataset.jsonl inputs (1000 ext_agebracket items, splits 588/168/244 exactly family-disjoint train f00-06 / val f07-08 / test f09-11) have labels identical to all 244 result rows, and per-row preds re-derive 0.9057 exactly; caveat confirmed at the input, not the output — the \"indirect\" cue is a fixed per-family surface phrase (e.g. \"My student card gets me discounts\", \"I volunteer at the charity shop\"), so the probe may be reading lexical life-stage vocabulary, and the claim's own gate (anchor_gender 0.4467 fails band, QUESTION.md voids extensions) still holds.",
+        "artifacts_read": [
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/probe_summary_ext_agebracket.json",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/dataset.jsonl",
+          "/home/hal/dev/interp/dm_hack/mats_open/auto_interp/out/results_probe/out/"
+        ]
+      },
+      "findings": [
+        {
+          "confound": "off-distribution ablation",
+          "status": "EXPLAINS",
+          "crux": "Best layer was chosen on val (0.714) but test came in higher (0.9057), a gap the evidence itself attributes to \"family variance across the val/test family draw\" — i.e., accuracy is sensitive to which template families land in test, and QUESTION.md:24-27 confirms life-stage cue vocabulary is realized in surface text per family. This means the 0.9057 figure is plausibly an artifact of which off-distribution family draw the test set happened to contain, not a stable measure of indirect-cue recovery."
+        },
+        {
+          "confound": "Downstream compensation/self-repair requires an intervention (ablation/patching) whose disrupted signal downstream layers reconstruct; this study has zero intervention arms — it trains a linear probe on clean, unperturbed residual activations across layers (probe_summary_ext_agebracket.json). There is no ablate-then-reprobe or patch-and-measure result anywhere in the committed evidence, so self-repair has no data to act on or be assessed against for this specific claim.",
+          "status": "NEEDS_RUN",
+          "crux": "Whether layer-20's 0.9057 test accuracy reflects genuine/robust encoding of age bracket vs. a compensatory reconstruction of a signal disrupted upstream — undecidable without any causal manipulation in the record; the permutation control (mean 0.260) rules out chance-level noise but is silent on self-repair, and the anchor-gate failure (anchor_gender 0.4467, out of band, QUESTION.md:13-15) voids claimability on separate grounds unrelated to this confound."
+        },
+        {
+          "confound": "Selection bias in which template-disjoint conversation families landed in the val vs. test split. With only a handful of held-out template families feeding n_test=244, the val→test jump (0.714 → 0.9057) is exactly the signature of an easy/hard family draw rather than a stable, family-general signal — and the evidence itself names this (\"test exceeding val indicates family variance across the val/test family draw\") without any resampling or repeated-split control to rule it out. Layer 20 was also selected using val performance, so the reported test number is a post-hoc-selected best case riding on a favorable family draw, not a single prespecified measurement.",
+          "status": "EXPLAINS",
+          "crux": "The committed evidence explicitly flags the val(0.714)→test(0.9057) gap as driven by \"family variance across the val/test family draw\" — an admitted selection-bias signature — and no committed control (e.g., repeated random family resplits, cross-family holdout averaging) is reported that would rule out this variance as the source of the high test number."
+        },
+        {
+          "confound": "Readout artifact: the 0.9057 test accuracy may reflect the probe reading an easy, low-level surface/lexical signal (life-stage vocabulary explicitly realized in surface text, per declared construct risk) rather than a genuine latent age-bracket representation reached via indirect-cue inference.",
+          "status": "EXPLAINS",
+          "crux": "out/results_probe/out/probe_summary_ext_agebracket.json shows val=0.714 vs test=0.9057 at layer 20 (a ~19pt gap the evidence itself attributes to \"family variance across the val/test family draw\"), combined with the preregistered construct-risk note (QUESTION.md:24-27) that life-stage cue vocabulary is realized in surface text — together consistent with the probe exploiting family/template-specific surface tokens rather than a stable, deep representation. No committed control (lexical/BOW baseline, cross-family transfer check) isolates lexical readout from genuine encoding."
+        },
+        {
+          "confound": "Regime specificity: the 0.9057 test accuracy comes from a single train/val/test split drawn once per the prereg's single-GPU run. The committed evidence itself flags that test accuracy (0.9057) exceeds validation accuracy (0.714) by a wide margin and attributes this directly to \"family variance across the val/test family draw\" — i.e., the specific set of template families that happened to land in the test partition is not representative of the val partition, and no resampling across alternative family draws was run to show the number is stable across regimes. The template-disjoint design controls for train/test leakage but does not control for variance in which families end up in test vs. val on a single draw, so a headline number this far above its own validation estimate is a signature of regime (family-draw) specificity rather than settled generalization.",
+          "status": "EXPLAINS",
+          "crux": "The evidence itself states the mechanism: \"test exceeding val indicates family variance across the val/test family draw\" (probe_summary_ext_agebracket.json narrative, val 0.714 vs test 0.9057) — a single split was run, so nothing committed shows the 0.9057 is stable across alternative family draws rather than an artifact of which families landed in this particular test partition."
+        },
+        {
+          "confound": "construct validity — does the probe recover a genuine latent \"age bracket\" attribute, or merely detect surface lexical cues that happen to co-vary with the planted attribute label (e.g., life-stage vocabulary like \"college\", \"retired\", \"grandkids\") without the model doing any age-inference at all?",
+          "status": "EXPLAINS",
+          "crux": "The evidence itself states the construct risk applies verbatim: \"life-stage cue vocabulary is realized in surface text\" (QUESTION.md:24-27). No committed control separates \"probe reads a latent age representation\" from \"probe reads surface tokens correlated with the templated bracket\" — there is no lexical-scrubbing/synonym-substitution/paraphrase-control result on record, only a generator lint (template-disjointness) and permutation controls (which test label-shuffling, not surface-cue removal). Template-disjointness across train/test guards against memorizing exact templates but does not guard against the model/probe keying on cue words that recur across templates within a bracket (e.principally, \"college essay\" -> 18-25, \"grandkids\" -> 61+), which is exactly what \"indirect cues\" require the generator to plant. So the 0.9057 accuracy is exactly what you'd expect from a linear probe reading surface-realized lexical cues, independent of whether the model has any coherent internal age-bracket representation."
+        },
+        {
+          "confound": "Scale incomparability would mean the reported test_acc (0.9057) looks impressive only because it's being read against a differently-scaled or miscalibrated chance/threshold — e.g., a bracket count, chance level, or accuracy metric that isn't actually commensurate with the nominal 0.25 chance and 0.35 recovery threshold used to judge it.",
+          "status": "RULED_OUT",
+          "crux": "The permutation controls (label-shuffled accuracies 0.303 and 0.217, mean 0.260) were computed on the exact same 4-bracket, n_test=244 test setup and land within the prestated gate of nominal chance 0.25 (|0.260-0.250|=0.010 <= 0.083). This empirically confirms the chance/scale used to define both the 0.25 baseline and the 0.35 recovery threshold is correctly calibrated to this task's actual class structure and sample — there is no hidden scale mismatch inflating the 0.9057 figure relative to chance."
+        },
+        {
+          "confound": "Noise floor: is the 0.9057 test accuracy distinguishable from what a classifier achieves with no real signal (i.e., is it within the range of chance-level statistical fluctuation given n_test=244)?",
+          "status": "RULED_OUT",
+          "crux": "The label-permutation controls directly instantiate the noise floor (accuracy achievable with the true feature distribution but no attribute-label signal): 0.303/0.217, mean 0.260, essentially matching chance (0.25) and passing the prestated |mean-chance|<=0.083 gate. The actual test accuracy of 0.9057 exceeds this empirical noise floor by ~0.64 (chance+0.10 threshold was only 0.35), a margin roughly 8x the gate width — far too large to be explained by noise-floor fluctuation at n=244."
+        },
+        {
+          "confound": "Ceiling/floor effect: measured chance level (via label permutation) could sit far from the nominal 0.25, or the observed accuracy could be pinned against the 1.0 ceiling, either of which would make 0.9057 uninformative about real discrimination rather than reflecting genuine signal.",
+          "status": "RULED_OUT",
+          "crux": "The permutation-control baseline (empirically measured, not assumed) sits at 0.303/0.217, mean 0.260, essentially matching the nominal chance rate of 0.25 (gate |0.260-0.250|=0.010 << 0.083 threshold) — so the 'floor' of the metric is verified, not artificially depressed or inflated. Meanwhile the observed test accuracy of 0.9057 is well below the 1.0 ceiling, leaving room in the scale for it to have come out lower. A metric with a verified, non-distorted floor and a result that isn't pinned to the ceiling cannot be dismissed as a floor/ceiling artifact."
+        },
+        {
+          "confound": "single-case overfit: the probe/eval may be picking up idiosyncrasies of the particular small set of held-out template families rather than a genuine, generalizable indirect-cue signal.",
+          "status": "NEEDS_RUN",
+          "crux": "Test accuracy (0.9057) exceeds val accuracy (0.714) by a wide margin, and the evidence itself attributes this to \"family variance across the val/test family draw\" — i.e. a single committed val/test split with no resampling across multiple family draws or per-template/per-family accuracy breakdown exists to show the 0.9057 figure is stable rather than a favorable overfit to the specific held-out templates that happened to land in this one test draw. Template-disjointness guards against verbatim template leakage but not against variance from having only a handful of held-out families."
+        }
+      ],
+      "rejected_findings": [],
+      "run_queue": [],
+      "author_queue": [
+        "ablate the layer-20 (or earlier-layer) age-bracket probe direction via mean-ablation/patching at an early layer, then re-run the probe at layer 20 and later layers to see whether downstream accuracy is restored (self-repair) versus collapses to chance — only existing artifacts are clean-activation probes, no intervention control is on record.",
+        "a lexical-control test that removes/replaces the surface life-stage vocabulary (paraphrase or synonym-substitute the cue tokens while holding bracket-label constant, or conversely permute cue words across brackets while holding the rest of the conversation fixed) and re-measures probe test accuracy — if accuracy collapses toward chance under cue removal/permutation, construct validity is the driver, not a general age-representation.",
+        "a bootstrap/resample control that redraws the val/test family split multiple times (or reports per-template-family test accuracy) to give a distribution/CI on test_acc, checked against the 0.35 recovery threshold — no such multi-draw or per-family breakdown script is on record (only controls/recheck_rows.py, which re-derives the single committed number, and controls/retrain_probe.sh, which reproduces the same split, not a resampled one)."
+      ],
+      "runner_results": null
+    }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+}

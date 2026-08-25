@@ -1,0 +1,75 @@
+{
+  "cell": {
+    "arm": "forward_passes",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "extract"
+  },
+  "decision": "EXTRACT_OK",
+  "decision_rule": "Every one of the 24 documents at every one of the 7 widths must produce one forward pass, with no variant flagged as reaching the context limit. Anything else halts.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-105-221",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T09:40:39+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 416481,
+      "n_items": 168,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap.json",
+      "present": true,
+      "sha256": "1fe73074a3d1"
+    },
+    {
+      "bytes": 22066,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD_v2_design_diff_triage.json",
+      "present": true,
+      "sha256": "45e160eb9fb4"
+    }
+  ],
+  "metric": "Counts from one forward pass per text variant, and the running totals saved for the fits.",
+  "notes": "Readout index 0 is the embedding output and index 24 is the last layer. This loader applies the model's final normalisation to index 24 only, which is a property of the library, recorded here rather than changed. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "n_variants": 168
+  },
+  "values": {
+    "degenerate_variants": {},
+    "device": "cuda",
+    "dtype": "float16",
+    "fold_assignment": {
+      "0": 3,
+      "1": 4,
+      "10": 1,
+      "11": 0,
+      "12": 1,
+      "13": 1,
+      "14": 4,
+      "15": 2,
+      "16": 2,
+      "17": 3,
+      "2": 0,
+      "3": 0,
+      "4": 1,
+      "5": 2,
+      "6": 4,
+      "7": 3,
+      "8": 0,
+      "9": 2
+    },
+    "n_positions": {
+      "fold0": 17514,
+      "fold1": 18306,
+      "fold2": 17288,
+      "fold3": 13365,
+      "fold4": 13184,
+      "test": 26314
+    },
+    "n_positions_total": 105971,
+    "n_readouts": 25,
+    "n_variants": 168,
+    "seconds": 14.4,
+    "width140_rows": 14232
+  }
+}

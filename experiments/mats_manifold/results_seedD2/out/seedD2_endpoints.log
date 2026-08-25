@@ -1,0 +1,26 @@
+=== stage endpoints ===
+[endpoints] best readout 5, pooled held-out quality 0.657823, width-140 quality 0.549167 -> ANCHOR_OUT_OF_BAND
+[record] ANCHOR_OUT_OF_BAND -> results_seedD2/out/arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 140: largest power 1.99623e-05 at period 40.00 characters, rank 1 of 200 -> NULL_CLEARED (4.3 s)
+[record] NULL_CLEARED -> results_seedD2/out/aperture-140_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 200: largest power 4.86849e-06 at period 16.36 characters, rank 10 of 200 -> NULL_CLEARED (6.4 s)
+[record] NULL_CLEARED -> results_seedD2/out/aperture-200_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 280: largest power 3.33899e-06 at period 130.00 characters, rank 3 of 200 -> NULL_CLEARED (9.3 s)
+[record] NULL_CLEARED -> results_seedD2/out/aperture-280_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 140 token control: period 10.50 tokens, 42.84 characters, rank 2 of 200 (3.2 s)
+[endpoints] width 140 token-position control -> CONFOUNDED_WITH_TOKEN_POSITION
+[record] CONFOUNDED_WITH_TOKEN_POSITION -> results_seedD2/out/aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 200 token control: period 18.00 tokens, 74.33 characters, rank 2 of 200 (3.2 s)
+[endpoints] width 200 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED -> results_seedD2/out/aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 280 token control: period 56.00 tokens, 233.43 characters, rank 1 of 200 (3.4 s)
+[endpoints] width 280 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED -> results_seedD2/out/aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] measurable range at width 280 -> RANGE_PATTERN_UNMATCHED
+[record] RANGE_PATTERN_UNMATCHED -> results_seedD2/out/aperture-280_arm-measurable_range_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] AT_LEAST_ONE_CLEARED -> results_seedD2/out/arm-widths_clearing_count_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] WAVELENGTH_GAP_EXCEEDS_10 -> results_seedD2/out/arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] RATIO_GAP_EXCEEDS_0.1 -> results_seedD2/out/arm-ratio_gap_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] VOID_ANCHOR_FAILED -> results_seedD2/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] summary {"setup_check": "SETUP_OK", "calibration": "CALIBRATION_OK", "endpoint_1_anchor_gate": "ANCHOR_OUT_OF_BAND", "endpoint_2_wobble_vs_shuffle": {"140": "NULL_CLEARED", "200": "NULL_CLEARED", "280": "NULL_CLEARED"}, "endpoint_3_widths_clearing_count": "AT_LEAST_ONE_CLEARED", "endpoint_4_wavelength_gap": "WAVELENGTH_GAP_EXCEEDS_10", "endpoint_5_ratio_gap": "RATIO_GAP_EXCEEDS_0.1", "endpoint_6_measurable_range": "RANGE_PATTERN_UNMATCHED", "endpoint_7_token_position_control": {"140": "CONFOUNDED_WITH_TOKEN_POSITION", "200": "CHARACTER_COUNT_DISTINGUISHED", "280": "CHARACTER_COUNT_DISTINGUISHED"}, "best_readout": 5, "held_out_quality_w140": 0.549167, "held_out_quality_pooled": 0.657823, "ridge_strength": 1000.0, "ridge_argmax_interior_on_grid": true, "n_widths_clearing": 3, "wavelengths_chars": {"140": 40.0, "200": 16.363636363636363, "280": 130.0}, "ambient_dimension_by_aperture": {"140": 100, "200": 148, "280": 201}, "largest_gap_chars": 113.6364, "largest_ratio_gap": 0.382468, "headline": "VOID_ANCHOR_FAILED"}
+=== stage endpoints done in 39.1 s ===

@@ -1,0 +1,172 @@
+{
+  "runner": "onbox_seedD4.sh",
+  "model": "EleutherAI/pythia-410m-deduped",
+  "revisions_in_training_order": [
+    "step0",
+    "step512",
+    "step1000",
+    "step2000",
+    "step4000",
+    "step8000",
+    "step16000",
+    "step32000",
+    "step64000",
+    "step96000",
+    "step128000",
+    "step143000"
+  ],
+  "measurement_order": [
+    "step143000",
+    "step0",
+    "step512",
+    "step1000",
+    "step2000",
+    "step4000",
+    "step8000",
+    "step16000",
+    "step32000",
+    "step64000",
+    "step96000",
+    "step128000"
+  ],
+  "expected_layers": 24,
+  "expected_hidden_size": 1024,
+  "text_file": "stimulus_linewrap_v2.json",
+  "text_file_sha256_expected": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd",
+  "widths_read": [
+    20,
+    40,
+    60,
+    80,
+    100,
+    120,
+    140
+  ],
+  "widths_in_the_file_not_read": [
+    200,
+    280
+  ],
+  "profile_width": 140,
+  "profile_parts": [
+    "1 to 35",
+    "36 to 70",
+    "71 to 105",
+    "106 to 140"
+  ],
+  "profile_statistic": "Pearson correlation between predicted and true count",
+  "anchor_value": 0.781031,
+  "anchor_tolerance": 0.02,
+  "negative_control_ceiling": 0.3,
+  "formation_floor": 0.5,
+  "formed_share_of_final": 0.9,
+  "boundary_presence_floor": 0.3,
+  "hold_test_boundary_range": 0.15,
+  "hold_test_quality_range": 0.1,
+  "early_late_cutoff_step": 16000,
+  "ridge_grid": [
+    1,
+    10,
+    100,
+    1000,
+    10000,
+    100000
+  ],
+  "folds": 5,
+  "base_seed": 0,
+  "best_readout_chosen_per_checkpoint": true,
+  "coordinate_edges_flagged": {
+    "readouts": [
+      0,
+      24
+    ],
+    "strengths": [
+      1,
+      100000
+    ]
+  },
+  "coordinate_flags_expected_at_step0": true,
+  "variance_targets_recorded_only": [
+    0.9,
+    0.95,
+    0.99
+  ],
+  "ambient_dimension_gated": false,
+  "pre_registered_readings": [
+    "FORMED_EARLY_AND_HELD",
+    "FORMED_LATE_AND_HELD",
+    "FORMED_AND_DRIFTED",
+    "NOT_FORMED_BY_FINAL",
+    "UNSTABLE_NOT_CLASSIFIABLE",
+    "VOID_ANCHOR_FAILED",
+    "VOID_CONTROL_FAILED"
+  ],
+  "generation_performed": false,
+  "weights_and_vectors_deleted_per_checkpoint": true,
+  "sweep_table": {
+    "n_rows": 2,
+    "complete": false,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "negative_control_decision": "VOID_CONTROL_FAILED",
+    "pooled_quality_by_revision": {
+      "step143000": 0.781031,
+      "step0": 0.344634
+    },
+    "best_layer_by_revision": {
+      "step143000": 6,
+      "step0": 24
+    },
+    "ridge_strength_by_revision": {
+      "step143000": 1000.0,
+      "step0": 10000.0
+    },
+    "boundary_ratio_by_revision": {
+      "step143000": -0.090673,
+      "step0": -0.080316
+    },
+    "coordinate_flags_by_revision": {
+      "step143000": [],
+      "step0": [
+        "best_layer_at_readout_24"
+      ]
+    }
+  },
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedD4": "0",
+    "packages": "0",
+    "disk": "0",
+    "memory": "0",
+    "seedD4_sweep": "3",
+    "seedD4_endpoints": "skipped"
+  },
+  "any_failed": true,
+  "records_present": [
+    "arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "arm-checkpoint_reading_model-pythia-410m-deduped_revision-step0_stage-extract.json",
+    "arm-checkpoint_reading_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "arm-constants_model-pythia-410m-deduped_revision-step0_stage-extract.json",
+    "arm-constants_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "arm-forward_passes_model-pythia-410m-deduped_revision-step0_stage-extract.json",
+    "arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "arm-negative_control_endpoint-2_model-pythia-410m-deduped_revision-step0_stage-extract.json",
+    "arm-run_summary_model-pythia-410m-deduped_revision-sweep_twelve_checkpoints_stage-extract.json",
+    "arm-setup_check_model-pythia-410m-deduped_revision-step0_stage-extract.json",
+    "arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "sweep_table.json"
+  ],
+  "verbatim_variant_files": [
+    "rows_variants_step0.jsonl",
+    "rows_variants_step143000.jsonl"
+  ],
+  "per_position_files": [
+    "rows_positions_w140_step0.jsonl",
+    "rows_positions_w140_step143000.jsonl"
+  ],
+  "mean_vector_files": [
+    "mean_vectors_step0.npz",
+    "mean_vectors_step143000.npz"
+  ],
+  "instance_id": "d2fa0a08b815447387aa8a1ab751e691",
+  "git_commit": "unknown",
+  "note": "A further run of this script on the same box is a rerun of the same instrument, not a replication. This sweep is a single run."
+}

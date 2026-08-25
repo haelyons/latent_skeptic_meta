@@ -1,0 +1,97 @@
+{
+  "cell": {
+    "arm": "anchor_gate",
+    "endpoint": 1,
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "extract"
+  },
+  "decision": "ANCHOR_IN_BAND",
+  "decision_rule": "The gate cell is the final checkpoint (step143000), and it must clear two bars at once. Held-out fit quality, pooled over the seven wrap widths 20 to 140 at that checkpoint's own best readout, must lie within 0.02 of the committed 0.876302. The boundary ratio at that same readout, width 140, must reach 0.3; its committed prior value on this text is 0.514227. Missing either bar is VOID_ANCHOR_FAILED: an instrument fault that voids the whole sweep, stops the run, and is not evidence about the model. The quality band is tighter than any fresh-text band because this is the same text, the same instrument and the same model as the committed value.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T21:19:47+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    }
+  ],
+  "metric": "Held-out pooled quality and boundary ratio at the final checkpoint, on the same text as the committed 0.876302 and 0.514227, at that checkpoint's own best readout.",
+  "notes": "The gate cell must clear two bars at once, because two committed measurements of this model on this text are being reproduced: pooled quality 0.876302 at readout 5, and the boundary ratio 0.514227 from the parts 0.645989, 0.8196, 0.210583 and 0.226552. Quality within 0.02 and ratio at least 0.3 are the two bars. A fresh, disjoint text gave 0.879879 and 0.519079 on the same model, which is context and not a bar. This is the same text, the same instrument and the same model as both committed values, so the quality band is tighter than any fresh-text band would be. The boundary ratio is the mean of the profile's first two parts minus the mean of its last two. Its bar stays absolute at 0.3, with no baseline correction, because the smaller sibling's untrained checkpoint read -0.080316, which is effectively zero. On that sibling's final checkpoint the ratio reads -0.090673, so the boundary is absent at 410 million weights and present at 1.4 billion. That is why this formation sweep runs on the larger model. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "anchor": 0.876302,
+    "ratio_at_least": 0.3,
+    "within": 0.02
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": 0.514227,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": 0.876302,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "band_high": 0.896302,
+    "band_low": 0.856302,
+    "baseline_decision": "NOT_YET_MEASURED",
+    "baseline_quality": null,
+    "baseline_void_floor": 0.6134113999999999,
+    "best_layer": 5,
+    "best_layer_equals_prior_run_readout": true,
+    "boundary_ratio": 0.514227,
+    "boundary_ratio_floor": 0.3,
+    "committed_anchor": 0.876302,
+    "committed_prior_profile_same_text": [
+      0.645989,
+      0.8196,
+      0.210583,
+      0.226552
+    ],
+    "committed_prior_ratio_as_stated_in_the_design": 0.514,
+    "committed_prior_ratio_recomputed_from_the_parts": 0.514227,
+    "coordinate_flags": [],
+    "difference_from_anchor": 0.0,
+    "fresh_text_quality_same_model": 0.879879,
+    "held_out_quality_pooled_widths_20_to_140": 0.876302,
+    "prior_run_readout_same_text": 5,
+    "prior_run_ridge_strength_same_text": 1000.0,
+    "profile_correlations": [
+      0.645989,
+      0.8196,
+      0.210583,
+      0.226552
+    ],
+    "revision": "step143000",
+    "ridge_strength": 1000.0,
+    "this_record_voided_by_a_gate": false,
+    "tolerance": 0.02,
+    "training_step": 143000
+  }
+}

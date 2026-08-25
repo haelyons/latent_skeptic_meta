@@ -1,0 +1,30 @@
+A prior study (Gurnee et al., "When Models Manipulate Manifolds", Transformer Circuits, Oct 2025, transformer-circuits.pub/2025/linebreaks; one closed model, Claude 3.5 Haiku, probe R-squared 0.985) found that a language model's residual stream carries a one-dimensional curve representing the count of characters since the last newline in line-wrapped text, and that its cosine-similarity structure shows faint off-diagonal bands - "ringing", their word, in the signal-processing sense of the Gibbs phenomenon: a similarity structure realizable in 150 dimensions is forced into about 6, truncating Fourier coefficients. Their section 2.5 argues this rippled geometry optimally trades capacity against distinguishability of nearby counts. The bands appear qualitatively, in cosine-similarity matrices of per-count mean activations, probes, and feature decoders; no source defines a statistical test for them.
+
+A reproduction (Sinii and Balagansky, "Chasing the Counting Manifold in Open LLMs", Feb 2026, huggingface.co/spaces/t-tech/manifolds) reports, on the final checkpoint of Pythia-410m-deduped: best linear-probe R-squared 0.724 for character count, at layer 6; the first three principal components carry 97.4 percent of the count representation's variance. Its stimuli, probe settings, and layer-indexing convention are unpublished. It never tested the ripple; nobody has computed a ripple statistic on any open model.
+
+This question covers exactly one cell: the public model EleutherAI/pythia-410m-deduped at HuggingFace revision step143000 (the final pretraining checkpoint), base model, no fine-tuning, no interventions. It is the gate cell for a possible later sweep over all 154 training checkpoints; the sweep, its equilibrium-versus-fossil question, and any training-data exposure measurement are out of scope here. The model config downloaded at run time is authoritative; 24 layers and hidden size 1024 are MEMORY (Pythia paper, arXiv 2304.01373, table 1) and a mismatch is a halt, not a patch. Layer indices count the embedding output as index 0; the layer where the probe peaks is recorded, never gated, because the reproduction's indexing convention is unpublished.
+
+The probe stimuli are provided verbatim in the committed file stimulus_linewrap.json (sha256 1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca): 24 documents of about 2,400 characters of public-domain ASCII prose, each materialized at seven wrap widths of 20, 40, 60, 80, 100, 120, and 140 characters per line; documents 0 through 17 are marked train, 18 through 23 test; the split is by book order, so train and test share no sentence. Load the file exactly. Do not paraphrase, regenerate, re-wrap, or reconstruct any document; if the file is absent, halt rather than invent a stimulus.
+
+The first two lines of document 0 at width 60, shown so the manipulation is visible (the same characters appear at width 20 as five short lines):
+
+It will be seen that this mere painstaking burrower and
+grub-worm of a poor devil of a Sub-Sub appears to have gone
+
+Definitions, fixed here:
+
+1. The label of a token position is the number of characters on its line up to and including that token's last character; the count restarts at zero after each newline. (GUESS: the reproduction's exact labeling convention is unpublished; a consistent off-by-one variant should shift R-squared only slightly.)
+
+2. Curve readout: ridge regression from the residual stream after layer l at each labeled token position to the label, fit on train documents pooled over all seven widths, R-squared on test documents, reported for every layer. The ridge strength comes from the calibration stage (definition 5).
+
+3. Ripple readout, at the layer with the best test R-squared: per-label mean residual-stream vectors from the width-140 test documents, labels 0 through 139; subtract the grand mean; form the 140-by-140 cosine similarity matrix; take the off-diagonal profile m(delta), the mean of entries delta above the diagonal; detrend it; take its discrete Fourier transform. Ripple amplitude is the largest power at any period inside the searched band; ripple wavelength is that period.
+
+4. Null for the ripple: repeat definition 3 with labels randomly permuted within each document before the means are taken. The amplitude counts as separable when it exceeds all but the top 5 percent of null draws (GUESS: a policy cutoff; no source constrains it).
+
+5. Calibration stage: computed on train documents only and committed as its own record before any test-document number exists, it fixes every remaining constant of definitions 2 through 4. Derived expectation (records/PREDICTIONS_gatepress_seedD.md): sidelobe spacing near the count range divided by the number of retained Fourier mode pairs - 43 to 50 characters at ambient dimension 6, longer where fewer components dominate; the calibrated band and detrend must pass such periods.
+
+6. Secondary record, not a gate: the same profile and transform on the cosine matrix of the 140 class-weight vectors of a multinomial logistic probe (one class per label, fit on width-140 train positions).
+
+Known competing explanation, to be addressed or explicitly scoped out: at a single width, characters-since-newline and tokens-since-newline are strongly correlated, so an apparent ripple could be token-position structure rather than character-count structure.
+
+Question: at this final checkpoint, (1) does the character-count curve replicate at the anchor level - test R-squared within 0.15 of the reproduction's 0.724 at the best layer (GUESS: band authored without the reproduction's stimuli, absorbing stimulus mismatch) - and (2) is the ripple amplitude of definition 3 separable from the null of definition 4? A failed (1) is a fact about this instrument and blocks any checkpoint sweep; it is not evidence about the model. A failed (2) with a passed (1) is a substantive result: the ripple account does not transfer to this model at this scale. A passed (2) opens the gate for the sweep.

@@ -1,0 +1,7 @@
+=== stage calibrate ===
+[calibrate] ridge strength 1000 (interior on the grid: True), best training readout 6, cross-validated quality 0.6728
+[calibrate] width 140: character labels 1 to 140, profile length 120, 30 periods; token labels 1 to 41, profile length 21, 5 periods
+[calibrate] width 200: character labels 1 to 200, profile length 180, 45 periods; token labels 1 to 56, profile length 36, 9 periods
+[calibrate] width 280: character labels 1 to 280, profile length 260, 65 periods; token labels 1 to 76, profile length 56, 14 periods
+[record] CALIBRATION_OK -> results_seedD2/out/arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+=== stage calibrate done in 31.4 s ===

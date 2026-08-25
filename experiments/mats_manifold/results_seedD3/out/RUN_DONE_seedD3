@@ -1,0 +1,2 @@
+state=OK
+exit_codes=selftest_provenance=0 selftest_run_seedD3=0 packages=0 disk=0 memory=0 seedD3_extract=0 seedD3_calibrate=0 seedD3_endpoints=0 

@@ -1,0 +1,16 @@
+=== stage endpoints ===
+[trajectory] baseline floor 0.341495; formation threshold 0.6088985; formed threshold 0.8228213
+[trajectory] quality by step {'0': 0.341495, '512': 0.827079, '1000': 0.851364, '2000': 0.765581, '4000': 0.715426, '8000': 0.725391, '16000': 0.764327, '32000': 0.829878, '64000': 0.867423, '96000': 0.872099, '128000': 0.87429, '143000': 0.876302}
+[trajectory] boundary ratio by step {'0': -0.05242, '512': 0.259086, '1000': 0.203763, '2000': -0.160578, '4000': -0.198033, '8000': -0.247611, '16000': 0.113313, '32000': 0.211511, '64000': 0.524118, '96000': 0.526207, '128000': 0.512028, '143000': 0.514227}
+[trajectory] best readout by step {'0': 24, '512': 23, '1000': 23, '2000': 23, '4000': 22, '8000': 22, '16000': 6, '32000': 6, '64000': 5, '96000': 5, '128000': 5, '143000': 5}
+[trajectory] formation step 512, formed step 512, boundary crossing 64000, localization 512
+[record] FORMATION_REACHED -> results_seedD4_1/out/arm-formation_existence_endpoint-3_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] OUTSIDE_BAND -> results_seedD4_1/out/arm-hold_test_quality_endpoint-3_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] EARLY_AT_OR_BEFORE_STEP16000 -> results_seedD4_1/out/arm-formation_timing_endpoint-3_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] BOUNDARY_PRESENT -> results_seedD4_1/out/arm-boundary_presence_endpoint-4_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] OUTSIDE_BAND -> results_seedD4_1/out/arm-hold_test_boundary_endpoint-4_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] BOUNDARY_AFTER_COUNTER -> results_seedD4_1/out/arm-boundary_timing_endpoint-5_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] RECORDED_NO_DECISION -> results_seedD4_1/out/arm-recorded_trajectories_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] UNSTABLE_NOT_CLASSIFIABLE -> results_seedD4_1/out/arm-run_summary_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[trajectory] summary {"headline": "UNSTABLE_NOT_CLASSIFIABLE", "boundary_trajectory_reading": "BOUNDARY_AFTER_COUNTER", "baseline_quality": 0.341495, "formation_step": 512, "formed_step": 512, "boundary_crossing_step": 64000, "hold_test": "UNSTABLE_NOT_CLASSIFIABLE", "boundary_presence": "BOUNDARY_PRESENT", "quality_range_after_formed": 0.16087600000000002, "boundary_range_after_formed": 0.773818}
+=== stage endpoints done in 0.0 s ===

@@ -1,0 +1,58 @@
+{
+  "cell": {
+    "arm": "ratio_gap",
+    "endpoint": 5,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "RATIO_GAP_EXCEEDS_0.1",
+  "decision_rule": "Over the probe widths that cleared their own shuffle draws, the largest gap between any two period-to-width ratios must be at most 0.1. Larger, together with a period gap above 10 characters, rules out a fixed proportion as well.",
+  "env": {
+    "git_rev": null,
+    "host": "161-153-8-80",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T12:02:59+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 23625,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_design_diff_triage.json",
+      "present": true,
+      "sha256": "bca0ff7b59bf"
+    },
+    {
+      "bytes": 3015,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2.md",
+      "present": true,
+      "sha256": "a617ec25ffde"
+    }
+  ],
+  "metric": "Largest gap between period-to-width ratios of any two probe widths that both cleared.",
+  "notes": "A mixed, unclassifiable result needs both this gap above 0.1 and the period gap above 10 characters. Both cutoffs are the design's own guesses and are binding. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "at_most": 0.1
+  },
+  "values": {
+    "cleared_apertures": [
+      140,
+      200,
+      280
+    ],
+    "largest_ratio_gap": 0.382468,
+    "ratios": {
+      "140": 0.285714,
+      "200": 0.081818,
+      "280": 0.464286
+    }
+  }
+}

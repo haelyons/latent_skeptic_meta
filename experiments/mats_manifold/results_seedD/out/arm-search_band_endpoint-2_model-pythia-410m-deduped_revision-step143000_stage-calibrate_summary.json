@@ -1,0 +1,45 @@
+{
+  "cell": {
+    "arm": "search_band",
+    "endpoint": 2,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "calibrate"
+  },
+  "decision": "BAND_OK",
+  "decision_rule": "The calibrated search band's top, in characters, must be at least 43. Below 43 is BAND_BELOW_FLOOR and halts before any held-out number is computed.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-105-221",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T09:41:02+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 416481,
+      "n_items": 168,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap.json",
+      "present": true,
+      "sha256": "1fe73074a3d1"
+    },
+    {
+      "bytes": 22066,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD_v2_design_diff_triage.json",
+      "present": true,
+      "sha256": "45e160eb9fb4"
+    }
+  ],
+  "metric": "Top of the calibrated search band, in characters.",
+  "notes": "The floor of 43 characters guards against repeating an earlier band that suppressed the predicted periods. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "floor_chars": 43
+  },
+  "values": {
+    "ambient_dimension_at_95_percent": 1,
+    "band_high_chars": 60,
+    "band_low_chars": 46,
+    "predicted_sidelobe_spacing": 140.0,
+    "retained_mode_pairs": 1
+  }
+}

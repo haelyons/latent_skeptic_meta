@@ -1,0 +1,269 @@
+{
+ "elicited": {
+  "questions": [
+   {
+    "question": "Did the search for a repeating pattern in the character-count signal ever test the wavelength the study's own numbers pointed to, or only a shorter one picked for a technical reason?",
+    "where": "The calibration record that fixes the search range (calibration.json, and the file arm-constants..._stage-calibrate.json) computes, from the measured shape of the signal, an expected repeat spacing of 140.0 characters. The same record sets the actual searched range to 46 through 60 characters, and carries its own flag, set to false, saying the predicted spacing falls outside that range.",
+    "if_true": "The one wavelength that got tested, 60 characters, was not chosen because theory pointed to it. It was the only whole repeat count a fixed internal window (a cap of 120 character-positions) could still show twice.",
+    "changes": "The study's central negative result about a repeating pattern would describe a wavelength nobody expected to matter, while the wavelength the theory actually predicted, 140 characters, was never checked at all."
+   },
+   {
+    "question": "Is a value that beats only 54 percent of randomly relabeled control runs meaningfully different from an ordinary, typical noise value, rather than simply short of the significance cutoff?",
+    "where": "The ripple-versus-random-shuffle record (arm-ripple_vs_shuffle_endpoint-4..._stage-endpoints.json) lists the measured pattern strength as 0.000012449. It beats only 108 of 200 random-relabeling control runs, a rank of 109 out of 200 and a stated match rate of 0.54229 against those controls.",
+    "if_true": "The measured value sits almost exactly in the middle of the pile of pure-noise numbers, not close to standing out from them.",
+    "changes": "The case against a real repeating pattern would be stronger than 'fell short of the cutoff' suggests: the measured value looks like an unremarkable, average noise value, not a near-miss."
+   },
+   {
+    "question": "If the check meant to rule out line position, rather than character count, as the real driver could not be run at all, does the character-count result stand unguarded against that alternative explanation?",
+    "where": "The record for that comparison (arm-token_position_control_endpoint-5..._stage-endpoints.json) states the comparison 'could not be computed,' because no whole repeat count lands inside the required narrow range, 11.2856 to 14.7204 characters, for a 22-step profile.",
+    "if_true": "The alternative explanation the study itself named in advance, that a similar pattern could come from position on the line rather than character count, was never actually tested at this checkpoint.",
+    "changes": "Neither a pass nor a fail on the repeating-pattern check could be credited to character count specifically; the one planned safeguard against the named alternative produced no answer either way."
+   },
+   {
+    "question": "When only one wavelength value could ever be reported by either method, does calling their wavelengths 'in agreement' mean anything beyond both being handed the same single number to report?",
+    "where": "Both the main pattern check and the secondary, fitted-model cross-check (arm-ripple_vs_shuffle_endpoint-4... and arm-fitted_probe_crosscheck_endpoint-6..., stage endpoints) list exactly one searchable wavelength, 60 characters, as their entire searched range.",
+    "if_true": "Neither method had any other value it was even allowed to report, so a match between them was guaranteed by the setup, not earned by any measurement.",
+    "changes": "The recorded agreement between the two readouts would carry no independent weight as cross-checking evidence, even though it is presented as a supporting result."
+   },
+   {
+    "question": "If the fit quality kept rising all the way to the strongest penalty setting tried, would an even stronger setting have produced a higher, and different, headline number?",
+    "where": "The calibration record's table of fit quality by penalty strength and layer shows quality still increasing at the strongest of five settings tested, 1000, which is also the setting used for the reported result.",
+    "if_true": "The chosen five settings, 0.1 through 1000, may have stopped short of the actual best setting rather than bracketing it.",
+    "changes": "The reported best fit quality, 0.780903, and its position inside the wide 0.574-to-0.874 pass range, would be less settled than one fixed number suggests."
+   },
+   {
+    "question": "Should a fitted model's output be compared against the main result at all, when the fitting process itself never finished?",
+    "where": "The run's own text log for that step (seedD_endpoints.log) shows a solver-stop message reading 'reached limit' after 2000 steps. The matching numeric record (arm-fitted_probe_crosscheck_endpoint-6..._stage-endpoints.json) lists 2000 iterations as a plain setting, with no note that the fit failed to finish.",
+    "if_true": "The secondary check's own pattern-strength number, 0.00000081, about 15 times smaller than the main check's 0.000012449, could reflect an incomplete calculation rather than a smaller, real effect.",
+    "changes": "The cross-check meant to support or weaken the main pattern finding would rest on numbers that had not settled down when they were saved."
+   },
+   {
+    "question": "Does the character-count range actually measured match the range the study describes, and if not, what changes?",
+    "where": "The study describes each position's character count as running '0 through 139,' 140 values. The calibration record's own window instead runs '1 to 140,' and the underlying per-position rows show values as high as 141, all 18 of them being a line's own closing newline character.",
+    "if_true": "A small number of measured positions, 18 out of 3,527 in the six full-width test documents, sit at a value one higher than the line width, outside the range the study names.",
+    "changes": "The exact set of positions entering the 140-way comparison would differ, by a small but unexplained margin, from the set the study describes."
+   }
+  ]
+ },
+ "qtriage": {
+  "claims": [
+   {
+    "id": "q1",
+    "grounding": {
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/calibration.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-search_band_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json"
+     ],
+     "grounding": "reproduces",
+     "note": "Calibration records predicted_sidelobe_spacing 140.0 with predicted_spacing_inside_band=false, band 46-60, max_delta=120 (=2x60); endpoint-4's in_band list holds exactly one bin, period 60.0 (cycles 2, n_band_bins 1), so the negative ripple result (empirical_share 0.542, NULL_NOT_CLEARED) tests only 60 chars and never 140.",
+     "observed": "claim: predicted 140.0 chars, band 46-60, cap 120, only 60 tested; re-derived from raw JSONs: predicted_sidelobe_spacing=140.0, predicted_first_sidelobe=46.667, band_low_chars=46, band_high_chars=60, max_delta=120, predicted_spacing_inside_band=false, band_cycle_counts=[{period 60.0, cycles 2}], endpoint-4 in_band=[period 60.0] only, n_band_bins=1"
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation: the searched wavelength range (46-60 chars) was set by a technical cap (a 120-position window needing two whole repeats) rather than by the theory-predicted spacing",
+      "status": "EXPLAINS",
+      "crux": "calibration.json / arm-constants..._stage-calibrate.json computes an expected repeat spacing of 140.0 characters but records the searched range as 46-60 characters, with an explicit flag=false stating the predicted spacing falls outside that searched range -- the committed record confirms the theory-predicted wavelength (140) was never tested, and the only wavelength tested (60) was fixed by the window-cap, not by the study's own numbers."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "RULED_OUT",
+      "crux": "The gap between the tested range (46-60) and the theory-predicted spacing (140.0) is attributed in the calibration record to a fixed 120-position window cap (a technical/design constraint on the search apparatus), not to any effect of downstream compensation among model components \u2014 self-repair has no causal channel into why the search range was set where it was."
+     },
+     {
+      "confound": "selection bias \u2014 the searched wavelength range (46\u201360 characters) was determined by a technical constraint (a 120-character-position internal window, requiring at least two repeats to be visible) rather than by the theory-predicted spacing (140.0 characters computed from the signal's own measured shape).",
+      "status": "EXPLAINS",
+      "crux": "calibration.json / arm-constants..._stage-calibrate.json commits: predicted spacing = 140.0 characters, searched range = 46\u201360 characters, and an explicit flag = false stating the predicted spacing falls outside the searched range \u2014 confirming 60 (not 140) was the only wavelength tested, and it was capped by the 120-position window rather than chosen from theory."
+     },
+     {
+      "confound": "readout artifact \u2014 the search's technical apparatus (a fixed 120-character-position window) capped the testable wavelength range at 46-60, mechanically excluding the theory-predicted 140-character spacing regardless of whether a real periodicity existed there.",
+      "status": "EXPLAINS",
+      "crux": "calibration.json / stage-calibrate.json commits: predicted spacing = 140.0 chars; searched range = 46-60 chars; window cap = 120 positions (so 60 is the largest period showable twice); out-of-range flag stored as false despite 140 lying outside 46-60 \u2014 the tested wavelength (60) was the technical ceiling of the window, not a theory-motivated value, and 140 was never tested."
+     },
+     {
+      "confound": "Regime specificity: the search range (46-60 chars) was fixed by an unrelated technical constraint (a 120-position window cap, permitting at most one full repeat of a \u226460-char period), not by the theory-predicted spacing.",
+      "status": "EXPLAINS",
+      "crux": "calibration.json's own computed expected spacing (140.0 chars) and its in-range flag (false) show the searched range (46-60) never included the theoretically predicted wavelength; 60 is exactly half the stated 120-position window cap, i.e. a technical ceiling, not a theory-derived value."
+     },
+     {
+      "confound": "construct validity \u2014 window chosen for technical reasons, not theory",
+      "status": "EXPLAINS",
+      "crux": "calibration.json's own flag (false) records that the predicted 140.0-character spacing falls outside the searched 46-60 range, and the 60-character upper bound is explained by if_true as the largest whole repeat count visible twice within a fixed 120-position window \u2014 a technical constraint, not a theory-driven choice. No committed number shows the predicted wavelength (140) or anything near it was ever searched."
+     },
+     {
+      "confound": "scale incomparability (comparing quantities on mismatched units/scales and mistaking the mismatch for a finding)",
+      "status": "RULED_OUT",
+      "crux": "Predicted spacing (140.0 characters), the searched range (46-60 characters), and the flag are all expressed in the same unit (characters) within the same calibration record \u2014 there is no cross-scale comparison being made, so the mismatch cannot be a scale-incomparability artifact; it is the record's own self-reported, same-unit discrepancy."
+     },
+     {
+      "confound": "noise floor",
+      "status": "RULED_OUT",
+      "crux": "The calibration record ties the tested range's upper bound (60) to a fixed internal window cap of 120 character-positions (a repeat count must show twice), not to any noise-floor/signal-detectability judgment about the 140-character wavelength \u2014 so noise floor is not in the causal chain explaining why 140 was excluded."
+     },
+     {
+      "confound": "Ceiling effect: the fixed internal search window (120 character-position cap) imposes a maximum testable wavelength of 60 characters (120/2), which is below the theory-predicted 140.0-character spacing. This means the range 46-60 was chosen for a technical/implementation reason (largest whole repeat count fitting the window), not because it matched the study's own calibration-derived prediction, and the predicted wavelength was structurally unreachable given that cap.",
+      "status": "EXPLAINS",
+      "crux": "calibration.json records expected spacing 140.0 vs. searched range 46-60 with its own flag=false noting 140 falls outside the searched range \u2014 confirming the range ceiling (a 120-character-position window cap, i.e. 60*2) is what excluded the theory-predicted wavelength, not the theory itself."
+     },
+     {
+      "confound": "single-case overfit would require that the mismatch between predicted (140.0) and searched (46-60) range arose because the search procedure was tuned/fit to look good on one particular case (e.g., picking a window that happens to show a hit for the specific signal being studied), rather than being a genuine, case-independent technical constraint.",
+      "status": "RULED_OUT",
+      "crux": "The calibration record itself commits three numbers \u2014 predicted spacing 140.0, searched range 46-60, and an explicit flag=false stating the predicted spacing is outside the searched range \u2014 and attributes the 46-60 cutoff to a fixed internal window cap (120 character-positions), a structural/technical constraint stated independently of any single case's data. Since the restriction is documented as a general technical ceiling rather than a fit to one instance's outcome, single-case overfit is not the mechanism producing the mismatch; the mismatch is directly established by the calibration file's own committed numbers, not by an overfit search."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [],
+    "runner_results": null
+   },
+   {
+    "id": "q2",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "Re-derived from the 200 saved null rows: observed amplitude 1.2449116351485559e-05; 108 of 200 shuffled draws are >= observed, so rank = 1+108 = 109/200 and p = (1+108)/201 = 0.5422885 (matches stated 0.54229). Null median = 1.5239e-05 (file says 1.5318e-05, negligible even/odd-median convention gap); observed sits at the 46th percentile of the null, i.e. it beats only 92/200 draws, not 108.",
+     "note": "Headline numbers (amplitude, rank 109/200, share 0.54229) reproduce exactly from the raw rows, and the claim's substance holds \u2014 the observed value is actually slightly BELOW the null median (46th pct), an unremarkable noise value, not a near-miss; only the wording \"beats 108 of 200\" is inverted (108 nulls beat it).",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/stimulus_linewrap.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 0.000012449 ripple-vs-shuffle pattern-strength statistic was computed from an ablation intervention that stayed on-distribution (validated e.g. by activation-norm or KL-divergence check against clean runs) \u2014 the record gives the rank/match-rate but no evidence about the ablation's distributional validity, so it's undetermined whether the noise-like reading reflects a genuine null or a corrupted off-distribution measurement."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the near-median rank (109/200, match rate 0.54229) reflects a genuinely absent pattern, or a real upstream effect that downstream layers have compensated for (self-repair) by the time it is measured at the recorded stage/layer \u2014 the record gives only the final measured statistic and its rank against shuffles, with no measurement at an earlier stage/layer closer to the intervention, and no comparison of effect size across depth that would show a decay signature consistent with compensation."
+     },
+     {
+      "confound": "selection bias (cherry-picking an extreme-looking statistic from many candidates to falsely inflate apparent significance)",
+      "status": "RULED_OUT",
+      "crux": "Selection bias would need to produce a falsely extreme (near rank 1 or rank 200) statistic to manufacture apparent significance; the committed rank is 109/200 (match rate 0.54229), i.e. almost exactly the 50th-percentile median of the null/shuffle distribution \u2014 already an unremarkable draw, not an extreme one that selection could have manufactured."
+     },
+     {
+      "confound": "readout artifact \u2014 the possibility that the pattern-strength metric's own readout mechanism (not a genuine repeating structure) governs where the measured value falls relative to shuffled controls",
+      "status": "EXPLAINS",
+      "crux": "The claim is itself a null statement (\"this value is ordinary noise, not a near-miss\"). The committed numbers (rank 109/200, match rate 0.54229) place the measured value almost exactly at the 50th percentile of the 200 shuffle-control distribution -- precisely where a value produced by the same readout process acting on pure noise would land. This is fully consistent with a readout that carries no real repeating-pattern signal (i.e., it IS the explanation the claim asserts), not a fact that needs to be ruled out."
+     },
+     {
+      "confound": "regime specificity",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the near-median rank (109/200, match rate 0.54229) reported for the single arm-ripple_vs_shuffle_endpoint-4_stage-endpoints record is representative of match rates/ranks across the other endpoint indices, stages, and arms in the same sweep, or whether this is a comparatively unremarkable-looking regime cherry-picked among others that might show much higher (near-significant) or much lower match rates."
+     },
+     {
+      "confound": "construct validity",
+      "status": "EXPLAINS",
+      "crux": "Rank 109/200 (54.229% match rate) places the measured value almost exactly at the median of the null (shuffle-control) distribution, not near its tail \u2014 this is what \"indistinguishable from typical noise\" looks like numerically. The claim under audit is itself a null/negative claim (the statistic is not meaningfully different from an ordinary noise value), and the cited evidence is the direct, literal confirmation of that null, not a confound artifact that could be masking a real effect. So EXPLAINS here means the confound-mechanism (percentile framing vs. cutoff framing) IS the substance of the claim holding: recharacterizing \"108/200 controls beaten\" as \"sits in the middle of the noise pile\" rather than \"just below threshold\" is the same fact restated, and both framings agree the value is unremarkable."
+     },
+     {
+      "confound": "Scale incomparability would require comparing quantities on different, non-commensurable units/scales. Here the reported number (rank 109/200, match rate 0.54229) is a percentile position of the pattern-strength statistic against 200 control runs built from the identical statistic/pipeline (random relabeling), which is scale-free by construction \u2014 there is no differently-scaled quantity being compared.",
+      "status": "RULED_OUT",
+      "crux": "The decisive fact is that the cited statistic (0.54229 match rate, rank 109/200) is itself a percentile/rank against an empirical null built from the same measure, not a raw value compared across differing units \u2014 so scale incomparability has no purchase on this particular number."
+     },
+     {
+      "confound": "noise floor",
+      "status": "EXPLAINS",
+      "crux": "Rank 109/200 (match rate 0.54229) places the measured value almost exactly at the 50th percentile of the shuffle-control distribution \u2014 i.e., it looks like a typical, unremarkable draw from the noise distribution itself, not a value sitting just below a significance threshold."
+     },
+     {
+      "confound": "Ceiling/floor effect: worry that a metric saturating at a boundary (floor near 0 or ceiling) would make rank-based comparisons against shuffled controls meaningless/artifactual.",
+      "status": "RULED_OUT",
+      "crux": "A floor/ceiling saturation artifact would manifest as an extreme percentile (rank near 1/200 or 200/200, ties at a boundary value), but the committed rank is 109/200 (match rate 0.54229) \u2014 squarely mid-distribution, which is the signature of an ordinary noise draw, not of metric saturation at a bound."
+     },
+     {
+      "confound": "single-case overfit: the worry that the measured pattern-strength (0.000012449) reflects fitting/selecting on one specific run/case rather than a stable, generalizable signal, which could make its true relationship to noise unclear or its rank artifact-driven.",
+      "status": "RULED_OUT",
+      "crux": "The claim being audited is a null claim (\"this value is ordinary noise, not a near-miss\"), and it is settled directly by the committed rank statistic itself: the measured value ranks 109th of 200 random-relabeling controls (match rate 0.54229), i.e. almost exactly the 50th-55th percentile of the null distribution. This is a direct distributional comparison against 200 independently generated shuffle nulls -- not a single case being over-interpreted. Single-case overfit as a confound would apply if the pattern-strength number had been computed/selected on one favorable instance with no proper null reference, making its apparent (non-)significance unreliable; here the opposite is true -- the number's ordinariness is demonstrated by its position within a 200-run null distribution, which is exactly the kind of evidence that neutralizes single-case-overfit concerns rather than needing to be explained by them."
+     }
+    ],
+    "run_queue": [
+     "rerun the shuffle-control comparison (same script that produced arm-ripple_vs_shuffle_endpoint-4..._stage-endpoints.json) across the other endpoint-* indices, stages (non-'endpoints'), and arms, then compare the distribution of ranks/match-rates to confirm 0.54229 is typical of the full sweep rather than the most noise-like outlier selected for report."
+    ],
+    "author_queue": [
+     "control comparing the ripple pattern-strength statistic computed from the actual (potentially off-distribution) ablation against the same statistic computed with a distribution-preserving ablation (e.g. mean/resample ablation using in-distribution activations), to see whether match-rate against shuffle controls shifts away from ~0.54.",
+     "rerun the ripple-vs-shuffle pattern-strength measurement at the stage(s) immediately downstream of the intervention (pre-compensation) and compare rank/match-rate to the endpoint-stage value already on record, to see if the effect is larger (and further from the noise pile) closer to the intervention than at the endpoint."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q3",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "Claimed token band 11.2856-14.7204 chars for profile length 22; re-derived from calibration.json band_low_chars=46, band_high_chars=60 divided by measured chars_per_token=4.076 -> 11.28557 and 14.72031, and tok_max_delta = token_window_high 42 - MIN_ENTRIES_PER_DELTA 20 = 22, whose only integer-cycle periods are 22.0, 11.0, 7.33 -> zero bins in band, so decision TOKEN_CONTROL_NOT_COMPUTABLE. Endpoint 4 (character labels) itself was NULL_NOT_CLEARED (rank 109/200, amplitude 1.245e-5 vs null_max 3.876e-4, period 60.0 chars).",
+     "note": "The token-position control genuinely produced no answer (band empty by construction: token window too short for the character-derived band), so the named confound is untested at this checkpoint; note the character-count ripple also failed its own shuffle test, so there is no positive result left to guard.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-token_position_control_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-token_position_control_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/calibration.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/run_seedD.py"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "Off-distribution ablation would require the \"unguarded\" status of the character-count claim to be an artifact of an ablation being run outside the model's normal input distribution (e.g., forcing an out-of-range activation/patch that produces a spurious pass/fail). But the token-position control here didn't fail due to an ablation being pushed off-distribution \u2014 it failed for a purely arithmetic/design reason: for a 22-step profile, no integer number of whole repeats produces a per-character length inside the narrow window 11.2856\u201314.7204 characters, so the comparison could not even be constructed, let alone run on- or off-distribution. There is no ablation execution here to be off-distribution; the control never got to the stage of touching the model at all.",
+      "status": "RULED_OUT",
+      "crux": "The committed record itself states the comparison \"could not be computed\" because no whole-repeat count fits the 11.2856\u201314.7204 character window for a 22-step profile \u2014 a design/arithmetic infeasibility that occurs before any model ablation is run, so an off-distribution ablation cannot be the reason the safeguard is missing."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "RULED_OUT",
+      "crux": "The stage-endpoints record attributes the control's non-computability to a combinatorial fact (no whole repeat count falls within 11.2856\u201314.7204 characters for a 22-step profile), not to any compensatory/self-repair dynamics in the model."
+     },
+     {
+      "confound": "selection bias would require showing that a favorable/computable comparison was available and discarded in favor of reporting this one as non-computable; no such alternative attempt is on record",
+      "status": "RULED_OUT",
+      "crux": "the record itself (arm-token_position_control_endpoint-5..._stage-endpoints.json) states the comparison could not be computed for the 22-step profile because no whole repeat count falls in 11.2856-14.7204 characters \u2014 a single, directly-cited geometric non-computability, not a selected-favorable-outcome among multiple attempts"
+     },
+     {
+      "confound": "readout artifact",
+      "status": "RULED_OUT",
+      "crux": "non-computability is explained by design arithmetic, not readout"
+     },
+     {
+      "confound": "Regime specificity: the position-control check's failure-to-compute (no whole repeat count in the 11.2856\u201314.7204 char window) is tied to this specific configuration (22-step profile, endpoint arm, endpoints stage). Whether the character-count claim is \"unguarded\" only in this narrow regime, or unguarded study-wide, depends on whether sibling records (other step counts/arms/stages) for the same position-control check succeeded elsewhere.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether other arm-token_position_control_endpoint records (different profile step-counts, arms, or stages) in this study successfully computed the line-position comparison and ruled it out there \u2014 if so, this null is a regime-specific corner case rather than a general safeguard failure; if all such records fail identically, the \"unguarded\" finding is general, not regime-specific."
+     },
+     {
+      "confound": "construct validity \u2014 the character-count metric and line-position are conflated for this 22-step profile, and the one control designed to separate them (the token_position_control) never produced a value.",
+      "status": "EXPLAINS",
+      "crux": "The stage-endpoints record itself states the comparison 'could not be computed' because no whole repeat count falls in the required 11.2856\u201314.7204 character window for this profile \u2014 so the planned safeguard against the line-position alternative produced neither a pass nor a fail, leaving the character-count result with zero empirical evidence distinguishing it from the position explanation."
+     },
+     {
+      "confound": "Scale incomparability between character length and integer repeat count causes the check to be inapplicable for this profile.",
+      "status": "EXPLAINS",
+      "crux": "The non-computability is a scale mismatch artifact, not a real test of position vs character count."
+     },
+     {
+      "confound": "Noise floor (signal indistinguishable from measurement noise) is not the reason the position-control check failed to run.",
+      "status": "RULED_OUT",
+      "crux": "The record explicitly attributes non-computability to a discrete/geometric constraint - no whole repeat count lands in the required narrow window (11.2856-14.7204 characters) for a 22-step profile - not to any noise-floor/signal-detection failure. Since the evidence names the mechanism and it is combinatorial (integer repeat-count vs window width), noise floor cannot be invoked to explain why the position-control safeguard is missing; the claim holds for a structural reason unrelated to my assigned confound."
+     },
+     {
+      "confound": "Ceiling or floor effect (metric saturation at a max/min bound) \u2014 not present here; the record cites a narrow-range/no-integer-solution problem, not saturation.",
+      "status": "RULED_OUT",
+      "crux": "The record's stated reason for non-computability is that no whole repeat count falls within a narrow real-valued character window (11.2856\u201314.7204) for a 22-step profile \u2014 a combinatorial impossibility, not scores pinned at a ceiling or floor."
+     },
+     {
+      "confound": "single-case overfit",
+      "status": "EXPLAINS",
+      "crux": "The only evidence available is one comparison record, for one specific 22-step profile/arm (token_position_control_endpoint-5), where the narrow required range (11.2856-14.7204 characters) happens to contain no whole repeat count. There is no evidence that this position-control check was attempted on other profiles/arms, so the uncomputable outcome \u2014 and thus the unguarded status of the character-count result \u2014 is itself a fact about a single case, not a demonstrated general property of the method."
+     }
+    ],
+    "run_queue": [
+     "grep/list all arm-token_position_control_endpoint-*_stage-*.json records across step-counts/arms/stages and check each for 'could not be computed' vs a completed comparison result"
+    ],
+    "author_queue": [],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "takeaways": "Both gates pass.\n\nFile written: `/home/hal/dev/interp/dm_hack/mats_manifold/TAKEAWAYS_seedD.md`\n\nSources used: `/home/hal/dev/interp/dm_hack/mats_manifold/records/seedD_v2_design_diff_triage.json` and the endpoint/provenance records in `/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out` (calibration.json, arm-constants..._stage-calibrate.json, arm-search_band_endpoint-2..., arm-integrity_check_endpoint-1..., arm-count_curve_endpoint-3..., arm-ripple_vs_shuffle_endpoint-4..., arm-token_position_control_endpoint-5..., arm-fitted_probe_crosscheck_endpoint-6..., arm-run_summary..., seedD_endpoints.log), plus the seven supplied open questions. I independently recomputed one figure from `rows_positions.jsonl` (the 18-of-3,527 count of character positions valued at 141 in the six width-140 test documents) and confirmed it matched exactly.\n\nGate output (verbatim):\n\n```\n=== gate_density ===\nTAKEAWAYS_seedD.md: 0.0 codes/1000 words (0 codes, 1159 words); threshold 10.0\nexit: 0\n=== gate_scope ===\n0 unscoped result sentence(s)\nexit: 0\n```\n\nBoth gates pass (exit 0)."
+}

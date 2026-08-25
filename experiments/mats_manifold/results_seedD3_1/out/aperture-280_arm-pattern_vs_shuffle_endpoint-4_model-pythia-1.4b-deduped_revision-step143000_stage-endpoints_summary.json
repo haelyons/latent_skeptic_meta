@@ -1,0 +1,2093 @@
+{
+  "cell": {
+    "aperture": 280,
+    "arm": "pattern_vs_shuffle",
+    "endpoint": 4,
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "NULL_NOT_CLEARED",
+  "decision_rule": "The rank of the observed largest power among 200 label-shuffled draws, counting the observed value itself, must be 10 or better. That is the top 5 percent. The largest power ranges over whole cycle counts of two or more, each with a period of 4 or more in the labelling's own units, for the observed value and for every draw alike. The one-cycle bin is saved in every spectrum and is never the statistic. A rank worse than 10 is NULL_NOT_CLEARED, meaning no separable repeating pattern at that probe window.",
+  "env": {
+    "git_rev": null,
+    "host": "132-226-88-169",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T13:30:35+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592594,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v3.json",
+      "present": true,
+      "sha256": "05db25f7a97d"
+    },
+    {
+      "bytes": 18266,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "72da78cd8de2"
+    },
+    {
+      "bytes": 2998,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+      "present": true,
+      "sha256": "4578bdd49cd5"
+    },
+    {
+      "bytes": 700156,
+      "n_items": 10322,
+      "path": "results_seedD3_1/work/labels_a280.npz",
+      "present": true,
+      "sha256": "297c22cf02fc"
+    },
+    {
+      "bytes": 2990703,
+      "n_items": 201,
+      "path": "results_seedD3_1/out/null_spectra_aperture-280_labels-characters.jsonl",
+      "present": true,
+      "sha256": "94a9f550a678"
+    }
+  ],
+  "metric": "Rank of the observed largest power among 200 character-count label shuffles, at one probe window.",
+  "notes": "The largest power ranges over whole cycle counts of two or more only, each with a period of 4 or more in the labelling's own units. That is this rung's one committed change. The one-cycle bin is computed and saved in every spectrum, observed and shuffled alike, and can never be the statistic. After the fixed degree-2 detrend that bin measures the profile's leftover curvature, so a single smooth drop across a window lands there, and such a drop is not a repeating pattern. The one-cycle power above is the quantity that restriction excludes, recorded so it can be read rather than guessed. Shuffling permutes the character-count labels inside each held-out document, so every label keeps exactly the same number of positions. With 200 draws the finest share this can resolve is about 0.5 percent. The seed values above all derive from the one committed base seed, 0. Every draw's whole spectrum is in the named file beside this record, and every line there names the minimum number of cycles it was computed under. The average vectors of the observed labelling are saved too. The average vectors of each draw are not saved, as the previous rung's gate record settles. The counts of directions above are recorded and gate nothing at this rung. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "rows": [
+    {
+      "draw": 0,
+      "max_power": 1.2126513224585057e-05
+    },
+    {
+      "draw": 1,
+      "max_power": 7.182706718692697e-06
+    },
+    {
+      "draw": 2,
+      "max_power": 1.0654502170063585e-05
+    },
+    {
+      "draw": 3,
+      "max_power": 1.8469009153986653e-05
+    },
+    {
+      "draw": 4,
+      "max_power": 1.1358284601706338e-05
+    },
+    {
+      "draw": 5,
+      "max_power": 1.3550826755513038e-05
+    },
+    {
+      "draw": 6,
+      "max_power": 4.501351365603568e-05
+    },
+    {
+      "draw": 7,
+      "max_power": 2.0033044505162847e-05
+    },
+    {
+      "draw": 8,
+      "max_power": 1.654705785309808e-05
+    },
+    {
+      "draw": 9,
+      "max_power": 2.4799845960672147e-05
+    },
+    {
+      "draw": 10,
+      "max_power": 1.890212848752932e-05
+    },
+    {
+      "draw": 11,
+      "max_power": 1.4094080970978097e-05
+    },
+    {
+      "draw": 12,
+      "max_power": 7.202570356712598e-06
+    },
+    {
+      "draw": 13,
+      "max_power": 6.804093093820371e-06
+    },
+    {
+      "draw": 14,
+      "max_power": 7.079197334556483e-06
+    },
+    {
+      "draw": 15,
+      "max_power": 2.5888140591270844e-05
+    },
+    {
+      "draw": 16,
+      "max_power": 2.3598267036438274e-05
+    },
+    {
+      "draw": 17,
+      "max_power": 2.0128073190879943e-05
+    },
+    {
+      "draw": 18,
+      "max_power": 2.5317172215389144e-05
+    },
+    {
+      "draw": 19,
+      "max_power": 5.389903735396511e-06
+    },
+    {
+      "draw": 20,
+      "max_power": 9.422506262800645e-06
+    },
+    {
+      "draw": 21,
+      "max_power": 3.4987409066088907e-05
+    },
+    {
+      "draw": 22,
+      "max_power": 3.186678165149433e-05
+    },
+    {
+      "draw": 23,
+      "max_power": 1.2318281554965953e-05
+    },
+    {
+      "draw": 24,
+      "max_power": 2.8904547825975264e-05
+    },
+    {
+      "draw": 25,
+      "max_power": 7.892241675604642e-06
+    },
+    {
+      "draw": 26,
+      "max_power": 3.3109136372745105e-05
+    },
+    {
+      "draw": 27,
+      "max_power": 7.474081601697608e-06
+    },
+    {
+      "draw": 28,
+      "max_power": 1.6773039148515643e-05
+    },
+    {
+      "draw": 29,
+      "max_power": 1.7678148554654034e-05
+    },
+    {
+      "draw": 30,
+      "max_power": 1.0445247914122661e-05
+    },
+    {
+      "draw": 31,
+      "max_power": 1.7130175588927767e-05
+    },
+    {
+      "draw": 32,
+      "max_power": 4.615173203098959e-06
+    },
+    {
+      "draw": 33,
+      "max_power": 2.4510992869624388e-05
+    },
+    {
+      "draw": 34,
+      "max_power": 2.1839233081434154e-05
+    },
+    {
+      "draw": 35,
+      "max_power": 2.22694188934794e-05
+    },
+    {
+      "draw": 36,
+      "max_power": 1.3091408619942362e-05
+    },
+    {
+      "draw": 37,
+      "max_power": 1.6354055250719167e-05
+    },
+    {
+      "draw": 38,
+      "max_power": 1.2974567282093582e-05
+    },
+    {
+      "draw": 39,
+      "max_power": 1.0834684959088199e-05
+    },
+    {
+      "draw": 40,
+      "max_power": 2.3509459469381665e-05
+    },
+    {
+      "draw": 41,
+      "max_power": 1.0440777145410521e-05
+    },
+    {
+      "draw": 42,
+      "max_power": 8.008060191578528e-06
+    },
+    {
+      "draw": 43,
+      "max_power": 3.308604322254094e-05
+    },
+    {
+      "draw": 44,
+      "max_power": 1.979493981098986e-05
+    },
+    {
+      "draw": 45,
+      "max_power": 1.9861550798489584e-05
+    },
+    {
+      "draw": 46,
+      "max_power": 5.859632325718796e-06
+    },
+    {
+      "draw": 47,
+      "max_power": 7.406989267555174e-06
+    },
+    {
+      "draw": 48,
+      "max_power": 1.3907976757108166e-05
+    },
+    {
+      "draw": 49,
+      "max_power": 1.3841993913521022e-05
+    },
+    {
+      "draw": 50,
+      "max_power": 2.4644702827060758e-05
+    },
+    {
+      "draw": 51,
+      "max_power": 5.998453175916655e-06
+    },
+    {
+      "draw": 52,
+      "max_power": 1.6418519225917166e-05
+    },
+    {
+      "draw": 53,
+      "max_power": 4.071986204150255e-05
+    },
+    {
+      "draw": 54,
+      "max_power": 3.2005811054032457e-05
+    },
+    {
+      "draw": 55,
+      "max_power": 9.819526890022498e-06
+    },
+    {
+      "draw": 56,
+      "max_power": 1.3617944560017001e-05
+    },
+    {
+      "draw": 57,
+      "max_power": 2.606957420936961e-05
+    },
+    {
+      "draw": 58,
+      "max_power": 2.4157739798489798e-05
+    },
+    {
+      "draw": 59,
+      "max_power": 2.420349065332008e-05
+    },
+    {
+      "draw": 60,
+      "max_power": 2.4967316689181393e-05
+    },
+    {
+      "draw": 61,
+      "max_power": 1.685693871419645e-05
+    },
+    {
+      "draw": 62,
+      "max_power": 1.1186099712621656e-05
+    },
+    {
+      "draw": 63,
+      "max_power": 1.1058105980817024e-05
+    },
+    {
+      "draw": 64,
+      "max_power": 1.0838979102194496e-05
+    },
+    {
+      "draw": 65,
+      "max_power": 4.216447964047959e-05
+    },
+    {
+      "draw": 66,
+      "max_power": 1.5033774691698618e-05
+    },
+    {
+      "draw": 67,
+      "max_power": 1.3711063900027074e-05
+    },
+    {
+      "draw": 68,
+      "max_power": 1.8339736560052908e-05
+    },
+    {
+      "draw": 69,
+      "max_power": 8.62200247710661e-06
+    },
+    {
+      "draw": 70,
+      "max_power": 5.113025705165027e-05
+    },
+    {
+      "draw": 71,
+      "max_power": 1.4818344745629062e-05
+    },
+    {
+      "draw": 72,
+      "max_power": 1.8592003444566143e-05
+    },
+    {
+      "draw": 73,
+      "max_power": 4.3418958110920114e-05
+    },
+    {
+      "draw": 74,
+      "max_power": 9.275062589495062e-05
+    },
+    {
+      "draw": 75,
+      "max_power": 9.603533687274413e-06
+    },
+    {
+      "draw": 76,
+      "max_power": 1.4331352929862368e-05
+    },
+    {
+      "draw": 77,
+      "max_power": 2.0649845150608346e-05
+    },
+    {
+      "draw": 78,
+      "max_power": 8.371486264128273e-06
+    },
+    {
+      "draw": 79,
+      "max_power": 1.5807113749431687e-05
+    },
+    {
+      "draw": 80,
+      "max_power": 1.0962090482438605e-05
+    },
+    {
+      "draw": 81,
+      "max_power": 2.5273946448592336e-05
+    },
+    {
+      "draw": 82,
+      "max_power": 9.732758348645766e-06
+    },
+    {
+      "draw": 83,
+      "max_power": 1.0656141789142358e-05
+    },
+    {
+      "draw": 84,
+      "max_power": 5.88221584757085e-06
+    },
+    {
+      "draw": 85,
+      "max_power": 1.4676822685884997e-05
+    },
+    {
+      "draw": 86,
+      "max_power": 1.8919420427960376e-05
+    },
+    {
+      "draw": 87,
+      "max_power": 7.1679427492947975e-06
+    },
+    {
+      "draw": 88,
+      "max_power": 5.755120380754656e-06
+    },
+    {
+      "draw": 89,
+      "max_power": 2.4995600530844518e-05
+    },
+    {
+      "draw": 90,
+      "max_power": 3.3867497237761246e-05
+    },
+    {
+      "draw": 91,
+      "max_power": 1.2728767253818634e-05
+    },
+    {
+      "draw": 92,
+      "max_power": 1.5766252964579643e-05
+    },
+    {
+      "draw": 93,
+      "max_power": 1.1390084674218105e-05
+    },
+    {
+      "draw": 94,
+      "max_power": 2.7284114926634597e-05
+    },
+    {
+      "draw": 95,
+      "max_power": 4.0109383767464156e-05
+    },
+    {
+      "draw": 96,
+      "max_power": 2.2549057337673753e-05
+    },
+    {
+      "draw": 97,
+      "max_power": 3.9389542433730594e-05
+    },
+    {
+      "draw": 98,
+      "max_power": 1.406721683725707e-05
+    },
+    {
+      "draw": 99,
+      "max_power": 2.975831915608865e-05
+    },
+    {
+      "draw": 100,
+      "max_power": 4.5120256730685405e-05
+    },
+    {
+      "draw": 101,
+      "max_power": 1.8911479783302408e-05
+    },
+    {
+      "draw": 102,
+      "max_power": 4.073251903145771e-05
+    },
+    {
+      "draw": 103,
+      "max_power": 3.0119008097080136e-05
+    },
+    {
+      "draw": 104,
+      "max_power": 3.970512265464958e-05
+    },
+    {
+      "draw": 105,
+      "max_power": 3.487838027636654e-05
+    },
+    {
+      "draw": 106,
+      "max_power": 6.929002096267936e-06
+    },
+    {
+      "draw": 107,
+      "max_power": 1.0534764722508892e-05
+    },
+    {
+      "draw": 108,
+      "max_power": 1.3536853308370478e-05
+    },
+    {
+      "draw": 109,
+      "max_power": 2.2405482340936343e-05
+    },
+    {
+      "draw": 110,
+      "max_power": 4.3203373577885795e-05
+    },
+    {
+      "draw": 111,
+      "max_power": 1.4626420880654464e-05
+    },
+    {
+      "draw": 112,
+      "max_power": 2.0748269962926127e-05
+    },
+    {
+      "draw": 113,
+      "max_power": 1.4327097362374453e-05
+    },
+    {
+      "draw": 114,
+      "max_power": 1.5754145491552673e-05
+    },
+    {
+      "draw": 115,
+      "max_power": 2.691579276471907e-05
+    },
+    {
+      "draw": 116,
+      "max_power": 6.09204274865897e-05
+    },
+    {
+      "draw": 117,
+      "max_power": 0.00011352613526330461
+    },
+    {
+      "draw": 118,
+      "max_power": 9.836796376943878e-06
+    },
+    {
+      "draw": 119,
+      "max_power": 3.81533342795385e-06
+    },
+    {
+      "draw": 120,
+      "max_power": 6.579149515863455e-05
+    },
+    {
+      "draw": 121,
+      "max_power": 2.4014190269183775e-05
+    },
+    {
+      "draw": 122,
+      "max_power": 1.770456920296912e-05
+    },
+    {
+      "draw": 123,
+      "max_power": 4.6917990198463614e-05
+    },
+    {
+      "draw": 124,
+      "max_power": 2.8466934427917098e-05
+    },
+    {
+      "draw": 125,
+      "max_power": 2.6577067333614924e-05
+    },
+    {
+      "draw": 126,
+      "max_power": 1.1035144734783817e-05
+    },
+    {
+      "draw": 127,
+      "max_power": 9.306253552658978e-06
+    },
+    {
+      "draw": 128,
+      "max_power": 1.5059051440319599e-05
+    },
+    {
+      "draw": 129,
+      "max_power": 8.622460476888485e-06
+    },
+    {
+      "draw": 130,
+      "max_power": 2.503799489583689e-05
+    },
+    {
+      "draw": 131,
+      "max_power": 1.1816114455053528e-05
+    },
+    {
+      "draw": 132,
+      "max_power": 1.7116620536252604e-05
+    },
+    {
+      "draw": 133,
+      "max_power": 3.406044314715359e-05
+    },
+    {
+      "draw": 134,
+      "max_power": 2.790256880741e-05
+    },
+    {
+      "draw": 135,
+      "max_power": 1.1445967565605083e-05
+    },
+    {
+      "draw": 136,
+      "max_power": 7.538137837152074e-06
+    },
+    {
+      "draw": 137,
+      "max_power": 1.6110327953331033e-05
+    },
+    {
+      "draw": 138,
+      "max_power": 2.8767171978292366e-05
+    },
+    {
+      "draw": 139,
+      "max_power": 1.1167735593396518e-05
+    },
+    {
+      "draw": 140,
+      "max_power": 1.2793180459891e-05
+    },
+    {
+      "draw": 141,
+      "max_power": 1.736468799916752e-05
+    },
+    {
+      "draw": 142,
+      "max_power": 1.9692933171586306e-05
+    },
+    {
+      "draw": 143,
+      "max_power": 2.189084726466822e-05
+    },
+    {
+      "draw": 144,
+      "max_power": 9.484036396455714e-06
+    },
+    {
+      "draw": 145,
+      "max_power": 1.5033178347987605e-05
+    },
+    {
+      "draw": 146,
+      "max_power": 1.807183098778658e-05
+    },
+    {
+      "draw": 147,
+      "max_power": 9.804118023922988e-06
+    },
+    {
+      "draw": 148,
+      "max_power": 2.940892795164622e-05
+    },
+    {
+      "draw": 149,
+      "max_power": 8.413211866303993e-06
+    },
+    {
+      "draw": 150,
+      "max_power": 1.3112091710966391e-05
+    },
+    {
+      "draw": 151,
+      "max_power": 8.263047850302744e-06
+    },
+    {
+      "draw": 152,
+      "max_power": 9.143743268376854e-06
+    },
+    {
+      "draw": 153,
+      "max_power": 1.7142286580824558e-05
+    },
+    {
+      "draw": 154,
+      "max_power": 9.303001312288928e-06
+    },
+    {
+      "draw": 155,
+      "max_power": 1.4068304695912388e-05
+    },
+    {
+      "draw": 156,
+      "max_power": 1.0194770513326376e-05
+    },
+    {
+      "draw": 157,
+      "max_power": 6.4270078034639005e-06
+    },
+    {
+      "draw": 158,
+      "max_power": 7.628834210818803e-06
+    },
+    {
+      "draw": 159,
+      "max_power": 7.798015610343998e-06
+    },
+    {
+      "draw": 160,
+      "max_power": 2.8829807609384876e-05
+    },
+    {
+      "draw": 161,
+      "max_power": 2.8210505002641558e-05
+    },
+    {
+      "draw": 162,
+      "max_power": 1.4193787511559718e-05
+    },
+    {
+      "draw": 163,
+      "max_power": 1.3406507463703007e-05
+    },
+    {
+      "draw": 164,
+      "max_power": 8.266455774470897e-06
+    },
+    {
+      "draw": 165,
+      "max_power": 1.570995422538976e-05
+    },
+    {
+      "draw": 166,
+      "max_power": 1.461759663469759e-05
+    },
+    {
+      "draw": 167,
+      "max_power": 3.126538335971618e-05
+    },
+    {
+      "draw": 168,
+      "max_power": 2.7131400126400805e-05
+    },
+    {
+      "draw": 169,
+      "max_power": 3.1815819629168944e-05
+    },
+    {
+      "draw": 170,
+      "max_power": 2.5955953456343637e-05
+    },
+    {
+      "draw": 171,
+      "max_power": 1.543607161817304e-05
+    },
+    {
+      "draw": 172,
+      "max_power": 3.369048662398254e-05
+    },
+    {
+      "draw": 173,
+      "max_power": 3.312822258304703e-05
+    },
+    {
+      "draw": 174,
+      "max_power": 1.146213860173927e-05
+    },
+    {
+      "draw": 175,
+      "max_power": 9.177289351390642e-06
+    },
+    {
+      "draw": 176,
+      "max_power": 6.9666239468249014e-06
+    },
+    {
+      "draw": 177,
+      "max_power": 1.8628419293471337e-05
+    },
+    {
+      "draw": 178,
+      "max_power": 1.6109997492025208e-05
+    },
+    {
+      "draw": 179,
+      "max_power": 3.3316579395762126e-05
+    },
+    {
+      "draw": 180,
+      "max_power": 1.3954524805930921e-05
+    },
+    {
+      "draw": 181,
+      "max_power": 2.4518017137991555e-05
+    },
+    {
+      "draw": 182,
+      "max_power": 1.806337066879465e-05
+    },
+    {
+      "draw": 183,
+      "max_power": 1.0706119527843527e-05
+    },
+    {
+      "draw": 184,
+      "max_power": 1.2738252634776072e-05
+    },
+    {
+      "draw": 185,
+      "max_power": 9.057183914223148e-06
+    },
+    {
+      "draw": 186,
+      "max_power": 3.2074036265866014e-05
+    },
+    {
+      "draw": 187,
+      "max_power": 2.4983804316289e-05
+    },
+    {
+      "draw": 188,
+      "max_power": 4.0544195972383154e-05
+    },
+    {
+      "draw": 189,
+      "max_power": 3.0260366603193923e-05
+    },
+    {
+      "draw": 190,
+      "max_power": 1.586904649004447e-05
+    },
+    {
+      "draw": 191,
+      "max_power": 1.0966176463589995e-05
+    },
+    {
+      "draw": 192,
+      "max_power": 1.741679679067625e-05
+    },
+    {
+      "draw": 193,
+      "max_power": 1.0030471716962665e-05
+    },
+    {
+      "draw": 194,
+      "max_power": 2.3855775550051633e-05
+    },
+    {
+      "draw": 195,
+      "max_power": 1.3803719763211737e-05
+    },
+    {
+      "draw": 196,
+      "max_power": 3.852298985499903e-05
+    },
+    {
+      "draw": 197,
+      "max_power": 1.4284609215679057e-05
+    },
+    {
+      "draw": 198,
+      "max_power": 6.773715493557338e-06
+    },
+    {
+      "draw": 199,
+      "max_power": 1.0068954619089678e-05
+    }
+  ],
+  "threshold": {
+    "draws": 200,
+    "rank_at_most": 10
+  },
+  "values": {
+    "ambient_dimension_at_95_percent": 1,
+    "ambient_dimension_by_variance_target_recorded_only": {
+      "0.9": 1,
+      "0.95": 1,
+      "0.99": 98
+    },
+    "aperture": 280,
+    "character_window_high": 280,
+    "character_window_low": 1,
+    "committed_profile_length": 260,
+    "cycles": 3,
+    "cycles_minimum": 2,
+    "draws": 200,
+    "empirical_share": 0.08955,
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.879879,
+    "floor_gate_readout": 5,
+    "held_out_rows": 10322,
+    "max_power": 3.8964815223379486e-05,
+    "n_cycle_counts_searched": 64,
+    "n_labels": 280,
+    "null_max": 0.00011352613526330461,
+    "null_median": 1.6109997492025208e-05,
+    "observed_mean_vectors_file": "mean_vectors_aperture-280_labels-characters.npz",
+    "one_cycle_bin_saved_never_the_statistic": true,
+    "one_cycle_power_excluded_from_statistic": 0.00010828189202664014,
+    "per_draw_mean_vectors_saved": false,
+    "positions_per_label_max": 57,
+    "positions_per_label_min": 20,
+    "profile": [
+      0.3649785,
+      0.36006144,
+      0.36791632,
+      0.36344391,
+      0.34247528,
+      0.33004194,
+      0.32444193,
+      0.32152061,
+      0.32274893,
+      0.31796582,
+      0.31923053,
+      0.31582169,
+      0.31578928,
+      0.31957776,
+      0.31548134,
+      0.31151904,
+      0.30884151,
+      0.31496617,
+      0.3022604,
+      0.30955034,
+      0.30333937,
+      0.30898507,
+      0.29919153,
+      0.30389851,
+      0.30202738,
+      0.29911834,
+      0.29945409,
+      0.30208512,
+      0.29677113,
+      0.30292499,
+      0.29746729,
+      0.2965699,
+      0.30077848,
+      0.29792209,
+      0.29198696,
+      0.2951538,
+      0.29270292,
+      0.29243555,
+      0.28666881,
+      0.28620811,
+      0.277795,
+      0.285516,
+      0.2812158,
+      0.28175979,
+      0.28221965,
+      0.28028667,
+      0.27847502,
+      0.27624249,
+      0.27440637,
+      0.27777572,
+      0.27452661,
+      0.27411074,
+      0.2746923,
+      0.27237485,
+      0.26997371,
+      0.26856838,
+      0.26798611,
+      0.27426954,
+      0.2681865,
+      0.26824194,
+      0.2667129,
+      0.26845865,
+      0.26784677,
+      0.26064821,
+      0.26360358,
+      0.26002666,
+      0.26275183,
+      0.26205503,
+      0.26110913,
+      0.25876367,
+      0.26377841,
+      0.26637615,
+      0.26418565,
+      0.26018739,
+      0.25830688,
+      0.2591234,
+      0.2626279,
+      0.25097211,
+      0.25658197,
+      0.25742511,
+      0.25721039,
+      0.25416011,
+      0.24862881,
+      0.25864472,
+      0.2593477,
+      0.25856361,
+      0.25853616,
+      0.25846888,
+      0.25918341,
+      0.25303627,
+      0.25218773,
+      0.25174384,
+      0.25385889,
+      0.25253606,
+      0.25685868,
+      0.25379588,
+      0.26027388,
+      0.25049605,
+      0.25299536,
+      0.25158272,
+      0.2507905,
+      0.25047959,
+      0.24907486,
+      0.24786427,
+      0.24728376,
+      0.25107401,
+      0.24227547,
+      0.24798854,
+      0.24006214,
+      0.24529832,
+      0.2361397,
+      0.23336217,
+      0.2380949,
+      0.23384897,
+      0.23779145,
+      0.23868458,
+      0.23804901,
+      0.23854907,
+      0.23703542,
+      0.23880428,
+      0.23723059,
+      0.24271864,
+      0.23406949,
+      0.23599281,
+      0.23375516,
+      0.23162904,
+      0.2272769,
+      0.23071887,
+      0.22720855,
+      0.22734429,
+      0.22917756,
+      0.22154909,
+      0.22902474,
+      0.2218231,
+      0.22332317,
+      0.21532021,
+      0.22216383,
+      0.21887104,
+      0.21605406,
+      0.22125856,
+      0.21467021,
+      0.2162868,
+      0.2187404,
+      0.20933095,
+      0.21045579,
+      0.20940693,
+      0.20743305,
+      0.20955506,
+      0.2071858,
+      0.20915939,
+      0.20973765,
+      0.20511401,
+      0.20772698,
+      0.2097284,
+      0.21169879,
+      0.20763186,
+      0.19935524,
+      0.19336478,
+      0.19999158,
+      0.20002234,
+      0.19691478,
+      0.19229882,
+      0.18912758,
+      0.18963236,
+      0.1859467,
+      0.18379402,
+      0.18707835,
+      0.1876465,
+      0.19290971,
+      0.19230918,
+      0.18466118,
+      0.18461211,
+      0.18550777,
+      0.185102,
+      0.18861905,
+      0.18468305,
+      0.19083262,
+      0.18420961,
+      0.18336246,
+      0.1778137,
+      0.17884435,
+      0.18352494,
+      0.17897039,
+      0.1724731,
+      0.17757253,
+      0.18168753,
+      0.16917298,
+      0.16613346,
+      0.16500143,
+      0.16751213,
+      0.16076624,
+      0.16279546,
+      0.16060165,
+      0.15437137,
+      0.15445941,
+      0.14907853,
+      0.15247691,
+      0.1433438,
+      0.13942037,
+      0.14784593,
+      0.14803554,
+      0.13764942,
+      0.13439273,
+      0.13322685,
+      0.1292973,
+      0.12722266,
+      0.12438081,
+      0.12345105,
+      0.1196472,
+      0.12232821,
+      0.11421466,
+      0.10921516,
+      0.11660204,
+      0.10642536,
+      0.11204891,
+      0.10072477,
+      0.10494933,
+      0.10576736,
+      0.09966089,
+      0.09435944,
+      0.10074188,
+      0.09372347,
+      0.08305756,
+      0.08346792,
+      0.07214926,
+      0.08026506,
+      0.06977605,
+      0.07234613,
+      0.06163022,
+      0.05024081,
+      0.05040878,
+      0.03962949,
+      0.03217413,
+      0.02301678,
+      0.03238825,
+      0.0386576,
+      0.02403842,
+      0.02948066,
+      0.02223598,
+      0.01637033,
+      0.01349047,
+      0.00246099,
+      -0.00293195,
+      -0.00485157,
+      -0.0090321,
+      -0.02332461,
+      -0.03079356,
+      -0.02894987,
+      -0.03637812,
+      -0.05693821,
+      -0.07337218,
+      -0.08402564,
+      -0.07534446,
+      -0.09941914,
+      -0.08948126,
+      -0.10840307,
+      -0.10921301,
+      -0.12559236,
+      -0.13929496,
+      -0.16289404
+    ],
+    "profile_length": 260,
+    "rank": 18,
+    "readout": 5,
+    "shuffle_base_seed": 0,
+    "shuffle_seed_entropy": [
+      0,
+      280,
+      0
+    ],
+    "spectra_file": "null_spectra_aperture-280_labels-characters.jsonl",
+    "spectrum": [
+      {
+        "cycles": 1,
+        "eligible": false,
+        "in_range": true,
+        "period": 260.0,
+        "power": 0.00010828189202664014
+      },
+      {
+        "cycles": 2,
+        "eligible": true,
+        "in_range": true,
+        "period": 130.0,
+        "power": 1.8024261975038443e-05
+      },
+      {
+        "cycles": 3,
+        "eligible": true,
+        "in_range": true,
+        "period": 86.66666666666667,
+        "power": 3.8964815223379486e-05
+      },
+      {
+        "cycles": 4,
+        "eligible": true,
+        "in_range": true,
+        "period": 65.0,
+        "power": 1.988233741701762e-05
+      },
+      {
+        "cycles": 5,
+        "eligible": true,
+        "in_range": true,
+        "period": 52.0,
+        "power": 1.615290427360909e-05
+      },
+      {
+        "cycles": 6,
+        "eligible": true,
+        "in_range": true,
+        "period": 43.333333333333336,
+        "power": 1.6348218565084752e-05
+      },
+      {
+        "cycles": 7,
+        "eligible": true,
+        "in_range": true,
+        "period": 37.142857142857146,
+        "power": 9.204562189617422e-06
+      },
+      {
+        "cycles": 8,
+        "eligible": true,
+        "in_range": true,
+        "period": 32.5,
+        "power": 6.501403679146541e-06
+      },
+      {
+        "cycles": 9,
+        "eligible": true,
+        "in_range": true,
+        "period": 28.88888888888889,
+        "power": 1.2534907971790902e-05
+      },
+      {
+        "cycles": 10,
+        "eligible": true,
+        "in_range": true,
+        "period": 26.0,
+        "power": 7.356942568866044e-06
+      },
+      {
+        "cycles": 11,
+        "eligible": true,
+        "in_range": true,
+        "period": 23.636363636363637,
+        "power": 1.0433656126385912e-05
+      },
+      {
+        "cycles": 12,
+        "eligible": true,
+        "in_range": true,
+        "period": 21.666666666666668,
+        "power": 8.24800360039634e-06
+      },
+      {
+        "cycles": 13,
+        "eligible": true,
+        "in_range": true,
+        "period": 20.0,
+        "power": 5.175383000431013e-06
+      },
+      {
+        "cycles": 14,
+        "eligible": true,
+        "in_range": true,
+        "period": 18.571428571428573,
+        "power": 4.133308358972814e-06
+      },
+      {
+        "cycles": 15,
+        "eligible": true,
+        "in_range": true,
+        "period": 17.333333333333332,
+        "power": 3.4652793344029724e-06
+      },
+      {
+        "cycles": 16,
+        "eligible": true,
+        "in_range": true,
+        "period": 16.25,
+        "power": 3.2111351402550294e-06
+      },
+      {
+        "cycles": 17,
+        "eligible": true,
+        "in_range": true,
+        "period": 15.294117647058824,
+        "power": 2.817498699249408e-06
+      },
+      {
+        "cycles": 18,
+        "eligible": true,
+        "in_range": true,
+        "period": 14.444444444444445,
+        "power": 2.8384078927155705e-06
+      },
+      {
+        "cycles": 19,
+        "eligible": true,
+        "in_range": true,
+        "period": 13.68421052631579,
+        "power": 3.2778590068577663e-06
+      },
+      {
+        "cycles": 20,
+        "eligible": true,
+        "in_range": true,
+        "period": 13.0,
+        "power": 2.650742219357071e-06
+      },
+      {
+        "cycles": 21,
+        "eligible": true,
+        "in_range": true,
+        "period": 12.380952380952381,
+        "power": 2.100882962379085e-06
+      },
+      {
+        "cycles": 22,
+        "eligible": true,
+        "in_range": true,
+        "period": 11.818181818181818,
+        "power": 3.152188976791485e-06
+      },
+      {
+        "cycles": 23,
+        "eligible": true,
+        "in_range": true,
+        "period": 11.304347826086957,
+        "power": 2.077360185636864e-06
+      },
+      {
+        "cycles": 24,
+        "eligible": true,
+        "in_range": true,
+        "period": 10.833333333333334,
+        "power": 1.635992771542914e-06
+      },
+      {
+        "cycles": 25,
+        "eligible": true,
+        "in_range": true,
+        "period": 10.4,
+        "power": 1.6374829662209139e-06
+      },
+      {
+        "cycles": 26,
+        "eligible": true,
+        "in_range": true,
+        "period": 10.0,
+        "power": 1.1630838074443778e-06
+      },
+      {
+        "cycles": 27,
+        "eligible": true,
+        "in_range": true,
+        "period": 9.62962962962963,
+        "power": 1.0547316719928552e-06
+      },
+      {
+        "cycles": 28,
+        "eligible": true,
+        "in_range": true,
+        "period": 9.285714285714286,
+        "power": 1.7222468347714182e-06
+      },
+      {
+        "cycles": 29,
+        "eligible": true,
+        "in_range": true,
+        "period": 8.96551724137931,
+        "power": 1.3035215819638662e-06
+      },
+      {
+        "cycles": 30,
+        "eligible": true,
+        "in_range": true,
+        "period": 8.666666666666666,
+        "power": 2.5541555651051643e-06
+      },
+      {
+        "cycles": 31,
+        "eligible": true,
+        "in_range": true,
+        "period": 8.387096774193548,
+        "power": 2.0207307243326083e-06
+      },
+      {
+        "cycles": 32,
+        "eligible": true,
+        "in_range": true,
+        "period": 8.125,
+        "power": 1.0452318786785214e-06
+      },
+      {
+        "cycles": 33,
+        "eligible": true,
+        "in_range": true,
+        "period": 7.878787878787879,
+        "power": 1.4306717619275293e-06
+      },
+      {
+        "cycles": 34,
+        "eligible": true,
+        "in_range": true,
+        "period": 7.647058823529412,
+        "power": 1.3721259467746606e-06
+      },
+      {
+        "cycles": 35,
+        "eligible": true,
+        "in_range": true,
+        "period": 7.428571428571429,
+        "power": 4.702485825149699e-07
+      },
+      {
+        "cycles": 36,
+        "eligible": true,
+        "in_range": true,
+        "period": 7.222222222222222,
+        "power": 1.2910511637010206e-06
+      },
+      {
+        "cycles": 37,
+        "eligible": true,
+        "in_range": true,
+        "period": 7.027027027027027,
+        "power": 1.4326976806795331e-06
+      },
+      {
+        "cycles": 38,
+        "eligible": true,
+        "in_range": true,
+        "period": 6.842105263157895,
+        "power": 1.0978906879024845e-06
+      },
+      {
+        "cycles": 39,
+        "eligible": true,
+        "in_range": true,
+        "period": 6.666666666666667,
+        "power": 1.3868205075848264e-06
+      },
+      {
+        "cycles": 40,
+        "eligible": true,
+        "in_range": true,
+        "period": 6.5,
+        "power": 6.320618576226936e-07
+      },
+      {
+        "cycles": 41,
+        "eligible": true,
+        "in_range": true,
+        "period": 6.341463414634147,
+        "power": 9.522527432952862e-07
+      },
+      {
+        "cycles": 42,
+        "eligible": true,
+        "in_range": true,
+        "period": 6.190476190476191,
+        "power": 7.599246053592617e-07
+      },
+      {
+        "cycles": 43,
+        "eligible": true,
+        "in_range": true,
+        "period": 6.046511627906977,
+        "power": 7.363235194940055e-07
+      },
+      {
+        "cycles": 44,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.909090909090909,
+        "power": 7.555166438447628e-07
+      },
+      {
+        "cycles": 45,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.777777777777778,
+        "power": 3.693810266822503e-07
+      },
+      {
+        "cycles": 46,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.6521739130434785,
+        "power": 4.389792360865377e-07
+      },
+      {
+        "cycles": 47,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.531914893617022,
+        "power": 2.7716378285750766e-07
+      },
+      {
+        "cycles": 48,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.416666666666667,
+        "power": 4.312254079465133e-07
+      },
+      {
+        "cycles": 49,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.3061224489795915,
+        "power": 2.3382628097081813e-07
+      },
+      {
+        "cycles": 50,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.2,
+        "power": 2.7905924266052425e-07
+      },
+      {
+        "cycles": 51,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.098039215686274,
+        "power": 5.654947747937392e-07
+      },
+      {
+        "cycles": 52,
+        "eligible": true,
+        "in_range": true,
+        "period": 5.0,
+        "power": 3.2344951200492865e-07
+      },
+      {
+        "cycles": 53,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.90566037735849,
+        "power": 2.1802553452819373e-07
+      },
+      {
+        "cycles": 54,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.814814814814815,
+        "power": 9.969877228792186e-08
+      },
+      {
+        "cycles": 55,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.7272727272727275,
+        "power": 2.4387570594899456e-07
+      },
+      {
+        "cycles": 56,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.642857142857143,
+        "power": 4.462949493812971e-07
+      },
+      {
+        "cycles": 57,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.56140350877193,
+        "power": 1.1882518992944461e-07
+      },
+      {
+        "cycles": 58,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.482758620689655,
+        "power": 3.685486301812373e-07
+      },
+      {
+        "cycles": 59,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.406779661016949,
+        "power": 1.0873590431489325e-06
+      },
+      {
+        "cycles": 60,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.333333333333333,
+        "power": 5.229171059650264e-07
+      },
+      {
+        "cycles": 61,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.262295081967213,
+        "power": 3.7264756422645277e-07
+      },
+      {
+        "cycles": 62,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.193548387096774,
+        "power": 5.303915189962069e-07
+      },
+      {
+        "cycles": 63,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.126984126984127,
+        "power": 4.1335311778420916e-07
+      },
+      {
+        "cycles": 64,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.0625,
+        "power": 2.5686401344239714e-07
+      },
+      {
+        "cycles": 65,
+        "eligible": true,
+        "in_range": true,
+        "period": 4.0,
+        "power": 6.39995687742316e-07
+      },
+      {
+        "cycles": 66,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.9393939393939394,
+        "power": 2.795030911009342e-07
+      },
+      {
+        "cycles": 67,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.8805970149253732,
+        "power": 3.7544441082952756e-08
+      },
+      {
+        "cycles": 68,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.823529411764706,
+        "power": 1.6232266737968622e-07
+      },
+      {
+        "cycles": 69,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.7681159420289854,
+        "power": 3.9550574639967747e-07
+      },
+      {
+        "cycles": 70,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.7142857142857144,
+        "power": 8.849157324759887e-08
+      },
+      {
+        "cycles": 71,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.6619718309859155,
+        "power": 1.0821531791478616e-07
+      },
+      {
+        "cycles": 72,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.611111111111111,
+        "power": 3.254252679506037e-07
+      },
+      {
+        "cycles": 73,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.5616438356164384,
+        "power": 2.2412553305956453e-07
+      },
+      {
+        "cycles": 74,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.5135135135135136,
+        "power": 5.7780804355237336e-08
+      },
+      {
+        "cycles": 75,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.466666666666667,
+        "power": 9.379846898295916e-08
+      },
+      {
+        "cycles": 76,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.4210526315789473,
+        "power": 2.2450239251291614e-07
+      },
+      {
+        "cycles": 77,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.3766233766233764,
+        "power": 3.378632105000824e-07
+      },
+      {
+        "cycles": 78,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.3333333333333335,
+        "power": 2.2855109066678246e-07
+      },
+      {
+        "cycles": 79,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.2911392405063293,
+        "power": 4.351984306195493e-07
+      },
+      {
+        "cycles": 80,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.25,
+        "power": 3.773592023868119e-07
+      },
+      {
+        "cycles": 81,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.2098765432098766,
+        "power": 3.1170580578800757e-07
+      },
+      {
+        "cycles": 82,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.1707317073170733,
+        "power": 4.620798419562372e-07
+      },
+      {
+        "cycles": 83,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.1325301204819276,
+        "power": 1.3673918164329583e-07
+      },
+      {
+        "cycles": 84,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.0952380952380953,
+        "power": 1.4140358298220152e-07
+      },
+      {
+        "cycles": 85,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.0588235294117645,
+        "power": 1.198396191340414e-07
+      },
+      {
+        "cycles": 86,
+        "eligible": false,
+        "in_range": false,
+        "period": 3.0232558139534884,
+        "power": 3.044979791879424e-07
+      },
+      {
+        "cycles": 87,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.9885057471264367,
+        "power": 9.33386513059947e-08
+      },
+      {
+        "cycles": 88,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.9545454545454546,
+        "power": 1.8836915377977928e-07
+      },
+      {
+        "cycles": 89,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.9213483146067416,
+        "power": 2.976334231780601e-07
+      },
+      {
+        "cycles": 90,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.888888888888889,
+        "power": 6.444402264174813e-07
+      },
+      {
+        "cycles": 91,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.857142857142857,
+        "power": 2.636251723739841e-07
+      },
+      {
+        "cycles": 92,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.8260869565217392,
+        "power": 2.961137401441698e-07
+      },
+      {
+        "cycles": 93,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.795698924731183,
+        "power": 1.6685292505590914e-07
+      },
+      {
+        "cycles": 94,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.765957446808511,
+        "power": 1.9730590735215632e-07
+      },
+      {
+        "cycles": 95,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.736842105263158,
+        "power": 2.3383754550211348e-07
+      },
+      {
+        "cycles": 96,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.7083333333333335,
+        "power": 2.997945536080409e-07
+      },
+      {
+        "cycles": 97,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.6804123711340204,
+        "power": 5.186298221267557e-07
+      },
+      {
+        "cycles": 98,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.6530612244897958,
+        "power": 1.3034302257948943e-07
+      },
+      {
+        "cycles": 99,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.6262626262626263,
+        "power": 2.2022268429791943e-07
+      },
+      {
+        "cycles": 100,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.6,
+        "power": 1.626410206034644e-07
+      },
+      {
+        "cycles": 101,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.5742574257425743,
+        "power": 3.2390367394486273e-07
+      },
+      {
+        "cycles": 102,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.549019607843137,
+        "power": 2.973071917267609e-07
+      },
+      {
+        "cycles": 103,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.5242718446601944,
+        "power": 3.7157995293976535e-07
+      },
+      {
+        "cycles": 104,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.5,
+        "power": 1.2046155787995573e-07
+      },
+      {
+        "cycles": 105,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.4761904761904763,
+        "power": 1.7728446849523234e-07
+      },
+      {
+        "cycles": 106,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.452830188679245,
+        "power": 2.3350268708030267e-07
+      },
+      {
+        "cycles": 107,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.4299065420560746,
+        "power": 1.4713572694249564e-07
+      },
+      {
+        "cycles": 108,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.4074074074074074,
+        "power": 3.162902853300681e-08
+      },
+      {
+        "cycles": 109,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.385321100917431,
+        "power": 8.34194749518913e-08
+      },
+      {
+        "cycles": 110,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.3636363636363638,
+        "power": 2.3890072802051524e-07
+      },
+      {
+        "cycles": 111,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.3423423423423424,
+        "power": 1.5407615066811637e-07
+      },
+      {
+        "cycles": 112,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.3214285714285716,
+        "power": 2.407599742877353e-07
+      },
+      {
+        "cycles": 113,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.3008849557522124,
+        "power": 1.5515336694477797e-07
+      },
+      {
+        "cycles": 114,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.280701754385965,
+        "power": 3.6112933023937083e-07
+      },
+      {
+        "cycles": 115,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.260869565217391,
+        "power": 1.6533374442732478e-08
+      },
+      {
+        "cycles": 116,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.2413793103448274,
+        "power": 1.9356459873575216e-08
+      },
+      {
+        "cycles": 117,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.2222222222222223,
+        "power": 3.109043975201946e-07
+      },
+      {
+        "cycles": 118,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.2033898305084745,
+        "power": 1.9545212039830963e-07
+      },
+      {
+        "cycles": 119,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.1848739495798317,
+        "power": 2.3791635751331972e-07
+      },
+      {
+        "cycles": 120,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.1666666666666665,
+        "power": 1.6637492920387536e-07
+      },
+      {
+        "cycles": 121,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.1487603305785123,
+        "power": 1.4436356394656716e-07
+      },
+      {
+        "cycles": 122,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.1311475409836067,
+        "power": 2.999191413820923e-07
+      },
+      {
+        "cycles": 123,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.113821138211382,
+        "power": 2.448221723472152e-07
+      },
+      {
+        "cycles": 124,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.096774193548387,
+        "power": 5.204936081438099e-07
+      },
+      {
+        "cycles": 125,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.08,
+        "power": 4.037591815531281e-07
+      },
+      {
+        "cycles": 126,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.0634920634920637,
+        "power": 4.69112182777713e-07
+      },
+      {
+        "cycles": 127,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.047244094488189,
+        "power": 5.630892531983365e-07
+      },
+      {
+        "cycles": 128,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.03125,
+        "power": 2.2810508383189012e-07
+      },
+      {
+        "cycles": 129,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.0155038759689923,
+        "power": 1.540569564194827e-07
+      },
+      {
+        "cycles": 130,
+        "eligible": false,
+        "in_range": false,
+        "period": 2.0,
+        "power": 2.2480107394637848e-07
+      }
+    ],
+    "this_record_voided_by_floor_gate": false,
+    "variance_share_first_ten": [
+      0.965683,
+      0.002663,
+      0.002032,
+      0.001033,
+      0.000859,
+      0.000648,
+      0.000514,
+      0.00049,
+      0.000489,
+      0.00043
+    ],
+    "wavelength_chars": 86.66666666666667
+  }
+}

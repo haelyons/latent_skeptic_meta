@@ -1,0 +1,105 @@
+{
+  "cell": {
+    "aperture": 140,
+    "arm": "labelling_attribution",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "NO_PATTERN_TO_ATTRIBUTE",
+  "decision_rule": "At a probe window: if the token-position control cannot be computed the call is TOKEN_CONTROL_NOT_COMPUTABLE. If neither labelling clears its own shuffle draws the call is NO_PATTERN_TO_ATTRIBUTE, because no 'distinguished' verdict may be drawn over two absent patterns. If only the token labelling clears, the call is TOKEN_ONLY_PATTERN. If only the character labelling clears, the character count is credited. If both clear, the character count is credited when the two periods differ by more than 3 characters, and otherwise the pattern is CONFOUNDED_WITH_TOKEN_POSITION.",
+  "env": {
+    "git_rev": null,
+    "host": "132-226-88-169",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T13:30:40+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592594,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v3.json",
+      "present": true,
+      "sha256": "05db25f7a97d"
+    },
+    {
+      "bytes": 18266,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "72da78cd8de2"
+    },
+    {
+      "bytes": 2998,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+      "present": true,
+      "sha256": "4578bdd49cd5"
+    },
+    {
+      "bytes": 714317,
+      "n_items": 10520,
+      "path": "results_seedD3_1/work/labels_a140.npz",
+      "present": true,
+      "sha256": "5baa783c74f7"
+    }
+  ],
+  "metric": "Which labelling, character-count or token-position, clears its own 200 shuffles at one probe window, and at what period.",
+  "notes": "The characters-per-token rate is measured on this probe window's own held-out documents, because the tokenisation shifts a little with the wrap width. The token period is turned into characters with that measured rate, because the design's margin of 3 is in characters. Both restrictions are applied in each labelling's own units. So this control searches token periods of 4 tokens or more, at two or more whole cycles, and never reuses the character numbers. The largest power ranges over whole cycle counts of two or more only, each with a period of 4 or more in the labelling's own units. That is this rung's one committed change. The one-cycle bin is computed and saved in every spectrum, observed and shuffled alike, and can never be the statistic. After the fixed degree-2 detrend that bin measures the profile's leftover curvature, so a single smooth drop across a window lands there, and such a drop is not a repeating pattern. The token ceiling above is the committed ceiling rule, restated as amendment B of this rung's gate record: at least 40 training positions, not a cap of 40 positions. It is recorded beside the observed maximum token count, so the size of the cut is visible. One line at this width holds far fewer tokens than characters, so the two labellings cannot range over the same number of periods. Both labellings' ranks and periods are recorded here whatever the character result was. Two absent patterns can never be told apart, so neither labelling clearing reads NO_PATTERN_TO_ATTRIBUTE, which corrects the previous rung. A token-only clearing reads TOKEN_ONLY_PATTERN and does not enter the invariance fork. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "margin_chars": 3.0,
+    "rank_at_most": 10
+  },
+  "values": {
+    "aperture": 140,
+    "character_cleared_shuffle": false,
+    "character_rank": 201,
+    "character_wavelength_chars": 60.0,
+    "chars_per_token": 4.102,
+    "draws": 200,
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.879879,
+    "floor_gate_readout": 5,
+    "held_out_characters": 43153,
+    "held_out_positions": 10520,
+    "per_draw_mean_vectors_saved": false,
+    "readout": 5,
+    "shuffle_base_seed": 0,
+    "this_record_voided_by_floor_gate": false,
+    "token_ambient_dimension_at_95_percent": 2,
+    "token_ambient_dimension_by_variance_target_recorded_only": {
+      "0.9": 1,
+      "0.95": 2,
+      "0.99": 7
+    },
+    "token_ceiling": 41,
+    "token_ceiling_min_training_positions": 40,
+    "token_cleared_shuffle": false,
+    "token_cycles": 2,
+    "token_cycles_minimum": 2,
+    "token_empirical_share": 1.0,
+    "token_label_observed_max": 58,
+    "token_labels_excluded_above_ceiling": 17,
+    "token_max_delta": 21,
+    "token_max_power": 5.488742131773133e-05,
+    "token_n_cycle_counts_searched": 4,
+    "token_null_max": 0.010854721644091583,
+    "token_observed_mean_vectors_file": "mean_vectors_aperture-140_labels-tokens.npz",
+    "token_one_cycle_power_excluded_from_statistic": 7.249621197901369e-06,
+    "token_positions_per_label_max": 320,
+    "token_positions_per_label_min": 12,
+    "token_profile_length": 21,
+    "token_rank": 201,
+    "token_shortest_period_searched_tokens": 4,
+    "token_shuffle_seed_entropy": [
+      0,
+      140,
+      1
+    ],
+    "token_spectra_file": "null_spectra_aperture-140_labels-tokens.jsonl",
+    "token_wavelength_chars": 43.071,
+    "token_wavelength_tokens": 10.5,
+    "token_window_high": 41
+  }
+}

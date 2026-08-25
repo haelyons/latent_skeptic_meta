@@ -1,0 +1,73 @@
+{
+  "cell": {
+    "arm": "exactly_one_window_cleared",
+    "endpoint": 6,
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "NOT_EXACTLY_ONE_WINDOW_CLEARED",
+  "decision_rule": "Exactly one of the three probe windows 140, 200 and 280, under the character-count labelling, clearing rank 10 or better of 200 is EXACTLY_ONE_WINDOW_CLEARED. The chain then closes as unresolved on that one cell. Any other count is NOT_EXACTLY_ONE_WINDOW_CLEARED.",
+  "env": {
+    "git_rev": null,
+    "host": "132-226-88-169",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T13:30:52+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592594,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v3.json",
+      "present": true,
+      "sha256": "05db25f7a97d"
+    },
+    {
+      "bytes": 18266,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "72da78cd8de2"
+    },
+    {
+      "bytes": 2998,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+      "present": true,
+      "sha256": "4578bdd49cd5"
+    }
+  ],
+  "metric": "Count of the three probe windows whose character-count labelling cleared rank 10 or better of 200, against exactly one.",
+  "notes": "Exactly one clearing window closes the chain as unresolved on that one cell, named rather than decided either way. This is the same count variable as the record beside it, read against the other half of the committed pair. The largest power ranges over whole cycle counts of two or more only, each with a period of 4 or more in the labelling's own units. That is this rung's one committed change. The one-cycle bin is computed and saved in every spectrum, observed and shuffled alike, and can never be the statistic. After the fixed degree-2 detrend that bin measures the profile's leftover curvature, so a single smooth drop across a window lands there, and such a drop is not a repeating pattern. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "exactly": 1
+  },
+  "values": {
+    "character_windows_cleared": [],
+    "cycles_minimum": 2,
+    "draws": 200,
+    "exactly_one_cleared": false,
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.879879,
+    "floor_gate_readout": 5,
+    "n_character_windows_cleared": 0,
+    "per_aperture_character_decision": {
+      "140": "NULL_NOT_CLEARED",
+      "200": "NULL_NOT_CLEARED",
+      "280": "NULL_NOT_CLEARED"
+    },
+    "per_aperture_character_rank": {
+      "140": 201,
+      "200": 198,
+      "280": 18
+    },
+    "rank_threshold": 10,
+    "this_record_voided_by_floor_gate": false,
+    "windows_tested": [
+      140,
+      200,
+      280
+    ]
+  }
+}

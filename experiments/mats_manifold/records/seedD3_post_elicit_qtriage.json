@@ -1,0 +1,278 @@
+{
+ "elicited": {
+  "questions": [
+   {
+    "question": "Does a signal that dips only once across the entire measurement window count as a repeating pattern, or is it just a leftover trend?",
+    "where": "The only measurement window that beat its random-shuffle comparison is 280 characters, character-count labels (file aperture-280_arm-pattern_vs_shuffle_endpoint-3...json). Its winning shape spans the full window in one smooth drop, from about 0.36 to about -0.16, with no repeat at all.",
+    "if_true": "If one non-repeating dip does not count as a repeating pattern, the only case in this whole run that beat random chance was never a repeating pattern to begin with. It looks like a trend a straight-line-and-curve removal step failed to fully strip out.",
+    "changes": "The 'a window cleared' finding and the 'character count distinguished' finding built on top of it would lose their basis. The real result of this run would read as no repeating pattern found at any of the three windows tested."
+   },
+   {
+    "question": "How much would the one result that beat random chance change under a different batch of 200 random comparisons?",
+    "where": "Same window, 280 characters, character-count labels. The real result's peak strength was 0.00008673. The strongest of its 200 randomized comparisons reached 0.00008027, about 8 percent lower (same file as above).",
+    "if_true": "If the margin is that thin, a different random batch of 200 comparisons could easily have produced one stronger than the real result, flipping the outcome from pass to fail.",
+    "changes": "The single positive result in the whole run, the one thing keeping the run from being fully null, would be shown to rest on a coin-flip-thin margin rather than a clear gap from chance."
+   },
+   {
+    "question": "Can a signal count as evidence of a character-count representation at a window where the model's own count reading is worse than always guessing the average count?",
+    "where": "At the 280-character window, the held-out fit-quality score is -0.793553 (files arm-floor_gate_endpoint-1...json and arm-run_summary...json). A negative score means the model's readout is worse than guessing the average count every time. The one result that beat random chance comes from this same window.",
+    "if_true": "If a negative fit-quality score means the model does not reliably represent count at that window, the pattern found there cannot be evidence of a character-count representation.",
+    "changes": "The finding that character count, not token position, was distinguished at 280 characters would need to be read instead as noise, arising in a window where the model does not represent count at all."
+   },
+   {
+    "question": "Is the one result that beat random chance coming from the window with the fewest examples per count value, making its averages the noisiest of the three?",
+    "where": "At 280 characters, each count value is averaged from as few as 12 examples (range 12 to 52). At 140 characters the minimum is 27 examples, and at 200 characters it is 26 (files aperture-140/200/280_arm-pattern_vs_shuffle_endpoint-3...json).",
+    "if_true": "If the 280-character window's per-count averages rest on roughly half as many examples as the other two windows, those averages are noisier, and noisier averages are more likely to throw up a stray high point by chance.",
+    "changes": "The one finding that kept this run from being fully null would have an ordinary, uninteresting explanation, fewer examples at exactly that window, rather than reflecting a real feature of the model."
+   },
+   {
+    "question": "Does the number of directions needed to capture the count signal measure something real about the model, or does it mainly track which percentage-of-spread cutoff is chosen?",
+    "where": "Across the three windows (140, 200, 280 characters), the count of directions needed for 90 percent of the spread stays at 1 every time. For 95 percent it is 3, 15, and 1. For 99 percent it jumps to 81, 127, and 129 (file arm-ambient_dimension_endpoint-2...json).",
+    "if_true": "If the choice of cutoff drives the count this much, the one window (200 characters) that crosses the 'four or more directions' bar may only do so because of where the 95-percent line happens to fall.",
+    "changes": "The finding that this larger model's count signal reaches four or more directions, one of the run's three central pre-registered questions, would no longer be a stable fact about the model. It would be an artifact of the chosen cutoff."
+   },
+   {
+    "question": "Is it consistent to credit character count with the one pattern that beat random chance at 280 characters, when the run's own separate check says counts above 175 characters are not reliably readable there?",
+    "where": "The wide-count check at 280 characters (file aperture-280_arm-measurable_range_endpoint-5...json) finds every count bin above 175 stays under a correlation of 0.31, below its own 0.5 bar for 'measurable.' The separate labelling check at the same window (file aperture-280_arm-labelling_attribution_endpoint-4...json) still credits character count with the one pattern beating chance.",
+    "if_true": "If counts above 175 characters are not reliably readable at all, the pattern that beat random chance in that range cannot be trusted as a genuine character-count signal.",
+    "changes": "The 'character count distinguished' call at 280 characters would conflict with this run's own diagnostic for that same window, undercutting the single positive finding in the entire run."
+   },
+   {
+    "question": "Does the single fit-quality score reported for characters 20 through 140 hide an early collapse in how finely the model tracks count, even inside that trusted range?",
+    "where": "Within that range, correlation between predicted and true count by 35-character group runs 0.645989, then 0.8196, then drops to 0.210583 and 0.226552 for characters 71 to 140 (file aperture-140_arm-bin_correlations_width_140...json), even though the single pooled score for the whole range is 0.876302.",
+    "if_true": "If fine-grained tracking fails after roughly character 70, the pooled score of 0.876302 mainly reflects coarse, low-versus-high count information, not accurate tracking of exact counts across the full range it is meant to certify.",
+    "changes": "The pass on this run's existence check (0.876302, above its 0.60 bar) would still stand, but what that pass is taken to certify, a working count representation across the whole range, would need to shrink to roughly the first 70 characters."
+   },
+   {
+    "question": "Should the one narrow result that beat random chance outweigh two clearer results, at the other windows, showing the real pattern is smoother than nearly all random shuffles?",
+    "where": "At 140 and 200 characters, the real, unshuffled pattern is smoother than random chance, ranking 196th and 120th out of 200 random comparisons (files aperture-140 and aperture-200 arm-pattern_vs_shuffle_endpoint-3...json). Only at 280 characters, by an 8 percent margin, does the real pattern beat random chance.",
+    "if_true": "If two of three windows show the real signal is smoother than nearly all random shuffles, that is itself a pattern, an absence of ripple, and the one narrow exception looks more like noise than a genuine finding.",
+    "changes": "The overall weight of evidence in this run would tilt further toward no repeating pattern found, rather than toward the single narrow exception this run's headline is built on."
+   }
+  ]
+ },
+ "qtriage": {
+  "claims": [
+   {
+    "id": "q1",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "Re-derived from /home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/aperture-280_arm-pattern_vs_shuffle_endpoint-3_...json: winning cycles=1, period=260.0 (= full 260-length profile), max_power 8.673e-05 vs null_max 8.027e-05, rank 1/200, empirical_share 0.00498; profile[0]=0.36102, profile[-1]=-0.15602, min=-0.15614 at index 258, max at index 0, Pearson r with position = -0.914. Apertures 140 and 200 both NULL_NOT_CLEARED \u2014 280/characters is the only cleared cell. Claim's \"0.36 to -0.16, one smooth drop, only window that beat shuffle\" matches exactly.",
+     "note": "Claim's numbers reproduce: the single cleared cell's winning statistic is the 1-cycle (full-window) component, a monotone-trending drop 0.361 to -0.156 with no repeat, surviving only a degree-2 poly detrend (DETREND_DEGREE=2 in run_seedD3.py), and the detrended profile itself is not saved in the record so the residual shape cannot be inspected directly.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/aperture-280_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/aperture-140_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/aperture-200_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/run_seedD3.py"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 'arm' condition at aperture-280 was generated by an ablation/patching procedure that drives activations off the model's natural input distribution \u2014 the committed evidence describes only the curve's shape and a suspected detrending failure, with no stated ablation method or in-distribution control to compare against."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "EXPLAINS",
+      "crux": "The only surviving 'signal' (aperture-280) is described as one smooth, monotonic drop spanning the entire window (~0.36 to ~-0.16) with zero repetition \u2014 exactly the shape a self-repair/compensation trend produces (a single directional shift as downstream units compensate for an earlier intervention), not a periodic or repeating structure. No committed number in the evidence (e.g., a repeat-count, periodicity statistic, or residual-after-detrend value) is given that would distinguish 'residual compensation trend' from 'genuine repeating pattern' \u2014 the evidence only offers a qualitative shape description, which is equally consistent with self-repair as the origin of the entire effect."
+     },
+     {
+      "confound": "selection bias",
+      "status": "EXPLAINS",
+      "crux": "Whether the single window that beat shuffle (280-char) shows a periodic/repeating shape or a single monotonic drop; the evidence states it is one smooth decline from ~0.36 to ~-0.16 spanning the full window with no repeat, i.e. exactly the shape a leftover-trend/detrending failure plus multiple-window selection (pick the one aperture out of several that happened to clear shuffle) would produce."
+     },
+     {
+      "confound": "readout artifact",
+      "status": "EXPLAINS",
+      "crux": "The sole surviving window's winning shape is a single smooth monotonic drop (~0.36 to ~-0.16) spanning the entire measurement window with zero repetitions \u2014 i.e. it is a trend, not an oscillation, and no committed number in the evidence shows a second dip or periodic recurrence anywhere in the record."
+     },
+     {
+      "confound": "regime specificity \u2014 the only window (aperture-280) that beat shuffle shows a single smooth monotonic drop over the entire window with no repetition, i.e. the \"signal\" is regime-specific (one window, one non-repeating excursion) rather than a pattern that recurs across the window or across regimes (window sizes).",
+      "status": "EXPLAINS",
+      "crux": "Whether the aperture-280 winning shape (0.36 -> -0.16, one smooth drop spanning the full window, no repeat) is a genuine repeating/periodic pattern or a leftover trend that the straight-line-and-curve detrending step failed to fully remove \u2014 the evidence describes exactly the latter and gives no held-out or cross-window replication number to rule it out."
+     },
+     {
+      "confound": "construct validity: whether a single non-repeating dip should count as a \"repeating pattern\" at all",
+      "status": "EXPLAINS",
+      "crux": "The only surviving-vs-shuffle window's winning shape is described as one smooth monotonic drop (~0.36 to ~-0.16) spanning the full window with no repeat \u2014 i.e., a trend, not a periodic/repeating structure."
+     },
+     {
+      "confound": "scale incomparability: whether the statistic that made aperture-280 \"win\" is normalized/comparable across the three tested character-count apertures (56/140/280), or whether it's an artifact of differing scale (e.g., residual magnitude growing with window length) rather than a real, comparable effect.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the committed run normalizes the arm-vs-shuffle statistic (or effect size) consistently across aperture-56, aperture-140, and aperture-280 before comparing which one \"beat\" its shuffle baseline \u2014 no normalization constant or cross-aperture comparability check is given in the evidence."
+     },
+     {
+      "confound": "noise floor",
+      "status": "EXPLAINS",
+      "crux": "The only window to beat its shuffle comparison (280-char aperture) does so with a single smooth monotonic drop spanning the entire window (0.36 to -0.16), not an oscillatory/repeating shape \u2014 this is the signature of a leftover trend/drift component riding on top of shuffle-noise variance, not a real periodic pattern rising above the noise floor."
+     },
+     {
+      "confound": "ceiling or floor effect",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the observed endpoint values (~0.36 and ~-0.16) sit at or near the metric's actual measurable min/max bound (shared across shuffle controls and other windows), versus being unbounded interior values \u2014 the evidence names no such bound or saturation check."
+     },
+     {
+      "confound": "single-case overfit: only one aperture (280) out of the windows tested beat its shuffle baseline, and its winning shape is a single smooth monotonic drop (~0.36 to ~-0.16) spanning the entire window with zero repeats \u2014 i.e., no periodicity was ever measured, only a one-shot detrending residual.",
+      "status": "EXPLAINS",
+      "crux": "The only evidence for \"pattern\" is that the 280-char window's residual beat shuffle; no cycle count, period estimate, or repeat-count was measured or reported, so a single non-repeating trend and a genuine repeating pattern are indistinguishable from the committed data \u2014 the shape description (\"full window, one smooth drop, no repeat\") is itself the confound's signature, not a fact that rules it out."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "rerun aperture-280 arm-vs-shuffle at endpoint-3 with an in-distribution (mean/resample-over-natural-inputs) ablation in place of whatever ablation produced the arm condition, and check if the smooth 0.36\u2192-0.16 dip still beats shuffle.",
+     "control that recomputes the arm-vs-shuffle statistic for all three apertures on a common normalized scale (e.g., z-scored against each aperture's own shuffle-null variance) and checks whether aperture-280 still uniquely clears its null once scale differences across window lengths are removed.",
+     "report the metric's theoretical/empirical min-max range and overlay shuffle-control endpoint values for aperture-280 to check if 0.36/-0.16 sit at a shared saturation bound rather than being interior trend values."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q2",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "Re-derived from the 201-line raw spectra file: observed in-range max power 8.673305e-05, strongest of 200 shuffles 8.027371e-05 (rank 1/201, empirical share 0.00498). Null max is 7.45% below the observed, i.e. observed only 8.04% above the best shuffle \u2014 claim's \"about 8 percent lower\" matches; 2nd/3rd strongest shuffles 7.688e-05, 7.436e-05.",
+     "note": "Claim's numbers reproduce exactly from the per-draw spectra (not just the summary): the single NULL_CLEARED cell passes on a ~8% margin over its best of 200 shuffles, with three shuffles within 15%.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/aperture-280_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/null_spectra_aperture-280_labels-characters.jsonl"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation: the 200 \"random comparisons\" forming the null distribution may be generated by perturbing/ablating the window in a way that doesn't match the real data distribution (e.g. character-level shuffles vs. realistic text statistics), which would bias the null's max (0.00008027) and make the reported 8% margin an artifact of a mismatched baseline rather than a genuine measure of chance.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the randomization/ablation procedure used to build the 200-comparison null distribution samples in-distribution perturbations of the real 280-char window or off-distribution ones; no committed number in the evidence states which, so the thin 8% margin cannot be judged as a fair chance-baseline comparison."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "NEEDS_RUN",
+      "crux": "Self-repair/downstream compensation would act equally on both the real comparison and the 200 randomized comparisons (same network pipeline), so it has no differential mechanism to explain why the real peak (0.00008673) beat the randomized max (0.00008027) by only ~8%; no committed measurement isolates a self-repair effect here, and the claim itself is really about order-statistic resampling stability, not about self-repair."
+     },
+     {
+      "confound": "selection bias",
+      "status": "EXPLAINS",
+      "crux": "The \"pass\" was defined by the real value exceeding the maximum of one batch of 200 random comparisons (0.00008673 vs 0.00008027, ~8% gap) \u2014 an extreme-order statistic that is itself high-variance across batches, so the thin margin is exactly what selection-bias-driven max-comparison predicts, not evidence against it."
+     },
+     {
+      "confound": "readout artifact (character-count-label readout on a fixed 280-char window)",
+      "status": "NEEDS_RUN",
+      "crux": "We only know the max of ONE batch of 200 randomized comparisons (0.00008027) versus the real peak (0.00008673); we have no mean/SD of that null distribution and no second independently-seeded batch, so we cannot tell whether 0.00008673 sits robustly above the noise floor of this readout or whether it's within ordinary batch-to-batch fluctuation of the same artifact-prone metric."
+     },
+     {
+      "confound": "regime specificity (multiple regimes/analyses tested, this being the one that happened to pass)",
+      "status": "EXPLAINS",
+      "crux": "The evidence itself states this is \"the single positive result in the whole run\" \u2014 i.e. among the full set of regimes/windows/label-types tested, only this one (280-char window, character-count labels) beat its own randomization baseline, and even then by only ~8%. That pattern is exactly what regime-specificity predicts: with many regimes tried, the best-of-many is expected to show a thin, fragile margin over its null, since it was selected (implicitly, by being the one reported as positive) rather than being a robust effect independent of regime."
+     },
+     {
+      "confound": "construct validity",
+      "status": "EXPLAINS",
+      "crux": "The real peak (0.00008673) and the strongest of 200 random peaks (0.00008027) differ by only ~8% at an absolute scale of ~1e-4 \u2014 a gap so small it is indistinguishable from what a construct-invalid measure (character-count labels over a fixed 280-char window, the only operationalization tested) would produce by chance; nothing in the committed data shows this \"signal\" tracks anything beyond what the random/null comparisons already reach."
+     },
+     {
+      "confound": "scale incomparability \u2014 comparing quantities on non-commensurate scales/units",
+      "status": "RULED_OUT",
+      "crux": "The real peak (0.00008673) and the strongest randomized peak (0.00008027) are both computed under identical conditions \u2014 same window, same 280-character segmentation, same character-count labels, same file \u2014 so the comparison is already same-scale by construction; the thinness of the 8% margin is a sampling-variability question, not a scale-mismatch artifact."
+     },
+     {
+      "confound": "noise floor / thin margin over random comparisons",
+      "status": "EXPLAINS",
+      "crux": "The real peak (0.00008673) exceeds the max of only 200 random comparisons (0.00008027) by just ~8%; with n=200 draws, the sample max is a high-variance statistic, so a different batch of 200 could plausibly exceed the real value. No committed data (e.g., a re-run with a new seed, or a distribution/percentile of the random maxima across multiple batches) shows the real result clears the random ceiling by a stable margin \u2014 the only number given is this single thin 8% gap."
+     },
+     {
+      "confound": "ceiling or floor effect",
+      "status": "EXPLAINS",
+      "crux": "The real peak strength (0.00008673) and the strongest of 200 random draws (0.00008027) are both tiny, same-order-of-magnitude values \u2014 consistent with the statistic sitting at its noise floor for this window/label setup rather than reflecting a well-separated real signal, which is exactly what would make the pass/fail outcome flip under a different random batch."
+     },
+     {
+      "confound": "single-case overfit: the one passing result is the max of 200 random comparisons beating the real value by only ~8%, i.e., it could easily be noise-driven order-statistic luck rather than a robust effect",
+      "status": "EXPLAINS",
+      "crux": "The real peak (8.673e-5) beat the strongest of 200 random comparisons (8.027e-5) by only ~8%, and no second independent randomized batch or margin-distribution is on record to show this gap reliably survives resampling"
+     }
+    ],
+    "run_queue": [
+     "Rerun the same 200-random-comparison randomization procedure (same 280-char window, character-count labels) across several additional independent seeds/batches, and report the distribution of batch-maxima relative to the real peak (0.00008673) to see how often/by how much the random max exceeds or falls short of it."
+    ],
+    "author_queue": [
+     "Control comparing the existing off-the-shelf 200-random-comparison null (used to get max 0.00008027) against a null built from in-distribution ablations (e.g. resampling real held-out windows matching the same 280-char/character-count structure), to check whether the real peak still clears an on-distribution null by a non-trivial margin."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q3",
+    "grounding": {
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/arm-floor_gate_endpoint-1_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/arm-run_summary_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/aperture-280_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/aperture-280_arm-labelling_attribution_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json"
+     ],
+     "grounding": "reproduces",
+     "note": "held_out_quality_w280 = -0.793553 at the chosen readout 5 reproduces exactly in the floor-gate rows; w280 is negative at all 25 readouts (best -0.347681, readout 2), while the gate itself was cleared only on widths 20-140 (0.876302) \u2014 and the sole clearing window (280, CHARACTER_COUNT_DISTINGUISHED, rank 1/201) has period 260 = the full 260-point profile with 95.4% variance in one component, i.e. a monotone ramp rather than a wrap-periodic signal, so the claim's premise is supported by the raw artifacts.",
+     "observed": "re-derived w280 @ readout 5 = -0.793553 (claim: -0.793553); pooled 20-140 = 0.876302; w200 = 0.168216; w280 max over readouts = -0.347681"
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "EXPLAINS",
+      "crux": "The held-out fit-quality score of -0.793553 at the 280-character window is negative, meaning the model's own count readout there is worse than always guessing the average count -- this is the committed number that makes the co-located \"beat random chance\" pattern read as noise/artifact rather than genuine character-count representation."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "NEEDS_RUN",
+      "crux": "The committed evidence (fit-quality = -0.793553 at the 280-char window, arm-floor_gate_endpoint-1...json / arm-run_summary...json) is a correlational readout-quality number; it tells us the linear probe is worse than average-guessing at that window, but self-repair is a causal-compensation mechanism (ablate/patch a component, downstream layers mask the effect) that this correlational fit score cannot speak to either way \u2014 no ablation/patching result is in evidence."
+     },
+     {
+      "confound": "Selection bias: the \"hit\" (distinguishing character-count from token-position) was selected from among multiple tested windows, and it happens to be the one window where the model's own count readout is worse than a trivial average-guessing baseline (fit-quality = -0.793553 at 280 chars). A negative fit-quality score means the model is not reliably tracking count at all at that window \u2014 so any residual pattern there is more parsimoniously explained as noise picked out by post-hoc selection across windows than as a genuine character-count representation.",
+      "status": "EXPLAINS",
+      "crux": "The one \"beats random chance\" result and the negative fit-quality score (-0.793553, arm-floor_gate_endpoint-1.../arm-run_summary...json) both come from the same 280-character window; since a negative score means the readout is worse than always guessing the average, the window that produced the celebrated finding is exactly the window where the model is not shown to represent count at all \u2014 this is the signature of selection across tested windows turning noise into an apparent hit, not evidence the noise is genuine."
+     },
+     {
+      "confound": "readout artifact",
+      "status": "EXPLAINS",
+      "crux": "The committed fit-quality score at the 280-character window is -0.793553 (arm-floor_gate_endpoint-1...json / arm-run_summary...json), meaning the model's own count-readout is worse than always guessing the average count at exactly the window where the sole above-chance discrimination result was found."
+     },
+     {
+      "confound": "regime specificity: the one discriminating result (character count over token position) comes entirely from the 280-character window, which is also the window with a negative held-out fit-quality score",
+      "status": "EXPLAINS",
+      "crux": "Held-out fit-quality score at the 280-char window is -0.793553 (arm-floor_gate_endpoint-1...json / arm-run_summary...json), meaning the model's count readout there is worse than guessing the average count -- and this is the same window supplying the sole above-chance discrimination result, so the discriminating signal cannot be attributed to a working character-count representation at that window."
+     },
+     {
+      "confound": "construct validity: a \"count-distinguishing\" signal at a window where the model's own count readout is empirically worse than the average-guessing baseline cannot be validly labeled a character-count representation, since the readout that would ground that construct is itself broken at that window.",
+      "status": "EXPLAINS",
+      "crux": "The single \"beat random chance\" distinguishing result and the negative fit-quality score (-0.793553) both come from the same 280-character window, with no committed evidence decoupling the two measures."
+     },
+     {
+      "confound": "scale incomparability \u2014 a fit-quality/readout score that is worse than the always-guess-the-average baseline at 280 characters",
+      "status": "EXPLAINS",
+      "crux": "The committed number itself (fit-quality = -0.793553 at 280 chars, arm-floor_gate_endpoint-1...json / arm-run_summary...json) says the model's count readout at that exact window is worse than trivial average-guessing, and the paper's own \"beat random chance\" result is drawn from that same window \u2014 so the window where the character-count-vs-token-position distinction was found is a window with no established count representation to be evidence for."
+     },
+     {
+      "confound": "noise floor",
+      "status": "EXPLAINS",
+      "crux": "The held-out fit-quality score at the 280-character window is -0.793553 (arm-floor_gate_endpoint-1...json / arm-run_summary...json), meaning the model's own count readout at that window is worse than always guessing the average count \u2014 i.e. the model has no reliable count representation there. Since the claimed character-vs-token-position distinguishing signal comes from this same window, the evidence establishes the confound rather than ruling it out: a signal produced at a window where the readout is sub-floor is exactly what you'd expect from noise, not from a genuine character-count representation."
+     },
+     {
+      "confound": "Ceiling/floor effect: at the 280-character window the model's count readout is worse than chance (fit-quality = -0.793553), meaning the model does not reliably represent count there \u2014 so any distinguishing pattern found at that window is more likely floor-effect noise than a genuine character-count representation.",
+      "status": "EXPLAINS",
+      "crux": "The single result that \"beat random chance\" (distinguishing character-count from token-position) is reported as coming from the same 280-character window where the fit-quality score is negative (-0.793553), i.e. exactly the window where the model's count representation is documented to be at/below floor."
+     },
+     {
+      "confound": "single-case overfit: the count-vs-token-position dissociation that \"beat random chance\" at 280 chars could be a fit to a single example/instance rather than a signal generalizing across multiple independent cases at that window.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the result that beat chance at 280 characters was measured across multiple independent held-out cases/seeds (ruling out single-case overfit) or reflects just one instance \u2014 this sample-count/replication fact is not reported in the evidence given, which only reports the (unrelated) average-count-readout fit-quality score."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "An ablation/patching control at the 280-character window that zero- or mean-ablates the putative count-carrying component and measures whether downstream layers restore the count signal (self-repair magnitude metric).",
+     "Report n (number of independent held-out cases/seeds) underlying the 280-char chance-beating result and re-run the count-vs-token-position dissociation with a leave-one-case-out or multi-seed split to confirm it replicates across cases rather than one instance."
+    ],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "takeaways": "Both gates pass cleanly and the embedded word count (1736) matches exactly. The file is complete and stable.\n\nFile path: `/home/hal/dev/interp/dm_hack/mats_manifold/TAKEAWAYS_seedD3.md`\n\nGate outputs (verbatim, matching what is embedded at the file's end):\n\n```\n$ python3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_density.py TAKEAWAYS_seedD3.md\nTAKEAWAYS_seedD3.md: 0.0 codes/1000 words (0 codes, 1736 words); threshold 10.0\n```\nExit code: 0\n\n```\n$ python3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_scope.py TAKEAWAYS_seedD3.md\n0 unscoped result sentence(s)\n```\nExit code: 0\n\nSummary of what the file covers: it states the three pre-registered thresholds for this run (existence check \u22650.60 fit-quality, measured 0.876302; direction-count \u22654, measured up to 15 at the 200-character window but only under one of three tried cutoffs; repeating-pattern check needing a top-10-of-201 rank, cleared only at the 280-character window with rank 1, while the 140- and 200-character windows ranked 196th and 120th \u2014 smoother than nearly all random comparisons). It reports the pre-registered headline as officially undecided (the plan's own rule for exactly one clearing window). It then walks through all eight open questions as clearly labeled exploratory findings that undercut that one positive result (non-repeating trend shape, ~8% margin over the best random comparison, a negative fit-quality score at that same window, fewest examples per count value there, cutoff-dependence of the dimension finding, conflict with the model's own range-readability check, fine-grained collapse even inside the trusted 1\u2013140 range, and the two-of-three-windows-smoother-than-chance pattern). It closes with the comparison to the smaller, 410-million-parameter version's prior result, methodological caveats (single run, no external anchor, floor gate calibrated on a narrower range than it licenses), and a bottom line."
+}

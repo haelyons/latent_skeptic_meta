@@ -1,0 +1,194 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+=== stage extract ===
+[sweep] text file /home/ubuntu/mats_manifold/stimulus_linewrap_v2.json
+[sweep] hash b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd (expected b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd) match=True
+[sweep] model EleutherAI/pythia-1.4b-deduped, 12 checkpoints, measured in this order: step143000, step0, step512, step1000, step2000, step4000, step8000, step16000, step32000, step64000, step96000, step128000
+[sweep] the final checkpoint is first because its quality must land within 0.02 of 0.876302 AND its boundary ratio must reach 0.3, or the sweep is void
+[sweep] the initialization checkpoint is second because its quality is the baseline floor every formation threshold is measured from; it voids the sweep only at or above 0.6134114
+[sweep] widths read [20, 40, 60, 80, 100, 120, 140]; text source Project Gutenberg eBook #2701 (Moby Dick), plain text
+[sweep] checkpoint step143000 (step 143000), measurement 1 of 12, downloading into results_seedD4_1/work/downloads/step143000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json
+[sweep] step143000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 5006.02it/s]
+[sweep] step143000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step143000: 336 variants in 261.3 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json
+[sweep] step143000: ridge strength 1000, cross-validated best readout 5 at 0.8780 (179.3 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json
+[sweep] step143000: best readout 5, pooled quality over widths 20 to 140 0.876302, median readout 0.616793, peak above median 0.259509, LOCALIZED_INTERIOR_PEAK (7.9 s)
+[sweep] step143000: kept the vectors of readout 5, deleted 24 other readouts
+[sweep] step143000: profile [0.645989, 0.8196, 0.210583, 0.226552], boundary ratio 0.514227, directions {'0.9': 1, '0.95': 3, '0.99': 81}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json
+[sweep] step143000 done in 450.8 s; working vectors and weights deleted
+[record] ANCHOR_IN_BAND -> results_seedD4_1/out/arm-anchor_gate_endpoint-1_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json
+[sweep] 1 of 12 checkpoints measured, 7.8 minutes so far
+[sweep] checkpoint step0 (step 0), measurement 2 of 12, downloading into results_seedD4_1/work/downloads/step0
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step0_stage-extract.json
+[sweep] step0: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4815.41it/s]
+[sweep] step0: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step0: 336 variants in 253.8 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step0_stage-extract.json
+[sweep] step0: ridge strength 10000, cross-validated best readout 24 at 0.3625 (183.6 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step0_stage-extract.json
+[sweep] step0: best readout 24, pooled quality over widths 20 to 140 0.341495, median readout 0.338748, peak above median 0.002747, NOT_YET_LOCALIZED (7.8 s)
+[sweep] step0: kept the vectors of readout 24, deleted 24 other readouts
+[sweep] step0: profile [0.227269, 0.033907, 0.01716, 0.348856], boundary ratio -0.05242, directions {'0.9': 77, '0.95': 100, '0.99': 128}, coordinates COORDINATES_AT_GRID_EDGE
+[record] COORDINATES_AT_GRID_EDGE -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step0_stage-extract.json
+[sweep] step0 done in 447.5 s; working vectors and weights deleted
+[record] BASELINE_RECORDED -> results_seedD4_1/out/arm-baseline_endpoint-2_model-pythia-1.4b-deduped_revision-step0_stage-extract.json
+[sweep] 2 of 12 checkpoints measured, 15.5 minutes so far
+[sweep] checkpoint step512 (step 512), measurement 3 of 12, downloading into results_seedD4_1/work/downloads/step512
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step512_stage-extract.json
+[sweep] step512: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 5009.52it/s]
+[sweep] step512: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step512: 336 variants in 257.2 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step512_stage-extract.json
+[sweep] step512: ridge strength 100, cross-validated best readout 23 at 0.8407 (175.1 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step512_stage-extract.json
+[sweep] step512: best readout 23, pooled quality over widths 20 to 140 0.827079, median readout 0.601918, peak above median 0.225161, LOCALIZED_INTERIOR_PEAK (7.8 s)
+[sweep] step512: kept the vectors of readout 23, deleted 24 other readouts
+[sweep] step512: profile [0.45779, 0.671669, 0.295865, 0.315421], boundary ratio 0.259086, directions {'0.9': 19, '0.95': 37, '0.99': 89}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step512_stage-extract.json
+[sweep] step512 done in 442.3 s; working vectors and weights deleted
+[sweep] 3 of 12 checkpoints measured, 23.0 minutes so far
+[sweep] checkpoint step1000 (step 1000), measurement 4 of 12, downloading into results_seedD4_1/work/downloads/step1000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step1000_stage-extract.json
+[sweep] step1000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4724.19it/s]
+[sweep] step1000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step1000: 336 variants in 260.1 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step1000_stage-extract.json
+[sweep] step1000: ridge strength 1000, cross-validated best readout 23 at 0.8648 (181.0 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step1000_stage-extract.json
+[sweep] step1000: best readout 23, pooled quality over widths 20 to 140 0.851364, median readout 0.528111, peak above median 0.323253, LOCALIZED_INTERIOR_PEAK (7.4 s)
+[sweep] step1000: kept the vectors of readout 23, deleted 24 other readouts
+[sweep] step1000: profile [0.4553, 0.677492, 0.432398, 0.292869], boundary ratio 0.203763, directions {'0.9': 22, '0.95': 51, '0.99': 106}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step1000_stage-extract.json
+[sweep] step1000 done in 450.8 s; working vectors and weights deleted
+[sweep] 4 of 12 checkpoints measured, 30.7 minutes so far
+[sweep] checkpoint step2000 (step 2000), measurement 5 of 12, downloading into results_seedD4_1/work/downloads/step2000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step2000_stage-extract.json
+[sweep] step2000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4633.94it/s]
+[sweep] step2000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step2000: 336 variants in 263.0 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step2000_stage-extract.json
+[sweep] step2000: ridge strength 10000, cross-validated best readout 23 at 0.7870 (178.5 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step2000_stage-extract.json
+[sweep] step2000: best readout 23, pooled quality over widths 20 to 140 0.765581, median readout 0.540165, peak above median 0.225415, LOCALIZED_INTERIOR_PEAK (7.7 s)
+[sweep] step2000: kept the vectors of readout 23, deleted 24 other readouts
+[sweep] step2000: profile [0.410092, 0.246015, 0.594327, 0.382936], boundary ratio -0.160578, directions {'0.9': 55, '0.95': 85, '0.99': 124}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step2000_stage-extract.json
+[sweep] step2000 done in 451.4 s; working vectors and weights deleted
+[sweep] 5 of 12 checkpoints measured, 38.4 minutes so far
+[sweep] checkpoint step4000 (step 4000), measurement 6 of 12, downloading into results_seedD4_1/work/downloads/step4000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step4000_stage-extract.json
+[sweep] step4000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4688.63it/s]
+[sweep] step4000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step4000: 336 variants in 261.1 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step4000_stage-extract.json
+[sweep] step4000: ridge strength 10000, cross-validated best readout 22 at 0.7295 (110.2 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step4000_stage-extract.json
+[sweep] step4000: best readout 22, pooled quality over widths 20 to 140 0.715426, median readout 0.559874, peak above median 0.155552, LOCALIZED_INTERIOR_PEAK (5.9 s)
+[sweep] step4000: kept the vectors of readout 22, deleted 24 other readouts
+[sweep] step4000: profile [0.443832, 0.107466, 0.335272, 0.612093], boundary ratio -0.198033, directions {'0.9': 76, '0.95': 101, '0.99': 129}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step4000_stage-extract.json
+[sweep] step4000 done in 379.5 s; working vectors and weights deleted
+[sweep] 6 of 12 checkpoints measured, 45.0 minutes so far
+[sweep] checkpoint step8000 (step 8000), measurement 7 of 12, downloading into results_seedD4_1/work/downloads/step8000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step8000_stage-extract.json
+[sweep] step8000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4770.28it/s]
+[sweep] step8000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step8000: 336 variants in 65.0 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step8000_stage-extract.json
+[sweep] step8000: ridge strength 100000, cross-validated best readout 22 at 0.7344 (97.1 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step8000_stage-extract.json
+[sweep] step8000: best readout 22, pooled quality over widths 20 to 140 0.725391, median readout 0.582333, peak above median 0.143058, LOCALIZED_INTERIOR_PEAK (5.3 s)
+[sweep] step8000: kept the vectors of readout 22, deleted 24 other readouts
+[sweep] step8000: profile [0.42693, 0.091764, 0.444591, 0.569324], boundary ratio -0.247611, directions {'0.9': 76, '0.95': 101, '0.99': 130}, coordinates COORDINATES_AT_GRID_EDGE
+[record] COORDINATES_AT_GRID_EDGE -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step8000_stage-extract.json
+[sweep] step8000 done in 169.7 s; working vectors and weights deleted
+[sweep] 7 of 12 checkpoints measured, 48.0 minutes so far
+[sweep] checkpoint step16000 (step 16000), measurement 8 of 12, downloading into results_seedD4_1/work/downloads/step16000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step16000_stage-extract.json
+[sweep] step16000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4893.76it/s]
+[sweep] step16000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step16000: 336 variants in 260.6 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step16000_stage-extract.json
+[sweep] step16000: ridge strength 10000, cross-validated best readout 6 at 0.7615 (186.8 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step16000_stage-extract.json
+[sweep] step16000: best readout 6, pooled quality over widths 20 to 140 0.764327, median readout 0.676171, peak above median 0.088156, NOT_YET_LOCALIZED (7.6 s)
+[sweep] step16000: kept the vectors of readout 6, deleted 24 other readouts
+[sweep] step16000: profile [0.715266, 0.317051, 0.523721, 0.281969], boundary ratio 0.113313, directions {'0.9': 14, '0.95': 52, '0.99': 113}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step16000_stage-extract.json
+[sweep] step16000 done in 457.2 s; working vectors and weights deleted
+[sweep] 8 of 12 checkpoints measured, 55.8 minutes so far
+[sweep] checkpoint step32000 (step 32000), measurement 9 of 12, downloading into results_seedD4_1/work/downloads/step32000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step32000_stage-extract.json
+[sweep] step32000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4764.12it/s]
+[sweep] step32000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step32000: 336 variants in 258.5 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step32000_stage-extract.json
+[sweep] step32000: ridge strength 10000, cross-validated best readout 6 at 0.8295 (132.0 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step32000_stage-extract.json
+[sweep] step32000: best readout 6, pooled quality over widths 20 to 140 0.829878, median readout 0.702146, peak above median 0.127731, LOCALIZED_INTERIOR_PEAK (7.0 s)
+[sweep] step32000: kept the vectors of readout 6, deleted 24 other readouts
+[sweep] step32000: profile [0.683811, 0.505794, 0.472906, 0.293677], boundary ratio 0.211511, directions {'0.9': 2, '0.95': 21, '0.99': 98}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step32000_stage-extract.json
+[sweep] step32000 done in 399.8 s; working vectors and weights deleted
+[sweep] 9 of 12 checkpoints measured, 62.7 minutes so far
+[sweep] checkpoint step64000 (step 64000), measurement 10 of 12, downloading into results_seedD4_1/work/downloads/step64000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step64000_stage-extract.json
+[sweep] step64000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4925.09it/s]
+[sweep] step64000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step64000: 336 variants in 257.7 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step64000_stage-extract.json
+[sweep] step64000: ridge strength 10000, cross-validated best readout 5 at 0.8699 (175.7 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step64000_stage-extract.json
+[sweep] step64000: best readout 5, pooled quality over widths 20 to 140 0.867423, median readout 0.654834, peak above median 0.212590, LOCALIZED_INTERIOR_PEAK (7.5 s)
+[sweep] step64000: kept the vectors of readout 5, deleted 24 other readouts
+[sweep] step64000: profile [0.644266, 0.803032, 0.172086, 0.226976], boundary ratio 0.524118, directions {'0.9': 2, '0.95': 12, '0.99': 93}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step64000_stage-extract.json
+[sweep] step64000 done in 443.2 s; working vectors and weights deleted
+[sweep] 10 of 12 checkpoints measured, 70.2 minutes so far
+[sweep] checkpoint step96000 (step 96000), measurement 11 of 12, downloading into results_seedD4_1/work/downloads/step96000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step96000_stage-extract.json
+[sweep] step96000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4806.55it/s]
+[sweep] step96000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step96000: 336 variants in 77.6 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step96000_stage-extract.json
+[sweep] step96000: ridge strength 10000, cross-validated best readout 5 at 0.8738 (118.3 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step96000_stage-extract.json
+[sweep] step96000: best readout 5, pooled quality over widths 20 to 140 0.872099, median readout 0.629545, peak above median 0.242555, LOCALIZED_INTERIOR_PEAK (6.4 s)
+[sweep] step96000: kept the vectors of readout 5, deleted 24 other readouts
+[sweep] step96000: profile [0.659372, 0.816734, 0.190825, 0.232867], boundary ratio 0.526207, directions {'0.9': 1, '0.95': 6, '0.99': 87}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step96000_stage-extract.json
+[sweep] step96000 done in 204.6 s; working vectors and weights deleted
+[sweep] 11 of 12 checkpoints measured, 73.8 minutes so far
+[sweep] checkpoint step128000 (step 128000), measurement 12 of 12, downloading into results_seedD4_1/work/downloads/step128000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step128000_stage-extract.json
+[sweep] step128000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4914.67it/s]
+[sweep] step128000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step128000: 336 variants in 261.3 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step128000_stage-extract.json
+[sweep] step128000: ridge strength 1000, cross-validated best readout 5 at 0.8760 (188.2 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step128000_stage-extract.json
+[sweep] step128000: best readout 5, pooled quality over widths 20 to 140 0.874290, median readout 0.607343, peak above median 0.266947, LOCALIZED_INTERIOR_PEAK (7.5 s)
+[sweep] step128000: kept the vectors of readout 5, deleted 24 other readouts
+[sweep] step128000: profile [0.64139, 0.820081, 0.207186, 0.230228], boundary ratio 0.512028, directions {'0.9': 1, '0.95': 3, '0.99': 80}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step128000_stage-extract.json
+[sweep] step128000 done in 459.3 s; working vectors and weights deleted
+[sweep] 12 of 12 checkpoints measured, 81.7 minutes so far
+[sweep] all 12 checkpoints measured in 81.7 minutes
+=== stage extract done in 4900.5 s ===

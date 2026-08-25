@@ -1,0 +1,876 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "n_classes": 2,
+    "probe": "logistic_C1",
+    "readout": "last_token_reading_prompt",
+    "smoke": false,
+    "task": "ext_expertise"
+  },
+  "decision": "RECOVERED",
+  "decision_rule": "chance = 1/n_classes; se = sqrt(chance*(1-chance)/n_test); test_acc >= chance + max(0.10, 3*se) -> RECOVERED; test_acc <= chance + 2*se -> AT_CHANCE; else INDETERMINATE; mean permuted-label test_acc must lie within chance +/- max(0.05, 3*se), else PERM_ANOMALY (readout instrument invalid for this task)",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:15:12+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    },
+    {
+      "bytes": 251996436,
+      "n_items": 600,
+      "path": "out/acts_ext_expertise.npz",
+      "present": true,
+      "sha256": "dac12794c407"
+    }
+  ],
+  "metric": "heldout_test_accuracy_template_disjoint",
+  "notes": "classes=['high', 'low']",
+  "rows": [
+    {
+      "id": "ext_expertise-high-f09-i225",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i226",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i227",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i228",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i229",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i230",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i231",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i232",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i233",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i234",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i235",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i236",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i237",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i238",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i239",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i240",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i241",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i242",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i243",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i244",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i245",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i246",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i247",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i248",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f09-i249",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i250",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i251",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i252",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i253",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i254",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i255",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i256",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i257",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i258",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i259",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i260",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i261",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i262",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i263",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i264",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i265",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i266",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i267",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i268",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i269",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i270",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i271",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i272",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i273",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f10-i274",
+      "label": "high",
+      "pred": "high"
+    },
+    {
+      "id": "ext_expertise-high-f11-i275",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i276",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i277",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i278",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i279",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i280",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i281",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i282",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i283",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i284",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i285",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i286",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i287",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i288",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i289",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i290",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i291",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i292",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i293",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i294",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i295",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i296",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i297",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i298",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-high-f11-i299",
+      "label": "high",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i225",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i226",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i227",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i228",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i229",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i230",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i231",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i232",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i233",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i234",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i235",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i236",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i237",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i238",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i239",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i240",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i241",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i242",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i243",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i244",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i245",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i246",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i247",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i248",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f09-i249",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i250",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i251",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i252",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i253",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i254",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i255",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i256",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i257",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i258",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i259",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i260",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i261",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i262",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i263",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i264",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i265",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i266",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i267",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i268",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i269",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i270",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i271",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i272",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i273",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f10-i274",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i275",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i276",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i277",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i278",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i279",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i280",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i281",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i282",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i283",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i284",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i285",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i286",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i287",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i288",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i289",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i290",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i291",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i292",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i293",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i294",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i295",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i296",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i297",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i298",
+      "label": "low",
+      "pred": "low"
+    },
+    {
+      "id": "ext_expertise-low-f11-i299",
+      "label": "low",
+      "pred": "low"
+    }
+  ],
+  "threshold": {
+    "chance": 0.5,
+    "margin": "max(0.10, 3*se)"
+  },
+  "values": {
+    "best_layer": 12,
+    "chance": 0.5,
+    "n_test": 150,
+    "n_train": 350,
+    "n_val": 100,
+    "perm_test_accs": [
+      0.3933333333333333,
+      0.4533333333333333
+    ],
+    "test_acc": 0.8333333333333334,
+    "val_acc_best": 1.0,
+    "val_acc_per_layer": [
+      0.5,
+      0.54,
+      0.62,
+      0.59,
+      0.69,
+      0.83,
+      0.85,
+      0.86,
+      0.78,
+      0.94,
+      0.98,
+      0.99,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  }
+}

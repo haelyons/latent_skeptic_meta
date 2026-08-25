@@ -1,0 +1,142 @@
+{
+  "cell": {
+    "arm": "run_summary",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "NO_REPEATING_PATTERN_UP_TO_280",
+  "decision_rule": "A failed floor gate reads CURVE_TOO_WEAK and voids the rung. Otherwise the count of probe windows whose character-count labelling cleared its own shuffle draws decides. No window cleared reads NO_REPEATING_PATTERN_UP_TO_280 and closes the chain. Exactly one cleared reads UNDETERMINED and closes the chain with that window named as its one unresolved cell. Two or more enter the earlier rung's fork. That fork reads INVARIANT when all period gaps are at most 10 characters. Otherwise it reads PROPORTIONAL when all period-to-width ratio gaps are at most 0.1. Otherwise it reads MIXED. If only the token-position labelling cleared, the reading is TOKEN_ONLY_PATTERN and the fork is not entered.",
+  "env": {
+    "git_rev": null,
+    "host": "132-226-88-169",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T13:30:52+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592594,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v3.json",
+      "present": true,
+      "sha256": "05db25f7a97d"
+    },
+    {
+      "bytes": 18266,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "72da78cd8de2"
+    },
+    {
+      "bytes": 2998,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+      "present": true,
+      "sha256": "4578bdd49cd5"
+    }
+  ],
+  "metric": "One call per endpoint, and the pre-registered headline reading, from the records written beside this one.",
+  "notes": "The pre-registered readings are CURVE_TOO_WEAK, NO_REPEATING_PATTERN_UP_TO_280, UNDETERMINED at exactly one clearing window, and the earlier rung's fork at two or more. A failed floor makes every pattern number here uninterpretable as evidence about the model, so the whole rung is void in that case and the next step is a human decision. A clearing under the token-position labelling alone reads TOKEN_ONLY_PATTERN and does not enter the fork. Exactly one clearing window is left undetermined by design, not decided. The largest power ranges over whole cycle counts of two or more only, each with a period of 4 or more in the labelling's own units. That is this rung's one committed change. The one-cycle bin is computed and saved in every spectrum, observed and shuffled alike, and can never be the statistic. After the fixed degree-2 detrend that bin measures the profile's leftover curvature, so a single smooth drop across a window lands there, and such a drop is not a repeating pattern. The band of 0.796 to 0.956 is recorded and gates nothing. The only gate is the 0.60 floor. The two numbers compared are the same instrument at the same checkpoint on different text, measured on different rented boxes. This rung is a single run and could land differently on a run elsewhere. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {},
+  "values": {
+    "any_window_cleared_either_labelling": "NO_WINDOW_CLEARED",
+    "bin_correlations_width_280": "RANGE_PATTERN_UNMATCHED",
+    "calibration": "CALIBRATION_OK",
+    "chosen_readout": 5,
+    "endpoint_1_floor_gate": "FLOOR_CLEARED",
+    "endpoint_5_two_or_more_windows_cleared": "FEWER_THAN_TWO_WINDOWS_CLEARED",
+    "endpoint_6_exactly_one_window_cleared": "NOT_EXACTLY_ONE_WINDOW_CLEARED",
+    "endpoint_7_curve_strength_band_recorded_only": "INSIDE_BAND_RECORDED",
+    "endpoints_2_3_4_pattern_vs_shuffle_by_window": {
+      "140": "NULL_NOT_CLEARED",
+      "200": "NULL_NOT_CLEARED",
+      "280": "NULL_NOT_CLEARED"
+    },
+    "floor": 0.6,
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.879879,
+    "floor_gate_readout": 5,
+    "generation_performed": false,
+    "headline": "NO_REPEATING_PATTERN_UP_TO_280",
+    "held_out_quality_pooled_widths_20_to_140": 0.879879,
+    "held_out_quality_w140_only": 0.759279,
+    "held_out_quality_w200": 0.160351,
+    "held_out_quality_w280": -0.804436,
+    "invariance_fork_ratio_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED",
+    "invariance_fork_wavelength_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED",
+    "labelling_attribution_by_window": {
+      "140": "NO_PATTERN_TO_ATTRIBUTE",
+      "200": "NO_PATTERN_TO_ATTRIBUTE",
+      "280": "NO_PATTERN_TO_ATTRIBUTE"
+    },
+    "largest_gap_chars": null,
+    "largest_ratio_gap": null,
+    "n_character_windows_cleared": 0,
+    "n_token_windows_cleared": 0,
+    "one_cycle_bin_saved_never_the_statistic": true,
+    "one_cycle_power_by_window": {
+      "140": 2.1928968557387113e-06,
+      "200": 2.6508766320006743e-05,
+      "280": 0.00010828189202664014
+    },
+    "recorded_only_ambient_dimension_at_95_percent_by_aperture": {
+      "140": 1,
+      "200": 2,
+      "280": 1
+    },
+    "recorded_only_ambient_dimension_by_variance_target": {
+      "140": {
+        "0.9": 1,
+        "0.95": 1,
+        "0.99": 52
+      },
+      "200": {
+        "0.9": 1,
+        "0.95": 2,
+        "0.99": 96
+      },
+      "280": {
+        "0.9": 1,
+        "0.95": 1,
+        "0.99": 98
+      }
+    },
+    "recorded_only_bin_correlations_width_140": [
+      0.649801,
+      0.83044,
+      0.19771,
+      0.244373
+    ],
+    "recorded_only_curve_strength_inside_band": true,
+    "recorded_only_prior_rung_pooled_quality": 0.876302,
+    "recorded_only_replication_band": [
+      0.796,
+      0.956
+    ],
+    "ridge_argmax_interior_on_grid": true,
+    "ridge_strength": 1000.0,
+    "setup_check": "SETUP_OK",
+    "single_run_not_replicated": true,
+    "statistic_cycles_minimum": 2,
+    "statistic_shortest_period": 4,
+    "text_file": "stimulus_linewrap_v3.json",
+    "this_record_voided_by_floor_gate": false,
+    "token_ceiling_by_aperture": {
+      "140": 41,
+      "200": 57,
+      "280": 75
+    },
+    "token_label_observed_max_by_aperture": {
+      "140": 58,
+      "200": 73,
+      "280": 97
+    },
+    "wavelengths_chars": {
+      "140": 60.0,
+      "200": 90.0,
+      "280": 86.66666666666667
+    }
+  }
+}

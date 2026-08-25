@@ -1,0 +1,142 @@
+{
+  "cell": {
+    "aperture": 280,
+    "arm": "measurable_range",
+    "endpoint": 5,
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "RANGE_PATTERN_UNMATCHED",
+  "decision_rule": "At width 280, the Pearson correlation between the main fit's predicted count and the true count is measured inside each bin of 35 label values. Any bin starting above label 175 that reaches 0.5 means wide counts ARE measurable. Otherwise, if every bin ending at or below label 140 reaches 0.5 and every bin starting above 175 stays below 0.2, wide counts are NOT represented. Any other pattern is RANGE_PATTERN_UNMATCHED. The bin from 141 to 175 is recorded and excluded.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-163-70",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T15:33:01+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 21727,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_design_diff_triage.json",
+      "present": true,
+      "sha256": "60ef29b05769"
+    },
+    {
+      "bytes": 1669,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3.md",
+      "present": true,
+      "sha256": "bc6b69231f64"
+    },
+    {
+      "bytes": 715932,
+      "n_items": 10353,
+      "path": "results_seedD3/work/labels_a280.npz",
+      "present": true,
+      "sha256": "333b69df6593"
+    }
+  ],
+  "metric": "Pearson correlation between the main fit's predicted count and the true count, inside each bin of 35 label values at width 280.",
+  "notes": "A correlation inside a bin, rather than a fit quality inside a bin, is what the design commits to here. A global fit's within-bin fit quality is bounded by one minus the squared ratio of the global residual spread to the bin's own spread, which for these numbers could not reach its own thresholds; the correlation has no such bound. The bin from 141 to 175 holds labels on both sides of 175, so it is recorded and left out of this decision. The decision uses the four bins ending at or below label 140 against the three bins starting above label 175. This check exists at width 280 only, as the design says, so it cannot classify a null result at width 200 on its own. It is the committed compensating instrument for the gate being calibrated on widths 20 through 140: its reading decides whether wide-window nulls count as evidence at all. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "rows": [
+    {
+      "bin_high": 35,
+      "bin_low": 1,
+      "n_positions": 1309,
+      "pearson_correlation": 0.655161,
+      "role": "low"
+    },
+    {
+      "bin_high": 70,
+      "bin_low": 36,
+      "n_positions": 1272,
+      "pearson_correlation": 0.667972,
+      "role": "low"
+    },
+    {
+      "bin_high": 105,
+      "bin_low": 71,
+      "n_positions": 1301,
+      "pearson_correlation": 0.19872,
+      "role": "low"
+    },
+    {
+      "bin_high": 140,
+      "bin_low": 106,
+      "n_positions": 1295,
+      "pearson_correlation": -0.029983,
+      "role": "low"
+    },
+    {
+      "bin_high": 175,
+      "bin_low": 141,
+      "n_positions": 1281,
+      "pearson_correlation": 0.010205,
+      "role": "straddles"
+    },
+    {
+      "bin_high": 210,
+      "bin_low": 176,
+      "n_positions": 1286,
+      "pearson_correlation": -0.002022,
+      "role": "high"
+    },
+    {
+      "bin_high": 245,
+      "bin_low": 211,
+      "n_positions": 1270,
+      "pearson_correlation": -0.014843,
+      "role": "high"
+    },
+    {
+      "bin_high": 280,
+      "bin_low": 246,
+      "n_positions": 1315,
+      "pearson_correlation": 0.310979,
+      "role": "high"
+    }
+  ],
+  "threshold": {
+    "any_high_bin_at_least": 0.5,
+    "every_high_bin_below": 0.2,
+    "every_low_bin_at_least": 0.5
+  },
+  "values": {
+    "bin_width": 35,
+    "excluded_bin": "141 to 175",
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.876302,
+    "floor_gate_readout": 5,
+    "high_bin_correlations": [
+      -0.002022,
+      -0.014843,
+      0.310979
+    ],
+    "high_bin_definition": "starts above label 175",
+    "high_ceiling": 0.2,
+    "low_bin_correlations": [
+      0.655161,
+      0.667972,
+      0.19872,
+      -0.029983
+    ],
+    "low_bin_definition": "ends at or below label 140",
+    "low_floor": 0.5,
+    "measurable_floor": 0.5,
+    "n_bins": 8,
+    "readout": 5,
+    "ridge_strength": 1000.0,
+    "statistic": "Pearson correlation between predicted and true count",
+    "this_record_voided_by_floor_gate": false
+  }
+}

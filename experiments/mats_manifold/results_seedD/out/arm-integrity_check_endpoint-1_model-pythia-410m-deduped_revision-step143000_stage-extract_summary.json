@@ -1,0 +1,54 @@
+{
+  "cell": {
+    "arm": "integrity_check",
+    "endpoint": 1,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "extract"
+  },
+  "decision": "SETUP_OK",
+  "decision_rule": "Text file hash must equal the committed hash exactly, layer count must equal 24, and hidden size must equal 1024. Anything else is SETUP_FAILURE and halts the run before any measurement.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-105-221",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T09:40:10+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 416481,
+      "n_items": 168,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap.json",
+      "present": true,
+      "sha256": "1fe73074a3d1"
+    },
+    {
+      "bytes": 22066,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD_v2_design_diff_triage.json",
+      "present": true,
+      "sha256": "45e160eb9fb4"
+    }
+  ],
+  "metric": "Committed text file hash, and the downloaded configuration's layer count and hidden size.",
+  "notes": "Layer count 24 and hidden size 1024 are recalled from the Pythia paper, arXiv 2304.01373 table 1, and checked against the download. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "hidden_size": 1024,
+    "n_layers": 24,
+    "stimulus_sha256": "1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca"
+  },
+  "values": {
+    "access_token_source": "HF_TOKEN",
+    "context_limit": 2048,
+    "design_record_committed_sha256": "45e160eb9fb41ff6995457347b2e8bf9f78d16dcad3145e62dbddc2e37736127",
+    "design_record_found": "/home/ubuntu/mats_manifold/seedD_v2_design_diff_triage.json",
+    "hidden_size": 1024,
+    "model_id": "EleutherAI/pythia-410m-deduped",
+    "n_layers": 24,
+    "recommended_dtype": "float16",
+    "revision": "step143000",
+    "stimulus_hash_match": true,
+    "stimulus_sha256": "1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca",
+    "stimulus_sha256_expected": "1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca"
+  }
+}

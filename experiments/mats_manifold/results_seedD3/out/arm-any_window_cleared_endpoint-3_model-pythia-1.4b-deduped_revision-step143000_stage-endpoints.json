@@ -1,0 +1,90 @@
+{
+  "cell": {
+    "arm": "any_window_cleared",
+    "endpoint": 3,
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "ANY_WINDOW_CLEARED",
+  "decision_rule": "Rank 10 or better out of 200 at any of the three probe windows, under either labelling, is ANY_WINDOW_CLEARED. No window clearing under either labelling is NO_WINDOW_CLEARED.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-163-70",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T15:33:01+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 21727,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_design_diff_triage.json",
+      "present": true,
+      "sha256": "60ef29b05769"
+    },
+    {
+      "bytes": 1669,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3.md",
+      "present": true,
+      "sha256": "bc6b69231f64"
+    }
+  ],
+  "metric": "Whether any of the three probe windows cleared its own 200 shuffle draws, under either labelling.",
+  "notes": "Three windows tested at 5 percent each carry roughly a 14 percent chance that at least one clears by luck alone. The headline reading absorbs that, because it conditions on which windows cleared and under which labelling. The width-280 bin reading is carried above because it decides whether a null at the wide windows counts as evidence at all. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "draws": 200,
+    "rank_at_most": 10,
+    "windows": [
+      140,
+      200,
+      280
+    ]
+  },
+  "values": {
+    "character_windows_cleared": [
+      280
+    ],
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.876302,
+    "floor_gate_readout": 5,
+    "n_character_windows_cleared": 1,
+    "n_token_windows_cleared": 0,
+    "per_aperture_attribution": {
+      "140": "NO_PATTERN_TO_ATTRIBUTE",
+      "200": "NO_PATTERN_TO_ATTRIBUTE",
+      "280": "CHARACTER_COUNT_DISTINGUISHED"
+    },
+    "per_aperture_character_decision": {
+      "140": "NULL_NOT_CLEARED",
+      "200": "NULL_NOT_CLEARED",
+      "280": "NULL_CLEARED"
+    },
+    "per_aperture_character_rank": {
+      "140": 196,
+      "200": 120,
+      "280": 1
+    },
+    "per_aperture_character_wavelength_chars": {
+      "140": 60.0,
+      "200": 180.0,
+      "280": 260.0
+    },
+    "per_aperture_token_cleared": {
+      "140": false,
+      "200": false,
+      "280": false
+    },
+    "this_record_voided_by_floor_gate": false,
+    "token_windows_cleared": [],
+    "width_280_bin_reading": "RANGE_PATTERN_UNMATCHED"
+  }
+}

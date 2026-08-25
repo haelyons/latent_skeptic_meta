@@ -1,0 +1,47 @@
+{
+  "cell": {
+    "arm": "run_summary",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "GATE_CLOSED",
+  "decision_rule": "Each endpoint's own rule, restated in its own record. This record only gathers the calls; it computes no new number.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-105-221",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T09:44:14+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 416481,
+      "n_items": 168,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap.json",
+      "present": true,
+      "sha256": "1fe73074a3d1"
+    },
+    {
+      "bytes": 22066,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD_v2_design_diff_triage.json",
+      "present": true,
+      "sha256": "45e160eb9fb4"
+    }
+  ],
+  "metric": "One call per endpoint, from the records written beside this one.",
+  "notes": "A failed count-curve endpoint makes the ripple result uninterpretable as evidence about the model, and is scored as void. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {},
+  "values": {
+    "best_held_out_quality": 0.780903,
+    "best_readout": 6,
+    "endpoint_1_setup": "SETUP_OK",
+    "endpoint_2_search_band": "BAND_OK",
+    "endpoint_3_count_curve": "ANCHOR_IN_BAND",
+    "endpoint_4_ripple_vs_shuffle": "NULL_NOT_CLEARED",
+    "endpoint_5_token_position_control": "TOKEN_CONTROL_NOT_COMPUTABLE",
+    "endpoint_6_fitted_probe_crosscheck": "PERIODS_AGREE_PRESENCE_NOT_DECIDABLE",
+    "ripple_rank_of_draws": 109,
+    "ripple_wavelength_chars": 60.0
+  }
+}

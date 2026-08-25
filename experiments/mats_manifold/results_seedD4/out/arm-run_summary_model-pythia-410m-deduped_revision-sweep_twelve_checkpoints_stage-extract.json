@@ -1,0 +1,102 @@
+{
+  "cell": {
+    "arm": "run_summary",
+    "model": "pythia-410m-deduped",
+    "revision": "sweep_twelve_checkpoints",
+    "stage": "extract"
+  },
+  "decision": "VOID_CONTROL_FAILED",
+  "decision_rule": "A failed anchor at the final checkpoint reads VOID_ANCHOR_FAILED and voids the sweep. A quality at or above 0.3 at initialization reads VOID_CONTROL_FAILED and voids the sweep. Otherwise, no checkpoint reaching 0.5 reads NOT_FORMED_BY_FINAL, treated as an instrument fault. Otherwise the stability test decides: inside both ranges reads FORMED_EARLY_AND_HELD when the formation step is at or before step16000 and FORMED_LATE_AND_HELD when it is later; outside either range with the movement running one way in steps reads FORMED_AND_DRIFTED; outside either range and not one-way reads UNSTABLE_NOT_CLASSIFIABLE, which is the stability test's own committed name for that outcome. If neither channel yields a range at all the stability test reads HOLD_TEST_NOT_COMPUTABLE, which twelve measured checkpoints cannot produce and which is named here rather than left to be invented later.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-116-153",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T20:00:21+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 20212,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_design_diff_triage.json",
+      "present": true,
+      "sha256": "0f450072d015"
+    },
+    {
+      "bytes": 3203,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4.md",
+      "present": true,
+      "sha256": "6707c87b8d7d"
+    }
+  ],
+  "metric": "The whole-sweep reading, stopped by an integrity gate before the trajectory was measured.",
+  "notes": "An integrity gate failed, so the sweep stopped where the committed order says it must. The failure is an instrument fault and is not evidence about the model. No trajectory endpoint was computed, and no record for one exists. If either integrity gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "anchor_within": 0.02,
+    "control_below": 0.3
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.781031,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": null,
+    "anchor_gate_tolerance": 0.02,
+    "best_layer_by_revision": {
+      "step0": 24,
+      "step143000": 6
+    },
+    "boundary_ratio_by_revision": {
+      "step0": -0.080316,
+      "step143000": -0.090673
+    },
+    "checkpoints_measured": [
+      "step143000",
+      "step0"
+    ],
+    "coordinate_flags_by_revision": {
+      "step0": [
+        "best_layer_at_readout_24"
+      ],
+      "step143000": []
+    },
+    "generation_performed": false,
+    "headline": "VOID_CONTROL_FAILED",
+    "measurement_order": [
+      "step143000",
+      "step0",
+      "step512",
+      "step1000",
+      "step2000",
+      "step4000",
+      "step8000",
+      "step16000",
+      "step32000",
+      "step64000",
+      "step96000",
+      "step128000"
+    ],
+    "n_checkpoints_measured": 2,
+    "n_checkpoints_planned": 12,
+    "negative_control_ceiling": 0.3,
+    "negative_control_decision": "VOID_CONTROL_FAILED",
+    "negative_control_quality": null,
+    "pooled_quality_by_revision": {
+      "step0": 0.344634,
+      "step143000": 0.781031
+    },
+    "ridge_strength_by_revision": {
+      "step0": 10000.0,
+      "step143000": 1000.0
+    },
+    "single_run_not_replicated": true,
+    "sweep_stopped_at_gate": true,
+    "this_record_voided_by_a_gate": true,
+    "trajectory_endpoints_computed": false
+  }
+}

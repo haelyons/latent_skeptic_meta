@@ -1,0 +1,146 @@
+{
+ "seed": "This is the formation rung of a completed seed chain (synthesis: CHAIN_TAKEAWAYS.md; committed close: no repeating pattern up to 280 characters on Pythia-410m or Pythia-1.4b, while the character counter itself replicated four times). The chain's twice-replicated objects are the substrate here: on the base 410-million-weight model, held-out counting quality 0.780903 and 0.781031 on disjoint texts, both at layer 6 (records/seedD_v2_design_diff_triage.json, records/seedD2_1_design_diff_triage.json); on the base 1.4-billion-weight model, a four-bin precision profile whose fine resolution ends near 70 characters (0.646/0.820/0.211/0.227, then 0.650/0.830/0.198/0.244 on fresh text), matching the training corpus's dominant hard-wrap length of about 70-72 characters (counting_manifold_formation_proposal.md, verified table). One known evidence gap, closed by this rung's gate cell: the 410m in-distribution bin profile was never measured.\n\nQuestion: when, during training, did the counter and its precision boundary form, and once formed, did they move? At twelve named public checkpoints of EleutherAI/pythia-410m-deduped - HuggingFace revisions step0, step512, step1000, step2000, step4000, step8000, step16000, step32000, step64000, step96000, step128000, step143000 (MEMORY: the release provides step0, powers of two to 512, then every 1000; arXiv 2304.01373) - measure per checkpoint, with the committed instrument: (a) held-out counting quality per layer, pooled over wrap widths 20-140; (b) the four-bin precision profile at the best layer, width 140 (within-35-label Pearson correlation between prediction and truth, bins 1-35, 36-70, 71-105, 106-140); (c) ambient dimension recorded at 90, 95, and 99 percent, never gated; (d) the best layer's location, recorded. No ripple legs: the chain's committed close found nothing to track, and this rung does not relitigate it.\n\nThe hypothesis under test, stated: the counter is a fossil of training pressure - it forms early, its boundary sits at the corpus wrap length from first measurability, and counter, boundary, and dimension then hold still. The rival: post-formation drift.\n\nSubstrate facts: base model, no interventions; 24 layers and hidden size 1024 are MEMORY (arXiv 2304.01373, table 1), config-mismatch halts; layer index 0 is the embedding output. Exposure note, load-bearing: the training corpus is served PRE-SHUFFLED (proposal, verified), so the hard-wrapped fraction per batch is stationary and cumulative exposure is linear in step count - formation timing in steps is formation timing in exposure, and no corpus download is needed or permitted here.\n\nStimuli: stimulus_linewrap_v2.json (sha256 b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd), unchanged - the same committed file behind the 0.781031 anchor, 48 documents at nine widths, documents 0-35 train and 36-47 test. Load exactly; halt if absent. Same labels, ridge grid {1, 10, 100, 1000, 10000, 100000}, five-fold train-only cross-validation per checkpoint, one base seed 0, provenance records with per-record gate flags - all as in the committed instrument lineage (records/GATE_COMMIT_seedD3_1.md binds anything unnamed).\n\nDefinitions, fixed here:\n\n1. Gate cell, run first: the final checkpoint (step143000) must reproduce its own anchor - held-out quality pooled over widths 20-140 within 0.02 of 0.781031 (GUESS band; same text, same instrument, same model - tighter than any fresh-text band). Failing voids the sweep as an instrument fault. Its bin profile also closes the known 410m gap, whatever it shows.\n\n2. Boundary ratio, per checkpoint: the mean of bins one and two minus the mean of bins three and four. The boundary is PRESENT when the ratio is at least 0.3 (GUESS, from the 1.4b values where it reads about 0.5). If the ratio is below 0.3 at the final checkpoint, the boundary-trajectory readings below are recorded as NOT_PRESENT_AT_FINAL, the quality-trajectory readings still stand, and the boundary questions transfer to a future 1.4b sweep - pre-registered, not a failure.\n\n3. Formation step: the first checkpoint whose pooled quality reaches 0.5 (GUESS). Formed: the first checkpoint whose pooled quality reaches 90 percent of the final checkpoint's value.\n\n4. Hold test, the fork's decider: across every checkpoint at or after \"formed\", the boundary ratio's range must stay within 0.15 and the pooled quality's range within 0.10 (both GUESS). Inside both bands: HELD. Outside either, with the drift monotone in steps: DRIFTED. Outside either, non-monotone: UNSTABLE_NOT_CLASSIFIABLE.\n\n5. Step0 is the negative control: pooled quality at initialization is expected near zero; a step0 quality above 0.3 (GUESS) is an instrument alarm that voids the sweep (label leakage or a probe reading surface statistics).\n\nPre-registered readings: gate fails - VOID_ANCHOR_FAILED. Step0 alarm - VOID_CONTROL_FAILED. Otherwise: FORMED_EARLY_AND_HELD (formation step at or before step16000, hold test HELD - the fossil-consistent reading); FORMED_LATE_AND_HELD (formation after step16000, HELD); FORMED_AND_DRIFTED (either formation timing, hold test DRIFTED - the equilibrium-consistent reading); NOT_FORMED_BY_FINAL (final quality below 0.5 - contradicts two anchors, treated as instrument fault). Recorded alongside, never gated: whether the boundary appears at the formation step or sharpens later (the ratio at the formation step versus at \"formed\"); the best layer's trajectory; the dimension trajectory at three conventions.\n\nOut of scope: why formation happens when it does (correlational only; the causal corpus-manipulation test is a different tier); dynamics finer than the twelve-point grid; seed-dependence (PolyPythias); the 1.4b sweep; any ripple question; any training-data download. Compute note for costing: twelve checkpoints of a 410-million-weight model, one measurement pass each, on one rented box under its 90-minute cap.",
+ "design": {
+  "hypothesis": "The counter and its precision boundary are a fossil of training pressure: both form early, the boundary settles at the corpus wrap length as soon as it is measurable, and afterward the counter, its boundary, and its ambient dimension all hold still. Rival view: post-formation drift - they keep moving after they first appear.",
+  "models": [
+   "EleutherAI/pythia-410m-deduped, revision step0 (initialization; negative-control arm)",
+   "EleutherAI/pythia-410m-deduped, revision step512",
+   "EleutherAI/pythia-410m-deduped, revision step1000",
+   "EleutherAI/pythia-410m-deduped, revision step2000",
+   "EleutherAI/pythia-410m-deduped, revision step4000",
+   "EleutherAI/pythia-410m-deduped, revision step8000",
+   "EleutherAI/pythia-410m-deduped, revision step16000 (early/late formation cutoff)",
+   "EleutherAI/pythia-410m-deduped, revision step32000",
+   "EleutherAI/pythia-410m-deduped, revision step64000",
+   "EleutherAI/pythia-410m-deduped, revision step96000",
+   "EleutherAI/pythia-410m-deduped, revision step128000",
+   "EleutherAI/pythia-410m-deduped, revision step143000 (final public checkpoint; gate cell)"
+  ],
+  "data": "stimulus_linewrap_v2.json, sha256 b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd, loaded unchanged for every checkpoint; halt before scoring anything if the file is missing or its hash does not match. 48 documents at nine wrap widths. Documents 0-35 (36 documents) are the training split; documents 36-47 (12 documents) are the held-out test split; identical across all twelve checkpoints. Held-out counting quality (reading a) pools every document whose wrap width falls between 20 and 140 characters. The four-bin precision profile (reading b) uses only the width-140 documents, split into fixed count ranges 1-35, 36-70, 71-105, and 106-140 characters.",
+  "arms": [
+   "step0: random initialization, the negative control. Pooled quality must stay below 0.3 (GUESS) or the sweep is voided as an instrument alarm.",
+   "step512: first checkpoint after initialization on the release's named ladder.",
+   "step1000: first checkpoint on the release's every-1000-steps portion of the ladder.",
+   "step2000: routine sweep point.",
+   "step4000: routine sweep point.",
+   "step8000: routine sweep point.",
+   "step16000: routine sweep point; also the fixed cutoff for calling a formation 'early' versus 'late'.",
+   "step32000: routine sweep point.",
+   "step64000: routine sweep point.",
+   "step96000: routine sweep point.",
+   "step128000: routine sweep point.",
+   "step143000: final public checkpoint, the gate cell. Held-out quality, pooled over widths 20-140 at the best layer, must land within 0.02 (GUESS) of the committed anchor 0.781031, or the whole sweep is voided as an instrument fault."
+  ],
+  "endpoints": [
+   {
+    "metric": "Gate cell: held-out counting quality at step143000, pooled over wrap widths 20-140, at that checkpoint's own best layer",
+    "threshold": "within 0.02 (GUESS band) of the committed anchor 0.781031",
+    "refuting_outcome": "quality falls outside that band at step143000: instrument fault, whole sweep recorded as VOID_ANCHOR_FAILED and no other reading is trusted"
+   },
+   {
+    "metric": "Negative control: held-out counting quality at step0, before any training",
+    "threshold": "must stay below 0.3 (GUESS)",
+    "refuting_outcome": "quality at or above 0.3 at step0: probe is reading surface text statistics, not a trained counter; sweep voided as VOID_CONTROL_FAILED"
+   },
+   {
+    "metric": "Existence of formation: highest pooled held-out quality reached by any checkpoint up to and including step143000",
+    "threshold": "must reach at least 0.5 (GUESS) at some checkpoint",
+    "refuting_outcome": "no checkpoint ever reaches 0.5: recorded as NOT_FORMED_BY_FINAL, contradicting the two prior anchors and treated as an instrument fault, not a genuine null result"
+   },
+   {
+    "metric": "Boundary presence: boundary ratio at step143000, defined as the mean of bins one and two minus the mean of bins three and four",
+    "threshold": "at least 0.3 (GUESS, taken from the roughly 0.5 reading on the larger model)",
+    "refuting_outcome": "ratio below 0.3 at step143000: boundary is recorded as NOT_PRESENT_AT_FINAL; boundary-trajectory questions transfer to a future sweep on the larger model rather than counting as a failure here"
+   },
+   {
+    "metric": "Hold test, boundary channel: range of the boundary ratio across every checkpoint at or after the 'formed' checkpoint",
+    "threshold": "must stay within 0.15 (GUESS)",
+    "refuting_outcome": "range exceeds 0.15 after formation: boundary keeps moving, feeding a DRIFTED reading if the movement is monotone in steps, or UNSTABLE_NOT_CLASSIFIABLE if it is not"
+   },
+   {
+    "metric": "Hold test, quality channel: range of pooled held-out quality across every checkpoint at or after the 'formed' checkpoint",
+    "threshold": "must stay within 0.10 (GUESS)",
+    "refuting_outcome": "range exceeds 0.10 after formation: quality keeps moving, feeding a DRIFTED reading if monotone in steps, or UNSTABLE_NOT_CLASSIFIABLE if not"
+   },
+   {
+    "metric": "Formation timing: the first checkpoint whose pooled quality reaches 90 percent of step143000's value (the 'formed' checkpoint), compared to step16000",
+    "threshold": "at or before step16000 counts as early; after step16000 counts as late",
+    "refuting_outcome": "formed checkpoint falls after step16000: reading routes to FORMED_LATE_AND_HELD rather than FORMED_EARLY_AND_HELD, weakening the fossil hypothesis's early-formation claim even when the hold test still passes"
+   }
+  ],
+  "sampling": "No text is generated. Each checkpoint's hidden activity comes from one deterministic forward pass per stimulus document, model in evaluation mode - no temperature, no top-p, nothing sampled. One base random seed, 0, controls the five-fold train-only cross-validation used to pick each layer's ridge strength from the fixed grid {1, 10, 100, 1000, 10000, 100000}. Per checkpoint: 36 training documents (five-fold cross-validated for strength selection) and 12 held-out test documents, unchanged across all twelve checkpoints. Probes are fit at every layer from 0 (embedding output) through 24 (24 transformer layers; MEMORY, arXiv 2304.01373, table 1); the best layer is the one with the highest held-out pooled quality, recorded per checkpoint. n per checkpoint: 25 layers x 6 ridge strengths x 5 folds for selection, then one held-out scoring pass at the chosen layer.",
+  "budget_usd": 2.5,
+  "does_not_test": [
+   "Why formation happens when it does: this design is correlational only; a causal test would need to manipulate the training corpus's wrap-length mix, a different tier of work.",
+   "Dynamics finer than the twelve named checkpoints: a formation event between two adjacent steps reads as one jump, not a curve.",
+   "Seed-dependence: only the one deduped training run is measured; whether other training seeds form or hold the same way is untested.",
+   "The larger, 1.4-billion-weight model's own checkpoint trajectory: reserved as the pre-registered follow-up if the boundary reads NOT_PRESENT_AT_FINAL here.",
+   "Any repeating-pattern or ripple question: the chain's prior rung already closed that question with a committed null; this design does not reopen it.",
+   "Downloading or inspecting the training corpus itself: exposure timing is inferred from the release's documented pre-shuffling, not verified here.",
+   "Six GUESS thresholds set the pre-registered bands: 0.02 anchor tolerance, 0.3 step0 alarm, 0.5 formation floor, 0.3 boundary presence, 0.15 and 0.10 hold-test ranges. Each could be off by roughly a factor of two, which would misclassify a borderline checkpoint.",
+   "GUESS budget of about 2.50 dollars, scaled from the chain's past per-run costs (about 0.72 dollars average over five prior runs) to twelve checkpoint loads on one 90-minute box; could be off by two to three times if per-checkpoint download or caching behaves differently than in prior single-checkpoint runs."
+  ],
+  "layers_strengths": "Layer search range (0, the embedding output, through 24) and the ridge grid (1, 10, 100, 1000, 10000, 100000) are both fixed by the question and the model's stated architecture, not guesses. The base cross-validation seed (0) is likewise fixed by the question. The only numeric choices this design adds beyond the question's own six GUESS-labeled thresholds are the budget estimate (about 2.50 dollars, GUESS, extrapolated from the chain's historical per-run cost) and the step16000 early/late formation cutoff, which the question itself names as the fixed comparison point rather than leaving it open."
+ },
+ "diff": {
+  "departures": [
+   {
+    "what": "The question sets up two separate checkpoints. One is where the score first reaches 50 percent of its final value; that one decides whether formation counts as early or late. The other is where the score first reaches 90 percent of final; that one marks where the later stability check begins. The plan tracks only the 90-percent point and uses it for both jobs.",
+    "question": "Should the plan use two separate checkpoints here, the 50-percent point and the 90-percent point, instead of just one?"
+   },
+   {
+    "what": "The question gives a time limit only: one rented computer, capped at 90 minutes, for all twelve checkpoints combined. No dollar figure appears anywhere in the question. The plan adds a spending cap of $2.50, drawn from unrelated past work.",
+    "question": "Where does the $2.50 spending cap come from, and is a dollar limit appropriate here at all?"
+   },
+   {
+    "what": "The plan lets the best-scoring layer differ at every checkpoint. This affects the four-bin score check and the final-checkpoint reproduction check. The original reference numbers all came from one fixed layer, layer 6. The question never says whether that layer should move or stay fixed.",
+    "question": "Should these checks use each checkpoint's own best layer, or stay fixed at layer 6?"
+   },
+   {
+    "what": "The question defines the four-bin score using one specific method: correlation between predicted and true counts, computed separately within each bin. The plan's own description of this step does not repeat that method. It lists only the bin boundaries.",
+    "question": "Should the four-bin score use that same correlation method, exactly as the question states it?"
+   }
+  ]
+ },
+ "triage": {
+  "claims": [
+   {
+    "id": "design-core",
+    "grounding": {
+     "grounding": "unauditable",
+     "observed": "Anchor re-derived from prior rung's raw per-layer rows: best layer 6, pooled widths 20-140 = 0.781031 (matches claim's committed anchor exactly; layer-6 argmax confirmed over all 25 layers). All other headline numbers (step0 control, formation step, boundary ratio, hold-test ranges) have no artifact: zero files for any revision other than step143000.",
+     "note": "The seed_d4 twelve-checkpoint formation sweep was never run - only step143000 results exist (results_seedD2_1/D3/D3_1), so only the anchor reproduces; every trajectory endpoint is unmeasured, and the design's stimulus hash b0aa4255... verifies.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/stimulus_linewrap_v2.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/SEALED_PREDICTIONS.md",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/CHAIN_TAKEAWAYS.md",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/arm-floor_gate_endpoint-1_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "decidability by construction: is any endpoint outcome forced, unable to occur, or deciding a different question than the seed asks",
+      "status": "EXPLAINS",
+      "crux": "Two of the design's own endpoints explicitly reroute their refuting outcome away from counting as refutation: 'Existence of formation' failure is labeled 'instrument fault, not a genuine null result,' and 'Boundary presence' failure is explicitly deferred ('transfer to a future sweep on the larger model rather than counting as a failure here'). So the design cannot, by its written rules, ever register 'the counter never formed' or 'the boundary is absent' as evidence against the fossil hypothesis \u2014 it answers 'is the instrument OK / should we look elsewhere' instead of the seed's actual question of whether formation and boundary genuinely occurred and held."
+     },
+     {
+      "confound": "coordinates and scale: could the chosen layers, strengths, or units make every cell degenerate or null regardless of the hypothesis",
+      "status": "NEEDS_RUN",
+      "crux": "The evidence contains only the pre-registered design (thresholds, layer/strength grid, sampling procedure) with no actual measured per-checkpoint numbers (no gate-cell value, no boundary ratios, no best-layer/strength selections realized). Without seeing which layer/strength was actually selected at each checkpoint and whether those selections are degenerate (e.g., best layer stuck at embedding-layer 0, or ridge strength always saturating at the grid boundary 1 or 100000), I cannot tell whether the reported quality/boundary numbers reflect a real counting representation or a coordinate/scale artifact."
+     }
+    ],
+    "run_queue": [
+     "rerun the sweep and additionally log, per checkpoint, the selected best layer index and selected ridge strength alongside pooled quality and boundary ratio; flag as degenerate any checkpoint where best layer = 0 or 24 (grid boundary) or ridge strength = 1 or 100000 (grid boundary) for all/most checkpoints."
+    ],
+    "author_queue": [],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute"
+}

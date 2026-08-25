@@ -1,0 +1,174 @@
+== position labeller ==
+  columns on a two-line text                                     ok
+  token counts on a two-line text                                ok
+  line numbers on a two-line text                                ok
+  implied opening boundary, columns                              ok
+  implied opening boundary, token counts                         ok
+  swallowed line break, columns                                  ok
+  swallowed line break, token counts                             ok
+  swallowed line break, line numbers                             ok
+  line-break token takes the next column                         ok
+  line-break token at width plus one                             ok
+  empty range is unlabelled                                      ok
+  empty range is not counted                                     ok
+== degenerate-input detector ==
+  length-cap case flags                                          ok
+  under the length cap does not flag                             ok
+  repeated-sequence case flags                                   ok
+  seven back-to-back copies counted                              ok
+  five back-to-back copies is below the cutoff                   ok
+  prose-like tokens are clean                                    ok
+  both cases can flag together                                   ok
+== exact-match checks and exact slot assignment ==
+  hash equal                                                     ok
+  hash one character off                                         ok
+  hash absent                                                    ok
+  configuration match                                            ok
+  configuration layer mismatch                                   ok
+  configuration width mismatch                                   ok
+  lowest window value maps to slot 0                             ok
+  highest window value maps to the last slot                     ok
+  one below the window is outside                                ok
+  one above the window is outside                                ok
+  a fractional label is never accepted                           ok
+  a true value is never accepted as 1                            ok
+  slot counts                                                    ok
+  slot indices                                                   ok
+  window start when the lowest value is thin                     ok
+  window start when every value is thick                         ok
+  no window when a middle value is thin                          ok
+  token window stops at the first thin value                     ok
+== label bins of the measurable-range check ==
+  eight bins                                                     ok
+  first bin                                                      ok
+  fourth bin ends at 140                                         ok
+  fifth bin straddles 150                                        ok
+  last bin ends at 280                                           ok
+  roles                                                          ok
+  four low bins                                                  ok
+  three high bins                                                ok
+== wobble statistic, no search band ==
+  profile at distance 1                                          ok
+  profile at distance 20                                         ok
+  a straight line detrends to zero                               ok
+  a curve of degree 2 detrends to zero                           ok
+  a 12-step wave peaks at 5 cycles over 60 steps                 ok
+  that peak is a period of 12                                    ok
+  the period range reaches the profile length                    ok
+  the period range stops at 4                                    ok
+  periods below 4 are excluded                                   ok
+  planted period of 40 recovered                                 ok
+  whole spectrum returned                                        ok
+  periods ranged over                                            ok
+  a period equal to the profile length is reachable              ok
+  that period is one cycle                                       ok
+  a bowl-shaped single cycle is largely absorbed by the detrend  ok
+  too short a profile halts                                      ok
+== endpoint arithmetic on planted values ==
+  setup, all three match                                         ok
+  setup, hash differs                                            ok
+  setup, layer count differs                                     ok
+  setup, width differs                                           ok
+  anchor, the earlier value 0.780903                             ok
+  anchor, exactly 0.701                                          ok
+  anchor, exactly 0.861                                          ok
+  anchor, 0.700                                                  ok
+  anchor, 0.862                                                  ok
+  anchor, below zero                                             ok
+  anchor, absent                                                 ok
+  rank of a value above every draw                               ok
+  rank of a value above all but nine                             ok
+  rank of a value above all but ten                              ok
+  rank counts ties against the observed value                    ok
+  clearing at rank 1                                             ok
+  clearing at rank 10                                            ok
+  not clearing at rank 11                                        ok
+  range, low bins strong and high bins dead                      ok
+  range, one high bin alive                                      ok
+  range, a high bin exactly at 0.3                               ok
+  range, a low bin exactly at 0.5                                ok
+  range, a low bin weak and high bins dead                       ok
+  range, a bin not computable                                    ok
+  count, none clear and wide counts measurable                   ok
+  count, none clear and wide counts not represented              ok
+  count, none clear and the range pattern matches neither        ok
+  count, one clears                                              ok
+  planted fixed periods, largest gap                             ok
+  planted growing periods, largest gap                           ok
+  planted growing periods, largest ratio gap                     ok
+  one width leaves the gap undefined                             ok
+  gap within 10 characters                                       ok
+  gap of exactly 10 characters                                   ok
+  gap above 10 characters                                        ok
+  gap undefined                                                  ok
+  ratio gap within 0.1                                           ok
+  ratio gap of exactly 0.1                                       ok
+  ratio gap above 0.1                                            ok
+  ratio gap undefined                                            ok
+  planted fixed periods classify as fixed                        ok
+  planted growing periods classify as proportional               ok
+  planted messy periods classify as mixed                        ok
+  two widths, close periods                                      ok
+  one width is undetermined                                      ok
+  no width cleared                                               ok
+  token control, periods 60 and 31                               ok
+  token control, periods 60 and 57.5                             ok
+  token control, periods 60 and 56.5                             ok
+  token control, periods differ by exactly 3                     ok
+  token control, close periods but only one clears               ok
+  token control, both fail and periods are close                 ok
+  token control absent                                           ok
+== headline fork on planted values ==
+  a failed anchor voids everything                               ok
+  fixed periods with a sound anchor                              ok
+  growing periods with a sound anchor                            ok
+  one width clearing                                             ok
+  no width clearing and wide counts measurable                   ok
+  no width clearing and wide counts blind                        ok
+== supporting checks ==
+  the three probe widths are among the nine wrap widths          ok
+  the ridge grid extends past 1000                               ok
+  the ridge grid is the committed one                            ok
+  the anchor band is 0.781 plus or minus 0.08                    ok
+  the eight bins cover labels 1 to 280                           ok
+  the shuffle seed is zero                                       ok
+  there are five totals groups for training documents            ok
+  there is one totals group per wrap width for held-out documents ok
+  the totals groups are the training and held-out groups together ok
+  every totals group name is distinct                            ok
+  the held-out group for width 140 exists                        ok
+  record writer importable                                       ok
+  sum of squared errors from running totals                      ok
+  fit quality from running totals                                ok
+  planted weights recovered                                      ok
+  bin quality of a perfect fit                                   ok
+  bin quality of a flat guess at the bin mean                    ok
+  bin quality of a biased flat guess                             ok
+  a bin with one position is not computable                      ok
+  a bin with no spread is not computable                         ok
+  shuffling preserves the label multiset                         ok
+  shuffling stays inside each document                           ok
+== analysis plumbing on small planted arrays ==
+  labels map to slots and outsiders to minus one                 ok
+  average vector of the first slot                               ok
+  average vector of the second slot                              ok
+  positions per slot                                             ok
+  an empty slot halts                                            ok
+  identical directions have similarity 1                         ok
+  square directions have similarity 0                            ok
+  a one-direction pattern measures one direction                 ok
+  reloaded readout count                                         ok
+  gram of two groups added                                       ok
+  labels of two groups added                                     ok
+  positions of two groups added                                  ok
+  saved vectors reload with the right shape                      ok
+  saved vectors reload with the right values                     ok
+  a wrong row count halts                                        ok
+  one saved spectrum per draw plus the observed                  ok
+  the observed spectrum is the first line                        ok
+  every saved line carries a whole spectrum                      ok
+  the planted period is recovered                                ok
+  the observed beats every draw of pure noise                    ok
+  positions per label are preserved                              ok
+  the average vectors have one row per label                     ok
+selftest: PASS

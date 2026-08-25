@@ -1,0 +1,270 @@
+{
+ "elicited": {
+  "questions": [
+   {
+    "question": "Every note in these records calls the main scored number 'the Pearson correlation between predicted and true count.' But recomputing straight Pearson correlation from the raw predicted-count and true-count numbers at the widest wrap length gives 0.2800 for the untrained checkpoint, while the recorded number for that same cell is -0.007607. Recomputing instead with a different formula, one that scores how close predictions land to the true numbers rather than how well they move together, reproduces -0.007607 exactly, and does so at all twelve checkpoints. Is the number that decides every threshold in this study actually a correlation, or is it this closeness-of-fit statistic wearing the wrong label?",
+    "where": "Every per-checkpoint file's stated definition ('the Pearson correlation between predicted and true count') versus the raw predicted-count and true-count pairs in rows_positions_w140_step0.jsonl through rows_positions_w140_step143000.jsonl, checked against the 'quality' values in each arm-checkpoint_reading file and the run summary.",
+    "if_true": "The training-floor check, the two formation milestones, the stability check, and the reproduction gate are all built on a statistic that punishes badly-scaled predictions far more harshly than true correlation would, and can read near zero or negative even when real position information is present.",
+    "changes": "The untrained network's positional signal may be stronger than the recorded 0.341495 floor suggests, since a true correlation at the widest width is 0.2800, not near zero. Some of the mid-training dip used to call the run unstable may reflect prediction miscalibration rather than lost information."
+   },
+   {
+    "question": "The design's own rule for checking whether the sharp precision boundary stays steady says to start counting from the checkpoint where the boundary itself first appears, reached after 64,000 training steps. The version actually applied instead starts counting from an earlier, unrelated milestone, reached after only 512 training steps. Measured from 512 steps, the boundary's range across later checkpoints is 0.773818, far outside the allowed band of 0.15. Measured from its own 64,000-step starting point, the range is only 0.014179, comfortably inside that band. Does the boundary genuinely drift, or does it only look unsteady because of which starting point was chosen?",
+    "where": "arm-hold_test_boundary_endpoint-4..., field boundary_range_after_formed (0.773818) versus boundary_range_from_its_own_crossing_recorded_only (0.014179); the file's own notes state the applied rule overrides the design's stated one.",
+    "if_true": "The single choice of starting point, not the underlying measurements, decides whether this channel reads as steady or as too unstable to classify.",
+    "changes": "Using the boundary's own starting point would flip this channel from 'not classifiable' to 'held,' directly supporting the claim that the boundary forms once and then stays put, rather than undercutting it."
+   },
+   {
+    "question": "Counting quality crosses the halfway-to-final milestone and the nine-tenths-to-final milestone on the exact same measured checkpoint, the one taken after 512 of the study's 143,000 training steps (about 0.4 percent of training). The untrained checkpoint scored 0.341495; the very next one measured, at 512 steps, already scored 0.827079, clearing both milestones (0.608899 and 0.822821) at once. Since the two-milestone system was built to separate a slow rise from a fast one, what does it mean that both milestones land on the same single grid point here?",
+    "where": "results table field pooled_quality_by_step (step0: 0.341495, step512: 0.827079) and values.formation_step / values.formed_step (both 512) in the run summary and arm-recorded_trajectories files.",
+    "if_true": "The entire rise from floor to near-final quality happens somewhere inside the unmeasured gap between 0 and 512 training steps, a stretch the twelve-checkpoint grid cannot see into at all.",
+    "changes": "The 'early formation versus late formation' question is answered 'early' by construction, not because the data discriminates a slow climb from a sudden jump; the two-tier milestone system contributes no real timing information in this run."
+   },
+   {
+    "question": "Between the checkpoints taken after 2,000 and 16,000 training steps, counting quality falls to its lowest point since formation (0.715426), and the precision-boundary number turns negative (as low as -0.247611), the opposite sign of what it measures when the boundary is present. In the same narrow window, the single network layer that best supports counting jumps from very late layers (22 or 23 of 24) down to a much earlier layer (6). Is this one shared event disturbing three signals at once, or three unrelated coincidences?",
+    "where": "boundary_ratio_by_step and pooled_quality_by_step (steps 2000-16000) alongside best_layer_by_step, all in the run summary and arm-recorded_trajectories files.",
+    "if_true": "Something specific appears to happen to the network's counting representation in this window, reorganizing which layer carries the signal at the same moment the signal itself weakens and partly inverts.",
+    "changes": "Neither the fossil account (form once, then hold) nor the plain drift account predicts a temporary sign flip followed by full recovery; this shape is not named, expected, or explained anywhere in the design."
+   },
+   {
+    "question": "At every one of the twelve checkpoints, including the fully-trained final one, the narrowest wrapped-line length (20 characters) scores a strongly negative quality value, reaching -0.887613 even at the end of training. Yet the combined figure spanning all seven wrap lengths together stays strongly positive throughout, reaching 0.876302 at the end. A plain average of the seven final per-length scores comes to about 0.565, far below the reported combined figure. Why does one wrap length fail completely at every checkpoint without pulling the combined number down?",
+    "where": "quality_by_width_at_final and quality_by_width_by_step, field '20', across all twelve checkpoints, versus the headline pooled_quality figures, both in the run summary and arm-recorded_trajectories files.",
+    "if_true": "The combined figure must be built by pooling the raw underlying numbers across wrap lengths before scoring, rather than averaging each length's own score, which hides a wrap length that never works.",
+    "changes": "The headline reproduction value of 0.876302 does not mean uniformly good counting at every wrap length; the shortest lines fail completely at every point in training, a limitation the design never states."
+   },
+   {
+    "question": "Per-token predicted-count and true-count numbers are saved to disk only for the widest wrap length, 140 characters. The other six wrap lengths that feed into the combined quality figure used for every threshold in this study have no saved per-token numbers anywhere in the output. Can any of the numbers that actually decide pass or fail be checked against raw model output at all?",
+    "where": "per_position_files list in seedD4_1_onbox_summary.json (only rows_positions_w140_*.jsonl exist) versus the seven-length quality_by_width figures reported for every checkpoint.",
+    "if_true": "None of the training-floor check, the formation checkpoint, or the stability check can be independently recomputed from raw rows; only the precision-boundary profile, built from the one saved wrap length, can be checked, and no single gate rests on that profile alone.",
+    "changes": "Confidence in the pass/fail verdict rests on six-sevenths of the underlying per-token data being unverifiable from anything in this output."
+   },
+   {
+    "question": "The number of directions needed to capture 90 percent of the network's representational variation falls from 77 at initialization to 1 or 2 by the checkpoints taken after 64,000 to 128,000 steps, roughly a 50-fold shrinkage. The number needed for 99 percent barely moves, staying between 80 and 130 throughout training. What causes this gap between the two thresholds to open up, and does it relate to the counting boundary at all?",
+    "where": "dimensions_by_step, comparing the '0.9' and '0.99' entries, in the run summary and arm-recorded_trajectories files.",
+    "if_true": "Training does not simply shrink the representation; it concentrates most variation into one or two directions while a long tail of many small directions survives essentially untouched.",
+    "changes": "This pattern is recorded at every checkpoint but never interpreted or connected to the counting or boundary story anywhere in the design, despite being exactly the kind of unexplained structural change the hypothesis is meant to account for."
+   }
+  ]
+ },
+ "qtriage": {
+  "claims": [
+   {
+    "id": "q1",
+    "grounding": {
+     "grounding": "diverges",
+     "observed": "From the 12 raw rows_positions_w140_step*.jsonl files (results_seedD4_1, pythia-1.4b): straight Pearson(char_label, predicted_count) at step0 = 0.2800; R^2 = 1 - SSE/SST = -0.007607, matching held_out_quality_w140 at readout 24 exactly. All 12 checkpoints match the recorded quality_by_width[\"140\"] under R^2 (e.g. step143000 R^2 0.751376 = recorded, Pearson 0.8808), never under Pearson. Pooled floor 0.341495 is likewise pooled R^2.",
+     "note": "The two numbers reproduce exactly (quality IS R^2, not correlation), but the claim's premise of a mislabel is wrong: run_seedD4_1.py computes quality via r2_from_stats() and the notes' \"Pearson correlation between predicted and true count\" sentence explicitly describes only the four-part profile statistic (\"profile_correlations\", computed by pearson_corr / bin_correlation_rows), not the quality metric, so no note actually calls quality a correlation.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out/rows_positions_w140_step0.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out/rows_positions_w140_step143000.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step0_stage-extract.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out/sweep_table.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out/arm-run_summary_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/run_seedD4_1.py",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4/out/rows_positions_w140_step0.jsonl"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "RULED_OUT",
+      "crux": "The pipeline computes the scored number directly from raw predicted-count/true-count pairs in rows_positions_w140_step*.jsonl with no ablation or intervention step present; the exact, checkpoint-invariant reproduction of -0.007607 via a substituted R\u00b2-like formula at all twelve checkpoints is the signature of a formula/label bug, not of an off-distribution ablation artifact (which would vary by checkpoint/input rather than match a fixed alternate formula exactly everywhere)."
+     },
+     {
+      "confound": "downstream compensation (self-repair) would predict checkpoint-dependent compensatory behavior; it cannot produce a fixed, training-independent algebraic identity between two scoring formulas.",
+      "status": "RULED_OUT",
+      "crux": "The alternate closeness-of-fit formula reproduces the recorded -0.007607 exactly at the untrained checkpoint (step 0, rows_positions_w140_step0.jsonl) and at all twelve checkpoints uniformly -- an exact match present before any training/self-repair could have occurred, so the discrepancy is a static formula-mislabeling artifact, not a self-repair effect."
+     },
+     {
+      "confound": "selection bias",
+      "status": "RULED_OUT",
+      "crux": "Whether the -0.007607 vs 0.2800 discrepancy is a cherry-picked subset (selection bias) or a uniform, systematic mislabeling across the whole checkpoint population."
+     },
+     {
+      "confound": "Readout artifact: the field documented as \"Pearson correlation between predicted and true count\" is actually computed by a closeness-of-fit (magnitude-accuracy) formula, not true Pearson correlation.",
+      "status": "EXPLAINS",
+      "crux": "The alternative closeness-of-fit formula reproduces the recorded -0.007607 value exactly (not approximately) at all twelve checkpoints, while true Pearson computed from the same raw predicted/true pairs gives a materially different value (0.2800) at the widest wrap \u2014 an exact 12-for-12 match to a different formula is the signature of mislabeling, not of coincidental agreement between two distinct statistics."
+     },
+     {
+      "confound": "Regime specificity would require the label/formula mismatch to be confined to one narrow condition (e.g., only the untrained checkpoint, or only the widest wrap length, or some other special regime) \u2014 with the recorded numbers actually behaving as real Pearson correlation elsewhere. If that were true, the alternate closeness-of-fit formula would only coincidentally match -0.007607 at that one cell, not generalize.",
+      "status": "RULED_OUT",
+      "crux": "Whether the exact reproduction by the closeness-of-fit formula is confined to a single regime (untrained checkpoint / widest wrap) or holds uniformly across the full training trajectory."
+     },
+     {
+      "confound": "construct validity \u2014 the metric labeled \"Pearson correlation between predicted and true count\" is actually a different, scale/offset-sensitive closeness-of-fit statistic (e.g. concordance-style R\u00b2), not Pearson r.",
+      "status": "EXPLAINS",
+      "crux": "The closeness-of-fit formula reproduces the recorded -0.007607 exactly at all twelve checkpoints (not just the untrained one), while true Pearson r at the same cell is 0.2800 \u2014 an exact, population-wide numeric identity, not a coincidental single-cell match."
+     },
+     {
+      "confound": "scale incomparability",
+      "status": "EXPLAINS",
+      "crux": "The reproducing formula is a closeness-of-fit statistic (R\u00b2-like: 1 - SS_res/SS_tot or similar), which unlike Pearson r is NOT invariant to affine rescaling/offset between predicted and true values \u2014 it punishes a prediction that is well-correlated but on the wrong scale or with an additive bias. The evidence establishes this formula reproduces the recorded -0.007607 exactly across all twelve checkpoints, which is exactly the signature of a scale/offset-sensitive statistic being applied where Pearson (scale-invariant) was claimed and intended."
+     },
+     {
+      "confound": "noise floor \u2014 recorded near-zero/negative \"correlation\" values are simply what weak-signal/high-variance measurements look like, rather than evidence of a mislabeled formula.",
+      "status": "RULED_OUT",
+      "crux": "Whether the match between the recorded -0.007607 and the closeness-of-fit formula's output is exact/deterministic or merely approximate; evidence states it is exact and reproduced independently at all twelve checkpoints (step0\u2013step143000), which noise/sampling variability cannot produce."
+     },
+     {
+      "confound": "ceiling or floor effect (restricted variance in raw predicted/true counts at the widest wrap length suppressing true Pearson correlation)",
+      "status": "RULED_OUT",
+      "crux": "A ceiling/floor effect predicts that even straight recomputed Pearson on the raw counts would read near the recorded value (both suppressed by restricted variance). Instead recomputed Pearson at the widest wrap length is 0.2800 (moderate, non-degenerate) while the recorded value is -0.007607 \u2014 and a different, non-correlation formula (closeness-of-fit) reproduces -0.007607 exactly at all twelve checkpoints. The gap is explained by formula substitution/mislabeling, not by saturated/restricted-range data."
+     },
+     {
+      "confound": "single-case overfit",
+      "status": "RULED_OUT",
+      "crux": "Single-case overfit predicts the closeness-of-fit formula would match the recorded -0.007607 only at the one cherry-picked cell (widest wrap length, one checkpoint); the evidence instead reports exact reproduction of -0.007607 at all twelve checkpoints (rows_positions_w140_step0.jsonl through rows_positions_w140_step143000.jsonl), which is inconsistent with a single-instance coincidence."
+     }
+    ],
+    "run_queue": [
+     "recompute true Pearson correlation from raw predicted/true count pairs at every (checkpoint, wrap-length) cell in rows_positions_w*.jsonl and diff against the corresponding 'quality' fields in arm-checkpoint_reading files, to confirm the mislabeling holds at all wrap widths (not just the widest) and to establish what the floor/milestone/stability thresholds look like under true Pearson instead of the closeness-of-fit statistic."
+    ],
+    "author_queue": [],
+    "runner_results": null
+   },
+   {
+    "id": "q2",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "From raw sweep_table.json boundary_ratio_by_step: window from step512 \u2192 max 0.526207 (step96000) \u2212 min \u22120.247611 (step8000) = 0.773818; window from step64000 (boundary's own first \u22650.3 crossing; step512 ratio is only 0.259086) \u2192 max 0.526207 \u2212 min 0.512028 = 0.014179. Limit 0.15. formed_step=512 is itself correct per the 0.9 rule (quality 0.827079 \u2265 B+0.9(A\u2212B)=0.822821).",
+     "note": "Both numbers and the rule conflict reproduce exactly: design endpoint 4 says the boundary's hold window starts at its own first ratio\u22650.3 checkpoint (step64000, range 0.014179 = held), while the applied rule uses the shared quality-formed checkpoint step512 (range 0.773818, non-monotone \u2192 UNSTABLE_NOT_CLASSIFIABLE); the override is stated in the record's notes and in answer 4 of records/GATE_COMMIT_seedD4_1.md, which was committed pre-spend rather than post-hoc.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out/arm-hold_test_boundary_endpoint-4_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out/sweep_table.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/records/GATE_COMMIT_seedD4_1.md",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/records/seedD4_1_design_diff_triage.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "RULED_OUT",
+      "crux": "Both the 0.773818 and 0.014179 range figures are computed from the same underlying (non-ablated) boundary-metric time series; they differ only in which checkpoint index the counting window starts from, per the file's own notes that \"the applied rule overrides the design's stated one\" \u2014 no ablation intervention (zero/mean/resample or off-distribution activation substitution) appears anywhere in the record."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "RULED_OUT",
+      "crux": "The gap between the two range values (0.773818 vs 0.014179) is fully attributable to which checkpoint anchors the counting window (512-step milestone vs the boundary's own 64,000-step first-appearance), as stated in the file's own notes ('the applied rule overrides the design's stated one') -- not to any downstream/layer-wise compensation for an intervention."
+     },
+     {
+      "confound": "selection bias",
+      "status": "EXPLAINS",
+      "crux": "The file's own notes admit the applied counting-start rule (512 steps) overrides the design's stated rule (64,000 steps, the checkpoint where the boundary itself first appears); measuring from a point before the boundary exists necessarily counts pre-formation noise/absence as 'range', so the 0.773818 vs 0.15 band violation is an artifact of that pre-formation window, not of post-formation drift \u2014 the 0.014179 range computed from the boundary's own crossing is the one that reflects actual post-formation steadiness."
+     },
+     {
+      "confound": "readout artifact: starting the range calculation at \"the checkpoint where the boundary first appears\" mechanically excludes the pre-formation/settling transient (the most volatile region), so a small range post-crossing is partly guaranteed by the window definition rather than solely reflecting genuine post-formation stability.",
+      "status": "EXPLAINS",
+      "crux": "The evidence's own annotation states the classification (held vs. not-classifiable) is decided by \"the single choice of starting point, not the underlying measurements\" \u2014 i.e., the committed data itself frames this as a readout-convention effect, and no committed number (e.g., variance within sub-windows of the post-64k region, or a null-trajectory comparison) rules out that starting after the crossing trivially suppresses measured range."
+     },
+     {
+      "confound": "regime specificity: the applied rule starts the range calculation at an unrelated 512-step milestone (before the boundary even exists) rather than at the boundary's own 64,000-step formation point, pooling a pre-formation/undefined regime with the post-formation regime and inflating the measured range.",
+      "status": "EXPLAINS",
+      "crux": "The applied rule and the design's own stated rule differ only in starting checkpoint (512 vs. 64,000 steps), and switching to the design's own starting point (post-formation) drops the range from 0.773818 (outside the 0.15 band) to 0.014179 (comfortably inside it) \u2014 the file's own notes confirm the applied rule overrides the design's stated one, so the 'instability' reflects the pre-formation interval being included, not genuine post-formation drift."
+     },
+     {
+      "confound": "construct validity: the applied \"steady\" metric counts from an unrelated 512-step milestone instead of the design-specified 64,000-step boundary-formation checkpoint, so it measures pre-formation transient + post-formation drift lumped together rather than post-formation steadiness.",
+      "status": "EXPLAINS",
+      "crux": "Both range values are computed from the identical underlying boundary measurements; the only difference is the starting index used to define \"since formation\" (512 vs. 64,000 steps), and the file's own notes admit the applied rule departs from the design's stated one \u2014 so the pass/fail classification is decided by window choice, not by the boundary's actual post-formation behavior."
+     },
+     {
+      "confound": "scale incomparability",
+      "status": "EXPLAINS",
+      "crux": "The 0.014179 range is computed over a much shorter, later-only window (checkpoints after step 64,000) than the 0.773818 range (from step 512, spanning nearly the whole run); a narrower/later window mechanically yields a smaller range regardless of true stability, so the two figures are not on a comparable scale and no matched-window number is given to rule that out."
+     },
+     {
+      "confound": "noise floor",
+      "status": "EXPLAINS",
+      "crux": "The 0.773818 range measured from step 512 spans a window that includes checkpoints before the boundary itself existed (it first appears only at 64,000 steps); pre-formation values are effectively noise-floor readings of a feature that hasn't stabilized yet, not evidence of drift in the formed boundary. The 0.014179 range, measured only after formation, is the one that actually tests steadiness of the boundary itself."
+     },
+     {
+      "confound": "ceiling or floor effect",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the raw boundary values at checkpoints after 64,000 steps sit near a saturation limit (ceiling/floor) of the metric's domain, versus being genuinely mid-range and stable \u2014 the committed evidence gives only the range (0.014179), not the raw per-checkpoint values or the metric's bounds, so a small range from saturation is indistinguishable from a small range from genuine steadiness."
+     },
+     {
+      "confound": "single-case overfit: the \"steady\" classification depends entirely on discretionarily swapping the starting point (512 steps -> its own 64,000-step crossing) for one single boundary instance, with no second case shown where this override rule was applied to check it generalizes.",
+      "status": "EXPLAINS",
+      "crux": "The applied starting-point rule was substituted for the design's stated rule specifically on this one case (per the file's own notes), and no committed data shows the same override applied to any other boundary/case with the same steady result \u2014 so the classification flip (not-classifiable -> held) rides on a single post-hoc choice for a single instance."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "Pull raw per-checkpoint boundary_endpoint values across the full range (512 through post-64,000 steps) to check both: (1) whether the large 512-start range is driven by pre-formation/undefined-boundary noise rather than post-formation excursions, and (2) whether the post-64,000 values sit near a ceiling/floor of the metric's domain rather than being genuinely mid-range and stable."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q3",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "baseline 0.341495, anchor 0.876302 -> half threshold 0.6088985 and nine-tenths 0.8228213 (both match claim); step512 pooled quality 0.827079 clears both; formation_step = formed_step = 512, prior grid point is step 0 only.",
+     "note": "All claim numbers re-derived exactly; also the pooled series is non-monotonic (1000: 0.851364 then 2000: 0.765581, 4000: 0.715426, 16000: 0.764327, all below the 0.8228 formed threshold), so both tiers fire on the same lone sub-1000-step point and contribute no distinguishing timing information.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out/arm-formation_timing_endpoint-3_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "RULED_OUT",
+      "crux": "Whether an ablation intervention (pushing the model off-distribution) is part of the pipeline that produced pooled_quality_by_step and formation_step/formed_step; the evidence shows these are direct checkpoint evaluations (step0, step512) with no ablation step anywhere in the measurement path."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "RULED_OUT",
+      "crux": "Self-repair requires an ablation/patching intervention whose downstream effect is measured; pooled_quality_by_step (step0=0.341495, step512=0.827079) and formation_step/formed_step=512 are direct per-checkpoint quality scores against fixed thresholds, with no intervention or downstream-compensation step in the pipeline at all."
+     },
+     {
+      "confound": "selection bias",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the checkpoint-save schedule (\u20260, 512, 1024\u2026) and the two milestone-threshold definitions (0.5 and 0.9 of final quality) were fixed/pre-registered independent of the outcome, versus chosen or tuned after observing that both crossings fall in the same 0-512 interval; the given evidence (pooled_quality_by_step, formation_step/formed_step) shows only the coincidence itself, not whether the schedule/thresholds were outcome-independent."
+     },
+     {
+      "confound": "readout artifact",
+      "status": "EXPLAINS",
+      "crux": "The checkpoint grid only samples at step0 and step512 in this range (12 checkpoints total, per pooled_quality_by_step), so there is no measurement between 0 and 512 steps capable of distinguishing a gradual climb from a sudden jump; both formation_step and formed_step land on 512 simply because that is the first non-zero grid point sampled, not because the model actually crossed both thresholds simultaneously."
+     },
+     {
+      "confound": "regime specificity: the checkpoint grid is coarse near the start of training (only step 0 and step 512 are measured in this region), so the two-milestone system (formation_step vs formed_step) has no resolution to distinguish a slow rise from an instantaneous jump inside that gap \u2014 any run whose quality clears both thresholds before the second checkpoint will show this exact coincidence regardless of the true underlying dynamics.",
+      "status": "EXPLAINS",
+      "crux": "Whether any checkpoint exists between step 0 and step 512 that could show gradual (rather than instantaneous) rise in pooled_quality_by_step \u2014 none is in the committed evidence, so the coincidence of formation_step and formed_step at 512 is fully accounted for by grid sparsity rather than by a genuine simultaneous crossing of two distinct milestones."
+     },
+     {
+      "confound": "construct validity: the two-milestone system (half-way-to-final, nine-tenths-to-final) was built to distinguish a slow rise from a fast one, but that distinction is only meaningful if the checkpoint grid has resolution finer than the gap between \"still forming\" and \"formed.\" Here the grid's very first post-init measurement is at step 512 (out of 143,000), and both milestones (0.608899 and 0.822821) are already cleared by the step-512 score of 0.827079. There is no committed measurement anywhere in (0, 512) that could show a gradual climb through the halfway point before later crossing the nine-tenths point \u2014 the grid is simply blind to that entire interval. So \"both milestones land on the same grid point\" is not evidence that formation was instantaneous; it is a direct consequence of measuring at 0 and then not again until 512. The two-tier system was designed to separate slow-forming from fast-forming circuits, but with only one data point inside the plausible formation window, it cannot actually perform that separation \u2014 it degenerates to a single early/late binary regardless of the true trajectory shape.",
+      "status": "EXPLAINS",
+      "crux": "The committed checkpoint grid has no measurement between step 0 and step 512 (pooled_quality_by_step jumps directly from step0=0.341495 to step512=0.827079), so the milestone system had zero opportunity to resolve whether the halfway and nine-tenths thresholds were crossed at different times within that gap. The claim under audit (\"both milestones coincide, so what does that mean?\") is itself already conceding this \u2014 it is largely a restatement of the construct-validity limitation rather than an independent discovery of fast formation, i.e. the confound largely IS the phenomenon being described, not something hiding behind it."
+     },
+     {
+      "confound": "scale incomparability (here: coarse measurement grid vs. underlying dynamics) \u2014 the checkpoint schedule only samples step 0 and step 512 as its first two points, so any formation dynamics occurring within that 512-step window are invisible. The claim's own two milestone thresholds (0.608899 and 0.822821) both fall between the step0 value (0.341495) and the step512 value (0.827079), meaning both are crossed somewhere in an interval the grid cannot resolve.",
+      "status": "EXPLAINS",
+      "crux": "values.formation_step and values.formed_step are both recorded as 512 only because 512 is the first post-zero checkpoint sampled \u2014 there is no finer-grained measurement between 0 and 512 steps to show whether the rise was gradual or sudden, so the two-milestone system cannot actually discriminate 'early' from 'late' formation in this run; this is consistent with (indeed is) the claim being made, not a separate artifact to rule out."
+     },
+     {
+      "confound": "Noise floor: pooled_quality is a metric estimated over some finite eval set, and both milestones being cleared at the same single checkpoint could be an artifact of measurement noise rather than a genuine simultaneous crossing \u2014 this is especially plausible because the nine-tenths milestone is cleared by a razor-thin margin (0.827079 vs threshold 0.822821, a gap of only 0.004258), well within the range that ordinary eval noise (different sampled prompts/seeds, sampling temperature, judge variance) could produce. The half-milestone (0.608899) is cleared by a much larger margin (~0.218), so that crossing is robust to noise, but the nine-tenths crossing is not \u2014 if the true step-512 score has even small measurement variance, the 'clears both milestones at 512' claim could easily be 'clears one milestone robustly and the other by noise-level luck.'",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 0.004258 margin by which the step-512 checkpoint clears the nine-tenths milestone (0.827079 vs 0.822821) exceeds the run-to-run/eval-sampling noise of the pooled_quality metric; no variance, confidence interval, seed-repeat, or bootstrap number for pooled_quality is given in the evidence, so this cannot be checked from the committed data."
+     },
+     {
+      "confound": "ceiling or floor effect (here: a measurement-grid floor/resolution effect \u2014 the checkpoint grid is too coarse near step 0 to see the actual rise)",
+      "status": "EXPLAINS",
+      "crux": "The measured grid jumps directly from step 0 (0.341495) to step 512 (0.827079) with no checkpoints in between, so both the halfway (0.608899) and nine-tenths (0.822821) milestones are cleared inside that single unmeasured interval. No committed data point exists between 0 and 512 steps to show whether the climb was gradual (early) or a sudden jump \u2014 the milestone system's whole purpose (distinguishing slow rise from fast rise) is defeated by grid coarseness at the low end, exactly as the confound predicts."
+     },
+     {
+      "confound": "single-case overfit: the claim rests on one training run's checkpoint trajectory (one arm, one set of measured steps: 0, 512, ...). Nothing in the cited evidence shows this exact coincidence \u2014 both milestones landing on step 512 \u2014 was checked against other seeds/arms/runs. A twelve-point grid with the first non-zero checkpoint at 512 steps will mechanically produce 'formation_step == formed_step == 512' any time the true rise happens anywhere in [1,512], regardless of whether the underlying dynamics are gradual or sudden. That is exactly what a single unreplicated case looks like: one run, one grid, one coincidence, presented as if it discriminates 'early vs late' formation.",
+      "status": "EXPLAINS",
+      "crux": "The only data given is pooled_quality_by_step and formation_step/formed_step from a single run/arm's trajectory file; there is no second seed, second arm, or finer-grained (e.g. step 64/128/256) measurement cited that would show the same milestone-collision independently reproduces rather than being an artifact of this one run's coarse 0->512 checkpoint gap."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "pull the training config / checkpoint-schedule definition (e.g. config.json or run launch script) committed before the run started, and the milestone-threshold formula's definition/commit date, to confirm the step-512 checkpoint and the 0.5/0.9 thresholds were not selected or tuned after seeing this run's quality curve.",
+     "re-evaluate pooled_quality at the step-512 checkpoint with multiple independent eval seeds/sample-set resamples (bootstrap over the eval set) to estimate the metric's standard error, then check whether 0.822821 falls outside a ~95% CI around the step-512 estimate."
+    ],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "takeaways": "The file is complete and both required gates pass at exit 0.\n\nFile: `/home/hal/dev/interp/dm_hack/mats_manifold/TAKEAWAYS_seedD4_1.md`\n\nGate outputs (verbatim, also appended at the file's end):\n\n```\n$ python3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_density.py TAKEAWAYS_seedD4_1.md\nTAKEAWAYS_seedD4_1.md: 0.0 codes/1000 words (0 codes, 1722 words); threshold 10.0\n\n$ python3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_scope.py TAKEAWAYS_seedD4_1.md\n0 unscoped result sentence(s)\n```\n\nBoth exit 0.\n\nSources used: `/home/hal/dev/interp/dm_hack/mats_manifold/records/seedD4_1_design_diff_triage.json`, `/home/hal/dev/interp/dm_hack/mats_manifold/records/GATE_COMMIT_seedD4_1.md`, `/home/hal/dev/interp/dm_hack/mats_manifold/records/GATE_COMMIT_seedD4.md`, and the endpoint/provenance records in `/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD4_1/out` (run summary, hold-test-boundary record, checkpoint-reading records, `seedD4_1_onbox_summary.json`, and the raw `rows_positions_w140_step*.jsonl` files, which I used to independently recompute Pearson correlation vs. the recorded \"quality\" values and confirm all seven of the open questions numerically)."
+}

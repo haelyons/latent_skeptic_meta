@@ -1,0 +1,1347 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "n_classes": 4,
+    "probe": "logistic_C1",
+    "readout": "last_token_reading_prompt",
+    "smoke": false,
+    "task": "anchor_age"
+  },
+  "decision": "IN_BAND",
+  "decision_rule": "test_acc >= published - 0.12 -> IN_BAND, else OUT_OF_BAND; anchor overall IN_BAND iff all four anchor tasks IN_BAND; mean permuted-label test_acc must lie within chance +/- max(0.05, 3*se), else PERM_ANOMALY (readout instrument invalid for this task)",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:14:41+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    },
+    {
+      "bytes": 420029236,
+      "n_items": 1000,
+      "path": "out/acts_anchor_age.npz",
+      "present": true,
+      "sha256": "472aeacb9617"
+    }
+  ],
+  "metric": "heldout_test_accuracy_template_disjoint",
+  "notes": "classes=['adolescent', 'adult', 'child', 'older']",
+  "rows": [
+    {
+      "id": "anchor_age-adolescent-f09-i189",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i190",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i191",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i192",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i193",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i194",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i195",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i196",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i197",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i198",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i199",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i200",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i201",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i202",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i203",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i204",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i205",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i206",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i207",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i208",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i209",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i210",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i211",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i212",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i213",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i214",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i215",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i216",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i217",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i218",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i219",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i220",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i221",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i222",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i223",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i224",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i225",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i226",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i227",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i228",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i229",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i230",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i231",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i232",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i233",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i234",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i235",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i236",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i237",
+      "label": "adolescent",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i238",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i239",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i240",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i241",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i242",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i243",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i244",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i245",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i246",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i247",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i248",
+      "label": "adolescent",
+      "pred": "adolescent"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i249",
+      "label": "adolescent",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-adult-f09-i189",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i190",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i191",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i192",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i193",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i194",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i195",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i196",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i197",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i198",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i199",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i200",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i201",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i202",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i203",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i204",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i205",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i206",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i207",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i208",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f09-i209",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i210",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i211",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i212",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i213",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i214",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i215",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i216",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i217",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i218",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i219",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i220",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i221",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i222",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i223",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i224",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i225",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i226",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i227",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i228",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f10-i229",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i230",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i231",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i232",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i233",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i234",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i235",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i236",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i237",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i238",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i239",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i240",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i241",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i242",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i243",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i244",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i245",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i246",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i247",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i248",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-adult-f11-i249",
+      "label": "adult",
+      "pred": "adult"
+    },
+    {
+      "id": "anchor_age-child-f09-i189",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i190",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i191",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i192",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i193",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i194",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i195",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i196",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i197",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i198",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i199",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i200",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i201",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i202",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i203",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i204",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i205",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i206",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i207",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i208",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f09-i209",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i210",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i211",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i212",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i213",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i214",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i215",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i216",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i217",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i218",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i219",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i220",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i221",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i222",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i223",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i224",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i225",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i226",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i227",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i228",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f10-i229",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i230",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i231",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i232",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i233",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i234",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i235",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i236",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i237",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i238",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i239",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i240",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i241",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i242",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i243",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i244",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i245",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i246",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i247",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i248",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-child-f11-i249",
+      "label": "child",
+      "pred": "child"
+    },
+    {
+      "id": "anchor_age-older-f09-i189",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i190",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i191",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i192",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i193",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i194",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i195",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i196",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i197",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i198",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i199",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i200",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i201",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i202",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i203",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i204",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i205",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i206",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i207",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i208",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f09-i209",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i210",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i211",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i212",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i213",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i214",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i215",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i216",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i217",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i218",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i219",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i220",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i221",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i222",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i223",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i224",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i225",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i226",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i227",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i228",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f10-i229",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i230",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i231",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i232",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i233",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i234",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i235",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i236",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i237",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i238",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i239",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i240",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i241",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i242",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i243",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i244",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i245",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i246",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i247",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i248",
+      "label": "older",
+      "pred": "older"
+    },
+    {
+      "id": "anchor_age-older-f11-i249",
+      "label": "older",
+      "pred": "older"
+    }
+  ],
+  "threshold": {
+    "band_tol": 0.12,
+    "published": 0.98
+  },
+  "values": {
+    "best_layer": 27,
+    "chance": 0.25,
+    "n_test": 244,
+    "n_train": 588,
+    "n_val": 168,
+    "perm_test_accs": [
+      0.1885245901639344,
+      0.19672131147540983
+    ],
+    "published": 0.98,
+    "test_acc": 0.9467213114754098,
+    "val_acc_best": 1.0,
+    "val_acc_per_layer": [
+      0.25,
+      0.2857142857142857,
+      0.2916666666666667,
+      0.2976190476190476,
+      0.3392857142857143,
+      0.4166666666666667,
+      0.47023809523809523,
+      0.6488095238095238,
+      0.7797619047619048,
+      0.8511904761904762,
+      0.8809523809523809,
+      0.9285714285714286,
+      0.9464285714285714,
+      0.8571428571428571,
+      0.8690476190476191,
+      0.9285714285714286,
+      0.9345238095238095,
+      0.9107142857142857,
+      0.9047619047619048,
+      0.9226190476190477,
+      0.9642857142857143,
+      0.9642857142857143,
+      0.9702380952380952,
+      0.9880952380952381,
+      0.9880952380952381,
+      0.9940476190476191,
+      0.9940476190476191,
+      1.0,
+      1.0,
+      0.9940476190476191,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  }
+}

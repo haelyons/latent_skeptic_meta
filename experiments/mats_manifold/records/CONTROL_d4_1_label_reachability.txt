@@ -1,0 +1,6 @@
+early-sigmoid-flat     -> FORMED_EARLY_AND_HELD (form@2000, formed@4000)
+late-sigmoid-flat      -> FORMED_LATE_AND_HELD (form@64000, formed@96000)
+form-then-drift-up     -> FORMED_AND_DRIFTED (form@2000, formed@4000)
+noisy-plateau          -> UNSTABLE_NOT_CLASSIFIABLE (form@2000, formed@4000)
+never-forms            -> NOT_FORMED_BY_FINAL
+ALL FIVE LABELS REACHABLE: True

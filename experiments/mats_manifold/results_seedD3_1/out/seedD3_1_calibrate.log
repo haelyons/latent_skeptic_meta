@@ -1,0 +1,7 @@
+=== stage calibrate ===
+[calibrate] ridge strength 1000 (interior on the grid: True), best training readout 5, cross-validated quality 0.8792
+[calibrate] width 140: character labels 1 to 140, profile length 120 (committed 120), 29 usable cycle counts; token labels 1 to 41, ceiling 41 against an observed maximum of 58, 17 counts excluded, profile length 21, 4 usable cycle counts
+[calibrate] width 200: character labels 1 to 200, profile length 180 (committed 180), 44 usable cycle counts; token labels 1 to 57, ceiling 57 against an observed maximum of 73, 16 counts excluded, profile length 37, 8 usable cycle counts
+[calibrate] width 280: character labels 1 to 280, profile length 260 (committed 260), 64 usable cycle counts; token labels 1 to 75, ceiling 75 against an observed maximum of 97, 22 counts excluded, profile length 55, 12 usable cycle counts
+[record] CALIBRATION_OK -> results_seedD3_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step143000_stage-calibrate.json
+=== stage calibrate done in 221.3 s ===

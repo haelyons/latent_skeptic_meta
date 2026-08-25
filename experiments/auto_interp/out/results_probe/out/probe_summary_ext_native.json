@@ -1,0 +1,606 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "n_classes": 2,
+    "probe": "logistic_C1",
+    "readout": "last_token_reading_prompt",
+    "smoke": false,
+    "task": "ext_native"
+  },
+  "decision": "RECOVERED",
+  "decision_rule": "chance = 1/n_classes; se = sqrt(chance*(1-chance)/n_test); test_acc >= chance + max(0.10, 3*se) -> RECOVERED; test_acc <= chance + 2*se -> AT_CHANCE; else INDETERMINATE; mean permuted-label test_acc must lie within chance +/- max(0.05, 3*se), else PERM_ANOMALY (readout instrument invalid for this task)",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:15:17+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    },
+    {
+      "bytes": 161288916,
+      "n_items": 384,
+      "path": "out/acts_ext_native.npz",
+      "present": true,
+      "sha256": "9d5e7a8603c0"
+    }
+  ],
+  "metric": "heldout_test_accuracy_template_disjoint",
+  "notes": "classes=['native', 'nonnative']",
+  "rows": [
+    {
+      "id": "ext_native-native-f09-i144",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i145",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i146",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i147",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i148",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i149",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i150",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i151",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i152",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i153",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i154",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i155",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i156",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i157",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i158",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f09-i159",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f10-i160",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i161",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i162",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i163",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i164",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i165",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i166",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i167",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i168",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i169",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i170",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i171",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i172",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i173",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i174",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f10-i175",
+      "label": "native",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-native-f11-i176",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i177",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i178",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i179",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i180",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i181",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i182",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i183",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i184",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i185",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i186",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i187",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i188",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i189",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i190",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-native-f11-i191",
+      "label": "native",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i144",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i145",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i146",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i147",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i148",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i149",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i150",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i151",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i152",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i153",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i154",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i155",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i156",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i157",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i158",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f09-i159",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i160",
+      "label": "nonnative",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i161",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i162",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i163",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i164",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i165",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i166",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i167",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i168",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i169",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i170",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i171",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i172",
+      "label": "nonnative",
+      "pred": "native"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i173",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i174",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f10-i175",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i176",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i177",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i178",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i179",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i180",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i181",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i182",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i183",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i184",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i185",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i186",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i187",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i188",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i189",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i190",
+      "label": "nonnative",
+      "pred": "nonnative"
+    },
+    {
+      "id": "ext_native-nonnative-f11-i191",
+      "label": "nonnative",
+      "pred": "nonnative"
+    }
+  ],
+  "threshold": {
+    "chance": 0.5,
+    "margin": "max(0.10, 3*se)"
+  },
+  "values": {
+    "best_layer": 2,
+    "chance": 0.5,
+    "n_test": 96,
+    "n_train": 224,
+    "n_val": 64,
+    "perm_test_accs": [
+      0.5208333333333334,
+      0.6875
+    ],
+    "test_acc": 0.8125,
+    "val_acc_best": 1.0,
+    "val_acc_per_layer": [
+      0.5,
+      0.96875,
+      1.0,
+      0.984375,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  }
+}

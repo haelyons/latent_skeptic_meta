@@ -1,0 +1,123 @@
+{
+  "anchor_gate_decision": "ANCHOR_IN_BAND",
+  "complete": false,
+  "measurement_order": [
+    "step143000",
+    "step0",
+    "step512",
+    "step1000",
+    "step2000",
+    "step4000",
+    "step8000",
+    "step16000",
+    "step32000",
+    "step64000",
+    "step96000",
+    "step128000"
+  ],
+  "model_id": "EleutherAI/pythia-410m-deduped",
+  "n_rows": 2,
+  "negative_control_decision": "VOID_CONTROL_FAILED",
+  "revisions_in_training_order": [
+    "step0",
+    "step512",
+    "step1000",
+    "step2000",
+    "step4000",
+    "step8000",
+    "step16000",
+    "step32000",
+    "step64000",
+    "step96000",
+    "step128000",
+    "step143000"
+  ],
+  "rows": [
+    {
+      "best_layer": 6,
+      "boundary_ratio": -0.090673,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 6,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 1,
+        "0.95": 2,
+        "0.99": 56
+      },
+      "held_out_profile_rows": 10578,
+      "measurement_order_index": 0,
+      "pooled_quality": 0.781031,
+      "profile_correlations": [
+        0.654081,
+        0.314235,
+        0.458304,
+        0.691357
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_by_width": {
+        "100": 0.789835,
+        "120": 0.770013,
+        "140": 0.664024,
+        "20": -2.971123,
+        "40": -0.361039,
+        "60": 0.578991,
+        "80": 0.697575
+      },
+      "revision": "step143000",
+      "ridge_strength": 1000.0,
+      "seconds": 44.5,
+      "step": 143000
+    },
+    {
+      "best_layer": 24,
+      "boundary_ratio": -0.080316,
+      "coordinate_decision": "COORDINATES_AT_GRID_EDGE",
+      "coordinate_flags": [
+        "best_layer_at_readout_24"
+      ],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 24,
+      "degenerate_coordinates": true,
+      "dimensions": {
+        "0.9": 69,
+        "0.95": 92,
+        "0.99": 124
+      },
+      "held_out_profile_rows": 10578,
+      "measurement_order_index": 1,
+      "pooled_quality": 0.344634,
+      "profile_correlations": [
+        0.194574,
+        0.011107,
+        0.000705,
+        0.365608
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_by_width": {
+        "100": 0.101322,
+        "120": 0.034851,
+        "140": -0.090231,
+        "20": -2.479186,
+        "40": -0.619151,
+        "60": -0.233532,
+        "80": 0.049618
+      },
+      "revision": "step0",
+      "ridge_strength": 10000.0,
+      "seconds": 42.7,
+      "step": 0
+    }
+  ]
+}

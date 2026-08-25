@@ -1,0 +1,606 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "n_classes": 2,
+    "probe": "logistic_C1",
+    "readout": "last_token_reading_prompt",
+    "smoke": false,
+    "task": "ext_formality"
+  },
+  "decision": "RECOVERED+PERM_ANOMALY",
+  "decision_rule": "chance = 1/n_classes; se = sqrt(chance*(1-chance)/n_test); test_acc >= chance + max(0.10, 3*se) -> RECOVERED; test_acc <= chance + 2*se -> AT_CHANCE; else INDETERMINATE; mean permuted-label test_acc must lie within chance +/- max(0.05, 3*se), else PERM_ANOMALY (readout instrument invalid for this task)",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:15:15+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    },
+    {
+      "bytes": 161284308,
+      "n_items": 384,
+      "path": "out/acts_ext_formality.npz",
+      "present": true,
+      "sha256": "fe162e04ee94"
+    }
+  ],
+  "metric": "heldout_test_accuracy_template_disjoint",
+  "notes": "classes=['casual', 'formal']",
+  "rows": [
+    {
+      "id": "ext_formality-casual-f09-i144",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i145",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i146",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i147",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i148",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i149",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i150",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i151",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i152",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i153",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i154",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i155",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i156",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i157",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i158",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f09-i159",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i160",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i161",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i162",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i163",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i164",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i165",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i166",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i167",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i168",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i169",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i170",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i171",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i172",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i173",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i174",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f10-i175",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i176",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i177",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i178",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i179",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i180",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i181",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i182",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i183",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i184",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i185",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i186",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i187",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i188",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i189",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i190",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-casual-f11-i191",
+      "label": "casual",
+      "pred": "casual"
+    },
+    {
+      "id": "ext_formality-formal-f09-i144",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i145",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i146",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i147",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i148",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i149",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i150",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i151",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i152",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i153",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i154",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i155",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i156",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i157",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i158",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f09-i159",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i160",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i161",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i162",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i163",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i164",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i165",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i166",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i167",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i168",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i169",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i170",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i171",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i172",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i173",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i174",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f10-i175",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i176",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i177",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i178",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i179",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i180",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i181",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i182",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i183",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i184",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i185",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i186",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i187",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i188",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i189",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i190",
+      "label": "formal",
+      "pred": "formal"
+    },
+    {
+      "id": "ext_formality-formal-f11-i191",
+      "label": "formal",
+      "pred": "formal"
+    }
+  ],
+  "threshold": {
+    "chance": 0.5,
+    "margin": "max(0.10, 3*se)"
+  },
+  "values": {
+    "best_layer": 3,
+    "chance": 0.5,
+    "n_test": 96,
+    "n_train": 224,
+    "n_val": 64,
+    "perm_test_accs": [
+      0.6041666666666666,
+      0.71875
+    ],
+    "test_acc": 1.0,
+    "val_acc_best": 1.0,
+    "val_acc_per_layer": [
+      0.5,
+      0.75,
+      0.84375,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "cell": {
+    "arm": "token_position_control",
+    "endpoint": 5,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "TOKEN_CONTROL_NOT_COMPUTABLE",
+  "decision_rule": "The character-count ripple is credited over token position when the two periods differ by more than 3 characters, or when exactly one of the two labellings clears its own shuffle comparison. Otherwise CONFOUNDED_WITH_TOKEN_POSITION.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-105-221",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T09:41:08+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 416481,
+      "n_items": 168,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap.json",
+      "present": true,
+      "sha256": "1fe73074a3d1"
+    },
+    {
+      "bytes": 22066,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD_v2_design_diff_triage.json",
+      "present": true,
+      "sha256": "45e160eb9fb4"
+    },
+    {
+      "bytes": 186532,
+      "n_items": 14232,
+      "path": "results_seedD/work/w140_meta.npz",
+      "present": true,
+      "sha256": "d53279c352f8"
+    }
+  ],
+  "metric": "Ripple period and shuffle result under character-count labels against token-position labels.",
+  "notes": "The token-position control could not be computed: no whole number of cycles gives a period inside 11.2856 to 14.7204 characters for a profile of length 22 One line at the widest wrapping holds about 140 characters but only about 42 tokens, so the two labellings cannot be searched over the same number of periods. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "margin_chars": 3
+  },
+  "values": {
+    "character_cleared_shuffle": false,
+    "character_wavelength_chars": 60.0,
+    "chars_per_token": 4.076,
+    "not_computable_reason": "no whole number of cycles gives a period inside 11.2856 to 14.7204 characters for a profile of length 22",
+    "readout": 6,
+    "token_cleared_shuffle": null,
+    "token_window_high": 42
+  }
+}

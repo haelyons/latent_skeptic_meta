@@ -1,0 +1,334 @@
+== position labeller (the reasoning-tag parser of this experiment) ==
+  columns on a two-line text                                       ok
+  token counts on a two-line text                                  ok
+  line numbers on a two-line text                                  ok
+  opening boundary implied, never present: columns                 ok
+  opening boundary implied, never present: token counts            ok
+  only the closing boundary appears: columns                       ok
+  only the closing boundary appears: token counts                  ok
+  only the closing boundary appears: line numbers                  ok
+  swallowed line break, columns                                    ok
+  swallowed line break, token counts                               ok
+  swallowed line break, line numbers                               ok
+  line-break token takes the next column                           ok
+  line-break token at width plus one                               ok
+  the width-plus-one label falls outside a window ending at the width ok
+  empty range is unlabelled                                        ok
+  empty range is not counted                                       ok
+== degenerate-input detector ==
+  length-cap case flags                                            ok
+  under the length cap does not flag                               ok
+  repeated-sequence case flags                                     ok
+  seven back-to-back copies counted                                ok
+  five back-to-back copies is below the cutoff                     ok
+  prose-like tokens are clean                                      ok
+  both cases can flag together                                     ok
+== exact-match checks and exact slot assignment ==
+  hash equal                                                       ok
+  hash one character off                                           ok
+  hash absent                                                      ok
+  configuration match at 24 layers and hidden 2048                 ok
+  configuration layer mismatch                                     ok
+  the previous rung's hidden size is now a mismatch                ok
+  lowest window value maps to slot 0                               ok
+  highest window value maps to the last slot                       ok
+  one below the window is outside                                  ok
+  one above the window is outside                                  ok
+  a fractional label is never accepted                             ok
+  a true value is never accepted as 1                              ok
+  slot counts                                                      ok
+  slot indices                                                     ok
+  window start when the lowest value is thin                       ok
+  window start when every value is thick                           ok
+  no window when a middle value is thin                            ok
+== the committed token ceiling: at least 40 training positions ==
+  token window stops at the first thin value                       ok
+  the ceiling is the highest count reaching 40 positions           ok
+  the observed maximum is recorded beside it                       ok
+  the size of the cut is recorded                                  ok
+  the rule's own minimum is recorded                               ok
+  positions just above the ceiling are recorded                    ok
+  exactly 40 positions is inside the ceiling                       ok
+  no count reaching 40 leaves an empty window                      ok
+  the committed minimum is 40                                      ok
+== the committed profile length: the label count minus 20 ==
+  profile length at 140 labels                                     ok
+  profile length at 200 labels                                     ok
+  profile length at 280 labels                                     ok
+  the rule reproduces every committed number                       ok
+  a shorter window no longer matches the committed number          ok
+== label bins of both bin-correlation checks ==
+  eight bins at width 280                                          ok
+  first bin                                                        ok
+  fourth bin ends at 140                                           ok
+  fifth bin straddles 175                                          ok
+  sixth bin starts at 176                                          ok
+  last bin ends at 280                                             ok
+  roles                                                            ok
+  four low bins                                                    ok
+  three high bins                                                  ok
+  the excluded bin is the only straddling one                      ok
+  four bins across characters 1 to 140                             ok
+  the recorded-only bins are the low bins of the wide check        ok
+== shuffle seed streams, all from base seed 0 ==
+  characters at width 140                                          ok
+  tokens at width 140                                              ok
+  characters at width 280                                          ok
+  six distinct streams                                             ok
+  every stream starts from the committed base seed                 ok
+  an unknown labelling halts                                       ok
+== which text variants enter the fit ==
+  training text at width 140 enters                                ok
+  training text at width 200 stays out                             ok
+  training text at width 280 stays out                             ok
+  held-out text at width 280 is kept                               ok
+  the seven selection widths                                       ok
+  the two widths never trained on or gated                         ok
+  the seven held-out groups pooled for the gate                    ok
+== the memory bill of the running totals at hidden 2048 ==
+  one group of totals is about 840 megabytes                       ok
+  fourteen groups are about 11.8 gigabytes                         ok
+  the totals are four times the previous rung's hidden 1024        ok
+== repeating-pattern statistic: two or more cycles, period 4 or more ==
+  profile at distance 1                                            ok
+  profile at distance 20                                           ok
+  a straight line detrends to zero                                 ok
+  a curve of degree 2 detrends to zero                             ok
+  a 12-step wave peaks at 5 cycles over 60 steps                   ok
+  that peak is a period of 12                                      ok
+  the longest usable period is half the profile length             ok
+  one cycle is never usable                                        ok
+  the committed minimum number of cycles is 2                      ok
+  the period range still stops at 4                                ok
+  periods below 4 are still excluded                               ok
+  the previous rung's range held exactly one entry more            ok
+  a profile too short for two cycles of period 4 has nothing usable ok
+  a token profile of length 21 ranges over 4 cycle counts          ok
+  its longest period is 10.5 tokens                                ok
+  its shortest period is at least 4 tokens                         ok
+  the character range at 120 is a different set                    ok
+  planted period of 40 recovered                                   ok
+  that period is three whole cycles                                ok
+  whole spectrum returned, one-cycle bin included                  ok
+  the one-cycle bin is saved                                       ok
+  the one-cycle bin is never eligible                              ok
+  the one-cycle bin is still a period of 4 or more                 ok
+  cycle counts searched                                            ok
+  the rule travels with the value                                  ok
+  the statistic is the largest power among eligible bins alone     ok
+  a single smooth cycle is never the statistic                     ok
+  the excluded one-cycle power is recorded                         ok
+  a bowl-shaped single cycle is largely absorbed by the detrend    ok
+  the planted profile falls across the window                      ok
+  a single smooth fall never becomes the statistic                 ok
+  its excluded one-cycle power is the larger number                ok
+  too short a profile halts                                        ok
+  no usable cycle count halts                                      ok
+== endpoint arithmetic on planted rows with known calls ==
+  setup, all three match                                           ok
+  setup, hash differs                                              ok
+  setup, layer count differs                                       ok
+  setup, width differs                                             ok
+-- endpoint 1, the existence floor at 0.60 --
+  floor, exactly 0.60                                              ok
+  floor, just under 0.60                                           ok
+  floor, the 410-million-weight value 0.781031                     ok
+  floor, the 160-million-weight reproduction 0.744                 ok
+  floor, the GPT-2 reproduction 0.363                              ok
+  floor, below zero                                                ok
+  floor, absent                                                    ok
+  floor, not a number                                              ok
+  the floor is not a two-sided band: a very high value still clears ok
+-- the floor gate's decision inside another record's values --
+  a passing gate is carried                                        ok
+  a passing gate marks the record usable                           ok
+  a failing gate marks the record void                             ok
+  the gate's own value travels with it                             ok
+  the floor travels with it                                        ok
+  the readout travels with it                                      ok
+-- the number of directions: recorded at three cutoffs, gating nothing --
+  the reference variance target is 95 percent                      ok
+  the other recorded targets are 90 and 99 percent                 ok
+  the previous rung's three counts at one window are carried as context ok
+  no headline reading of this rung turns on any such count         ok
+  directions at 90 percent on a planted spread                     ok
+  directions at 95 percent on the same spread                      ok
+  directions at 99 percent on the same spread                      ok
+  the cutoff alone can move the count                              ok
+  all three counts are recorded together                           ok
+-- endpoints 2, 3 and 4: rank among 200 shuffle draws, one per window --
+  rank of a value above every draw                                 ok
+  rank of a value above all but nine                               ok
+  rank of a value above all but ten                                ok
+  rank counts ties against the observed value                      ok
+  clearing at rank 1                                               ok
+  clearing at rank 10                                              ok
+  not clearing at rank 11                                          ok
+  the 410-million-weight ranks under the earlier statistic also failed ok
+  no window under either labelling                                 ok
+  one character window                                             ok
+  one token window only                                            ok
+  one endpoint number per probe window                             ok
+  the earlier rungs' ranks under this statistic all fail to clear  ok
+-- endpoints 5 and 6, the count of clearing windows --
+  none cleared is not two or more                                  ok
+  one cleared is not two or more                                   ok
+  two cleared is two or more                                       ok
+  all three cleared is two or more                                 ok
+  none cleared is not exactly one                                  ok
+  one cleared is exactly one                                       ok
+  two cleared is not exactly one                                   ok
+  the two halves of the count can never both hold                  ok
+-- endpoint 7, the curve's strength against the previous rung, recorded --
+  the band is 0.796 to 0.956                                       ok
+  the band is the previous value give or take 0.08, rounded        ok
+  the previous rung's own 0.876302 lands inside                    ok
+  the low edge is inside                                           ok
+  just under the low edge is outside                               ok
+  the high edge is inside                                          ok
+  just over the high edge is outside                               ok
+  a value under the band still clears the only gate there is       ok
+  absent is not a call                                             ok
+  the band's own rule says it decides nothing                      ok
+-- the token-position control: which labelling owns the pattern --
+  neither labelling clears                                         ok
+  neither clears even with far-apart periods                       ok
+  only the token labelling clears                                  ok
+  only the character labelling clears                              ok
+  both clear, periods 60 and 31                                    ok
+  both clear, periods 60 and 57.5                                  ok
+  both clear, periods 60 and 56.5                                  ok
+  both clear, periods differ by exactly 3                          ok
+  the control cannot be computed                                   ok
+  the previous rung's own numbers no longer read as distinguished  ok
+-- bin correlations at width 280, gating readings unchanged --
+  low bins strong and high bins dead                               ok
+  one high bin alive                                               ok
+  a high bin exactly at 0.5                                        ok
+  a high bin at 0.35 matches neither reading                       ok
+  a high bin exactly at 0.2                                        ok
+  a high bin just under 0.2                                        ok
+  a low bin exactly at 0.5 still counts as reaching it             ok
+  a low bin just under 0.5                                         ok
+  the 410-million-weight low bins were already weak                ok
+  a bin not computable                                             ok
+  the low floor is 0.5                                             ok
+  the high ceiling is 0.2                                          ok
+-- the previous rung's fork, over character clearings only --
+  planted fixed periods, largest gap                               ok
+  planted growing periods, largest gap                             ok
+  planted growing periods, largest ratio gap                       ok
+  one window leaves the gap undefined                              ok
+  gap within 10 characters                                         ok
+  gap of exactly 10 characters                                     ok
+  gap above 10 characters                                          ok
+  gap undefined                                                    ok
+  ratio gap within 0.1                                             ok
+  ratio gap of exactly 0.1                                         ok
+  ratio gap above 0.1                                              ok
+  ratio gap undefined                                              ok
+  planted fixed periods classify as fixed                          ok
+  planted growing periods classify as proportional                 ok
+  planted messy periods classify as mixed                          ok
+  two windows, close periods                                       ok
+  one window is undetermined                                       ok
+  no window cleared                                                ok
+== the pre-registered headline readings, on planted values ==
+  a failed floor voids the rung                                    ok
+  floor passed and no window cleared closes the chain              ok
+  exactly one clearing window is left undetermined                 ok
+  two or more cleared, fixed periods                               ok
+  two or more cleared, growing periods                             ok
+  two or more cleared, messy periods                               ok
+  two cleared with close periods                                   ok
+  only the token labelling cleared, so no fork is entered          ok
+  a token clearing never overrides a character clearing            ok
+  the count and the headline never disagree                        ok
+  all four readings are reachable                                  ok
+  the two readings that turned on direction counts are gone        ok
+== supporting checks ==
+  the model of this rung                                           ok
+  the checkpoint of this rung                                      ok
+  the expected layer count                                         ok
+  the expected hidden size                                         ok
+  the three probe windows are among the nine wrap widths           ok
+  the nine wrap widths are the seven plus the two wide ones        ok
+  the ridge grid is the committed one                              ok
+  the floor is 0.60                                                ok
+  the eight bins cover labels 1 to 280                             ok
+  the base seed is zero                                            ok
+  the shuffle draws per window per labelling                       ok
+  clearing means rank 10 or better of 200                          ok
+  1200 draws in all                                                ok
+  five totals groups for training documents                        ok
+  one totals group per wrap width for held-out documents           ok
+  the totals groups are the training and held-out groups together  ok
+  every totals group name is distinct                              ok
+  the held-out group for width 140 exists                          ok
+  the results folder of this rung                                  ok
+  the text file of this rung                                       ok
+  the committed hash of that text file                             ok
+  the committed minimum number of cycles                           ok
+  the shortest period is unchanged at 4                            ok
+  the previous rung's value this one is placed against             ok
+  no output calls a same-box rerun a replication                   ok
+  the one-cycle rule is stated in the note every record carries    ok
+  the band's note says it gates nothing                            ok
+  record writer importable                                         ok
+== ridge fit and fit quality from running totals ==
+  sum of squared errors from running totals                        ok
+  fit quality from running totals                                  ok
+  planted weights recovered                                        ok
+== per-bin Pearson correlation of both bin checks ==
+  a perfect prediction correlates 1                                ok
+  a shifted and stretched prediction still correlates 1            ok
+  a reversed prediction correlates minus 1                         ok
+  a flat prediction has no correlation                             ok
+  a bin with one position is not computable                        ok
+  a bin with no label spread is not computable                     ok
+  the count of positions in a bin is reported                      ok
+  a badly scaled prediction still correlates above 0.5             ok
+  eight bin rows at width 280                                      ok
+  four low correlations and three high ones                        ok
+  the straddling bin is recorded with its role                     ok
+  a perfect low half reads 1                                       ok
+  planted rows read as not represented                             ok
+  four bin rows across characters 1 to 140                         ok
+  the recorded-only rows carry no role                             ok
+  every recorded-only bin has a correlation                        ok
+== analysis plumbing on small planted arrays ==
+  shuffling preserves the label multiset                           ok
+  shuffling stays inside each document                             ok
+  labels map to slots and outsiders to minus one                   ok
+  average vector of the first slot                                 ok
+  average vector of the second slot                                ok
+  positions per slot                                               ok
+  an empty slot halts                                              ok
+  identical directions have similarity 1                           ok
+  square directions have similarity 0                              ok
+  a one-direction pattern measures one direction                   ok
+  a one-direction pattern measures one at every target             ok
+  reloaded readout count                                           ok
+  gram of two groups added                                         ok
+  labels of two groups added                                       ok
+  positions of two groups added                                    ok
+  saved vectors reload with the right shape                        ok
+  saved vectors reload with the right values                       ok
+  a wrong row count halts                                          ok
+  one saved spectrum per draw plus the observed                    ok
+  the observed spectrum is the first line                          ok
+  every saved line carries a whole spectrum                        ok
+  every saved line names the minimum number of cycles              ok
+  every saved line keeps the one-cycle bin                         ok
+  every saved line records the excluded one-cycle power            ok
+  no saved line ever uses one cycle as its statistic               ok
+  every line's statistic is the largest eligible power             ok
+  no per-draw average vectors are written anywhere                 ok
+  the planted period is recovered                                  ok
+  the planted period is two whole cycles                           ok
+  the observed beats every draw of pure noise                      ok
+  positions per label are preserved                                ok
+  the average vectors have one row per label                       ok
+  the planted ramp and cycle count as three directions             ok
+  the same count is reported at all three targets                  ok
+selftest: PASS

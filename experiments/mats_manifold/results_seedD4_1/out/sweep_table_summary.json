@@ -1,0 +1,629 @@
+{
+  "anchor_gate_decision": "ANCHOR_IN_BAND",
+  "baseline_decision": "BASELINE_RECORDED",
+  "complete": true,
+  "measurement_order": [
+    "step143000",
+    "step0",
+    "step512",
+    "step1000",
+    "step2000",
+    "step4000",
+    "step8000",
+    "step16000",
+    "step32000",
+    "step64000",
+    "step96000",
+    "step128000"
+  ],
+  "model_id": "EleutherAI/pythia-1.4b-deduped",
+  "n_rows": 12,
+  "revisions_in_training_order": [
+    "step0",
+    "step512",
+    "step1000",
+    "step2000",
+    "step4000",
+    "step8000",
+    "step16000",
+    "step32000",
+    "step64000",
+    "step96000",
+    "step128000",
+    "step143000"
+  ],
+  "rows": [
+    {
+      "best_layer": 5,
+      "best_layer_interior": true,
+      "boundary_ratio": 0.514227,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 5,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 1,
+        "0.95": 3,
+        "0.99": 81
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.616793,
+      "layer_quality_spread": 0.810422,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 0,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.259509,
+      "pooled_quality": 0.876302,
+      "profile_correlations": [
+        0.645989,
+        0.8196,
+        0.210583,
+        0.226552
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -0.887613,
+      "quality_by_width": {
+        "100": 0.875876,
+        "120": 0.841972,
+        "140": 0.751376,
+        "20": -0.887613,
+        "40": 0.64691,
+        "60": 0.843111,
+        "80": 0.883949
+      },
+      "revision": "step143000",
+      "ridge_strength": 1000.0,
+      "seconds": 450.7,
+      "step": 143000
+    },
+    {
+      "best_layer": 24,
+      "best_layer_interior": false,
+      "boundary_ratio": -0.05242,
+      "coordinate_decision": "COORDINATES_AT_GRID_EDGE",
+      "coordinate_flags": [
+        "best_layer_at_readout_24"
+      ],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 24,
+      "degenerate_coordinates": true,
+      "dimensions": {
+        "0.9": 77,
+        "0.95": 100,
+        "0.99": 128
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.338748,
+      "layer_quality_spread": 0.334866,
+      "localization_decision": "NOT_YET_LOCALIZED",
+      "measurement_order_index": 1,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.002747,
+      "pooled_quality": 0.341495,
+      "profile_correlations": [
+        0.227269,
+        0.033907,
+        0.01716,
+        0.348856
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -2.421041,
+      "quality_by_width": {
+        "100": 0.092531,
+        "120": 0.076931,
+        "140": -0.007607,
+        "20": -2.421041,
+        "40": -1.058358,
+        "60": -0.479982,
+        "80": -0.054713
+      },
+      "revision": "step0",
+      "ridge_strength": 10000.0,
+      "seconds": 447.5,
+      "step": 0
+    },
+    {
+      "best_layer": 23,
+      "best_layer_interior": true,
+      "boundary_ratio": 0.259086,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 23,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 19,
+        "0.95": 37,
+        "0.99": 89
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.601918,
+      "layer_quality_spread": 0.781277,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 2,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.225161,
+      "pooled_quality": 0.827079,
+      "profile_correlations": [
+        0.45779,
+        0.671669,
+        0.295865,
+        0.315421
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -1.08132,
+      "quality_by_width": {
+        "100": 0.796081,
+        "120": 0.790316,
+        "140": 0.739014,
+        "20": -1.08132,
+        "40": 0.314147,
+        "60": 0.570175,
+        "80": 0.740005
+      },
+      "revision": "step512",
+      "ridge_strength": 100.0,
+      "seconds": 442.2,
+      "step": 512
+    },
+    {
+      "best_layer": 23,
+      "best_layer_interior": true,
+      "boundary_ratio": 0.203763,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 23,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 22,
+        "0.95": 51,
+        "0.99": 106
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.528111,
+      "layer_quality_spread": 0.825355,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 3,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.323253,
+      "pooled_quality": 0.851364,
+      "profile_correlations": [
+        0.4553,
+        0.677492,
+        0.432398,
+        0.292869
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -1.151896,
+      "quality_by_width": {
+        "100": 0.828634,
+        "120": 0.832115,
+        "140": 0.788329,
+        "20": -1.151896,
+        "40": 0.27632,
+        "60": 0.637744,
+        "80": 0.765974
+      },
+      "revision": "step1000",
+      "ridge_strength": 1000.0,
+      "seconds": 450.8,
+      "step": 1000
+    },
+    {
+      "best_layer": 23,
+      "best_layer_interior": true,
+      "boundary_ratio": -0.160578,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 23,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 55,
+        "0.95": 85,
+        "0.99": 124
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.540165,
+      "layer_quality_spread": 0.756482,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 4,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.225415,
+      "pooled_quality": 0.765581,
+      "profile_correlations": [
+        0.410092,
+        0.246015,
+        0.594327,
+        0.382936
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -2.010196,
+      "quality_by_width": {
+        "100": 0.696168,
+        "120": 0.660448,
+        "140": 0.630162,
+        "20": -2.010196,
+        "40": 0.252184,
+        "60": 0.646753,
+        "80": 0.687499
+      },
+      "revision": "step2000",
+      "ridge_strength": 10000.0,
+      "seconds": 451.4,
+      "step": 2000
+    },
+    {
+      "best_layer": 22,
+      "best_layer_interior": true,
+      "boundary_ratio": -0.198033,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 22,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 76,
+        "0.95": 101,
+        "0.99": 129
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.559874,
+      "layer_quality_spread": 0.703506,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 5,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.155552,
+      "pooled_quality": 0.715426,
+      "profile_correlations": [
+        0.443832,
+        0.107466,
+        0.335272,
+        0.612093
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -2.733107,
+      "quality_by_width": {
+        "100": 0.64997,
+        "120": 0.591793,
+        "140": 0.533529,
+        "20": -2.733107,
+        "40": 0.188583,
+        "60": 0.533865,
+        "80": 0.635593
+      },
+      "revision": "step4000",
+      "ridge_strength": 10000.0,
+      "seconds": 379.5,
+      "step": 4000
+    },
+    {
+      "best_layer": 22,
+      "best_layer_interior": true,
+      "boundary_ratio": -0.247611,
+      "coordinate_decision": "COORDINATES_AT_GRID_EDGE",
+      "coordinate_flags": [
+        "ridge_strength_at_100000"
+      ],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 22,
+      "degenerate_coordinates": true,
+      "dimensions": {
+        "0.9": 76,
+        "0.95": 101,
+        "0.99": 130
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.582333,
+      "layer_quality_spread": 0.723335,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 6,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.143058,
+      "pooled_quality": 0.725391,
+      "profile_correlations": [
+        0.42693,
+        0.091764,
+        0.444591,
+        0.569324
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -2.771843,
+      "quality_by_width": {
+        "100": 0.634137,
+        "120": 0.608453,
+        "140": 0.571667,
+        "20": -2.771843,
+        "40": 0.25275,
+        "60": 0.55038,
+        "80": 0.625379
+      },
+      "revision": "step8000",
+      "ridge_strength": 100000.0,
+      "seconds": 169.7,
+      "step": 8000
+    },
+    {
+      "best_layer": 6,
+      "best_layer_interior": true,
+      "boundary_ratio": 0.113313,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 6,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 14,
+        "0.95": 52,
+        "0.99": 113
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.676171,
+      "layer_quality_spread": 0.742488,
+      "localization_decision": "NOT_YET_LOCALIZED",
+      "measurement_order_index": 7,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.088156,
+      "pooled_quality": 0.764327,
+      "profile_correlations": [
+        0.715266,
+        0.317051,
+        0.523721,
+        0.281969
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -2.59539,
+      "quality_by_width": {
+        "100": 0.746926,
+        "120": 0.733537,
+        "140": 0.604242,
+        "20": -2.59539,
+        "40": 0.055171,
+        "60": 0.565091,
+        "80": 0.654533
+      },
+      "revision": "step16000",
+      "ridge_strength": 10000.0,
+      "seconds": 457.2,
+      "step": 16000
+    },
+    {
+      "best_layer": 6,
+      "best_layer_interior": true,
+      "boundary_ratio": 0.211511,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 6,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 2,
+        "0.95": 21,
+        "0.99": 98
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.702146,
+      "layer_quality_spread": 0.802991,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 8,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.127731,
+      "pooled_quality": 0.829878,
+      "profile_correlations": [
+        0.683811,
+        0.505794,
+        0.472906,
+        0.293677
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -2.350004,
+      "quality_by_width": {
+        "100": 0.819933,
+        "120": 0.825631,
+        "140": 0.743524,
+        "20": -2.350004,
+        "40": 0.214238,
+        "60": 0.632077,
+        "80": 0.737735
+      },
+      "revision": "step32000",
+      "ridge_strength": 10000.0,
+      "seconds": 399.7,
+      "step": 32000
+    },
+    {
+      "best_layer": 5,
+      "best_layer_interior": true,
+      "boundary_ratio": 0.524118,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 5,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 2,
+        "0.95": 12,
+        "0.99": 93
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.654834,
+      "layer_quality_spread": 0.840245,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 9,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.21259,
+      "pooled_quality": 0.867423,
+      "profile_correlations": [
+        0.644266,
+        0.803032,
+        0.172086,
+        0.226976
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -0.872863,
+      "quality_by_width": {
+        "100": 0.863368,
+        "120": 0.824668,
+        "140": 0.731463,
+        "20": -0.872863,
+        "40": 0.653228,
+        "60": 0.835231,
+        "80": 0.878378
+      },
+      "revision": "step64000",
+      "ridge_strength": 10000.0,
+      "seconds": 443.2,
+      "step": 64000
+    },
+    {
+      "best_layer": 5,
+      "best_layer_interior": true,
+      "boundary_ratio": 0.526207,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 5,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 1,
+        "0.95": 6,
+        "0.99": 87
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.629545,
+      "layer_quality_spread": 0.848302,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 10,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.242555,
+      "pooled_quality": 0.872099,
+      "profile_correlations": [
+        0.659372,
+        0.816734,
+        0.190825,
+        0.232867
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -0.868312,
+      "quality_by_width": {
+        "100": 0.870866,
+        "120": 0.834008,
+        "140": 0.736094,
+        "20": -0.868312,
+        "40": 0.674629,
+        "60": 0.847139,
+        "80": 0.884431
+      },
+      "revision": "step96000",
+      "ridge_strength": 10000.0,
+      "seconds": 204.5,
+      "step": 96000
+    },
+    {
+      "best_layer": 5,
+      "best_layer_interior": true,
+      "boundary_ratio": 0.512028,
+      "coordinate_decision": "COORDINATES_INTERIOR",
+      "coordinate_flags": [],
+      "count_window_low": 1,
+      "cross_validated_best_layer": 5,
+      "degenerate_coordinates": false,
+      "dimensions": {
+        "0.9": 1,
+        "0.95": 3,
+        "0.99": 80
+      },
+      "held_out_profile_rows": 10578,
+      "layer_median_quality": 0.607343,
+      "layer_quality_spread": 0.807519,
+      "localization_decision": "LOCALIZED_INTERIOR_PEAK",
+      "measurement_order_index": 11,
+      "narrow_width_quality_negative": true,
+      "peak_over_layer_median": 0.266947,
+      "pooled_quality": 0.87429,
+      "profile_correlations": [
+        0.64139,
+        0.820081,
+        0.207186,
+        0.230228
+      ],
+      "profile_part_positions": [
+        2638,
+        2552,
+        2594,
+        2741
+      ],
+      "quality_at_narrowest_width": -0.965307,
+      "quality_by_width": {
+        "100": 0.873002,
+        "120": 0.840743,
+        "140": 0.748507,
+        "20": -0.965307,
+        "40": 0.633329,
+        "60": 0.841167,
+        "80": 0.882305
+      },
+      "revision": "step128000",
+      "ridge_strength": 1000.0,
+      "seconds": 459.3,
+      "step": 128000
+    }
+  ]
+}

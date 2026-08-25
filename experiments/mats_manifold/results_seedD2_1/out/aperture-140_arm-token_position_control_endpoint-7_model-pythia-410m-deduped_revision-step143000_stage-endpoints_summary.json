@@ -1,0 +1,94 @@
+{
+  "cell": {
+    "aperture": 140,
+    "arm": "token_position_control",
+    "endpoint": 7,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "CHARACTER_COUNT_DISTINGUISHED",
+  "decision_rule": "At a probe width, the character-count wobble is credited over token position when the two periods differ by more than 3 characters, or when exactly one of the two labellings clears its own shuffle draws. Otherwise the wobble is CONFOUNDED_WITH_TOKEN_POSITION at that width.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-34-21",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T13:37:00+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 24416,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "189f87148c64"
+    },
+    {
+      "bytes": 1658,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2_1.md",
+      "present": true,
+      "sha256": "50297fb3110d"
+    },
+    {
+      "bytes": 729311,
+      "n_items": 10578,
+      "path": "results_seedD2_1/work/labels_a140.npz",
+      "present": true,
+      "sha256": "c70cbe0a40ec"
+    }
+  ],
+  "metric": "Wobble period and shuffle result under character-count labels against token-position labels, at one probe width.",
+  "notes": "The characters-per-token rate is measured on this probe width's own held-out documents, because the tokenisation shifts a little with the wrap width. The token period is turned into characters with that measured rate, because the design's margin of 3 is in characters. The shortest period of 4 is applied in each labelling's own units, as the gate record's answer 2 settles. So this control searches token periods from 4 tokens up to its own profile length, and never reuses the character numbers. One line at this width holds far fewer tokens than characters, so the two labellings cannot range over the same number of periods. Both labellings' ranks and periods are recorded here whatever the character result was. If the validity gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "margin_chars": 3.0
+  },
+  "values": {
+    "anchor_gate_band_high": 0.861,
+    "anchor_gate_band_low": 0.701,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality_pooled_widths_20_to_140": 0.781031,
+    "anchor_gate_readout": 6,
+    "aperture": 140,
+    "character_cleared_shuffle": false,
+    "character_wavelength_chars": 120.0,
+    "chars_per_token": 4.0798,
+    "draws": 200,
+    "held_out_characters": 43156,
+    "held_out_positions": 10578,
+    "per_draw_mean_vectors_saved": false,
+    "readout": 6,
+    "shuffle_base_seed": 0,
+    "this_record_voided_by_anchor_gate": false,
+    "token_ambient_dimension_at_95_percent": 2,
+    "token_cleared_shuffle": false,
+    "token_cycles": 3,
+    "token_empirical_share": 1.0,
+    "token_max_delta": 21,
+    "token_max_power": 4.1862532574857424e-05,
+    "token_n_periods_in_range": 5,
+    "token_null_max": 0.01337301674798257,
+    "token_observed_mean_vectors_file": "mean_vectors_aperture-140_labels-tokens.npz",
+    "token_positions_per_label_max": 319,
+    "token_positions_per_label_min": 23,
+    "token_profile_length": 21,
+    "token_rank": 201,
+    "token_shortest_period_searched_tokens": 4,
+    "token_shuffle_seed_entropy": [
+      0,
+      140,
+      1
+    ],
+    "token_spectra_file": "null_spectra_aperture-140_labels-tokens.jsonl",
+    "token_wavelength_chars": 28.5585,
+    "token_wavelength_tokens": 7.0,
+    "token_window_high": 41
+  }
+}

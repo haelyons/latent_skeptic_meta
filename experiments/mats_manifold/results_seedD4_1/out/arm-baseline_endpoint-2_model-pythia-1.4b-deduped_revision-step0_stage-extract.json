@@ -1,0 +1,115 @@
+{
+  "cell": {
+    "arm": "baseline",
+    "endpoint": 2,
+    "model": "pythia-1.4b-deduped",
+    "revision": "step0",
+    "stage": "extract"
+  },
+  "decision": "BASELINE_RECORDED",
+  "decision_rule": "The initialization checkpoint (step0) is a baseline measurement, not a near-zero alarm. Its held-out pooled quality over the same seven widths, at its own best readout, is recorded as the baseline floor B, and every formation threshold is measured up from it. The one void trigger is B at or above 0.7 times the anchor quality, which is 0.6134114: at or above that the fit would be reading most of its signal from untrained structure, which is VOID_CONTROL_FAILED, and the whole sweep is void. A range of 0.2 to 0.45 is expected, carried from the smaller sibling's measured 0.344634; that range is recorded and is not a pass bar.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T21:27:25+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    }
+  ],
+  "metric": "Held-out pooled quality at the initialization checkpoint, before any training: the baseline floor every formation threshold is measured from.",
+  "notes": "The initialization checkpoint is a baseline measurement, not a near-zero alarm. The smaller sibling's untrained checkpoint decoded character position at pooled quality 0.344634, with quality nearly flat across readouts, the best readout at the sweep edge, and quality inverted across widths down to -2.479186 at width 20. So an untrained network already carries partly decodable positional structure. Only a baseline at or above 0.7 times the anchor quality, which is 0.6134114, voids the sweep: above that the fit would be reading most of its signal from untrained structure. The expected range of 0.2 to 0.45 is carried from the sibling's measured 0.344634 and is recorded, never required. The selected best readout and the selected ridge strength are logged beside the pooled quality and the boundary ratio, and a selection sitting at an end of its search range is flagged. The ends are readout 0, readout 24, strength 1 and strength 100000. The previous rung's committed gate record adopts this control as binding and this rung's design carries it forward. Both state in advance that the initialization checkpoint is expected to trip it, because a random model has no meaningful best readout: on the smaller sibling it selected readout 24 at strength 10000. There the flag is confirmation, not alarm. The coordinate flags on this record are therefore expected, and both committed gate records say so in advance. The two shape signatures are recorded here and gate nothing. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "expected_range_recorded_only": [
+      0.2,
+      0.45
+    ],
+    "void_at_or_above": 0.6134113999999999
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": 0.514227,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": 0.876302,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "baseline_decision": "BASELINE_RECORDED",
+    "baseline_floor": 0.341495,
+    "baseline_quality": 0.341495,
+    "baseline_void_floor": 0.6134113999999999,
+    "best_layer": 24,
+    "boundary_ratio": -0.05242,
+    "coordinate_flags": [
+      "best_layer_at_readout_24"
+    ],
+    "coordinate_flags_expected_here": true,
+    "expected_range": [
+      0.2,
+      0.45
+    ],
+    "formation_threshold_from_this_baseline": 0.608899,
+    "formed_threshold_from_this_baseline": 0.822821,
+    "held_out_quality_pooled_widths_20_to_140": 0.341495,
+    "inside_expected_range_recorded_only": true,
+    "layer_median_quality": 0.338748,
+    "layer_quality_spread": 0.334866,
+    "localization_decision": "NOT_YET_LOCALIZED",
+    "margin_below_void_floor": 0.271916,
+    "narrow_width_quality_negative": true,
+    "peak_over_layer_median": 0.002747,
+    "profile_correlations": [
+      0.227269,
+      0.033907,
+      0.01716,
+      0.348856
+    ],
+    "quality_at_narrowest_width": -2.421041,
+    "quality_by_width": {
+      "100": 0.092531,
+      "120": 0.076931,
+      "140": -0.007607,
+      "20": -2.421041,
+      "40": -1.058358,
+      "60": -0.479982,
+      "80": -0.054713
+    },
+    "revision": "step0",
+    "ridge_strength": 10000.0,
+    "sibling_untrained_best_readout": 24,
+    "sibling_untrained_boundary_ratio": -0.080316,
+    "sibling_untrained_narrow_width_quality": -2.479186,
+    "sibling_untrained_pooled_quality": 0.344634,
+    "sibling_untrained_ridge_strength": 10000.0,
+    "this_record_voided_by_a_gate": false,
+    "training_step": 0,
+    "void_floor": 0.6134113999999999,
+    "void_share_of_anchor": 0.7
+  }
+}

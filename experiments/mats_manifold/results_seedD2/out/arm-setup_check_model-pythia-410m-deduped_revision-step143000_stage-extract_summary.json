@@ -1,0 +1,66 @@
+{
+  "cell": {
+    "arm": "setup_check",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "extract"
+  },
+  "decision": "SETUP_OK",
+  "decision_rule": "The text file's hash must equal the committed hash exactly, the layer count must equal 24, and the hidden size must equal 1024. Anything else is SETUP_FAILURE and halts the run before any measurement.",
+  "env": {
+    "git_rev": null,
+    "host": "161-153-8-80",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T12:00:53+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 23625,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_design_diff_triage.json",
+      "present": true,
+      "sha256": "bca0ff7b59bf"
+    },
+    {
+      "bytes": 3015,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2.md",
+      "present": true,
+      "sha256": "a617ec25ffde"
+    }
+  ],
+  "metric": "Committed text file hash, and the downloaded configuration's layer count and hidden size.",
+  "notes": "Layer count 24 and hidden size 1024 are recalled from the Pythia paper, arXiv 2304.01373 table 1, and checked against the download. The text is loaded exactly as committed and is never regenerated or re-wrapped. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "hidden_size": 1024,
+    "n_layers": 24,
+    "stimulus_sha256": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd"
+  },
+  "values": {
+    "access_token_source": "HF_TOKEN",
+    "context_limit": 2048,
+    "design_record_expected_sha256": "bca0ff7b59bfa11c72d2009c3f601ec5139c784105a31c7aa23a9692d3dc9593",
+    "design_record_found": "/home/ubuntu/mats_manifold/seedD2_design_diff_triage.json",
+    "disjoint_from": {
+      "file": "stimulus_linewrap.json",
+      "how": "replayed the seed-D1 packing (24 docs x 2400 chars, 81 paragraphs consumed) and started after it",
+      "v1_docs_sha256_joined": "4f48dcb7d1da"
+    },
+    "gate_record_found": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2.md",
+    "hidden_size": 1024,
+    "model_id": "EleutherAI/pythia-410m-deduped",
+    "n_layers": 24,
+    "revision": "step143000",
+    "stimulus_hash_match": true,
+    "stimulus_sha256": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd",
+    "stimulus_sha256_expected": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd",
+    "text_source": "Project Gutenberg eBook #2701 (Moby Dick), plain text"
+  }
+}

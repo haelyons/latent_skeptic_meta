@@ -1,0 +1,31 @@
+=== stage endpoints ===
+[endpoints] chosen readout 5, pooled quality over widths 20 to 140 0.876302 -> FLOOR_CLEARED
+[endpoints] at that readout: width 140 0.751376, width 200 0.168216, width 280 -0.793553 (recorded, never gated)
+[record] FLOOR_CLEARED -> results_seedD3/out/arm-floor_gate_endpoint-1_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 140: largest power 3.72284e-05 at period 60.00 characters, rank 196 of 200 -> NULL_NOT_CLEARED; directions at 95 percent 3 (7.5 s)
+[record] NULL_NOT_CLEARED -> results_seedD3/out/aperture-140_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 200: largest power 3.44992e-05 at period 180.00 characters, rank 120 of 200 -> NULL_NOT_CLEARED; directions at 95 percent 15 (9.2 s)
+[record] NULL_NOT_CLEARED -> results_seedD3/out/aperture-200_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 280: largest power 8.67331e-05 at period 260.00 characters, rank 1 of 200 -> NULL_CLEARED; directions at 95 percent 1 (11.7 s)
+[record] NULL_CLEARED -> results_seedD3/out/aperture-280_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] directions at 95 percent by window {140: 3, 200: 15, 280: 1} -> DIMENSION_REACHES_4
+[record] DIMENSION_REACHES_4 -> results_seedD3/out/arm-ambient_dimension_endpoint-2_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 140 token control: period 7.00 tokens, 28.56 characters, rank 201 of 200, ceiling 41 against an observed maximum of 53 (5.4 s)
+[endpoints] width 140 labelling attribution -> NO_PATTERN_TO_ATTRIBUTE
+[record] NO_PATTERN_TO_ATTRIBUTE -> results_seedD3/out/aperture-140_arm-labelling_attribution_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 200 token control: period 18.00 tokens, 74.33 characters, rank 201 of 200, ceiling 56 against an observed maximum of 68 (5.4 s)
+[endpoints] width 200 labelling attribution -> NO_PATTERN_TO_ATTRIBUTE
+[record] NO_PATTERN_TO_ATTRIBUTE -> results_seedD3/out/aperture-200_arm-labelling_attribution_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] width 280 token control: period 28.00 tokens, 116.72 characters, rank 201 of 200, ceiling 76 against an observed maximum of 92 (8.4 s)
+[endpoints] width 280 labelling attribution -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED -> results_seedD3/out/aperture-280_arm-labelling_attribution_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] bin correlations at width 280 -> RANGE_PATTERN_UNMATCHED
+[record] RANGE_PATTERN_UNMATCHED -> results_seedD3/out/aperture-280_arm-measurable_range_endpoint-5_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] bin correlations at width 140 (recorded only): [0.645989, 0.8196, 0.210583, 0.226552]
+[record] RECORDED_NO_DECISION -> results_seedD3/out/aperture-140_arm-bin_correlations_width_140_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[record] ANY_WINDOW_CLEARED -> results_seedD3/out/arm-any_window_cleared_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[record] GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED -> results_seedD3/out/arm-wavelength_gap_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[record] GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED -> results_seedD3/out/arm-ratio_gap_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[record] UNDETERMINED -> results_seedD3/out/arm-run_summary_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json
+[endpoints] summary {"setup_check": "SETUP_OK", "calibration": "CALIBRATION_OK", "endpoint_1_floor_gate": "FLOOR_CLEARED", "endpoint_2_ambient_dimension": "DIMENSION_REACHES_4", "endpoint_3_pattern_vs_shuffle": {"140": "NULL_NOT_CLEARED", "200": "NULL_NOT_CLEARED", "280": "NULL_CLEARED"}, "endpoint_3_any_window_cleared": "ANY_WINDOW_CLEARED", "endpoint_4_labelling_attribution": {"140": "NO_PATTERN_TO_ATTRIBUTE", "200": "NO_PATTERN_TO_ATTRIBUTE", "280": "CHARACTER_COUNT_DISTINGUISHED"}, "endpoint_5_bin_correlations_width_280": "RANGE_PATTERN_UNMATCHED", "recorded_only_bin_correlations_width_140": [0.645989, 0.8196, 0.210583, 0.226552], "recorded_only_ambient_dimension_by_variance_target": {"140": {"0.95": 3, "0.9": 1, "0.99": 81}, "200": {"0.95": 15, "0.9": 1, "0.99": 127}, "280": {"0.95": 1, "0.9": 1, "0.99": 129}}, "invariance_fork_wavelength_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED", "invariance_fork_ratio_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED", "chosen_readout": 5, "held_out_quality_pooled_widths_20_to_140": 0.876302, "held_out_quality_w140_only": 0.751376, "held_out_quality_w200": 0.168216, "held_out_quality_w280": -0.793553, "floor": 0.6, "ridge_strength": 1000.0, "ridge_argmax_interior_on_grid": true, "n_character_windows_cleared": 1, "n_token_windows_cleared": 0, "wavelengths_chars": {"140": 60.0, "200": 180.0, "280": 260.0}, "ambient_dimension_at_95_percent_by_aperture": {"140": 3, "200": 15, "280": 1}, "dimension_threshold": 4, "largest_gap_chars": null, "largest_ratio_gap": null, "token_ceiling_by_aperture": {"140": 41, "200": 56, "280": 76}, "token_label_observed_max_by_aperture": {"140": 53, "200": 68, "280": 92}, "generation_performed": false, "single_run_not_replicated": true, "headline": "UNDETERMINED", "floor_gate_decision": "FLOOR_CLEARED", "floor_gate_quality_pooled_widths_20_to_140": 0.876302, "floor_gate_floor": 0.6, "floor_gate_readout": 5, "this_record_voided_by_floor_gate": false}
+=== stage endpoints done in 86.9 s ===

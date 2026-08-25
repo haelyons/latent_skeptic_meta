@@ -1,0 +1,56 @@
+{
+  "cell": {
+    "arm": "ratio_gap",
+    "endpoint": 5,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED",
+  "decision_rule": "Over the probe widths that cleared their own shuffle draws, the largest gap between any two period-to-width ratios must be at most 0.1. Larger, together with a period gap above 10 characters, rules out a fixed proportion as well.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-34-21",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T13:37:07+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 24416,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "189f87148c64"
+    },
+    {
+      "bytes": 1658,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2_1.md",
+      "present": true,
+      "sha256": "50297fb3110d"
+    }
+  ],
+  "metric": "Largest gap between period-to-width ratios of any two probe widths that both cleared.",
+  "notes": "A mixed, unclassifiable result needs both this gap above 0.1 and the period gap above 10 characters. Both cutoffs are the design's own guesses and are binding. If the validity gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "at_most": 0.1
+  },
+  "values": {
+    "anchor_gate_band_high": 0.861,
+    "anchor_gate_band_low": 0.701,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality_pooled_widths_20_to_140": 0.781031,
+    "anchor_gate_readout": 6,
+    "cleared_apertures": [],
+    "largest_ratio_gap": null,
+    "ratios": {},
+    "this_record_voided_by_anchor_gate": false
+  }
+}

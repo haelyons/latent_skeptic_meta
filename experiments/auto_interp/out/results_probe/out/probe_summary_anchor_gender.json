@@ -1,0 +1,877 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "n_classes": 2,
+    "probe": "logistic_C1",
+    "readout": "last_token_reading_prompt",
+    "smoke": false,
+    "task": "anchor_gender"
+  },
+  "decision": "OUT_OF_BAND",
+  "decision_rule": "test_acc >= published - 0.12 -> IN_BAND, else OUT_OF_BAND; anchor overall IN_BAND iff all four anchor tasks IN_BAND; mean permuted-label test_acc must lie within chance +/- max(0.05, 3*se), else PERM_ANOMALY (readout instrument invalid for this task)",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:14:50+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    },
+    {
+      "bytes": 252006036,
+      "n_items": 600,
+      "path": "out/acts_anchor_gender.npz",
+      "present": true,
+      "sha256": "65b41869ee74"
+    }
+  ],
+  "metric": "heldout_test_accuracy_template_disjoint",
+  "notes": "classes=['female', 'male']",
+  "rows": [
+    {
+      "id": "anchor_gender-female-f09-i225",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i226",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i227",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i228",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i229",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i230",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i231",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i232",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i233",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i234",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i235",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i236",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i237",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i238",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i239",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i240",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i241",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i242",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i243",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i244",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i245",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i246",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i247",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i248",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f09-i249",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i250",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i251",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i252",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i253",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i254",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i255",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i256",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i257",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i258",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i259",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i260",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i261",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i262",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i263",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i264",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i265",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f10-i266",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i267",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i268",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i269",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i270",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i271",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i272",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i273",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f10-i274",
+      "label": "female",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-female-f11-i275",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i276",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i277",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i278",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i279",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i280",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i281",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i282",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i283",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i284",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i285",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i286",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i287",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i288",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i289",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i290",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i291",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i292",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i293",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i294",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i295",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i296",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i297",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i298",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-female-f11-i299",
+      "label": "female",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i225",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i226",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i227",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i228",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i229",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f09-i230",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i231",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i232",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i233",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i234",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i235",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i236",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i237",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i238",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i239",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i240",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i241",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i242",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i243",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i244",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i245",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i246",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i247",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i248",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f09-i249",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f10-i250",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i251",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i252",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i253",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i254",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i255",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i256",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i257",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i258",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i259",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i260",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i261",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i262",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i263",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i264",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i265",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i266",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i267",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i268",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i269",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i270",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i271",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i272",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i273",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f10-i274",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i275",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i276",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i277",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i278",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i279",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i280",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i281",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i282",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i283",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i284",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i285",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i286",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i287",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i288",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i289",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i290",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i291",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i292",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i293",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i294",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i295",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i296",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i297",
+      "label": "male",
+      "pred": "male"
+    },
+    {
+      "id": "anchor_gender-male-f11-i298",
+      "label": "male",
+      "pred": "female"
+    },
+    {
+      "id": "anchor_gender-male-f11-i299",
+      "label": "male",
+      "pred": "male"
+    }
+  ],
+  "threshold": {
+    "band_tol": 0.12,
+    "published": 0.94
+  },
+  "values": {
+    "best_layer": 6,
+    "chance": 0.5,
+    "n_test": 150,
+    "n_train": 350,
+    "n_val": 100,
+    "perm_test_accs": [
+      0.49333333333333335,
+      0.5266666666666666
+    ],
+    "published": 0.94,
+    "test_acc": 0.44666666666666666,
+    "val_acc_best": 0.98,
+    "val_acc_per_layer": [
+      0.5,
+      0.67,
+      0.51,
+      0.65,
+      0.7,
+      0.74,
+      0.98,
+      0.96,
+      0.95,
+      0.87,
+      0.77,
+      0.74,
+      0.75,
+      0.65,
+      0.56,
+      0.56,
+      0.69,
+      0.65,
+      0.76,
+      0.71,
+      0.73,
+      0.73,
+      0.75,
+      0.74,
+      0.75,
+      0.76,
+      0.76,
+      0.84,
+      0.91,
+      0.9,
+      0.91,
+      0.89,
+      0.91,
+      0.91,
+      0.91,
+      0.91,
+      0.91,
+      0.9,
+      0.91,
+      0.9,
+      0.9
+    ]
+  }
+}

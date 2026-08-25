@@ -1,0 +1,1296 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "n_classes": 16,
+    "probe": "logistic_C1",
+    "readout": "last_token_reading_prompt",
+    "smoke": false,
+    "task": "poscontrol_topic"
+  },
+  "decision": "RECOVERED",
+  "decision_rule": "chance = 1/n_classes; se = sqrt(chance*(1-chance)/n_test); test_acc >= chance + max(0.10, 3*se) -> RECOVERED; test_acc <= chance + 2*se -> AT_CHANCE; else INDETERMINATE; positive control: RECOVERED validates the extraction+probe readout instrument; mean permuted-label test_acc must lie within chance +/- max(0.05, 3*se), else PERM_ANOMALY (readout instrument invalid for this task)",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:15:33+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    }
+  ],
+  "metric": "heldout_test_accuracy_template_disjoint",
+  "notes": "topic is textually present by construction; instrument validation",
+  "rows": [
+    {
+      "id": "anchor_age-adolescent-f09-i189",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i190",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i191",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i192",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i193",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i194",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i195",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i196",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i197",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i198",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i199",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i200",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i201",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i202",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i203",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i204",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i205",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i206",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i207",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i208",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-adolescent-f09-i209",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i210",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i211",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i212",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i213",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i214",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i215",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i216",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i217",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i218",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i219",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i220",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i221",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i222",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i223",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i224",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i225",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i226",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i227",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i228",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adolescent-f10-i229",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i230",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i231",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i232",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i233",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i234",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i235",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i236",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i237",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i238",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i239",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i240",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i241",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i242",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i243",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i244",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i245",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i246",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i247",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i248",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adolescent-f11-i249",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-adult-f09-i189",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-adult-f09-i190",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adult-f09-i191",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-adult-f09-i192",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adult-f09-i193",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f09-i194",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-adult-f09-i195",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-adult-f09-i196",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-adult-f09-i197",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-adult-f09-i198",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-adult-f09-i199",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-adult-f09-i200",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-adult-f09-i201",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-adult-f09-i202",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adult-f09-i203",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f09-i204",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f09-i205",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-adult-f09-i206",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-adult-f09-i207",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f09-i208",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adult-f09-i209",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-adult-f10-i210",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-adult-f10-i211",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-adult-f10-i212",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-adult-f10-i213",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adult-f10-i214",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-adult-f10-i215",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f10-i216",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-adult-f10-i217",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-adult-f10-i218",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-adult-f10-i219",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-adult-f10-i220",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-adult-f10-i221",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-adult-f10-i222",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-adult-f10-i223",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adult-f10-i224",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-adult-f10-i225",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adult-f10-i226",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-adult-f10-i227",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f10-i228",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adult-f10-i229",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f11-i230",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-adult-f11-i231",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f11-i232",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-adult-f11-i233",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-adult-f11-i234",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-adult-f11-i235",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-adult-f11-i236",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-adult-f11-i237",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f11-i238",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adult-f11-i239",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-adult-f11-i240",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-adult-f11-i241",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-adult-f11-i242",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adult-f11-i243",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-adult-f11-i244",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-adult-f11-i245",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-adult-f11-i246",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-adult-f11-i247",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-adult-f11-i248",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-adult-f11-i249",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-child-f09-i189",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-child-f09-i190",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-child-f09-i191",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-child-f09-i192",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-child-f09-i193",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-child-f09-i194",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-child-f09-i195",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-child-f09-i196",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-child-f09-i197",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-child-f09-i198",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-child-f09-i199",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-child-f09-i200",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-child-f09-i201",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-child-f09-i202",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-child-f09-i203",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-child-f09-i204",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-child-f09-i205",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-child-f09-i206",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-child-f09-i207",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-child-f09-i208",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-child-f09-i209",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-child-f10-i210",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-child-f10-i211",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-child-f10-i212",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-child-f10-i213",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-child-f10-i214",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-child-f10-i215",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-child-f10-i216",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-child-f10-i217",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-child-f10-i218",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-child-f10-i219",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-child-f10-i220",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-child-f10-i221",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-child-f10-i222",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-child-f10-i223",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-child-f10-i224",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-child-f10-i225",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-child-f10-i226",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-child-f10-i227",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-child-f10-i228",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-child-f10-i229",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-child-f11-i230",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-child-f11-i231",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-child-f11-i232",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-child-f11-i233",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-child-f11-i234",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-child-f11-i235",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-child-f11-i236",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-child-f11-i237",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-child-f11-i238",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-child-f11-i239",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-child-f11-i240",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-child-f11-i241",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-child-f11-i242",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-child-f11-i243",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-child-f11-i244",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-child-f11-i245",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-child-f11-i246",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-child-f11-i247",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-child-f11-i248",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-child-f11-i249",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-older-f09-i189",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-older-f09-i190",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-older-f09-i191",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-older-f09-i192",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-older-f09-i193",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-older-f09-i194",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-older-f09-i195",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-older-f09-i196",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-older-f09-i197",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-older-f09-i198",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-older-f09-i199",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-older-f09-i200",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-older-f09-i201",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-older-f09-i202",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-older-f09-i203",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-older-f09-i204",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-older-f09-i205",
+      "label": "gardening",
+      "pred": "gardening"
+    },
+    {
+      "id": "anchor_age-older-f09-i206",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-older-f09-i207",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-older-f09-i208",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-older-f09-i209",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-older-f10-i210",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-older-f10-i211",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-older-f10-i212",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-older-f10-i213",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-older-f10-i214",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-older-f10-i215",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-older-f10-i216",
+      "label": "trip planning",
+      "pred": "trip planning"
+    },
+    {
+      "id": "anchor_age-older-f10-i217",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-older-f10-i218",
+      "label": "bike repair",
+      "pred": "bike repair"
+    },
+    {
+      "id": "anchor_age-older-f10-i219",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-older-f10-i220",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-older-f10-i221",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-older-f10-i222",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-older-f10-i223",
+      "label": "phone maintenance",
+      "pred": "phone maintenance"
+    },
+    {
+      "id": "anchor_age-older-f10-i224",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-older-f10-i225",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-older-f10-i226",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-older-f10-i227",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-older-f10-i228",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-older-f10-i229",
+      "label": "guitar",
+      "pred": "guitar"
+    },
+    {
+      "id": "anchor_age-older-f11-i230",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-older-f11-i231",
+      "label": "photography",
+      "pred": "photography"
+    },
+    {
+      "id": "anchor_age-older-f11-i232",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-older-f11-i233",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-older-f11-i234",
+      "label": "knitting",
+      "pred": "knitting"
+    },
+    {
+      "id": "anchor_age-older-f11-i235",
+      "label": "running",
+      "pred": "running"
+    },
+    {
+      "id": "anchor_age-older-f11-i236",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-older-f11-i237",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-older-f11-i238",
+      "label": "houseplant care",
+      "pred": "houseplant care"
+    },
+    {
+      "id": "anchor_age-older-f11-i239",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    },
+    {
+      "id": "anchor_age-older-f11-i240",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-older-f11-i241",
+      "label": "writing",
+      "pred": "writing"
+    },
+    {
+      "id": "anchor_age-older-f11-i242",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-older-f11-i243",
+      "label": "cooking",
+      "pred": "cooking"
+    },
+    {
+      "id": "anchor_age-older-f11-i244",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-older-f11-i245",
+      "label": "board games",
+      "pred": "board games"
+    },
+    {
+      "id": "anchor_age-older-f11-i246",
+      "label": "bread baking",
+      "pred": "bread baking"
+    },
+    {
+      "id": "anchor_age-older-f11-i247",
+      "label": "coffee brewing",
+      "pred": "coffee brewing"
+    },
+    {
+      "id": "anchor_age-older-f11-i248",
+      "label": "chess",
+      "pred": "chess"
+    },
+    {
+      "id": "anchor_age-older-f11-i249",
+      "label": "spreadsheets",
+      "pred": "spreadsheets"
+    }
+  ],
+  "threshold": {
+    "chance": 0.0625,
+    "margin": "max(0.10, 3*se)"
+  },
+  "values": {
+    "best_layer": 6,
+    "chance": 0.0625,
+    "n_test": 244,
+    "n_train": 588,
+    "n_val": 168,
+    "perm_test_accs": [
+      0.11885245901639344,
+      0.045081967213114756
+    ],
+    "test_acc": 1.0,
+    "val_acc_best": 1.0
+  }
+}

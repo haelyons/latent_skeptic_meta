@@ -1,0 +1,30 @@
+{
+  "runner": "onbox_seedD.sh",
+  "model": "EleutherAI/pythia-410m-deduped",
+  "revision": "step143000",
+  "generation_performed": false,
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedD": "0",
+    "packages": "0",
+    "seedD_extract": "0",
+    "seedD_calibrate": "0",
+    "seedD_endpoints": "0"
+  },
+  "any_failed": false,
+  "records_present": [
+    "arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json",
+    "arm-count_curve_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-fitted_probe_crosscheck_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "arm-integrity_check_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-search_band_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json",
+    "arm-token_position_control_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "calibration.json"
+  ],
+  "instance_id": "9e34393aa39941069506f9a2880c7b95",
+  "git_commit": "unknown",
+  "note": "A further run of this script on the same box is a rerun of the same instrument, not a replication."
+}

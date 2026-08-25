@@ -1,0 +1,143 @@
+{
+ "seed": "This is the closing rung of a seed chain, resolving seed D3's UNDETERMINED headline with one committed statistic change and fresh text. Contamination is declared: the author has seen seed D3's outputs and an exploratory re-analysis (records/EXPLORATORY_k2_rerank_seedD3.md). The change is derivable from first principles and is superseded-proof: after a degree-2 polynomial detrend, the one-cycle Fourier bin measures residual trend curvature, not repetition - a single smooth drop across the window lands in it, and cannot be a \"repeating pattern\" under any reading of the words. Seed D3's only null-clearing result was exactly that shape (cycles 1, profile falling 0.36 to -0.16, correlation with position -0.914, re-derived from the committed record by an independent reader in records/seedD3_post_elicit_qtriage.json).\n\nChain state, all committed: the character-count curve replicates strongly (Pythia-410m: 0.780903 and 0.781031 on disjoint texts, layer 6; Pythia-1.4b: 0.876302, layer 5, pooled over widths 20-140); its fine resolution ends near the training corpus's ~70-character hard-wrap pressure (bin correlations 0.65, 0.82, then 0.21, 0.23 across 1-140 at 1.4b); no repeating pattern with two or more cycles has cleared a 200-draw shuffle null at any window (140, 200, 280) on either model (exploratory ranks 33 to 201 of 200); the original study's ripple (Gurnee et al., Transformer Circuits, Oct 2025, Claude 3.5 Haiku, ambient dimension about 6) has not transferred.\n\nQuestion: at the final pretraining checkpoint of EleutherAI/pythia-1.4b-deduped (revision step143000, base model, no interventions - one cell; everything else out of scope), on text never used by any prior run, does any probe window (140, 200, 280 characters) show a REPEATING pattern - maximum power over whole-cycle periods with AT LEAST TWO cycles, period 4 or more in the labelling's own units - separable from its 200-draw within-document label-shuffle null (rank 10 or better of 200)? Two or more windows clearing enters the invariance fork of seed D2.1; exactly one is UNDETERMINED; none is the chain's committed close: NO_REPEATING_PATTERN_UP_TO_280, on top of the same reading already established at 410m.\n\nSubstrate and instrument, unchanged from seed D3 (records/seedD3_design_diff_triage.json and records/GATE_COMMIT_seedD3.md bind everything not named here): 24 layers and hidden 2048 MEMORY with config-mismatch halt; floor gate at pooled-20-140 held-out R-squared of at least 0.60 at some layer, CURVE_TOO_WEAK below it voids everything; ridge grid and five-fold train-only cross-validation; ripple legs at the floor-gate layer; profile length = label count minus 20; degree-2 polynomial detrend; 200 draws per window per labelling, seeds streamed from base 0, full per-draw spectra and observed per-label mean vectors saved; every record carries the gate decision and a voided flag; ambient dimension recorded at 90, 95, 99 percent, never gated here (seed D3 measured 1/15/127 at window 200 across those conventions - the count is a property of the cutoff, so this rung does not gate on it); token-position control with the NO_PATTERN_TO_ATTRIBUTE branch and the committed 40-position token ceiling; per-bin Pearson checks at width 280 (gating readings unchanged) and width 140 (recorded only).\n\nThe one committed change: the pattern statistic's period search runs over cycle counts of TWO OR MORE only. The one-cycle bin is recorded in every saved spectrum (the spectra always carried it) but can never be the statistic. This applies identically to the observed value and to every shuffle draw, in both labellings.\n\nStimuli: stimulus_linewrap_v3.json (sha256 05db25f7a97dd9c3963c7eeb3b8d9738c707a2929a18b2503e56b1f43003aea1), 48 documents of about 3,600 characters at the same nine widths, documents 0-35 train and 36-47 test, text disjoint by construction from BOTH prior stimulus files (the generator replays their packing and starts after them; construction inlined in records/GATE_COMMIT_seedD3_1.md). Load exactly; halt if absent.\n\nPre-registered readings: floor fails - CURVE_TOO_WEAK, rung void. No window clears - NO_REPEATING_PATTERN_UP_TO_280: the chain closes with the ripple account not transferring to Pythia at 410m or 1.4b, and the parent program's checkpoint sweep has no object to sweep at these scales. Exactly one window clears - UNDETERMINED, and the chain closes with that window named as the single unresolved cell. Two or more clear - the invariance fork, and INVARIANT reopens the sweep. The floor-gate quality is also this rung's replication check on seed D3's 0.876302, recorded against a band of 0.796 to 0.956 (plus or minus 0.08, GUESS), never gated - the gate stays the 0.60 floor.",
+ "design": {
+  "hypothesis": "The committed change bars the one-cycle bin from ever counting as a repeating pattern, in any reading. We test whether any probe window, 140, 200, or 280 characters, shows a real repeating pattern. The pattern must beat its own shuffle null. The test runs on fresh text, at Pythia-1.4b-deduped's final pretraining checkpoint. This closes the prior link's undetermined result with one committed statistic change. Zero windows clearing closes the chain as a clean null; exactly one leaves it unresolved; two or more reopens the checkpoint sweep.",
+  "models": [
+   "Pythia-1.4b-deduped, final pretraining checkpoint (revision step143000), base weights only, no interventions, one cell."
+  ],
+  "data": "Stimulus file stimulus_linewrap_v3.json, sha256 05db25f7a97dd9c3963c7eeb3b8d9738c707a2929a18b2503e56b1f43003aea1. It holds 48 documents of about 3,600 characters, each rendered at nine character widths. Documents 0 to 35 are for fitting; documents 36 to 47 are held out for testing. Its text is disjoint by construction from both earlier stimulus files used in this chain. Load the file exactly as named; halt if it is absent.",
+  "arms": [
+   "Observed run, character-count labelling, window 140 characters, on the 12 held-out test documents across nine widths.",
+   "Observed run, character-count labelling, window 200 characters, on the same held-out documents.",
+   "Observed run, character-count labelling, window 280 characters, on the same held-out documents.",
+   "Shuffle-null control, character-count labelling, window 140 characters: 200 within-document label-shuffle draws, seeds from base 0.",
+   "Shuffle-null control, character-count labelling, window 200 characters: 200 draws, same seeding.",
+   "Shuffle-null control, character-count labelling, window 280 characters: 200 draws, same seeding.",
+   "Observed run, token-position labelling (a second, control labelling), capped at 40 token positions, with a fallback reading if the curve is flat.",
+   "Shuffle-null control, token-position labelling: 200 within-document label-shuffle draws, same capped positions.",
+   "Floor-gate check: held-out R-squared of the character-count curve, pooled over widths 20 to 140, tested at each of 24 layers.",
+   "Ripple replication leg: look for the original study's roughly six-dimensional periodic signal, at the floor-gate layer only.",
+   "Instrument check: per-character correlation at width 280, feeding the same gate decision as before.",
+   "Instrument check: per-character correlation at width 140, recorded only, does not affect any gate."
+  ],
+  "endpoints": [
+   {
+    "metric": "Held-out R-squared of the character-count probe, best layer of 24, pooled over widths 20 to 140 characters",
+    "threshold": "at least 0.60",
+    "refuting_outcome": "Best-layer R-squared stays below 0.60. The floor gate fails, voiding the rung before any pattern test runs."
+   },
+   {
+    "metric": "Rank of the observed repeating-pattern score among 200 shuffle draws, window 140 characters, character-count labelling",
+    "threshold": "rank 10 or better, out of 200",
+    "refuting_outcome": "Window 140 clears on its own, naming a repeating pattern absent from the smaller model."
+   },
+   {
+    "metric": "Rank of the observed repeating-pattern score among 200 shuffle draws, window 200 characters, character-count labelling",
+    "threshold": "rank 10 or better, out of 200",
+    "refuting_outcome": "Window 200 clears on its own, naming a repeating pattern absent from the smaller model."
+   },
+   {
+    "metric": "Rank of the observed repeating-pattern score among 200 shuffle draws, window 280 characters, character-count labelling",
+    "threshold": "rank 10 or better, out of 200",
+    "refuting_outcome": "Window 280 clears on its own, naming a repeating pattern absent from the smaller model."
+   },
+   {
+    "metric": "Count of the three windows, 140, 200, 280 characters, each clearing rank 10 or better",
+    "threshold": "two or more windows clear",
+    "refuting_outcome": "Two or more windows clear. This reopens the training-checkpoint sweep, against the predicted clean null."
+   },
+   {
+    "metric": "Count of the three windows each clearing rank 10 or better",
+    "threshold": "exactly one window clears",
+    "refuting_outcome": "Exactly one window clears. The chain closes as unresolved on that single cell, not settled either way."
+   },
+   {
+    "metric": "Floor-gate layer's held-out R-squared, compared against the prior checkpoint's 0.876302 on the same architecture",
+    "threshold": "band of 0.796 to 0.956 (a margin already tagged GUESS by the chain)",
+    "refuting_outcome": "R-squared lands outside this band even though it clears 0.60. The curve's strength did not repeat in size."
+   }
+  ],
+  "sampling": "No text generation happens here; hidden states come from one deterministic forward pass per document per width. Decoding settings such as temperature do not apply. Shuffle-null seeds stream from base 0, exactly as stated for this chain. Each of six cells, three windows times two labellings, draws 200 within-document label shuffles. That is 1,200 null draws total, plus six observed statistics, one per cell. Fitting uses the 36 training documents, five-fold cross-validation, across nine widths and 24 layers. Testing uses the 12 held-out documents only, never touched during fitting.",
+  "budget_usd": 15,
+  "does_not_test": [
+   "Does not test other training checkpoints; the checkpoint sweep across training stays out of scope unless two or more windows clear here.",
+   "Does not test other model sizes at this rung; the smaller model was already closed earlier in this same chain.",
+   "Does not test widths outside 140, 200, 280 characters as pattern windows; other widths only feed the floor-gate curve fit.",
+   "Does not test whether a real single smooth trend exists; the one-cycle bin is barred from ever counting as a repeating pattern.",
+   "Does not test fine-tuned, instruction-tuned, or steered models; only the plain base checkpoint, no interventions, is loaded.",
+   "Does not test causal structure; a fitted linear probe on frozen hidden states is not an intervention on the model.",
+   "Does not test text unlike the stimulus; generalization to non-English text, code, or non-line-wrapped prose is unknown.",
+   "Does not gate on ambient dimension counts at 90, 95, 99 percent cutoffs; recorded for reference only, as before.",
+   "GUESS: 12 to 15 dollars assumes a small model and cheap ridge and spectral fits on one rented GPU. True cost could run 5 to 50 dollars with setup and reruns.",
+   "GUESS: token-position control is assumed to run at all three windows. The question does not say whether it covers one window or three.",
+   "MEMORY: 24 layers and hidden size 2048 are carried from the question's own tag, checked by a halt if the loaded model's config disagrees.",
+   "GUESS: exact ridge penalty grid and fold boundaries are not stated; left to the existing pipeline unchanged from the prior rung."
+  ],
+  "layers_strengths": "24 layers, hidden size 2048, as tagged by the question itself (MEMORY), with a halt if the loaded model's config disagrees. The floor-gate layer is whichever of the 24 reaches 0.60 or better; it is not fixed in advance. Ripple replication runs only at that one layer, not swept across all 24. No steering or patching strength applies; this is a passive linear read-out, not an intervention."
+ },
+ "diff": {
+  "departures": [
+   {
+    "what": "The question defines a real repeating pattern as needing both two or more repeats and each repeat spanning at least four units. The plan's own summary of the one change keeps only the two-repeats rule and never mentions the four-unit minimum anywhere in its test description.",
+    "question": "Should a pattern also need each repeat to span at least four units, or is requiring two or more repeats enough on its own?"
+   },
+   {
+    "what": "The question never says whether the position-based check, which uses up to 40 text-chunks called tokens, runs once, or once per character-length window. The plan guesses it runs for all three windows, then bakes that guess into a total of 1,200 comparison draws.",
+    "question": "Should the position-based check run once overall, or three times, once for each character-length window?"
+   },
+   {
+    "what": "The question says comparing this run's curve strength to the earlier 0.876302 result never decides pass or fail; only the 0.60 cutoff does. The plan still lists that comparison with pass/fail-style wording, calling a result outside the range something that refutes the finding.",
+    "question": "If the new curve strength falls outside 0.796 to 0.956, does that change the conclusion, or is it just recorded for reference?"
+   },
+   {
+    "what": "The question gives no cost estimate anywhere in it. The plan adds one, saying the test should cost 12 to 15 dollars, though it might run 5 to 50 dollars. A separate summary line in the same plan gives a flat 15 dollars instead.",
+    "question": "Do you want a cost estimate in this plan at all, and if so, which figure is right?"
+   },
+   {
+    "what": "The question says two or more windows showing a pattern triggers a separate follow-up check before the wider check across training stages reopens. The plan skips that follow-up step and says two or more windows clearing reopens the wider check right away.",
+    "question": "When two or more windows show a pattern, is there a separate follow-up check first, before the wider check reopens?"
+   }
+  ]
+ },
+ "triage": {
+  "claims": [
+   {
+    "id": "design-core",
+    "grounding": {
+     "grounding": "unauditable",
+     "observed": "No D3.1 outputs exist; only the PRIOR rung (seedD3, stimulus_linewrap_v2.json sha b0aa4255...) is on disk, where I re-derived best-readout pooled R^2 = 0.876302 at readout 5 (max over 25 readouts) and character-count ranks 140:196, 200:120, 280:1 -> exactly 1 window cleared (UNDETERMINED). The claim's v3 rung has zero re-derivable numbers.",
+     "note": "stimulus_linewrap_v3.json exists with the cited sha256 (05db25f7...) and records/GATE_COMMIT_seedD3_1.md is filed, but no run_seedD3_1.py, no onbox script and no results_seedD3_1/ directory: the closing rung was never executed, so its floor gate, three shuffle ranks and window count are unauditable; the 0.876302 anchor it compares against does reproduce from results_seedD3/out/arm-floor_gate_endpoint-1_*.json.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/stimulus_linewrap_v3.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/records/GATE_COMMIT_seedD3_1.md",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/arm-floor_gate_endpoint-1_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/arm-any_window_cleared_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/arm-run_summary_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD3/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "decidability by construction: is any endpoint outcome forced, unable to occur, or deciding a different question than the seed asks",
+      "status": "EXPLAINS",
+      "crux": "The endpoint list exhaustively partitions the outcome space of \"how many of the 3 windows clear\" (0, 1, 2+) plus a separate gate-fail branch into three/four pre-labeled narrative slots (voided rung / clean null / unresolved / reopens sweep) with no outcome left outside a pre-assigned interpretation -- endpoints 5 and 6 are literally two halves of one count variable, each other's stated 'refuting_outcome.' Since every possible result is already narratively accounted for before the run, the design cannot fail to produce a self-consistent closure story regardless of the data, which is the framing pattern the H2 gate calls EXPLAINS rather than a genuine falsifiable test."
+     },
+     {
+      "confound": "coordinates and scale: could layer/window/unit choices force every cell to degenerate or null regardless of the hypothesis",
+      "status": "NEEDS_RUN",
+      "crux": "The evidence given is only the committed protocol (which layers/windows/units will be swept and what gate values would refute), not any actual measured R\u00b2 or shuffle-rank number from running it. The design does sweep all 24 layers for the floor gate (mitigating a fixed-bad-layer confound) and tests three separate windows (140/200/280 chars) rather than one, which is a reasonable coordinate/scale choice \u2014 but whether that choice actually lands in a non-degenerate regime (R\u00b2 clearing 0.60, shuffle ranks separating from null) is an empirical fact not yet in evidence."
+     }
+    ],
+    "run_queue": [
+     "fit the floor-gate character-count ridge probe across all 24 layers x widths 20-140 on stimulus_linewrap_v3.json held-out docs 36-47 for pythia-1.4b-deduped@step143000, and report best-layer held-out R\u00b2 plus the three window (140/200/280) shuffle-null ranks"
+    ],
+    "author_queue": [],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute"
+}

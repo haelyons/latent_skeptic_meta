@@ -1,0 +1,148 @@
+{
+  "cell": {
+    "aperture": 280,
+    "arm": "measurable_range",
+    "endpoint": 6,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "RANGE_PATTERN_UNMATCHED",
+  "decision_rule": "At width 280, held-out fit quality is measured inside each bin of 35 label values, against that bin's own spread. Any bin starting above label 150 that exceeds 0.3 means wide counts ARE measurable. Otherwise, if all four bins ending at or below 140 exceed 0.5 and all three bins starting above 150 fall below 0.3, wide counts are NOT represented. Any other pattern is RANGE_PATTERN_UNMATCHED. The bin from 141 to 175 is recorded and excluded.",
+  "env": {
+    "git_rev": null,
+    "host": "161-153-8-80",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T12:02:59+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 23625,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_design_diff_triage.json",
+      "present": true,
+      "sha256": "bca0ff7b59bf"
+    },
+    {
+      "bytes": 3015,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2.md",
+      "present": true,
+      "sha256": "a617ec25ffde"
+    },
+    {
+      "bytes": 715932,
+      "n_items": 10353,
+      "path": "results_seedD2/work/labels_a280.npz",
+      "present": true,
+      "sha256": "333b69df6593"
+    }
+  ],
+  "metric": "Held-out fit quality inside each bin of 35 label values at width 280, against that bin's own spread.",
+  "notes": "The bin from 141 to 175 holds labels on both sides of 150, so the gate file's answer 4 records it and leaves it out of this decision. The decision uses the four bins ending at or below 140 against the three bins starting above 150. Training pressure in this model's own corpus sits near 70 to 72 characters per line, which is context for a narrow measurable range, not a prediction. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "rows": [
+    {
+      "bin_high": 35,
+      "bin_low": 1,
+      "held_out_quality": -24.343564,
+      "n_positions": 1309,
+      "own_spread": 132558.521,
+      "role": "low",
+      "sum_squared_error": 3359505.3127
+    },
+    {
+      "bin_high": 70,
+      "bin_low": 36,
+      "held_out_quality": -35.165575,
+      "n_positions": 1272,
+      "own_spread": 129114.2445,
+      "role": "low",
+      "sum_squared_error": 4669490.9381
+    },
+    {
+      "bin_high": 105,
+      "bin_low": 71,
+      "held_out_quality": -18.826312,
+      "n_positions": 1301,
+      "own_spread": 129997.0038,
+      "role": "low",
+      "sum_squared_error": 2577361.2153
+    },
+    {
+      "bin_high": 140,
+      "bin_low": 106,
+      "held_out_quality": -3.827423,
+      "n_positions": 1295,
+      "own_spread": 133037.5876,
+      "role": "low",
+      "sum_squared_error": 642228.6626
+    },
+    {
+      "bin_high": 175,
+      "bin_low": 141,
+      "held_out_quality": -10.732409,
+      "n_positions": 1281,
+      "own_spread": 129541.4254,
+      "role": "straddles",
+      "sum_squared_error": 1519833.0378
+    },
+    {
+      "bin_high": 210,
+      "bin_low": 176,
+      "held_out_quality": -39.367425,
+      "n_positions": 1286,
+      "own_spread": 132894.2932,
+      "role": "high",
+      "sum_squared_error": 5364600.394
+    },
+    {
+      "bin_high": 245,
+      "bin_low": 211,
+      "held_out_quality": -90.250193,
+      "n_positions": 1270,
+      "own_spread": 131320.1606,
+      "role": "high",
+      "sum_squared_error": 11982989.9969
+    },
+    {
+      "bin_high": 280,
+      "bin_low": 246,
+      "held_out_quality": -146.593113,
+      "n_positions": 1315,
+      "own_spread": 141222.8639,
+      "role": "high",
+      "sum_squared_error": 20843522.1282
+    }
+  ],
+  "threshold": {
+    "high_bins_below": 0.3,
+    "low_bins_exceed": 0.5
+  },
+  "values": {
+    "bin_width": 35,
+    "excluded_bin": "141 to 175",
+    "high_bin_qualities": [
+      -39.367425,
+      -90.250193,
+      -146.593113
+    ],
+    "high_ceiling": 0.3,
+    "low_bin_qualities": [
+      -24.343564,
+      -35.165575,
+      -18.826312,
+      -3.827423
+    ],
+    "low_floor": 0.5,
+    "n_bins": 8,
+    "readout": 5,
+    "ridge_strength": 1000.0
+  }
+}

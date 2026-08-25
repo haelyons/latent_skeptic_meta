@@ -1,0 +1,2 @@
+state=FAILED
+exit_codes=selftest_provenance=0 selftest_run_seedD4=0 packages=0 disk=0 memory=0 seedD4_sweep=3 seedD4_endpoints=skipped 

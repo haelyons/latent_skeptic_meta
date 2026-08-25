@@ -1,0 +1,4 @@
+launch_utc=2026-08-21T16:08:36Z instance=56d3d3dfe2d646d49d5957cee46f37fd type=gpu_1x_a100_sxm4 price_usd_hr=1.99
+terminate_utc=2026-08-21T16:28:50Z instance=56d3d3dfe2d646d49d5957cee46f37fd api_confirmed=see_above
+teardown_confirmed_utc=2026-08-21T16:31:53Z instances_remaining=0 est_cost_usd=1.1 (0.55h x 1.99)
+correction: billed window 16:08:36-16:28:50 = 0.34h x 1.99 = ~0.67 USD (well under 15 USD cap)

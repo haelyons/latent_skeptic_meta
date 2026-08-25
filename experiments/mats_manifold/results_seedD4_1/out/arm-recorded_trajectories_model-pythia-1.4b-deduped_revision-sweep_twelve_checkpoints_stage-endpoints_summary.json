@@ -1,0 +1,382 @@
+{
+  "cell": {
+    "arm": "recorded_trajectories",
+    "model": "pythia-1.4b-deduped",
+    "revision": "sweep_twelve_checkpoints",
+    "stage": "endpoints"
+  },
+  "decision": "RECORDED_NO_DECISION",
+  "decision_rule": "Recorded only, with no threshold and no pass-or-fail call: the best readout's trajectory across the twelve checkpoints and the counter's localization moment, the direction counts at 90, 95 and 99 percent at each one, the selected ridge strength at each one, how flat quality is across readouts, the per-width qualities, whether the boundary already stood at the formation step, and the stability ranges two alternative readings of the design text would have used. The committed design gates on none of them.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T22:33:38+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    },
+    {
+      "bytes": 16192,
+      "n_items": 12,
+      "path": "results_seedD4_1/out/sweep_table.json",
+      "present": true,
+      "sha256": "ebe5074c109a"
+    }
+  ],
+  "metric": "The best readout and its localization moment, the ridge strength, the direction counts at three cutoffs, the per-width qualities, and where the boundary already stood, checkpoint by checkpoint.",
+  "notes": "The counting convention for directions is the smallest number reaching a given share of the spread, which is every prior run of this chain's convention. All three cutoffs are recorded and none is gated: the count is a property of the cutoff. The localization moment is the first checkpoint whose best readout sits off both ends of the readout range and beats the median readout by at least 0.1; on the untrained sibling neither held, which is what a flat readout profile looks like. The selected best readout and the selected ridge strength are logged beside the pooled quality and the boundary ratio, and a selection sitting at an end of its search range is flagged. The ends are readout 0, readout 24, strength 1 and strength 100000. The previous rung's committed gate record adopts this control as binding and this rung's design carries it forward. Both state in advance that the initialization checkpoint is expected to trip it, because a random model has no meaningful best readout: on the smaller sibling it selected readout 24 at strength 10000. There the flag is confirmation, not alarm. This quantity is recorded only. It carries no threshold and decides nothing, as the committed design states. If either integrity gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {},
+  "values": {
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": 0.514227,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": 0.876302,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "baseline_decision": "BASELINE_RECORDED",
+    "baseline_expected_range": [
+      0.2,
+      0.45
+    ],
+    "baseline_inside_expected_range": true,
+    "baseline_quality": 0.341495,
+    "baseline_void_floor": 0.6134113999999999,
+    "best_layer_by_step": {
+      "0": 24,
+      "1000": 23,
+      "128000": 5,
+      "143000": 5,
+      "16000": 6,
+      "2000": 23,
+      "32000": 6,
+      "4000": 22,
+      "512": 23,
+      "64000": 5,
+      "8000": 22,
+      "96000": 5
+    },
+    "boundary_ratio_at_final": 0.514227,
+    "boundary_ratio_at_formation_step": 0.259086,
+    "boundary_ratio_at_formed_step": 0.259086,
+    "coordinate_flags_by_step": {
+      "0": [
+        "best_layer_at_readout_24"
+      ],
+      "1000": [],
+      "128000": [],
+      "143000": [],
+      "16000": [],
+      "2000": [],
+      "32000": [],
+      "4000": [],
+      "512": [],
+      "64000": [],
+      "8000": [
+        "ridge_strength_at_100000"
+      ],
+      "96000": []
+    },
+    "degenerate_coordinates_by_step": {
+      "0": true,
+      "1000": false,
+      "128000": false,
+      "143000": false,
+      "16000": false,
+      "2000": false,
+      "32000": false,
+      "4000": false,
+      "512": false,
+      "64000": false,
+      "8000": true,
+      "96000": false
+    },
+    "dimensions_by_step": {
+      "0": {
+        "0.9": 77,
+        "0.95": 100,
+        "0.99": 128
+      },
+      "1000": {
+        "0.9": 22,
+        "0.95": 51,
+        "0.99": 106
+      },
+      "128000": {
+        "0.9": 1,
+        "0.95": 3,
+        "0.99": 80
+      },
+      "143000": {
+        "0.9": 1,
+        "0.95": 3,
+        "0.99": 81
+      },
+      "16000": {
+        "0.9": 14,
+        "0.95": 52,
+        "0.99": 113
+      },
+      "2000": {
+        "0.9": 55,
+        "0.95": 85,
+        "0.99": 124
+      },
+      "32000": {
+        "0.9": 2,
+        "0.95": 21,
+        "0.99": 98
+      },
+      "4000": {
+        "0.9": 76,
+        "0.95": 101,
+        "0.99": 129
+      },
+      "512": {
+        "0.9": 19,
+        "0.95": 37,
+        "0.99": 89
+      },
+      "64000": {
+        "0.9": 2,
+        "0.95": 12,
+        "0.99": 93
+      },
+      "8000": {
+        "0.9": 76,
+        "0.95": 101,
+        "0.99": 130
+      },
+      "96000": {
+        "0.9": 1,
+        "0.95": 6,
+        "0.99": 87
+      }
+    },
+    "layer_median_quality_by_step": {
+      "0": 0.338748,
+      "1000": 0.528111,
+      "128000": 0.607343,
+      "143000": 0.616793,
+      "16000": 0.676171,
+      "2000": 0.540165,
+      "32000": 0.702146,
+      "4000": 0.559874,
+      "512": 0.601918,
+      "64000": 0.654834,
+      "8000": 0.582333,
+      "96000": 0.629545
+    },
+    "layer_quality_spread_by_step": {
+      "0": 0.334866,
+      "1000": 0.825355,
+      "128000": 0.807519,
+      "143000": 0.810422,
+      "16000": 0.742488,
+      "2000": 0.756482,
+      "32000": 0.802991,
+      "4000": 0.703506,
+      "512": 0.781277,
+      "64000": 0.840245,
+      "8000": 0.723335,
+      "96000": 0.848302
+    },
+    "localization_by_step": {
+      "0": "NOT_YET_LOCALIZED",
+      "1000": "LOCALIZED_INTERIOR_PEAK",
+      "128000": "LOCALIZED_INTERIOR_PEAK",
+      "143000": "LOCALIZED_INTERIOR_PEAK",
+      "16000": "NOT_YET_LOCALIZED",
+      "2000": "LOCALIZED_INTERIOR_PEAK",
+      "32000": "LOCALIZED_INTERIOR_PEAK",
+      "4000": "LOCALIZED_INTERIOR_PEAK",
+      "512": "LOCALIZED_INTERIOR_PEAK",
+      "64000": "LOCALIZED_INTERIOR_PEAK",
+      "8000": "LOCALIZED_INTERIOR_PEAK",
+      "96000": "LOCALIZED_INTERIOR_PEAK"
+    },
+    "localization_margin": 0.1,
+    "localization_revision_recorded_only": "step512",
+    "localization_step_recorded_only": 512,
+    "peak_over_layer_median_by_step": {
+      "0": 0.002747,
+      "1000": 0.323253,
+      "128000": 0.266947,
+      "143000": 0.259509,
+      "16000": 0.088156,
+      "2000": 0.225415,
+      "32000": 0.127731,
+      "4000": 0.155552,
+      "512": 0.225161,
+      "64000": 0.21259,
+      "8000": 0.143058,
+      "96000": 0.242555
+    },
+    "prior_run_readout_same_text": 5,
+    "quality_by_width_at_final": {
+      "100": 0.875876,
+      "120": 0.841972,
+      "140": 0.751376,
+      "20": -0.887613,
+      "40": 0.64691,
+      "60": 0.843111,
+      "80": 0.883949
+    },
+    "quality_by_width_by_step": {
+      "0": {
+        "100": 0.092531,
+        "120": 0.076931,
+        "140": -0.007607,
+        "20": -2.421041,
+        "40": -1.058358,
+        "60": -0.479982,
+        "80": -0.054713
+      },
+      "1000": {
+        "100": 0.828634,
+        "120": 0.832115,
+        "140": 0.788329,
+        "20": -1.151896,
+        "40": 0.27632,
+        "60": 0.637744,
+        "80": 0.765974
+      },
+      "128000": {
+        "100": 0.873002,
+        "120": 0.840743,
+        "140": 0.748507,
+        "20": -0.965307,
+        "40": 0.633329,
+        "60": 0.841167,
+        "80": 0.882305
+      },
+      "143000": {
+        "100": 0.875876,
+        "120": 0.841972,
+        "140": 0.751376,
+        "20": -0.887613,
+        "40": 0.64691,
+        "60": 0.843111,
+        "80": 0.883949
+      },
+      "16000": {
+        "100": 0.746926,
+        "120": 0.733537,
+        "140": 0.604242,
+        "20": -2.59539,
+        "40": 0.055171,
+        "60": 0.565091,
+        "80": 0.654533
+      },
+      "2000": {
+        "100": 0.696168,
+        "120": 0.660448,
+        "140": 0.630162,
+        "20": -2.010196,
+        "40": 0.252184,
+        "60": 0.646753,
+        "80": 0.687499
+      },
+      "32000": {
+        "100": 0.819933,
+        "120": 0.825631,
+        "140": 0.743524,
+        "20": -2.350004,
+        "40": 0.214238,
+        "60": 0.632077,
+        "80": 0.737735
+      },
+      "4000": {
+        "100": 0.64997,
+        "120": 0.591793,
+        "140": 0.533529,
+        "20": -2.733107,
+        "40": 0.188583,
+        "60": 0.533865,
+        "80": 0.635593
+      },
+      "512": {
+        "100": 0.796081,
+        "120": 0.790316,
+        "140": 0.739014,
+        "20": -1.08132,
+        "40": 0.314147,
+        "60": 0.570175,
+        "80": 0.740005
+      },
+      "64000": {
+        "100": 0.863368,
+        "120": 0.824668,
+        "140": 0.731463,
+        "20": -0.872863,
+        "40": 0.653228,
+        "60": 0.835231,
+        "80": 0.878378
+      },
+      "8000": {
+        "100": 0.634137,
+        "120": 0.608453,
+        "140": 0.571667,
+        "20": -2.771843,
+        "40": 0.25275,
+        "60": 0.55038,
+        "80": 0.625379
+      },
+      "96000": {
+        "100": 0.870866,
+        "120": 0.834008,
+        "140": 0.736094,
+        "20": -0.868312,
+        "40": 0.674629,
+        "60": 0.847139,
+        "80": 0.884431
+      }
+    },
+    "ridge_strength_by_step": {
+      "0": 10000.0,
+      "1000": 1000.0,
+      "128000": 1000.0,
+      "143000": 1000.0,
+      "16000": 10000.0,
+      "2000": 10000.0,
+      "32000": 10000.0,
+      "4000": 10000.0,
+      "512": 100.0,
+      "64000": 10000.0,
+      "8000": 100000.0,
+      "96000": 10000.0
+    },
+    "this_record_voided_by_a_gate": false,
+    "variance_targets_recorded": [
+      0.9,
+      0.95,
+      0.99
+    ]
+  }
+}

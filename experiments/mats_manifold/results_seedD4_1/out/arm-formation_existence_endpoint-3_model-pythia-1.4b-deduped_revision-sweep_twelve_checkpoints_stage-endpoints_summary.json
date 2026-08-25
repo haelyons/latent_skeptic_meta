@@ -1,0 +1,95 @@
+{
+  "cell": {
+    "arm": "formation_existence",
+    "endpoint": 3,
+    "model": "pythia-1.4b-deduped",
+    "revision": "sweep_twelve_checkpoints",
+    "stage": "endpoints"
+  },
+  "decision": "FORMATION_REACHED",
+  "decision_rule": "Some checkpoint's pooled held-out quality must reach the formed threshold, the baseline floor B plus nine tenths of the distance from B to the committed anchor quality 0.876302. No checkpoint reaching it is NOT_FORMED_BY_FINAL. Two committed measurements of this model at its final checkpoint, 0.876302 on this text and 0.879879 on a second text, already establish that the counter exists there, so a sweep contradicting both impeaches the sweep: it is treated as an instrument fault, not as a genuine null result. The gate cell also forces the final checkpoint inside 0.02 of the anchor, so once the gate passes this reading cannot fire.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T22:33:38+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    },
+    {
+      "bytes": 16192,
+      "n_items": 12,
+      "path": "results_seedD4_1/out/sweep_table.json",
+      "present": true,
+      "sha256": "ebe5074c109a"
+    }
+  ],
+  "metric": "Highest held-out pooled quality reached by any of the twelve checkpoints, against the baseline-relative formed threshold.",
+  "notes": "Two committed measurements of this model at its final checkpoint, 0.876302 on this text and 0.879879 on a second text, already establish that the counter exists there. So a sweep that reached the formed threshold nowhere would impeach the sweep rather than the counter. One thing about these thresholds is on the record in advance. The gate cell forces the final checkpoint to sit within 0.02 of the anchor quality, and the formed threshold is nine tenths of the way from the baseline to that same anchor. So the final checkpoint satisfies the formed threshold by arithmetic, and the reading NOT_FORMED_BY_FINAL cannot fire once the gate passes: it names an instrument fault, not a possible finding. Which of the four live labels fires still depends entirely on the ten intermediate checkpoints, and the committed label-reachability control shows all of them are reachable. If either integrity gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "at_least": 0.8228213
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": 0.514227,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": 0.876302,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "baseline_decision": "BASELINE_RECORDED",
+    "baseline_quality": 0.341495,
+    "baseline_void_floor": 0.6134113999999999,
+    "committed_anchor_quality": 0.876302,
+    "committed_anchors_this_model": [
+      0.876302,
+      0.879879
+    ],
+    "final_quality": 0.876302,
+    "formed_share_of_gap": 0.9,
+    "formed_threshold": 0.8228213,
+    "highest_quality_any_checkpoint": 0.876302,
+    "n_checkpoints_reaching_formed_threshold": 7,
+    "pooled_quality_by_step": {
+      "0": 0.341495,
+      "1000": 0.851364,
+      "128000": 0.87429,
+      "143000": 0.876302,
+      "16000": 0.764327,
+      "2000": 0.765581,
+      "32000": 0.829878,
+      "4000": 0.715426,
+      "512": 0.827079,
+      "64000": 0.867423,
+      "8000": 0.725391,
+      "96000": 0.872099
+    },
+    "this_record_voided_by_a_gate": false
+  }
+}

@@ -1,0 +1,1042 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "n_classes": 3,
+    "probe": "logistic_C1",
+    "readout": "last_token_reading_prompt",
+    "smoke": false,
+    "task": "anchor_education"
+  },
+  "decision": "IN_BAND+PERM_ANOMALY",
+  "decision_rule": "test_acc >= published - 0.12 -> IN_BAND, else OUT_OF_BAND; anchor overall IN_BAND iff all four anchor tasks IN_BAND; mean permuted-label test_acc must lie within chance +/- max(0.05, 3*se), else PERM_ANOMALY (readout instrument invalid for this task)",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:14:48+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    },
+    {
+      "bytes": 315064236,
+      "n_items": 750,
+      "path": "out/acts_anchor_education.npz",
+      "present": true,
+      "sha256": "186eb6658a21"
+    }
+  ],
+  "metric": "heldout_test_accuracy_template_disjoint",
+  "notes": "classes=['college_beyond', 'high_school', 'some_schooling']",
+  "rows": [
+    {
+      "id": "anchor_education-college_beyond-f09-i189",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i190",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i191",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i192",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i193",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i194",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i195",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i196",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i197",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i198",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i199",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i200",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i201",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i202",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i203",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i204",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i205",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i206",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i207",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i208",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f09-i209",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i210",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i211",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i212",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i213",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i214",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i215",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i216",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i217",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i218",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i219",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i220",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i221",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i222",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i223",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i224",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i225",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i226",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i227",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i228",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f10-i229",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i230",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i231",
+      "label": "college_beyond",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i232",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i233",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i234",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i235",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i236",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i237",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i238",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i239",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i240",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i241",
+      "label": "college_beyond",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i242",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i243",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i244",
+      "label": "college_beyond",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i245",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i246",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i247",
+      "label": "college_beyond",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i248",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-college_beyond-f11-i249",
+      "label": "college_beyond",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i189",
+      "label": "high_school",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i190",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i191",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i192",
+      "label": "high_school",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i193",
+      "label": "high_school",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i194",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i195",
+      "label": "high_school",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i196",
+      "label": "high_school",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i197",
+      "label": "high_school",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i198",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i199",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i200",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i201",
+      "label": "high_school",
+      "pred": "college_beyond"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i202",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i203",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i204",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i205",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i206",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i207",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i208",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f09-i209",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i210",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i211",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i212",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i213",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i214",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i215",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i216",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i217",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i218",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i219",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i220",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i221",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i222",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i223",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i224",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i225",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i226",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i227",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i228",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f10-i229",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i230",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i231",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i232",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i233",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i234",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i235",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i236",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i237",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i238",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i239",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i240",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i241",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i242",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i243",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i244",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i245",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i246",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i247",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i248",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-high_school-f11-i249",
+      "label": "high_school",
+      "pred": "high_school"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i189",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i190",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i191",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i192",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i193",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i194",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i195",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i196",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i197",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i198",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i199",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i200",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i201",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i202",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i203",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i204",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i205",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i206",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i207",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i208",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f09-i209",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i210",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i211",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i212",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i213",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i214",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i215",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i216",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i217",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i218",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i219",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i220",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i221",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i222",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i223",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i224",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i225",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i226",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i227",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i228",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f10-i229",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i230",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i231",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i232",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i233",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i234",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i235",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i236",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i237",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i238",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i239",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i240",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i241",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i242",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i243",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i244",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i245",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i246",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i247",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i248",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    },
+    {
+      "id": "anchor_education-some_schooling-f11-i249",
+      "label": "some_schooling",
+      "pred": "some_schooling"
+    }
+  ],
+  "threshold": {
+    "band_tol": 0.12,
+    "published": 0.96
+  },
+  "values": {
+    "best_layer": 23,
+    "chance": 0.3333333333333333,
+    "n_test": 183,
+    "n_train": 441,
+    "n_val": 126,
+    "perm_test_accs": [
+      0.546448087431694,
+      0.4098360655737705
+    ],
+    "published": 0.96,
+    "test_acc": 0.9398907103825137,
+    "val_acc_best": 0.8650793650793651,
+    "val_acc_per_layer": [
+      0.3333333333333333,
+      0.5079365079365079,
+      0.626984126984127,
+      0.7857142857142857,
+      0.8174603174603174,
+      0.6904761904761905,
+      0.6428571428571429,
+      0.7301587301587301,
+      0.7222222222222222,
+      0.7380952380952381,
+      0.7619047619047619,
+      0.8412698412698413,
+      0.8492063492063492,
+      0.8253968253968254,
+      0.7936507936507936,
+      0.8095238095238095,
+      0.7936507936507936,
+      0.7301587301587301,
+      0.7380952380952381,
+      0.753968253968254,
+      0.7857142857142857,
+      0.8015873015873016,
+      0.8095238095238095,
+      0.8650793650793651,
+      0.8174603174603174,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334,
+      0.8333333333333334
+    ]
+  }
+}

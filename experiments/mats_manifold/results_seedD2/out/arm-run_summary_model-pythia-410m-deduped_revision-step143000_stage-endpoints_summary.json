@@ -1,0 +1,80 @@
+{
+  "cell": {
+    "arm": "run_summary",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "VOID_ANCHOR_FAILED",
+  "decision_rule": "A failed anchor voids everything. Otherwise, two or more clearing widths are classified as INVARIANT when all period gaps are at most 10 characters, else PROPORTIONAL when all period-to-width ratio gaps are at most 0.1, else MIXED. Exactly one clearing width is UNDETERMINED by design. None clearing defers to the measurable-range check.",
+  "env": {
+    "git_rev": null,
+    "host": "161-153-8-80",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T12:02:59+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 23625,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_design_diff_triage.json",
+      "present": true,
+      "sha256": "bca0ff7b59bf"
+    },
+    {
+      "bytes": 3015,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2.md",
+      "present": true,
+      "sha256": "a617ec25ffde"
+    }
+  ],
+  "metric": "One call per endpoint, and the headline fork, from the records written beside this one.",
+  "notes": "A failed anchor makes every wobble number here uninterpretable as evidence about the model, so the whole run is void in that case. Exactly one width clearing is left undetermined by design, not decided. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {},
+  "values": {
+    "ambient_dimension_by_aperture": {
+      "140": 100,
+      "200": 148,
+      "280": 201
+    },
+    "best_readout": 5,
+    "calibration": "CALIBRATION_OK",
+    "endpoint_1_anchor_gate": "ANCHOR_OUT_OF_BAND",
+    "endpoint_2_wobble_vs_shuffle": {
+      "140": "NULL_CLEARED",
+      "200": "NULL_CLEARED",
+      "280": "NULL_CLEARED"
+    },
+    "endpoint_3_widths_clearing_count": "AT_LEAST_ONE_CLEARED",
+    "endpoint_4_wavelength_gap": "WAVELENGTH_GAP_EXCEEDS_10",
+    "endpoint_5_ratio_gap": "RATIO_GAP_EXCEEDS_0.1",
+    "endpoint_6_measurable_range": "RANGE_PATTERN_UNMATCHED",
+    "endpoint_7_token_position_control": {
+      "140": "CONFOUNDED_WITH_TOKEN_POSITION",
+      "200": "CHARACTER_COUNT_DISTINGUISHED",
+      "280": "CHARACTER_COUNT_DISTINGUISHED"
+    },
+    "headline": "VOID_ANCHOR_FAILED",
+    "held_out_quality_pooled": 0.657823,
+    "held_out_quality_w140": 0.549167,
+    "largest_gap_chars": 113.6364,
+    "largest_ratio_gap": 0.382468,
+    "n_widths_clearing": 3,
+    "ridge_argmax_interior_on_grid": true,
+    "ridge_strength": 1000.0,
+    "setup_check": "SETUP_OK",
+    "wavelengths_chars": {
+      "140": 40.0,
+      "200": 16.363636363636363,
+      "280": 130.0
+    }
+  }
+}

@@ -1,0 +1,116 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_seedD.sh
+=== onbox_seedD model=EleutherAI/pythia-410m-deduped revision=step143000 results=results_seedD ===
+=== instance=9e34393aa39941069506f9a2880c7b95 host=129-146-105-221 commit=unknown ===
+NVIDIA A100-SXM4-40GB, 40960 MiB, 570.148.08
+[inputs] design record: seedD_v2_design_diff_triage.json (the committed version)
+=== SELFTESTS (no model, no graphics card; a broken instrument must show first) ===
+  provenance.py: rc=0  selftest: PASS
+  run_seedD.py: rc=0  selftest: PASS
+=== PACKAGES (verify what remote_run.sh left; add only what is missing) ===
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[packages] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[packages] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 GPTNeoXForCausalLM resolvable
+=== seedD_extract RUNNING ===
+--- seedD_extract tail ---
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+=== stage extract ===
+[extract] text file /home/ubuntu/mats_manifold/stimulus_linewrap.json
+[extract] hash 1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca (expected 1fe73074a3d127e0bc546fb05a5adf9c2f0715f035b7f6fa7ac546afeaefe8ca) match=True
+[extract] access token from HF_TOKEN
+[extract] config layers=24 hidden=1024 context=2048 recommended dtype=float16
+[record] SETUP_OK -> results_seedD/out/arm-integrity_check_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[extract] loading the model in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3544.67it/s]
+[record] EXTRACT_OK -> results_seedD/out/arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[extract] 168 variants, 105971 labelled positions, 14.4 s
+=== stage extract done in 33.9 s ===
+=== seedD_extract OK ===
+=== seedD_calibrate RUNNING ===
+--- seedD_calibrate tail ---
+=== stage calibrate ===
+[calibrate] ridge strength 1000, best training readout 6, cross-validated quality 0.7750
+[calibrate] character-count window 1 to 140; token-count window 1 to 42
+[calibrate] ambient dimension 1, retained mode pairs 1, predicted spacing 140.0
+[calibrate] searched band 46 to 60 characters, 1 whole cycle counts inside it
+[record] BAND_OK -> results_seedD/out/arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+[record] BAND_OK -> results_seedD/out/arm-search_band_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+=== stage calibrate done in 21.7 s ===
+=== seedD_calibrate OK ===
+=== seedD_endpoints RUNNING ===
+--- seedD_endpoints tail ---
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+=== stage endpoints ===
+[endpoints] best readout 6, held-out fit quality 0.7809 -> ANCHOR_IN_BAND
+[record] ANCHOR_IN_BAND -> results_seedD/out/arm-count_curve_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] ripple size 1.24491e-05 at period 60.00 characters, rank 109 of 200 -> NULL_NOT_CLEARED
+[record] NULL_NOT_CLEARED -> results_seedD/out/arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] token-position control -> TOKEN_CONTROL_NOT_COMPUTABLE
+[record] TOKEN_CONTROL_NOT_COMPUTABLE -> results_seedD/out/arm-token_position_control_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] fitted-probe cross-check -> PERIODS_AGREE_PRESENCE_NOT_DECIDABLE
+[record] PERIODS_AGREE_PRESENCE_NOT_DECIDABLE -> results_seedD/out/arm-fitted_probe_crosscheck_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] GATE_CLOSED -> results_seedD/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] summary {"endpoint_1_setup": "SETUP_OK", "endpoint_2_search_band": "BAND_OK", "endpoint_3_count_curve": "ANCHOR_IN_BAND", "endpoint_4_ripple_vs_shuffle": "NULL_NOT_CLEARED", "endpoint_5_token_position_control": "TOKEN_CONTROL_NOT_COMPUTABLE", "endpoint_6_fitted_probe_crosscheck": "PERIODS_AGREE_PRESENCE_NOT_DECIDABLE", "best_readout": 6, "best_held_out_quality": 0.780903, "ripple_wavelength_chars": 60.0, "ripple_rank_of_draws": 109}
+=== stage endpoints done in 191.8 s ===
+=== seedD_endpoints OK ===
+=== COLLECT results_seedD/out -> out/ ===
+-rw-rw-r-- 1 ubuntu ubuntu     4491 Aug 21 09:44 arm-fitted_probe_crosscheck_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     2024 Aug 21 09:44 arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu     2024 Aug 21 09:44 arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     2089 Aug 21 09:44 arm-integrity_check_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu     2089 Aug 21 09:44 arm-integrity_check_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu    18778 Aug 21 09:44 arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    18778 Aug 21 09:44 arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     1649 Aug 21 09:44 arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu     1649 Aug 21 09:44 arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     1389 Aug 21 09:44 arm-search_band_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+-rw-rw-r-- 1 ubuntu ubuntu     1389 Aug 21 09:44 arm-search_band_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-calibrate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     2082 Aug 21 09:44 arm-token_position_control_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu     2082 Aug 21 09:44 arm-token_position_control_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     4334 Aug 21 09:44 calibration.json
+-rw-rw-r-- 1 ubuntu ubuntu     4334 Aug 21 09:44 calibration_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu 19491598 Aug 21 09:44 rows_positions.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu   452346 Aug 21 09:44 rows_variants.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu     7985 Aug 21 09:44 run_detached.log
+-rw-rw-r-- 1 ubuntu ubuntu      633 Aug 21 09:41 seedD_calibrate.log
+-rw-rw-r-- 1 ubuntu ubuntu     2416 Aug 21 09:44 seedD_endpoints.log
+-rw-rw-r-- 1 ubuntu ubuntu     1229 Aug 21 09:40 seedD_extract.log
+-rw-rw-r-- 1 ubuntu ubuntu     1498 Aug 21 09:44 seedD_onbox_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu        0 Aug 21 09:44 seedD_status.err
+-rw-rw-r-- 1 ubuntu ubuntu       15 Aug 21 09:39 selftest_provenance.log
+-rw-rw-r-- 1 ubuntu ubuntu     5141 Aug 21 09:39 selftest_run_seedD.log
+=== EXIT CODES: selftest_provenance=0 selftest_run_seedD=0 packages=0 seedD_extract=0 seedD_calibrate=0 seedD_endpoints=0 ===
+=== ALLDONE_SEEDD OK ===

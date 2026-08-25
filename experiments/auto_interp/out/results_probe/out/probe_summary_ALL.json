@@ -1,0 +1,70 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "smoke": false,
+    "task": "ALL"
+  },
+  "decision": "ANCHOR_OUT_OF_BAND",
+  "decision_rule": "extension decisions are claimable iff anchor_in_band is true (QUESTION.md:13-15); per-task rules as in each task record",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:15:33+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    }
+  ],
+  "metric": "anchor_gate_and_per_attribute_decisions",
+  "notes": "see per-task probe_summary_*.json",
+  "threshold": {
+    "band_tol": 0.12
+  },
+  "values": {
+    "anchor_age": "IN_BAND",
+    "anchor_education": "IN_BAND+PERM_ANOMALY",
+    "anchor_gender": "OUT_OF_BAND",
+    "anchor_in_band": false,
+    "anchor_ses": "IN_BAND",
+    "ext_agebracket": "RECOVERED",
+    "ext_emotion": "RECOVERED",
+    "ext_expertise": "RECOVERED",
+    "ext_formality": "RECOVERED+PERM_ANOMALY",
+    "ext_native": "RECOVERED",
+    "poscontrol_topic": "RECOVERED"
+  }
+}

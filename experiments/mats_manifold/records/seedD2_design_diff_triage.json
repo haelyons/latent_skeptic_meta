@@ -1,0 +1,134 @@
+{
+ "seed": "Two prior results frame this question. First, the original study (Gurnee et al., \"When Models Manipulate Manifolds\", Transformer Circuits, Oct 2025; Claude 3.5 Haiku) found a curve in the residual stream tracking characters since the last newline, showing faint off-diagonal bands (\"ringing\") in its cosine-similarity structure, explained as Gibbs-style truncation: a similarity structure realizable in 150 dimensions forced into about 6. Second, a completed run in this project (seed D1, records/seedD_v2_design_diff_triage.json and results_seedD/out/, 2026-08-21) measured, on the final checkpoint of Pythia-410m-deduped: held-out probe R-squared 0.781 at layer 6 of 24 (embedding output is index 0); ambient dimension 1 at 95 percent variance (first component 95.3 percent); no ripple separable from a label-shuffle null at the single testable period (rank 109 of 200 at period 60); and a full-spectrum re-read showing the largest spectral power at period 120 - the profile's own length - which could not be ranked against any null because only in-band maxima were saved.\n\nSeed D1's negative was censored by its own aperture: with ambient dimension 1, the theory's predicted ripple spacing equals the probe window divided by one - the window itself - at any window. Widening the window moves the prediction with it. So the decidable question is not \"is there a ripple in a wider window\" but invariance:\n\nQuestion: at this same checkpoint, when the similarity structure of the character-count representation is measured at three apertures - probe windows of 140, 200, and 280 characters - and a periodicity clears its shuffle null at any aperture, is its wavelength INVARIANT in characters across apertures (an absolute property of the model's code), or PROPORTIONAL to the aperture (an artifact of the probe window)? And if no aperture clears its null, that is a decisive negative across every scale up to 280 characters - with one pre-registered escape, the represented-range check below, which decides whether the wide apertures were measuring anything at all.\n\nSubstrate, one cell only: EleutherAI/pythia-410m-deduped, HuggingFace revision step143000, base model, no interventions. The checkpoint sweep, the equilibrium-versus-fossil question, other models and sizes, and causal tests are out of scope. The downloaded config is authoritative; 24 layers and hidden size 1024 are MEMORY (Pythia paper, arXiv 2304.01373, table 1); mismatch is a halt. Layer indices count the embedding output as index 0; the best layer's location is recorded, never gated.\n\nStimuli, committed verbatim in stimulus_linewrap_v2.json (sha256 b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd): 48 public-domain ASCII prose documents of about 3,600 characters, each materialized at nine wrap widths (20, 40, 60, 80, 100, 120, 140, 200, 280); documents 0-35 train, 36-47 test, a block split in book order; the text is disjoint by construction from seed D1's stimulus file (the generator replays D1's packing and starts after it), so the anchor leg below is a fresh-text replication. Load exactly; do not paraphrase, regenerate, re-wrap, or reconstruct; if absent, halt.\n\nDefinitions, fixed here:\n\n1. Labels as in seed D1: a token's label is the count of characters on its line up to and including its last character, restarting after each newline; standalone newline tokens land at width plus one (measured fact, seed D1: 18 such positions). The label window per aperture is fixed by the calibration stage.\n\n2. Curve readout: ridge regression from the residual stream after each layer to the label, fit on train documents pooled over all nine widths, R-squared on test documents, per layer. Ridge strength from calibration; grid must extend beyond 1000 (seed D1's grid ended at 1000 with quality still rising, delta 0.0033 - measured, results_seedD calibration record).\n\n3. Represented-range check, at the best layer: held-out R-squared computed separately within each bin of 35 consecutive label values at aperture 280 (eight bins), where the bin's own variance is the denominator. Pre-registered reading: if every bin at or below 140 exceeds 0.5 while every bin beyond 150 falls below 0.3 (GUESS thresholds), counts beyond 150 are \"not represented\", and a null ripple at apertures 200 and 280 is then recorded as RANGE_NOT_REPRESENTED, not as evidence against the ripple. Context: the Pile's hard-wrapped training pressure sits near 70-72 characters per line (Gutenberg 2.17 percent of the mix; source: counting_manifold_formation_proposal.md, verified table).\n\n4. Ripple statistic, per aperture A in {140, 200, 280}, at the best layer, test documents of width A only: per-label mean vectors; subtract the grand mean; cosine similarity matrix; off-diagonal profile m(delta) for delta 1 to max_delta (calibration fixes max_delta per aperture); subtract the best-fitting degree-2 polynomial (fixed here - seed D1 verified that a moving average removes exactly the predicted periods); discrete Fourier transform; the statistic is the MAXIMUM power over ALL whole-cycle periods from 4 characters to the profile length. No search band exists in this design - the band censorship of seed D1 is removed. Ambient dimension is measured and recorded per aperture; unlike seed D1 it constrains nothing.\n\n5. Null, per aperture: labels shuffled within each document, 200 draws (GUESS), the same maximum-power statistic per draw. Separable means the observed maximum exceeds all but the top 5 percent of draws (policy, unchanged from seed D1). Every draw's FULL per-period power vector is saved, and the per-label mean vectors at the best layer are saved into the fetched results - both absences made seed D1's geometry unauditable afterward.\n\n6. Invariance rule, over the apertures that clear their null: wavelengths in characters. All pairwise differences at most 10 characters (GUESS): INVARIANT. All wavelength-to-aperture ratios within 0.1 of each other (GUESS): PROPORTIONAL. Neither: MIXED. Exactly one aperture clears: UNDETERMINED. The headline decision is this fork, not mere presence; three 5-percent tests carry about a 14 percent family-wise false-positive rate, which the fork absorbs because it conditions on which apertures cleared.\n\n7. Token-position control, per aperture: the same maximum-power statistic and null with tokens-since-newline labels; periods converted to characters at the measured characters-per-token; the character-count ripple is credited only where wavelengths differ by more than 3 characters (GUESS) or the two labelings disagree on clearing.\n\n8. Anchor gate: the aperture-140 curve leg must reach held-out R-squared between 0.701 and 0.861 (0.781 plus or minus 0.08, GUESS band for fresh text on the same instrument lineage). Failing it voids every ripple result as an instrument fault and blocks any next seed; it is not evidence about the model.\n\nDropped from seed D1, deliberately: the fitted-probe cross-check (its agreement was vacuous with one searchable period, its fit never converged, and no null was computable for it - all three measured in seed D1's post records).",
+ "design": {
+  "hypothesis": "A curve tracking characters since the last line break may hold a genuine wobble in its similarity structure, at one checkpoint of one model. Two rival readings compete once a wobble clears chance at some window width. Either its wavelength stays fixed in characters as the window widens (an absolute property of the model's code, labeled INVARIANT). Or the wavelength grows with the window (a measurement artifact, labeled PROPORTIONAL). A third live outcome: no wobble beats its own chance draws at any of the three windows tested, up to 280 characters \u2014 a decisive negative, unless a separate range check shows the wide windows could not have detected anything regardless (labeled RANGE_NOT_REPRESENTED).",
+  "models": [
+   "EleutherAI/pythia-410m-deduped, HuggingFace revision step143000, base model, no fine-tuning or interventions -- one substrate cell only, per the question's stated scope"
+  ],
+  "data": "One stimulus file, stimulus_linewrap_v2.json, sha256 b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd, loaded exactly and never regenerated or re-wrapped; absence halts the run. 48 public-domain English prose documents, about 3,600 characters each, each re-wrapped at nine widths: 20, 40, 60, 80, 100, 120, 140, 200, 280 characters. Documents 0-35 are train (36 documents), 36-47 are test (12 documents), a block split in book order. This text is disjoint from the prior run's stimulus file, so this is a fresh-text replication. The layer-selection fit pools all nine widths from the 36 train documents. The wobble test, its token-position control, and the range check use only the 12 test documents, at the three widths named in the question: 140, 200, and 280 characters.",
+  "arms": [
+   "Main arm, window 140 characters: wobble test on the 12 test documents wrapped at 140, at the best layer.",
+   "Main arm, window 200 characters: wobble test on the 12 test documents wrapped at 200, at the best layer.",
+   "Main arm, window 280 characters: wobble test on the 12 test documents wrapped at 280, at the best layer.",
+   "Control, chance baseline: 200 label-shuffle draws per window (140, 200, 280), same statistic, same test documents -- the null each main arm is judged against.",
+   "Control, token vs. character: same three windows and same null, but labels count tokens since the last line break, converted to characters at the measured characters-per-token rate.",
+   "Pre-registered escape-hatch check: at window 280 only, held-out fit quality measured separately within eight 35-wide label bins, to test whether counts past label 150 are measurable at all.",
+   "Validity gate: window-140 held-out fit quality on this fresh text, compared against the prior run's 0.781, checked before trusting any wobble result.",
+   "Layer-selection fit (not itself a test of the hypothesis): one ridge regression per layer, layers 0 through 24 (0 = embedding output), fit on all nine widths of the 36 train documents, scored on the 12 test documents; picks the best layer used by every arm above."
+  ],
+  "endpoints": [
+   {
+    "metric": "Window-140 held-out fit quality (R-squared) on fresh test documents, at the best layer",
+    "threshold": "must fall between 0.701 and 0.861 (0.781 plus or minus 0.08)",
+    "refuting_outcome": "Falls outside 0.701-0.861 -- voids every wobble result this run as an instrument fault; not evidence about the model, and blocks any next run."
+   },
+   {
+    "metric": "Maximum wobble power, over all whole-cycle periods from 4 characters to the window's own length, at each of the three windows, versus that window's 200-draw shuffle null",
+    "threshold": "observed maximum exceeds the top 5 percent of that window's 200 null draws",
+    "refuting_outcome": "Observed maximum falls within the top 5 percent of null draws at a given window -- no separable wobble at that window."
+   },
+   {
+    "metric": "Count of the three windows whose wobble clears its own null",
+    "threshold": "0 of 3 windows clear",
+    "refuting_outcome": "0 of 3 clear AND the range check (below) shows counts above label 150 ARE measurable -- a decisive negative: no wobble detectable up to 280 characters at this checkpoint."
+   },
+   {
+    "metric": "Largest gap, in characters, between the wobble wavelengths of any two windows that both cleared their null",
+    "threshold": "at most 10 characters (GUESS)",
+    "refuting_outcome": "Gap exceeds 10 characters for at least one pair -- rules out a single fixed wavelength (not INVARIANT)."
+   },
+   {
+    "metric": "Largest gap between wavelength-to-window-width ratios, for any two windows that both cleared their null",
+    "threshold": "within 0.1 of each other (GUESS)",
+    "refuting_outcome": "Ratios differ by more than 0.1 for at least one pair, while wavelengths also differ by more than 10 characters -- rules out a fixed proportion too, giving a mixed, unclassifiable result."
+   },
+   {
+    "metric": "Held-out fit quality (R-squared) inside each of eight 35-wide label bins, at window 280 only",
+    "threshold": "every bin at or below label 140 exceeds 0.5, AND every bin above label 150 falls below 0.3 (GUESS thresholds)",
+    "refuting_outcome": "Any bin above label 150 exceeds 0.3 -- wide counts ARE measurable, so a null wobble at windows 200 or 280 counts as real evidence against a wobble there, not a blind spot."
+   },
+   {
+    "metric": "Wavelength gap, in characters, between the character-count wobble and the token-position control wobble (converted to characters), per window",
+    "threshold": "more than 3 characters (GUESS), or the two labelings disagree on clearing their null",
+    "refuting_outcome": "Gap is 3 characters or less AND both labelings agree on clearing -- the wobble is credited to token position, not to character counting, at that window."
+   }
+  ],
+  "sampling": "No text is generated by the model here; every measurement reads hidden activations from one deterministic forward pass per document per wrap width, so there are no temperature or top-p settings. Layers swept: 0 through 24, where 0 is the embedding output and 24 matches the total transformer layers -- both figures are MEMORY, from the Pythia paper (arXiv 2304.01373, table 1), and a mismatch against the downloaded model config halts the run before anything is measured. Ridge strength is chosen by calibration on a grid extending past 1000, per the question's own requirement; the exact grid points are a GUESS left to implementation and do not change the analysis if varied. Label-shuffle null: 200 draws per window per labeling (character-count and token-position) -- 1,200 draws total across three windows and two labelings -- each an independent shuffle of labels within its own document, fixed random seed 0 (GUESS, arbitrary). n per cell: 12 test documents per window for the main wobble statistic; 36 train plus 12 test documents, pooled over all nine widths, for the one-time layer-selection fit; 8 bins of 35 label values each for the range check.",
+  "budget_usd": 40,
+  "does_not_test": [
+   "Does not test any other checkpoint besides step143000; the checkpoint sweep and any question of equilibrium versus a leftover artifact are out of scope, per the question's own stated scope.",
+   "Does not test any model besides this one substrate cell; other models or sizes are out of scope, per the question's own stated scope.",
+   "Does not test any causal intervention; only passive reading of activations is in scope, per the question's own stated scope.",
+   "Does not re-run the prior fitted-probe cross-check; it was dropped because its agreement was empty, its fit never converged, and no null was ever computable for it.",
+   "Does not resolve invariant versus proportional when only one window clears its null; that case is left undetermined by design, not decided.",
+   "The represented-range thresholds (fit quality above 0.5 at or below label 140; below 0.3 above label 150) are a GUESS; looser cutoffs could wrongly call a genuinely blind window 'measurable', or the reverse.",
+   "200 shuffle draws per null (GUESS) sets the finest detectable false-positive rate near 0.5 percent per window; a real but rare effect just under that rate could be missed.",
+   "The 10-character invariance cutoff and the 0.1 ratio cutoff (both GUESS) are somewhat arbitrary; a true wavelength drifting by, say, 12 characters would be called non-invariant even if it is the same code plus noise.",
+   "The 3-character margin for crediting a wobble to character count over token position (GUESS) could misattribute a real character effect to token position, or vice versa, near that margin.",
+   "The fixed shuffle seed of 0 and the exact ridge-strength grid (both GUESS) are not fixed by the question; different arbitrary choices here should not change the substantive answer but are not pinned down.",
+   "The $40 budget figure is a GUESS extrapolated from typical rented-GPU rates for a 410-million-parameter model; actual spend could run two to three times higher if calibration needs retries."
+  ]
+ },
+ "diff": {
+  "departures": [
+   {
+    "what": "The earlier run became hard to check afterward. Two things were never saved: the full chance-shuffle results, and the average pattern per character count. The question requires this new run to save both, plus the number of dimensions the pattern uses at each window width. The design's plan does not mention saving any of these three things.",
+    "question": "Will the full chance-shuffle results, the per-character-count average patterns, and the per-window dimension count actually get saved this time?"
+   },
+   {
+    "what": "The statistical model has a strength setting that controls how much it resists overfitting (called ridge strength). The question requires searching this setting past a value of 1000. The earlier run's search stopped exactly at 1000, while accuracy was still climbing by 0.0033. The new design repeats the same rule, but does not say how far past 1000 to search. It also does not say whether the search must confirm accuracy has stopped climbing before it stops.",
+    "question": "How far past 1000 should this search go, and must it confirm accuracy has leveled off before picking a final value?"
+   },
+   {
+    "what": "The design sets a $40 total spending cap for the whole study. The original question never mentions any budget at all. The design's own notes guess the real cost could run two to three times higher than $40.",
+    "question": "If real costs exceed $40, should parts of the study be shortened or skipped, or is that figure not meant to limit anything?"
+   },
+   {
+    "what": "One check splits character-count values into eight equal chunks of 35, from 0 to 280. This check tests whether high character counts can be measured at all. The rule requires chunks at or below 140 to score well, and chunks beyond 150 to score poorly. The chunk spanning 140 through 175 matches neither description.",
+    "question": "Should the chunk covering labels 140 through 175 be treated as measurable, as unmeasurable, or left out of that decision?"
+   },
+   {
+    "what": "A control test checks whether a detected pattern reflects character counting rather than token position. It does this by converting a token-based spacing into characters. This conversion uses a measured characters-per-token rate. The design never says what text that rate should be measured from.",
+    "question": "Should the characters-per-token conversion rate be measured once across everything, or separately for each of the three probe windows?"
+   }
+  ]
+ },
+ "triage": {
+  "claims": [
+   {
+    "id": "design-core",
+    "grounding": {
+     "grounding": "unauditable",
+     "observed": "Input side reproduces exactly: stimulus_linewrap_v2.json sha256 = b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd, 48 docs (36 train / 12 test = ids 36-47), 3591-3599 chars each, widths [20,40,60,80,100,120,140,200,280], max line length at width 280 = 280. Output side: no v2 result files exist; only the prior v1 run (/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/) with best_held_out_quality=0.780903 (the 0.781 anchor the gate is compared against), best_readout layer 6, endpoint_4 NULL_NOT_CLEARED at rank 109/200, wavelength 60.0 chars, single-window design, GATE_CLOSED.",
+     "note": "Design is prospective: every claimed endpoint number (window-140 R^2 on fresh text, three-window ripple-vs-null, bin-wise range check, token control) has no saved artifact \u2014 results_seedD/out contains only the v1/stimulus_linewrap.json run, whose 0.780903 is the prior anchor, not this run's measurement.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/stimulus_linewrap_v2.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD/out/arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "decidability by construction: is any endpoint outcome forced, unable to occur, or deciding a different question than the seed asks",
+      "status": "EXPLAINS",
+      "crux": "The seed frames the outcome space as a clean three-way choice (INVARIANT vs PROPORTIONAL once a wobble clears at \"some window width,\" or a decisive negative), but the design's own classification rule for INVARIANT/PROPORTIONAL requires at least two of the three windows to clear their null so a wavelength gap and ratio gap can be computed pairwise. The design document itself states this in does_not_test: \"Does not resolve invariant versus proportional when only one window clears its null; that case is left undetermined by design, not decided.\" That is a construction fact, not a data outcome: if exactly one of the three windows clears chance (a live, plausible result given only 3 windows and a 5% per-window null threshold), the design cannot classify the result as INVARIANT, PROPORTIONAL, or the clean decisive-negative -- it falls into an unlabeled fourth bucket the claim's stated framing never mentions. So part of the outcome space is decided (or rather, non-decided) purely by the construction's data requirements, independent of what the model's activations actually show, which is exactly the confound in question: the design can produce an outcome that answers a narrower/different question (unclassifiable due to insufficient clearing windows) than the seed's advertised three-way framing."
+     },
+     {
+      "confound": "coordinates and scale: could the chosen layers, strengths, or units make every cell degenerate or null regardless of the hypothesis",
+      "status": "NEEDS_RUN",
+      "crux": "The design document itself contains the right guardrails against this confound (a layer sweep 0-24 with best-layer selection via held-out fit, a ridge-strength grid calibrated past 1000, and an explicit validity gate requiring window-140 R-squared in 0.701-0.861 before any wobble result is trusted) -- but the evidence supplied is only the pre-registered protocol, with no actual measured R-squared, chosen layer, or chosen ridge strength reported. Without the realized numbers (e.g., which layer was picked, what R-squared the validity gate actually returned, what ridge strength the calibration grid landed on), I cannot tell whether this run's specific coordinate/scale choices left the probe in a sane operating regime or accidentally degenerate (e.g., best layer at the embedding layer 0 with near-zero fit, or ridge strength so large every window's fit collapses to the mean, which would produce a uniform null across all three windows that looks identical to a genuine RANGE_NOT_REPRESENTED or decisive-negative result)."
+     }
+    ],
+    "run_queue": [
+     "Execute the pre-registered pipeline (layer sweep 0-24 -> best-layer selection -> ridge calibration grid past 1000 -> window-140 validity gate) on stimulus_linewrap_v2.json and report the realized best layer, ridge strength, and window-140 R-squared against the 0.701-0.861 gate before trusting any of the three main-arm wobble numbers."
+    ],
+    "author_queue": [],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute"
+}

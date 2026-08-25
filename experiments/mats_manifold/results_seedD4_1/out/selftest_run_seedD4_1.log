@@ -1,0 +1,363 @@
+== position labeller (the reasoning-tag parser of this experiment) ==
+  columns on a two-line text                                                 ok
+  token counts on a two-line text                                            ok
+  line numbers on a two-line text                                            ok
+  opening boundary implied, never present: columns                           ok
+  opening boundary implied, never present: token counts                      ok
+  only the closing boundary appears: columns                                 ok
+  only the closing boundary appears: token counts                            ok
+  only the closing boundary appears: line numbers                            ok
+  swallowed line break, columns                                              ok
+  swallowed line break, token counts                                         ok
+  swallowed line break, line numbers                                         ok
+  line-break token takes the next column                                     ok
+  the width-plus-one label falls outside a window ending at the width        ok
+  empty range is unlabelled                                                  ok
+  empty range is not counted                                                 ok
+== degenerate-input detector ==
+  length-cap case flags                                                      ok
+  under the length cap does not flag                                         ok
+  repeated-sequence case flags                                               ok
+  seven back-to-back copies counted                                          ok
+  five back-to-back copies is below the cutoff                               ok
+  prose-like tokens are clean                                                ok
+  both cases can flag together                                               ok
+== exact-match checks and exact slot assignment ==
+  hash equal                                                                 ok
+  hash one character off                                                     ok
+  hash absent                                                                ok
+  configuration match at 24 layers and hidden 2048                           ok
+  configuration layer mismatch                                               ok
+  the smaller sibling's hidden size is a mismatch here                       ok
+  a named checkpoint matches                                                 ok
+  an unnamed checkpoint never matches                                        ok
+  a missing revision never matches                                           ok
+  lowest window value maps to slot 0                                         ok
+  highest window value maps to the last slot                                 ok
+  one below the window is outside                                            ok
+  a fractional label is never accepted                                       ok
+  a true value is never accepted as 1                                        ok
+  slot counts                                                                ok
+  slot indices                                                               ok
+  window start when the lowest value is thin                                 ok
+  window start when every value is thick                                     ok
+  no window when a middle value is thin                                      ok
+  counts from labels                                                         ok
+== the twelve committed checkpoints and the committed measurement order ==
+  twelve checkpoints                                                         ok
+  the step in a name is read exactly                                         ok
+  initialization is step 0                                                   ok
+  a name with no whole-number step halts                                     ok
+  the gate cell is measured first                                            ok
+  the baseline is measured second                                            ok
+  the remaining ten run earliest to latest                                   ok
+  the order covers exactly the twelve                                        ok
+  the steps rise through the committed ladder                                ok
+  seven wrap widths are read, as the gate record's first answer says         ok
+  the two wide widths are not read                                           ok
+  forward passes per checkpoint                                              ok
+== the four profile parts and the boundary ratio ==
+  the parts are the committed ranges                                         ok
+  a strong low half and a dead high half give a large ratio                  ok
+  the committed parts on this text reproduce 0.514227                        ok
+  the design states that same ratio as 0.514                                 ok
+  the fresh-text parts on this model reproduce 0.519079                      ok
+  a flat profile gives no boundary                                           ok
+  an absent part leaves the ratio absent                                     ok
+  a profile of the wrong length is refused                                   ok
+== the coordinate control, and the recorded localization moment ==
+  an interior selection is clean                                             ok
+  the embedding output is an edge                                            ok
+  the last layer is an edge                                                  ok
+  the weakest strength is an edge                                            ok
+  the strongest strength is an edge                                          ok
+  both edges together, the case expected at initialization                   ok
+  an interior selection reads interior                                       ok
+  an edge selection reads as an edge                                         ok
+  the prior run's own selection on this model is interior                    ok
+  the middle of five values is the median                                    ok
+  an absent value is dropped before the median                               ok
+  nothing left leaves no median                                              ok
+  an interior peak a clear margin above the median is localized              ok
+  a margin of exactly 0.1 counts                                             ok
+  a margin just under 0.1 does not                                           ok
+  a peak at the sweep edge is never localized                                ok
+  the untrained sibling's readout profile is not yet localized               ok
+  an absent median leaves localization uncomputable                          ok
+== comparisons judged in decimals, not in bits ==
+  a value on a floor reaches it                                              ok
+  a value under a floor does not                                             ok
+  a value on a limit stays within it                                         ok
+  a value over a limit does not                                              ok
+  the low band edge is not pushed out by binary noise                        ok
+  a range of exactly the quality limit stays within it                       ok
+== endpoint 1, the gate cell on both its bars ==
+  the two committed values reproduce themselves                              ok
+  the low edge of the quality band is inside it                              ok
+  the high edge of the quality band is inside it                             ok
+  just under the quality band voids the sweep                                ok
+  just over the quality band voids the sweep                                 ok
+  the fresh-text quality on this model would also pass this band             ok
+  a ratio exactly on its floor passes                                        ok
+  a ratio just under its floor voids the sweep                               ok
+  the smaller sibling's own final ratio would void this gate                 ok
+  an absent quality voids the sweep                                          ok
+  an absent ratio voids the sweep                                            ok
+  a not-a-number quality voids the sweep                                     ok
+== endpoint 2, the baseline floor at initialization ==
+  the sibling's measured floor is recorded, not an alarm                     ok
+  a quality near zero is recorded                                            ok
+  a negative quality is recorded                                             ok
+  0.3 no longer voids anything, unlike the previous rung                     ok
+  the top of the expected range is recorded                                  ok
+  just below the void floor is recorded                                      ok
+  exactly at the void floor voids the sweep                                  ok
+  above the void floor voids the sweep                                       ok
+  an absent quality voids the sweep                                          ok
+  the void floor is 0.7 times the anchor quality                             ok
+  the design states that floor as about 0.613                                ok
+  the sibling's floor sits inside the expected range                         ok
+  a floor above the expected range is still only recorded                    ok
+== the two formation thresholds, measured up from the baseline ==
+  half of the distance from 0.35 to the anchor                               ok
+  nine tenths of that distance                                               ok
+  a floor at the anchor leaves both thresholds at the anchor                 ok
+  an absent floor leaves both thresholds absent                              ok
+  a zero floor reduces to half the anchor                                    ok
+  a zero floor reduces to nine tenths of the anchor                          ok
+  reaching the formed threshold is formation                                 ok
+  just under it is not                                                       ok
+  the committed anchor is past a 0.35 floor's formed threshold               ok
+  an absent threshold leaves formation unreached                             ok
+== endpoint 4, is the boundary there at the end ==
+  reaching the boundary floor is presence                                    ok
+  just under it is absence                                                   ok
+  this model's committed ratio reads as present                              ok
+  the smaller sibling's final ratio reads as absent                          ok
+  the untrained sibling's ratio reads as absent                              ok
+  an absent ratio reads as absent                                            ok
+== the two stability channels, both starting at the shared formed checkpoint ==
+  a range at the boundary limit is inside it                                 ok
+  a range past the boundary limit is outside it                              ok
+  a range at the quality limit is inside it                                  ok
+  a range past the quality limit is outside it                               ok
+  an absent range is not computable                                          ok
+  a range is the largest minus the smallest                                  ok
+  one absent value leaves no range                                           ok
+  an empty series leaves no range                                            ok
+  a rising series runs one way                                               ok
+  a falling series runs one way                                              ok
+  a series that turns around does not                                        ok
+  a flat series runs one way                                                 ok
+  an absent value makes the question unanswerable                            ok
+  both channels inside their bands hold                                      ok
+  one channel outside and one-way drifts                                     ok
+  one channel outside and not one-way is unclassifiable                      ok
+  an absent boundary leaves the quality channel to decide                    ok
+  an absent boundary and a drifting quality still drifts                     ok
+  neither channel live leaves the stability test uncomputable                ok
+== endpoint 3, early against late ==
+  the cutoff step itself counts as early                                     ok
+  one step later counts as late                                              ok
+  initialization counts as early                                             ok
+  no formation leaves the timing undefined                                   ok
+== endpoint 5, the boundary's own timing against the formation step ==
+  the same checkpoint counts as arriving with the counter                    ok
+  an earlier crossing counts as arriving with the counter                    ok
+  a later crossing counts as arriving after it                               ok
+  a boundary that never crosses names an instrument fault                    ok
+  no formation step leaves the comparison undefined                          ok
+== the pre-registered readings, from the calls already made ==
+  a failed gate cell voids everything                                        ok
+  a baseline above its void floor voids everything                           ok
+  no formation reads as not formed                                           ok
+  early and holding reads as the fossil-consistent reading                   ok
+  late and holding reads as the late variant                                 ok
+  drift reads as the equilibrium-consistent reading                          ok
+  an unclassifiable stability test keeps its own name                        ok
+== the committed label-reachability control, replayed at three baseline floors ==
+  floor 0.35, early-sigmoid-flat reads its committed label                   ok
+  floor 0.35, early-sigmoid-flat formation step                              ok
+  floor 0.35, early-sigmoid-flat formed checkpoint                           ok
+  floor 0.35, early-sigmoid-flat planted floor is read back                  ok
+  floor 0.35, late-sigmoid-flat reads its committed label                    ok
+  floor 0.35, late-sigmoid-flat formation step                               ok
+  floor 0.35, late-sigmoid-flat formed checkpoint                            ok
+  floor 0.35, late-sigmoid-flat planted floor is read back                   ok
+  floor 0.35, form-then-drift-up reads its committed label                   ok
+  floor 0.35, form-then-drift-up formation step                              ok
+  floor 0.35, form-then-drift-up formed checkpoint                           ok
+  floor 0.35, form-then-drift-up planted floor is read back                  ok
+  floor 0.35, noisy-plateau reads its committed label                        ok
+  floor 0.35, noisy-plateau formation step                                   ok
+  floor 0.35, noisy-plateau formed checkpoint                                ok
+  floor 0.35, noisy-plateau planted floor is read back                       ok
+  floor 0.35, never-forms reads its committed label                          ok
+  floor 0.35, never-forms formation step                                     ok
+  floor 0.35, never-forms formed checkpoint                                  ok
+  floor 0.35, never-forms planted floor is read back                         ok
+  floor 0.35, all five committed labels are reachable                        ok
+  floor 0.35, five labels for five trajectories                              ok
+  floor 0.25, early-sigmoid-flat reads its committed label                   ok
+  floor 0.25, early-sigmoid-flat formation step                              ok
+  floor 0.25, early-sigmoid-flat formed checkpoint                           ok
+  floor 0.25, early-sigmoid-flat planted floor is read back                  ok
+  floor 0.25, late-sigmoid-flat reads its committed label                    ok
+  floor 0.25, late-sigmoid-flat formation step                               ok
+  floor 0.25, late-sigmoid-flat formed checkpoint                            ok
+  floor 0.25, late-sigmoid-flat planted floor is read back                   ok
+  floor 0.25, form-then-drift-up reads its committed label                   ok
+  floor 0.25, form-then-drift-up formation step                              ok
+  floor 0.25, form-then-drift-up formed checkpoint                           ok
+  floor 0.25, form-then-drift-up planted floor is read back                  ok
+  floor 0.25, noisy-plateau reads its committed label                        ok
+  floor 0.25, noisy-plateau formation step                                   ok
+  floor 0.25, noisy-plateau formed checkpoint                                ok
+  floor 0.25, noisy-plateau planted floor is read back                       ok
+  floor 0.25, never-forms reads its committed label                          ok
+  floor 0.25, never-forms formation step                                     ok
+  floor 0.25, never-forms formed checkpoint                                  ok
+  floor 0.25, never-forms planted floor is read back                         ok
+  floor 0.25, all five committed labels are reachable                        ok
+  floor 0.25, five labels for five trajectories                              ok
+  floor 0.40, early-sigmoid-flat reads its committed label                   ok
+  floor 0.40, early-sigmoid-flat formation step                              ok
+  floor 0.40, early-sigmoid-flat formed checkpoint                           ok
+  floor 0.40, early-sigmoid-flat planted floor is read back                  ok
+  floor 0.40, late-sigmoid-flat reads its committed label                    ok
+  floor 0.40, late-sigmoid-flat formation step                               ok
+  floor 0.40, late-sigmoid-flat formed checkpoint                            ok
+  floor 0.40, late-sigmoid-flat planted floor is read back                   ok
+  floor 0.40, form-then-drift-up reads its committed label                   ok
+  floor 0.40, form-then-drift-up formation step                              ok
+  floor 0.40, form-then-drift-up formed checkpoint                           ok
+  floor 0.40, form-then-drift-up planted floor is read back                  ok
+  floor 0.40, noisy-plateau reads its committed label                        ok
+  floor 0.40, noisy-plateau formation step                                   ok
+  floor 0.40, noisy-plateau formed checkpoint                                ok
+  floor 0.40, noisy-plateau planted floor is read back                       ok
+  floor 0.40, never-forms reads its committed label                          ok
+  floor 0.40, never-forms formation step                                     ok
+  floor 0.40, never-forms formed checkpoint                                  ok
+  floor 0.40, never-forms planted floor is read back                         ok
+  floor 0.40, all five committed labels are reachable                        ok
+  floor 0.40, five labels for five trajectories                              ok
+  the early control's boundary arrives with the counter                      ok
+  the early control's boundary crossing is its formation step                ok
+  the early control's quality range is inside its band                       ok
+  the early control's boundary range is inside its band                      ok
+  the early control's boundary is present at the end                         ok
+  eight checkpoints sit at or after the early control's formed one           ok
+  the late control's boundary crosses before its counter forms               ok
+  so the late control's boundary still arrives with the counter              ok
+  the drifting control's boundary range leaves its band                      ok
+  the drifting control's boundary runs one way in steps                      ok
+  the noisy control's quality range leaves its band                          ok
+  the noisy control's quality does not run one way                           ok
+  the never-forming control has no formed checkpoint                         ok
+  so its stability test has nothing to read                                  ok
+  each control trajectory carries twelve quality values                      ok
+  each control trajectory carries twelve ratio values                        ok
+  an unnamed control trajectory halts                                        ok
+== the whole trajectory, on planted checkpoints with known calls ==
+  the planted floor is read from the initialization checkpoint               ok
+  planted early formation is found at the half-distance crossing             ok
+  planted formed checkpoint is the nine-tenths crossing                      ok
+  the formed threshold is measured up from the planted floor                 ok
+  planted rows read as formed early and holding                              ok
+  the boundary already stood at the formation step                           ok
+  the planted localization moment is the earliest checkpoint                 ok
+  a planted row carries every number the trajectory stage reads              ok
+  the planted profile matches the planted boundary ratio                     ok
+  an interior checkpoint is not flagged degenerate                           ok
+  a checkpoint at a coordinate edge is flagged degenerate                    ok
+  a sweep whose peak never leaves the edge is never localized                ok
+  the direction counts travel with the rows                                  ok
+  the alternative crossings against the measured final are recorded          ok
+  a failed gate cell voids the trajectory reading too                        ok
+  a voided baseline voids the trajectory reading too                         ok
+  the earliest checkpoint reaching a floor is found                          ok
+  a floor nobody reaches has no checkpoint                                   ok
+  an absent threshold finds no checkpoint                                    ok
+  the earliest checkpoint reaching a ratio floor is found                    ok
+  a trajectory missing the final checkpoint halts                            ok
+  a trajectory missing the initialization checkpoint halts                   ok
+  a boundary absent at the end drops out of the stability test               ok
+  and that absence names an instrument fault of its own                      ok
+  the quality readings still stand when the boundary is absent               ok
+  a boundary crossing after the formation step reads as later                ok
+  that crossing is recorded with its own checkpoint                          ok
+== constants, notes, and the record writer ==
+  the model of this rung                                                     ok
+  the layer count expected of it                                             ok
+  the hidden size expected of it                                             ok
+  the smaller sibling of the previous rung                                   ok
+  the text file of this rung                                                 ok
+  the committed hash of that text file                                       ok
+  the results folder of this rung                                            ok
+  the committed anchor quality                                               ok
+  the committed anchor tolerance                                             ok
+  the gate's boundary bar                                                    ok
+  the baseline void share of the anchor                                      ok
+  the recorded expected baseline range                                       ok
+  the committed formation share of the gap                                   ok
+  the committed formed share of the gap                                      ok
+  the committed boundary floor                                               ok
+  the committed boundary stability range                                     ok
+  the committed quality stability range                                      ok
+  the committed early-late cutoff                                            ok
+  the recorded localization margin                                           ok
+  the committed ridge grid                                                   ok
+  the committed fold count                                                   ok
+  the one committed base seed                                                ok
+  the three recorded variance cutoffs                                        ok
+  twelve groups of running totals                                            ok
+  every group name is distinct                                               ok
+  one checkpoint's totals in gigabytes                                       ok
+  one group's totals in megabytes                                            ok
+  the room-to-work floors clear those totals                                 ok
+  no output calls a same-box rerun a replication                             ok
+  the coordinate note states the expectation at initialization               ok
+  the baseline note says the untrained checkpoint is not an alarm            ok
+  the boundary note says why the bar stays absolute                          ok
+  the marker note names which crossing decides early against late            ok
+  the control note names the committed reachability control                  ok
+  the forced-outcome note says which reading cannot fire                     ok
+  the design forbids downloading the corpus                                  ok
+  record writer importable                                                   ok
+  a record's name carries its own identity                                   ok
+== ridge fit and fit quality from running totals ==
+  sum of squared errors from running totals                                  ok
+  fit quality from running totals                                            ok
+  planted weights recovered                                                  ok
+  adding two groups' totals fits their union                                 ok
+== the four-part profile on planted rows with a known boundary ==
+  a perfect prediction correlates 1                                          ok
+  a shifted and stretched prediction still correlates 1                      ok
+  a reversed prediction correlates minus 1                                   ok
+  a flat prediction has no correlation                                       ok
+  a part with one position is not computable                                 ok
+  the count of positions in a part is reported                               ok
+  four planted profile rows                                                  ok
+  each part holds its 35 counts                                              ok
+  the planted low half reads 1                                               ok
+  the planted high half is near zero                                         ok
+  the planted boundary ratio is near 1                                       ok
+  the planted profile reads as a present boundary                            ok
+== average vectors per count, and how many directions they use ==
+  slots for a window starting at 1                                           ok
+  one average vector per count                                               ok
+  each count averaged its own positions                                      ok
+  the positions per count are reported                                       ok
+  a one-direction table needs one direction                                  ok
+  the three cutoffs are all reported                                         ok
+  a table with no spread has no direction count                              ok
+  an absent share leaves the count absent                                    ok
+  a ramp plus an alternation needs two directions                            ok
+  an empty count slot halts                                                  ok
+== the fold split from the one committed base seed ==
+  every training document lands in a group                                   ok
+  five groups are used                                                       ok
+  the groups are the same size                                               ok
+  the split repeats from the same seed                                       ok
+selftest: PASS

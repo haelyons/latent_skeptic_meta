@@ -1,0 +1,43 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+=== stage extract ===
+[sweep] text file /home/ubuntu/mats_manifold/stimulus_linewrap_v2.json
+[sweep] hash b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd (expected b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd) match=True
+[sweep] model EleutherAI/pythia-410m-deduped, 12 checkpoints, measured in this order: step143000, step0, step512, step1000, step2000, step4000, step8000, step16000, step32000, step64000, step96000, step128000
+[sweep] the final checkpoint is first because its quality must land within 0.02 of 0.781031, or the sweep is void
+[sweep] the initialization checkpoint is second because its quality must stay below 0.3, or the sweep is void
+[sweep] widths read [20, 40, 60, 80, 100, 120, 140]; text source Project Gutenberg eBook #2701 (Moby Dick), plain text
+[sweep] checkpoint step143000 (step 143000), measurement 1 of 12, downloading into results_seedD4/work/downloads/step143000
+[record] SETUP_OK -> results_seedD4/out/arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[sweep] step143000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3833.77it/s]
+[sweep] step143000: running totals 12 groups times 25 readouts at hidden 1024 = 2.52 GB
+[sweep] step143000: 336 variants in 27.0 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4/out/arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[sweep] step143000: ridge strength 1000, cross-validated best readout 6 at 0.7862 (15.5 s)
+[record] CALIBRATION_OK -> results_seedD4/out/arm-constants_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[sweep] step143000: best readout 6, pooled quality over widths 20 to 140 0.781031 (0.9 s)
+[sweep] step143000: kept the vectors of readout 6, deleted 24 other readouts
+[sweep] step143000: profile [0.654081, 0.314235, 0.458304, 0.691357], boundary ratio -0.090673, directions {'0.9': 1, '0.95': 2, '0.99': 56}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4/out/arm-checkpoint_reading_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[sweep] step143000 done in 44.5 s; working vectors and weights deleted
+[record] ANCHOR_IN_BAND -> results_seedD4/out/arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[sweep] 1 of 12 checkpoints measured, 1.0 minutes so far
+[sweep] checkpoint step0 (step 0), measurement 2 of 12, downloading into results_seedD4/work/downloads/step0
+[record] SETUP_OK -> results_seedD4/out/arm-setup_check_model-pythia-410m-deduped_revision-step0_stage-extract.json
+[sweep] step0: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3332.55it/s]
+HALT in stage extract: the initialization checkpoint measured 0.344634, at or above the 0.3 alarm; the sweep is void and stops here
+[sweep] step0: running totals 12 groups times 25 readouts at hidden 1024 = 2.52 GB
+[sweep] step0: 336 variants in 26.3 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4/out/arm-forward_passes_model-pythia-410m-deduped_revision-step0_stage-extract.json
+[sweep] step0: ridge strength 10000, cross-validated best readout 24 at 0.3473 (14.4 s)
+[record] CALIBRATION_OK -> results_seedD4/out/arm-constants_model-pythia-410m-deduped_revision-step0_stage-extract.json
+[sweep] step0: best readout 24, pooled quality over widths 20 to 140 0.344634 (0.9 s)
+[sweep] step0: kept the vectors of readout 24, deleted 24 other readouts
+[sweep] step0: profile [0.194574, 0.011107, 0.000705, 0.365608], boundary ratio -0.080316, directions {'0.9': 69, '0.95': 92, '0.99': 124}, coordinates COORDINATES_AT_GRID_EDGE
+[record] COORDINATES_AT_GRID_EDGE -> results_seedD4/out/arm-checkpoint_reading_model-pythia-410m-deduped_revision-step0_stage-extract.json
+[sweep] step0 done in 42.8 s; working vectors and weights deleted
+[record] VOID_CONTROL_FAILED -> results_seedD4/out/arm-negative_control_endpoint-2_model-pythia-410m-deduped_revision-step0_stage-extract.json
+[record] VOID_CONTROL_FAILED -> results_seedD4/out/arm-run_summary_model-pythia-410m-deduped_revision-sweep_twelve_checkpoints_stage-extract.json

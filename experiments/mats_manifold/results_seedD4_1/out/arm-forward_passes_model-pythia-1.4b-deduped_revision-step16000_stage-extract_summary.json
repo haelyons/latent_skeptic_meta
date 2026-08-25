@@ -1,0 +1,110 @@
+{
+  "cell": {
+    "arm": "forward_passes",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step16000",
+    "stage": "extract"
+  },
+  "decision": "EXTRACT_OK",
+  "decision_rule": "All 48 documents at all seven wrap widths from 20 to 140 must produce one forward pass each, 336 in total, with no variant flagged as reaching the context limit and no internal vector holding a value that is not finite. Anything else is EXTRACT_INCOMPLETE and halts.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T22:04:29+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    }
+  ],
+  "metric": "Counts from one forward pass per text variant at one checkpoint, and the running totals saved for its fits.",
+  "notes": "Readout 0 is the embedding output and readout 24 is the last layer. This library applies the model's final normalisation to readout 24 only, which is a property of the library, recorded here rather than changed. Every one of the 336 text variants gets one deterministic forward pass, one variant at a time; there is nothing to group, because each variant is a whole document and its labels are per position. The two wide widths in the committed file, 200 and 280, are not read at this rung: the committed gate record's first answer names the seven the file defines, and nothing here is fitted, gated or recorded on the other two. Every variant's text is saved verbatim with its own hash in the file named above. No text is generated at any point. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "n_variants": 336
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": null,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": null,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "baseline_decision": "BASELINE_RECORDED",
+    "baseline_quality": null,
+    "baseline_void_floor": 0.6134113999999999,
+    "degenerate_variants": {},
+    "device": "cuda",
+    "downloaded_weights_deleted": true,
+    "dtype": "float16",
+    "generation_performed": false,
+    "held_out_profile_rows": 10578,
+    "hidden_size": 2048,
+    "measurement_order_index": 7,
+    "n_positions_by_group": {
+      "fold0": 52262,
+      "fold1": 47643,
+      "fold2": 46705,
+      "fold3": 47139,
+      "fold4": 46308,
+      "test_w100": 10748,
+      "test_w120": 10647,
+      "test_w140": 10578,
+      "test_w20": 13268,
+      "test_w40": 11613,
+      "test_w60": 11137,
+      "test_w80": 10897
+    },
+    "n_positions_total": 318945,
+    "n_readouts": 25,
+    "n_variants": 336,
+    "n_variants_expected": 336,
+    "per_position_vectors_saved_for_split": "test",
+    "per_position_vectors_saved_for_width": 140,
+    "revision": "step16000",
+    "running_totals_bytes": 10076160000,
+    "seconds_forward_passes": 260.6,
+    "this_record_voided_by_a_gate": false,
+    "tokenizer_class": "TokenizersBackend",
+    "training_step": 16000,
+    "verbatim_variant_rows_file": "rows_variants_step16000.jsonl",
+    "widths_in_the_file_not_read": [
+      200,
+      280
+    ],
+    "widths_read": [
+      20,
+      40,
+      60,
+      80,
+      100,
+      120,
+      140
+    ]
+  }
+}

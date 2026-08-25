@@ -1,0 +1,1382 @@
+{
+  "cell": {
+    "aperture": 140,
+    "arm": "wobble_vs_shuffle",
+    "endpoint": 2,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "NULL_CLEARED",
+  "decision_rule": "The rank of the observed largest power among 200 label-shuffled draws, counting the observed value itself, must be 10 or better. That is the top 5 percent. Worse is NULL_NOT_CLEARED, meaning no separable wobble at that probe width.",
+  "env": {
+    "git_rev": null,
+    "host": "161-153-8-80",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T12:02:34+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 23625,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_design_diff_triage.json",
+      "present": true,
+      "sha256": "bca0ff7b59bf"
+    },
+    {
+      "bytes": 3015,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2.md",
+      "present": true,
+      "sha256": "a617ec25ffde"
+    },
+    {
+      "bytes": 729311,
+      "n_items": 10578,
+      "path": "results_seedD2/work/labels_a140.npz",
+      "present": true,
+      "sha256": "c70cbe0a40ec"
+    },
+    {
+      "bytes": 1138373,
+      "n_items": 201,
+      "path": "results_seedD2/out/null_spectra_aperture-140_labels-characters.jsonl",
+      "present": true,
+      "sha256": "06519c4e1c5d"
+    }
+  ],
+  "metric": "Rank of the observed largest power among 200 label-shuffled draws, at one probe width.",
+  "notes": "Shuffling permutes the character-count labels inside each held-out document, so every label keeps exactly the same number of positions. With 200 draws the finest share this can resolve is about 0.5 percent. The number of directions carrying 95 percent of the spread is recorded here and constrains nothing, unlike the earlier run. Every draw's whole spectrum is in the named file beside this record. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "rows": [
+    {
+      "draw": 0,
+      "max_power": 5.671180680393682e-06
+    },
+    {
+      "draw": 1,
+      "max_power": 2.6746678868501383e-06
+    },
+    {
+      "draw": 2,
+      "max_power": 3.989407582299328e-06
+    },
+    {
+      "draw": 3,
+      "max_power": 4.2551567602423965e-06
+    },
+    {
+      "draw": 4,
+      "max_power": 4.6137591529255155e-06
+    },
+    {
+      "draw": 5,
+      "max_power": 6.742566769321297e-06
+    },
+    {
+      "draw": 6,
+      "max_power": 1.511850540094045e-06
+    },
+    {
+      "draw": 7,
+      "max_power": 5.001788972050819e-06
+    },
+    {
+      "draw": 8,
+      "max_power": 5.196851840491045e-06
+    },
+    {
+      "draw": 9,
+      "max_power": 2.9112391529231286e-06
+    },
+    {
+      "draw": 10,
+      "max_power": 3.3734530727291484e-06
+    },
+    {
+      "draw": 11,
+      "max_power": 5.207486699634801e-06
+    },
+    {
+      "draw": 12,
+      "max_power": 8.066079067683428e-06
+    },
+    {
+      "draw": 13,
+      "max_power": 4.937257723309103e-06
+    },
+    {
+      "draw": 14,
+      "max_power": 5.375708170787364e-06
+    },
+    {
+      "draw": 15,
+      "max_power": 3.0071605453204915e-06
+    },
+    {
+      "draw": 16,
+      "max_power": 5.949757294829546e-06
+    },
+    {
+      "draw": 17,
+      "max_power": 5.214865672022722e-06
+    },
+    {
+      "draw": 18,
+      "max_power": 4.426323938856313e-06
+    },
+    {
+      "draw": 19,
+      "max_power": 2.2815295584095662e-06
+    },
+    {
+      "draw": 20,
+      "max_power": 4.349174939448573e-06
+    },
+    {
+      "draw": 21,
+      "max_power": 3.5423437258589978e-06
+    },
+    {
+      "draw": 22,
+      "max_power": 8.359406820787878e-06
+    },
+    {
+      "draw": 23,
+      "max_power": 5.964430182504913e-06
+    },
+    {
+      "draw": 24,
+      "max_power": 6.653449662249981e-06
+    },
+    {
+      "draw": 25,
+      "max_power": 7.189260830930304e-06
+    },
+    {
+      "draw": 26,
+      "max_power": 5.198003089228324e-06
+    },
+    {
+      "draw": 27,
+      "max_power": 9.054981347141556e-06
+    },
+    {
+      "draw": 28,
+      "max_power": 3.698716825758817e-06
+    },
+    {
+      "draw": 29,
+      "max_power": 4.085714025912732e-06
+    },
+    {
+      "draw": 30,
+      "max_power": 3.174644681517215e-06
+    },
+    {
+      "draw": 31,
+      "max_power": 2.3408705150358174e-06
+    },
+    {
+      "draw": 32,
+      "max_power": 6.822215327634572e-06
+    },
+    {
+      "draw": 33,
+      "max_power": 4.433955882874096e-06
+    },
+    {
+      "draw": 34,
+      "max_power": 3.5671193583515947e-06
+    },
+    {
+      "draw": 35,
+      "max_power": 9.695386198415864e-06
+    },
+    {
+      "draw": 36,
+      "max_power": 5.213690823395339e-06
+    },
+    {
+      "draw": 37,
+      "max_power": 3.6129072662991408e-06
+    },
+    {
+      "draw": 38,
+      "max_power": 4.924969562854647e-06
+    },
+    {
+      "draw": 39,
+      "max_power": 1.985068056886801e-06
+    },
+    {
+      "draw": 40,
+      "max_power": 4.870328405861556e-06
+    },
+    {
+      "draw": 41,
+      "max_power": 3.0316188678410858e-06
+    },
+    {
+      "draw": 42,
+      "max_power": 4.075939260083534e-06
+    },
+    {
+      "draw": 43,
+      "max_power": 3.8740201121839076e-06
+    },
+    {
+      "draw": 44,
+      "max_power": 2.2240994714820506e-06
+    },
+    {
+      "draw": 45,
+      "max_power": 2.8403642357435263e-06
+    },
+    {
+      "draw": 46,
+      "max_power": 3.2723361381473558e-06
+    },
+    {
+      "draw": 47,
+      "max_power": 3.639309196907637e-06
+    },
+    {
+      "draw": 48,
+      "max_power": 6.326920147792003e-06
+    },
+    {
+      "draw": 49,
+      "max_power": 3.3300256885033924e-06
+    },
+    {
+      "draw": 50,
+      "max_power": 2.793271309068421e-06
+    },
+    {
+      "draw": 51,
+      "max_power": 5.705200056654586e-06
+    },
+    {
+      "draw": 52,
+      "max_power": 4.495546081229342e-06
+    },
+    {
+      "draw": 53,
+      "max_power": 3.386426134224609e-06
+    },
+    {
+      "draw": 54,
+      "max_power": 2.573198599039824e-06
+    },
+    {
+      "draw": 55,
+      "max_power": 8.288324999183474e-06
+    },
+    {
+      "draw": 56,
+      "max_power": 4.167959636457554e-06
+    },
+    {
+      "draw": 57,
+      "max_power": 2.5875184321487934e-06
+    },
+    {
+      "draw": 58,
+      "max_power": 2.7232180740805174e-06
+    },
+    {
+      "draw": 59,
+      "max_power": 2.846004574158481e-06
+    },
+    {
+      "draw": 60,
+      "max_power": 9.464238141963471e-06
+    },
+    {
+      "draw": 61,
+      "max_power": 2.579636074671284e-06
+    },
+    {
+      "draw": 62,
+      "max_power": 3.311969205035036e-06
+    },
+    {
+      "draw": 63,
+      "max_power": 3.066569953466976e-06
+    },
+    {
+      "draw": 64,
+      "max_power": 5.67815645468542e-06
+    },
+    {
+      "draw": 65,
+      "max_power": 7.813586840515277e-06
+    },
+    {
+      "draw": 66,
+      "max_power": 2.745955113058734e-06
+    },
+    {
+      "draw": 67,
+      "max_power": 7.227396436244428e-06
+    },
+    {
+      "draw": 68,
+      "max_power": 3.161967726419988e-06
+    },
+    {
+      "draw": 69,
+      "max_power": 3.082000372541813e-06
+    },
+    {
+      "draw": 70,
+      "max_power": 4.230006164049681e-06
+    },
+    {
+      "draw": 71,
+      "max_power": 5.8489923672310005e-06
+    },
+    {
+      "draw": 72,
+      "max_power": 4.3967930542119755e-06
+    },
+    {
+      "draw": 73,
+      "max_power": 6.0932412255499974e-06
+    },
+    {
+      "draw": 74,
+      "max_power": 5.287391381380648e-06
+    },
+    {
+      "draw": 75,
+      "max_power": 7.39611893364034e-06
+    },
+    {
+      "draw": 76,
+      "max_power": 6.287625147523753e-06
+    },
+    {
+      "draw": 77,
+      "max_power": 2.8004845906331164e-06
+    },
+    {
+      "draw": 78,
+      "max_power": 2.8417536382857993e-06
+    },
+    {
+      "draw": 79,
+      "max_power": 2.5972317904984084e-06
+    },
+    {
+      "draw": 80,
+      "max_power": 5.011837872309507e-06
+    },
+    {
+      "draw": 81,
+      "max_power": 2.4308740378467242e-06
+    },
+    {
+      "draw": 82,
+      "max_power": 3.2457102037774928e-06
+    },
+    {
+      "draw": 83,
+      "max_power": 4.722331487240598e-06
+    },
+    {
+      "draw": 84,
+      "max_power": 1.9067856385223145e-06
+    },
+    {
+      "draw": 85,
+      "max_power": 3.2871749600947646e-06
+    },
+    {
+      "draw": 86,
+      "max_power": 3.966761382039305e-06
+    },
+    {
+      "draw": 87,
+      "max_power": 7.551889358163591e-06
+    },
+    {
+      "draw": 88,
+      "max_power": 3.652461296741477e-06
+    },
+    {
+      "draw": 89,
+      "max_power": 5.982899394357978e-06
+    },
+    {
+      "draw": 90,
+      "max_power": 1.170802763421354e-05
+    },
+    {
+      "draw": 91,
+      "max_power": 3.722340415623037e-06
+    },
+    {
+      "draw": 92,
+      "max_power": 2.491360152519339e-06
+    },
+    {
+      "draw": 93,
+      "max_power": 4.269496270651476e-06
+    },
+    {
+      "draw": 94,
+      "max_power": 2.015697685511775e-06
+    },
+    {
+      "draw": 95,
+      "max_power": 3.440390617821756e-06
+    },
+    {
+      "draw": 96,
+      "max_power": 3.008033665806443e-06
+    },
+    {
+      "draw": 97,
+      "max_power": 4.9995371621675966e-06
+    },
+    {
+      "draw": 98,
+      "max_power": 4.102486278165795e-06
+    },
+    {
+      "draw": 99,
+      "max_power": 4.14935301333626e-06
+    },
+    {
+      "draw": 100,
+      "max_power": 3.912592042482926e-06
+    },
+    {
+      "draw": 101,
+      "max_power": 5.005840311332078e-06
+    },
+    {
+      "draw": 102,
+      "max_power": 2.101697941071562e-06
+    },
+    {
+      "draw": 103,
+      "max_power": 2.849988574986475e-06
+    },
+    {
+      "draw": 104,
+      "max_power": 3.158276943624977e-06
+    },
+    {
+      "draw": 105,
+      "max_power": 1.2511840036043223e-05
+    },
+    {
+      "draw": 106,
+      "max_power": 4.109721426345605e-06
+    },
+    {
+      "draw": 107,
+      "max_power": 4.201860480418803e-06
+    },
+    {
+      "draw": 108,
+      "max_power": 2.507089416819794e-06
+    },
+    {
+      "draw": 109,
+      "max_power": 7.65334495424958e-06
+    },
+    {
+      "draw": 110,
+      "max_power": 4.636446626163897e-06
+    },
+    {
+      "draw": 111,
+      "max_power": 5.205006355968745e-06
+    },
+    {
+      "draw": 112,
+      "max_power": 4.9917808816881344e-06
+    },
+    {
+      "draw": 113,
+      "max_power": 3.7491991965685697e-06
+    },
+    {
+      "draw": 114,
+      "max_power": 4.489127918992639e-06
+    },
+    {
+      "draw": 115,
+      "max_power": 3.2836833656004618e-06
+    },
+    {
+      "draw": 116,
+      "max_power": 3.0990280185428017e-06
+    },
+    {
+      "draw": 117,
+      "max_power": 3.2981779113868824e-06
+    },
+    {
+      "draw": 118,
+      "max_power": 4.301600478593658e-06
+    },
+    {
+      "draw": 119,
+      "max_power": 3.524367158660994e-06
+    },
+    {
+      "draw": 120,
+      "max_power": 2.3298743080342395e-06
+    },
+    {
+      "draw": 121,
+      "max_power": 6.716434358286216e-06
+    },
+    {
+      "draw": 122,
+      "max_power": 5.661805012702451e-06
+    },
+    {
+      "draw": 123,
+      "max_power": 3.111343244151863e-06
+    },
+    {
+      "draw": 124,
+      "max_power": 2.4792462531561864e-06
+    },
+    {
+      "draw": 125,
+      "max_power": 3.6782142052219107e-06
+    },
+    {
+      "draw": 126,
+      "max_power": 7.588918571833655e-06
+    },
+    {
+      "draw": 127,
+      "max_power": 6.1885124573798366e-06
+    },
+    {
+      "draw": 128,
+      "max_power": 9.251996940260859e-06
+    },
+    {
+      "draw": 129,
+      "max_power": 3.5386183068597173e-06
+    },
+    {
+      "draw": 130,
+      "max_power": 4.9888173729659245e-06
+    },
+    {
+      "draw": 131,
+      "max_power": 4.7126982198329224e-06
+    },
+    {
+      "draw": 132,
+      "max_power": 1.7797277454222208e-06
+    },
+    {
+      "draw": 133,
+      "max_power": 5.9605936901575625e-06
+    },
+    {
+      "draw": 134,
+      "max_power": 3.534287546560362e-06
+    },
+    {
+      "draw": 135,
+      "max_power": 7.4609118303537836e-06
+    },
+    {
+      "draw": 136,
+      "max_power": 4.4040725079057165e-06
+    },
+    {
+      "draw": 137,
+      "max_power": 2.433606132086812e-06
+    },
+    {
+      "draw": 138,
+      "max_power": 2.982491639988401e-06
+    },
+    {
+      "draw": 139,
+      "max_power": 2.229099898475751e-06
+    },
+    {
+      "draw": 140,
+      "max_power": 1.0616457505137749e-05
+    },
+    {
+      "draw": 141,
+      "max_power": 5.693397735805175e-06
+    },
+    {
+      "draw": 142,
+      "max_power": 3.975128816469745e-06
+    },
+    {
+      "draw": 143,
+      "max_power": 5.905476293612918e-06
+    },
+    {
+      "draw": 144,
+      "max_power": 4.8253045015758896e-06
+    },
+    {
+      "draw": 145,
+      "max_power": 3.7511761541973975e-06
+    },
+    {
+      "draw": 146,
+      "max_power": 5.278872975638068e-06
+    },
+    {
+      "draw": 147,
+      "max_power": 5.412843565607333e-06
+    },
+    {
+      "draw": 148,
+      "max_power": 8.334747149292652e-06
+    },
+    {
+      "draw": 149,
+      "max_power": 4.1573507257369865e-06
+    },
+    {
+      "draw": 150,
+      "max_power": 4.7524978233060475e-06
+    },
+    {
+      "draw": 151,
+      "max_power": 3.4647024951476267e-06
+    },
+    {
+      "draw": 152,
+      "max_power": 7.6800773888308e-06
+    },
+    {
+      "draw": 153,
+      "max_power": 3.111029980140741e-06
+    },
+    {
+      "draw": 154,
+      "max_power": 3.5316013614043917e-06
+    },
+    {
+      "draw": 155,
+      "max_power": 9.931418429368733e-06
+    },
+    {
+      "draw": 156,
+      "max_power": 1.999233532240731e-06
+    },
+    {
+      "draw": 157,
+      "max_power": 3.3736865470268463e-06
+    },
+    {
+      "draw": 158,
+      "max_power": 4.124791719418107e-06
+    },
+    {
+      "draw": 159,
+      "max_power": 3.2863586227959853e-06
+    },
+    {
+      "draw": 160,
+      "max_power": 6.8839397917654665e-06
+    },
+    {
+      "draw": 161,
+      "max_power": 6.787174352853811e-06
+    },
+    {
+      "draw": 162,
+      "max_power": 2.5016743462931505e-06
+    },
+    {
+      "draw": 163,
+      "max_power": 8.338490491297301e-06
+    },
+    {
+      "draw": 164,
+      "max_power": 2.952559937488897e-06
+    },
+    {
+      "draw": 165,
+      "max_power": 3.2794369334372235e-06
+    },
+    {
+      "draw": 166,
+      "max_power": 3.1257241354047216e-06
+    },
+    {
+      "draw": 167,
+      "max_power": 1.0948950856091232e-05
+    },
+    {
+      "draw": 168,
+      "max_power": 7.6030478816919465e-06
+    },
+    {
+      "draw": 169,
+      "max_power": 2.816212591442584e-06
+    },
+    {
+      "draw": 170,
+      "max_power": 4.135248309379166e-06
+    },
+    {
+      "draw": 171,
+      "max_power": 9.138461032664798e-06
+    },
+    {
+      "draw": 172,
+      "max_power": 4.945837508624985e-06
+    },
+    {
+      "draw": 173,
+      "max_power": 6.618082014920827e-06
+    },
+    {
+      "draw": 174,
+      "max_power": 4.186052880814701e-06
+    },
+    {
+      "draw": 175,
+      "max_power": 4.071189610223817e-06
+    },
+    {
+      "draw": 176,
+      "max_power": 2.714299696360192e-06
+    },
+    {
+      "draw": 177,
+      "max_power": 1.3263054795547509e-05
+    },
+    {
+      "draw": 178,
+      "max_power": 5.521915176180078e-06
+    },
+    {
+      "draw": 179,
+      "max_power": 4.0222701215408195e-06
+    },
+    {
+      "draw": 180,
+      "max_power": 2.887614086722813e-06
+    },
+    {
+      "draw": 181,
+      "max_power": 4.510611304597714e-06
+    },
+    {
+      "draw": 182,
+      "max_power": 6.520145733489268e-06
+    },
+    {
+      "draw": 183,
+      "max_power": 4.968242143348054e-06
+    },
+    {
+      "draw": 184,
+      "max_power": 2.801960554856271e-06
+    },
+    {
+      "draw": 185,
+      "max_power": 5.157347177359226e-06
+    },
+    {
+      "draw": 186,
+      "max_power": 7.414694804408638e-06
+    },
+    {
+      "draw": 187,
+      "max_power": 4.979796112629868e-06
+    },
+    {
+      "draw": 188,
+      "max_power": 3.941818974056074e-06
+    },
+    {
+      "draw": 189,
+      "max_power": 3.513284673989344e-06
+    },
+    {
+      "draw": 190,
+      "max_power": 4.838729712266233e-06
+    },
+    {
+      "draw": 191,
+      "max_power": 3.2797638201107876e-06
+    },
+    {
+      "draw": 192,
+      "max_power": 2.988487020677903e-06
+    },
+    {
+      "draw": 193,
+      "max_power": 4.211034277716209e-06
+    },
+    {
+      "draw": 194,
+      "max_power": 3.2928464650213287e-06
+    },
+    {
+      "draw": 195,
+      "max_power": 8.344660335730406e-06
+    },
+    {
+      "draw": 196,
+      "max_power": 6.331011300498308e-06
+    },
+    {
+      "draw": 197,
+      "max_power": 2.004322353064969e-06
+    },
+    {
+      "draw": 198,
+      "max_power": 2.3949089998364517e-06
+    },
+    {
+      "draw": 199,
+      "max_power": 3.779617306691749e-06
+    }
+  ],
+  "threshold": {
+    "draws": 200,
+    "rank_at_most": 10
+  },
+  "values": {
+    "ambient_dimension_at_95_percent": 100,
+    "aperture": 140,
+    "character_window_high": 140,
+    "character_window_low": 1,
+    "cycles": 3,
+    "draws": 200,
+    "empirical_share": 0.00498,
+    "held_out_rows": 10578,
+    "max_power": 1.9962279325672082e-05,
+    "mean_vectors_file": "mean_vectors_aperture-140_labels-characters.npz",
+    "n_labels": 140,
+    "n_periods_in_range": 30,
+    "null_max": 1.3263054795547509e-05,
+    "null_median": 4.1573507257369865e-06,
+    "positions_per_label_max": 116,
+    "positions_per_label_min": 27,
+    "profile": [
+      0.15703108,
+      0.16493387,
+      0.15163098,
+      0.13672981,
+      0.13678891,
+      0.09760773,
+      0.10511669,
+      0.09624784,
+      0.08116615,
+      0.08055447,
+      0.06145884,
+      0.07637354,
+      0.05669435,
+      0.07183788,
+      0.07005886,
+      0.0618218,
+      0.0594996,
+      0.0541342,
+      0.05512243,
+      0.05248739,
+      0.05316956,
+      0.04832401,
+      0.0490495,
+      0.03926611,
+      0.0407005,
+      0.04777703,
+      0.03106271,
+      0.04319202,
+      0.03691696,
+      0.03260042,
+      0.03825209,
+      0.02030248,
+      0.01694423,
+      0.02965027,
+      0.01620074,
+      0.01101081,
+      0.02231993,
+      0.01705815,
+      0.01026273,
+      0.03295191,
+      0.01040517,
+      0.01069755,
+      0.00590103,
+      0.00740613,
+      -0.00169377,
+      -0.00172442,
+      -0.01183644,
+      -0.00799803,
+      -0.0029388,
+      -0.00919259,
+      -0.02256494,
+      -0.02240983,
+      -0.01007575,
+      -0.01934453,
+      -0.03273888,
+      -0.03419682,
+      -0.03413248,
+      -0.01633132,
+      -0.02870128,
+      -0.02270044,
+      -0.02751335,
+      -0.0302528,
+      -0.03636787,
+      -0.03836526,
+      -0.04272498,
+      -0.03874086,
+      -0.0456677,
+      -0.04624395,
+      -0.05742812,
+      -0.05875221,
+      -0.04681282,
+      -0.05022353,
+      -0.06009586,
+      -0.05331511,
+      -0.04733015,
+      -0.04560146,
+      -0.05938424,
+      -0.06128473,
+      -0.04049515,
+      -0.06849439,
+      -0.05440908,
+      -0.06771671,
+      -0.08791577,
+      -0.09036141,
+      -0.10559942,
+      -0.07815421,
+      -0.08976333,
+      -0.09152125,
+      -0.08378186,
+      -0.08081036,
+      -0.0629514,
+      -0.09750597,
+      -0.05638696,
+      -0.09867676,
+      -0.0959167,
+      -0.082069,
+      -0.10206973,
+      -0.10208117,
+      -0.12866528,
+      -0.10985939,
+      -0.1193592,
+      -0.12421834,
+      -0.1261918,
+      -0.12479901,
+      -0.13302917,
+      -0.13713433,
+      -0.12920653,
+      -0.13813489,
+      -0.12934394,
+      -0.12133788,
+      -0.11385352,
+      -0.0890272,
+      -0.12054214,
+      -0.11726712,
+      -0.12847591,
+      -0.12126454,
+      -0.11050712,
+      -0.1184235,
+      -0.09074196,
+      -0.0973548
+    ],
+    "profile_length": 120,
+    "rank": 1,
+    "readout": 5,
+    "spectra_file": "null_spectra_aperture-140_labels-characters.jsonl",
+    "spectrum": [
+      {
+        "cycles": 1,
+        "in_range": true,
+        "period": 120.0,
+        "power": 3.576857183244941e-06
+      },
+      {
+        "cycles": 2,
+        "in_range": true,
+        "period": 60.0,
+        "power": 6.795625344878598e-06
+      },
+      {
+        "cycles": 3,
+        "in_range": true,
+        "period": 40.0,
+        "power": 1.9962279325672082e-05
+      },
+      {
+        "cycles": 4,
+        "in_range": true,
+        "period": 30.0,
+        "power": 1.3495116598544524e-05
+      },
+      {
+        "cycles": 5,
+        "in_range": true,
+        "period": 24.0,
+        "power": 1.0765591486829286e-05
+      },
+      {
+        "cycles": 6,
+        "in_range": true,
+        "period": 20.0,
+        "power": 4.303832399331349e-06
+      },
+      {
+        "cycles": 7,
+        "in_range": true,
+        "period": 17.142857142857142,
+        "power": 3.060868082689272e-06
+      },
+      {
+        "cycles": 8,
+        "in_range": true,
+        "period": 15.0,
+        "power": 7.268106113156573e-06
+      },
+      {
+        "cycles": 9,
+        "in_range": true,
+        "period": 13.333333333333334,
+        "power": 1.7443052081703674e-06
+      },
+      {
+        "cycles": 10,
+        "in_range": true,
+        "period": 12.0,
+        "power": 2.274974845045951e-06
+      },
+      {
+        "cycles": 11,
+        "in_range": true,
+        "period": 10.909090909090908,
+        "power": 1.831851299198376e-06
+      },
+      {
+        "cycles": 12,
+        "in_range": true,
+        "period": 10.0,
+        "power": 2.877674549975511e-06
+      },
+      {
+        "cycles": 13,
+        "in_range": true,
+        "period": 9.23076923076923,
+        "power": 3.9208069560113233e-07
+      },
+      {
+        "cycles": 14,
+        "in_range": true,
+        "period": 8.571428571428571,
+        "power": 3.132770366881634e-07
+      },
+      {
+        "cycles": 15,
+        "in_range": true,
+        "period": 8.0,
+        "power": 5.941261738042512e-07
+      },
+      {
+        "cycles": 16,
+        "in_range": true,
+        "period": 7.5,
+        "power": 9.770038726586223e-07
+      },
+      {
+        "cycles": 17,
+        "in_range": true,
+        "period": 7.0588235294117645,
+        "power": 4.605509573961772e-08
+      },
+      {
+        "cycles": 18,
+        "in_range": true,
+        "period": 6.666666666666667,
+        "power": 1.1832873814802383e-07
+      },
+      {
+        "cycles": 19,
+        "in_range": true,
+        "period": 6.315789473684211,
+        "power": 5.363832273073724e-07
+      },
+      {
+        "cycles": 20,
+        "in_range": true,
+        "period": 6.0,
+        "power": 1.913687644456657e-07
+      },
+      {
+        "cycles": 21,
+        "in_range": true,
+        "period": 5.714285714285714,
+        "power": 1.5209847187656528e-07
+      },
+      {
+        "cycles": 22,
+        "in_range": true,
+        "period": 5.454545454545454,
+        "power": 4.959114128522587e-07
+      },
+      {
+        "cycles": 23,
+        "in_range": true,
+        "period": 5.217391304347826,
+        "power": 1.142479834710823e-06
+      },
+      {
+        "cycles": 24,
+        "in_range": true,
+        "period": 5.0,
+        "power": 1.3875466205728044e-07
+      },
+      {
+        "cycles": 25,
+        "in_range": true,
+        "period": 4.8,
+        "power": 6.396488413433355e-07
+      },
+      {
+        "cycles": 26,
+        "in_range": true,
+        "period": 4.615384615384615,
+        "power": 4.2106623216505823e-07
+      },
+      {
+        "cycles": 27,
+        "in_range": true,
+        "period": 4.444444444444445,
+        "power": 5.149219336652372e-07
+      },
+      {
+        "cycles": 28,
+        "in_range": true,
+        "period": 4.285714285714286,
+        "power": 2.0551447736280187e-07
+      },
+      {
+        "cycles": 29,
+        "in_range": true,
+        "period": 4.137931034482759,
+        "power": 4.2027012123618535e-07
+      },
+      {
+        "cycles": 30,
+        "in_range": true,
+        "period": 4.0,
+        "power": 4.974849223317041e-09
+      },
+      {
+        "cycles": 31,
+        "in_range": false,
+        "period": 3.870967741935484,
+        "power": 1.0417031448202583e-07
+      },
+      {
+        "cycles": 32,
+        "in_range": false,
+        "period": 3.75,
+        "power": 1.0925244023841965e-06
+      },
+      {
+        "cycles": 33,
+        "in_range": false,
+        "period": 3.6363636363636362,
+        "power": 7.575886706818045e-07
+      },
+      {
+        "cycles": 34,
+        "in_range": false,
+        "period": 3.5294117647058822,
+        "power": 1.1253059130149677e-06
+      },
+      {
+        "cycles": 35,
+        "in_range": false,
+        "period": 3.4285714285714284,
+        "power": 5.0893898696109735e-08
+      },
+      {
+        "cycles": 36,
+        "in_range": false,
+        "period": 3.3333333333333335,
+        "power": 1.593588269837165e-08
+      },
+      {
+        "cycles": 37,
+        "in_range": false,
+        "period": 3.2432432432432434,
+        "power": 2.89434150733249e-07
+      },
+      {
+        "cycles": 38,
+        "in_range": false,
+        "period": 3.1578947368421053,
+        "power": 9.25869274579678e-07
+      },
+      {
+        "cycles": 39,
+        "in_range": false,
+        "period": 3.076923076923077,
+        "power": 8.656999726862312e-08
+      },
+      {
+        "cycles": 40,
+        "in_range": false,
+        "period": 3.0,
+        "power": 2.5472992626758036e-07
+      },
+      {
+        "cycles": 41,
+        "in_range": false,
+        "period": 2.926829268292683,
+        "power": 1.221010122372582e-06
+      },
+      {
+        "cycles": 42,
+        "in_range": false,
+        "period": 2.857142857142857,
+        "power": 7.069048628633239e-08
+      },
+      {
+        "cycles": 43,
+        "in_range": false,
+        "period": 2.7906976744186047,
+        "power": 5.616582849897208e-07
+      },
+      {
+        "cycles": 44,
+        "in_range": false,
+        "period": 2.727272727272727,
+        "power": 3.3952553005899505e-08
+      },
+      {
+        "cycles": 45,
+        "in_range": false,
+        "period": 2.6666666666666665,
+        "power": 1.6295829797231898e-06
+      },
+      {
+        "cycles": 46,
+        "in_range": false,
+        "period": 2.608695652173913,
+        "power": 5.259441443643156e-07
+      },
+      {
+        "cycles": 47,
+        "in_range": false,
+        "period": 2.5531914893617023,
+        "power": 1.704857658512594e-06
+      },
+      {
+        "cycles": 48,
+        "in_range": false,
+        "period": 2.5,
+        "power": 1.0229312945981864e-07
+      },
+      {
+        "cycles": 49,
+        "in_range": false,
+        "period": 2.4489795918367347,
+        "power": 7.737444887914517e-07
+      },
+      {
+        "cycles": 50,
+        "in_range": false,
+        "period": 2.4,
+        "power": 2.5252518257043416e-06
+      },
+      {
+        "cycles": 51,
+        "in_range": false,
+        "period": 2.3529411764705883,
+        "power": 1.2886601473413399e-06
+      },
+      {
+        "cycles": 52,
+        "in_range": false,
+        "period": 2.3076923076923075,
+        "power": 3.3081782246338535e-06
+      },
+      {
+        "cycles": 53,
+        "in_range": false,
+        "period": 2.2641509433962264,
+        "power": 9.766337552854713e-07
+      },
+      {
+        "cycles": 54,
+        "in_range": false,
+        "period": 2.2222222222222223,
+        "power": 3.911745994564338e-08
+      },
+      {
+        "cycles": 55,
+        "in_range": false,
+        "period": 2.1818181818181817,
+        "power": 6.068318991353502e-07
+      },
+      {
+        "cycles": 56,
+        "in_range": false,
+        "period": 2.142857142857143,
+        "power": 3.95149889462361e-07
+      },
+      {
+        "cycles": 57,
+        "in_range": false,
+        "period": 2.1052631578947367,
+        "power": 2.3911849970075554e-07
+      },
+      {
+        "cycles": 58,
+        "in_range": false,
+        "period": 2.0689655172413794,
+        "power": 2.1654611798658609e-07
+      },
+      {
+        "cycles": 59,
+        "in_range": false,
+        "period": 2.0338983050847457,
+        "power": 3.1708534836144304e-07
+      },
+      {
+        "cycles": 60,
+        "in_range": false,
+        "period": 2.0,
+        "power": 2.151440959164359e-07
+      }
+    ],
+    "variance_share_first_ten": [
+      0.268292,
+      0.148844,
+      0.073893,
+      0.029707,
+      0.027036,
+      0.020264,
+      0.012996,
+      0.012424,
+      0.01039,
+      0.009516
+    ],
+    "wavelength_chars": 40.0
+  }
+}

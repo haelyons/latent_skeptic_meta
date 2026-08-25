@@ -1,0 +1,54 @@
+{
+  "cell": {
+    "arm": "ratio_gap",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED",
+  "decision_rule": "Over the probe windows whose character-count labelling cleared its own shuffle draws, the largest gap between any two period-to-width ratios must be at most 0.1. Larger, together with a period gap above 10 characters, rules out a fixed proportion as well.",
+  "env": {
+    "git_rev": null,
+    "host": "132-226-88-169",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T13:30:52+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592594,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v3.json",
+      "present": true,
+      "sha256": "05db25f7a97d"
+    },
+    {
+      "bytes": 18266,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "72da78cd8de2"
+    },
+    {
+      "bytes": 2998,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3_1.md",
+      "present": true,
+      "sha256": "4578bdd49cd5"
+    }
+  ],
+  "metric": "Largest gap between period-to-width ratios of any two probe windows that both cleared.",
+  "notes": "A mixed, unclassifiable result needs both this gap above 0.1 and the period gap above 10 characters. Both cutoffs are the previous rung's own guesses and are binding. This is the other half of that rung's fork. If the floor gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "at_most": 0.1
+  },
+  "values": {
+    "cleared_apertures": [],
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.879879,
+    "floor_gate_readout": 5,
+    "largest_ratio_gap": null,
+    "ratios": {},
+    "this_record_voided_by_floor_gate": false
+  }
+}

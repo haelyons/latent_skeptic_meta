@@ -1,0 +1,126 @@
+{
+  "cell": {
+    "arm": "run_summary",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "UNDETERMINED",
+  "decision_rule": "A failed floor gate reads CURVE_TOO_WEAK and voids the rung. Otherwise, if any probe window's character-count labelling cleared its shuffle draws, the previous rung's invariance fork decides: INVARIANT when all period gaps are at most 10 characters, else PROPORTIONAL when all period-to-width ratio gaps are at most 0.1, else MIXED; exactly one clearing window is UNDETERMINED by design. If only the token-position labelling cleared, the reading is TOKEN_ONLY_PATTERN and the fork is not entered. If nothing cleared, the reading is PRECONDITION_WITHOUT_RIPPLE when the number of directions reached 4 at any window, and PRECONDITION_ABSENT_AT_1P4B when it did not.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-163-70",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T15:33:01+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 21727,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD3_design_diff_triage.json",
+      "present": true,
+      "sha256": "60ef29b05769"
+    },
+    {
+      "bytes": 1669,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD3.md",
+      "present": true,
+      "sha256": "bc6b69231f64"
+    }
+  ],
+  "metric": "One call per endpoint, and the pre-registered headline reading, from the records written beside this one.",
+  "notes": "The four pre-registered readings are CURVE_TOO_WEAK, PRECONDITION_ABSENT_AT_1P4B, PRECONDITION_WITHOUT_RIPPLE, and the previous rung's fork. A failed floor makes every pattern number here uninterpretable as evidence about the model, so the whole rung is void in that case and the next rung is a human decision. A clearing under the token-position labelling alone reads TOKEN_ONLY_PATTERN and does not enter the fork. Exactly one clearing window is left undetermined by design, not decided. This rung is a single run, unlike the twice-measured rung below it, and could land differently on a repeat elsewhere. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {},
+  "values": {
+    "ambient_dimension_at_95_percent_by_aperture": {
+      "140": 3,
+      "200": 15,
+      "280": 1
+    },
+    "calibration": "CALIBRATION_OK",
+    "chosen_readout": 5,
+    "dimension_threshold": 4,
+    "endpoint_1_floor_gate": "FLOOR_CLEARED",
+    "endpoint_2_ambient_dimension": "DIMENSION_REACHES_4",
+    "endpoint_3_any_window_cleared": "ANY_WINDOW_CLEARED",
+    "endpoint_3_pattern_vs_shuffle": {
+      "140": "NULL_NOT_CLEARED",
+      "200": "NULL_NOT_CLEARED",
+      "280": "NULL_CLEARED"
+    },
+    "endpoint_4_labelling_attribution": {
+      "140": "NO_PATTERN_TO_ATTRIBUTE",
+      "200": "NO_PATTERN_TO_ATTRIBUTE",
+      "280": "CHARACTER_COUNT_DISTINGUISHED"
+    },
+    "endpoint_5_bin_correlations_width_280": "RANGE_PATTERN_UNMATCHED",
+    "floor": 0.6,
+    "floor_gate_decision": "FLOOR_CLEARED",
+    "floor_gate_floor": 0.6,
+    "floor_gate_quality_pooled_widths_20_to_140": 0.876302,
+    "floor_gate_readout": 5,
+    "generation_performed": false,
+    "headline": "UNDETERMINED",
+    "held_out_quality_pooled_widths_20_to_140": 0.876302,
+    "held_out_quality_w140_only": 0.751376,
+    "held_out_quality_w200": 0.168216,
+    "held_out_quality_w280": -0.793553,
+    "invariance_fork_ratio_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED",
+    "invariance_fork_wavelength_gap": "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED",
+    "largest_gap_chars": null,
+    "largest_ratio_gap": null,
+    "n_character_windows_cleared": 1,
+    "n_token_windows_cleared": 0,
+    "recorded_only_ambient_dimension_by_variance_target": {
+      "140": {
+        "0.9": 1,
+        "0.95": 3,
+        "0.99": 81
+      },
+      "200": {
+        "0.9": 1,
+        "0.95": 15,
+        "0.99": 127
+      },
+      "280": {
+        "0.9": 1,
+        "0.95": 1,
+        "0.99": 129
+      }
+    },
+    "recorded_only_bin_correlations_width_140": [
+      0.645989,
+      0.8196,
+      0.210583,
+      0.226552
+    ],
+    "ridge_argmax_interior_on_grid": true,
+    "ridge_strength": 1000.0,
+    "setup_check": "SETUP_OK",
+    "single_run_not_replicated": true,
+    "this_record_voided_by_floor_gate": false,
+    "token_ceiling_by_aperture": {
+      "140": 41,
+      "200": 56,
+      "280": 76
+    },
+    "token_label_observed_max_by_aperture": {
+      "140": 53,
+      "200": 68,
+      "280": 92
+    },
+    "wavelengths_chars": {
+      "140": 60.0,
+      "200": 180.0,
+      "280": 260.0
+    }
+  }
+}

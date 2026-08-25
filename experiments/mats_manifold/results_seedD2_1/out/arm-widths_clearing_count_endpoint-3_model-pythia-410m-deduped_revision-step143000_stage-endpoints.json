@@ -1,0 +1,71 @@
+{
+  "cell": {
+    "arm": "widths_clearing_count",
+    "endpoint": 3,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "NEGATIVE_NOT_CLASSIFIABLE",
+  "decision_rule": "If no probe width clears its own shuffle draws, the reading depends on the measurable-range check. Wide counts measurable gives DECISIVE_NEGATIVE. Wide counts not represented gives RANGE_NOT_REPRESENTED. A range pattern matching neither reading gives NEGATIVE_NOT_CLASSIFIABLE.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-34-21",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T13:37:07+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 24416,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "189f87148c64"
+    },
+    {
+      "bytes": 1658,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2_1.md",
+      "present": true,
+      "sha256": "50297fb3110d"
+    }
+  ],
+  "metric": "How many of the three probe widths cleared their own 200 shuffle draws.",
+  "notes": "Three tests at 5 percent each carry roughly a 14 percent chance that at least one clears by luck alone. The headline fork absorbs that, because it conditions on which widths cleared. If the validity gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "decisive_negative_requires": "0 of 3 clearing and wide counts measurable"
+  },
+  "values": {
+    "anchor_gate_band_high": 0.861,
+    "anchor_gate_band_low": 0.701,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality_pooled_widths_20_to_140": 0.781031,
+    "anchor_gate_readout": 6,
+    "cleared_apertures": [],
+    "measurable_range_decision": "RANGE_PATTERN_UNMATCHED",
+    "n_cleared": 0,
+    "per_aperture_decision": {
+      "140": "NULL_NOT_CLEARED",
+      "200": "NULL_NOT_CLEARED",
+      "280": "NULL_NOT_CLEARED"
+    },
+    "per_aperture_rank": {
+      "140": 199,
+      "200": 201,
+      "280": 34
+    },
+    "per_aperture_wavelength_chars": {
+      "140": 120.0,
+      "200": 180.0,
+      "280": 130.0
+    },
+    "this_record_voided_by_anchor_gate": false
+  }
+}

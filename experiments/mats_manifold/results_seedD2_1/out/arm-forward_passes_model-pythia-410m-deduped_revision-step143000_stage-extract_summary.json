@@ -1,0 +1,126 @@
+{
+  "cell": {
+    "arm": "forward_passes",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "extract"
+  },
+  "decision": "EXTRACT_OK",
+  "decision_rule": "All 48 documents at all 9 wrap widths must produce one forward pass each, 432 in total, with no variant flagged as reaching the context limit. Anything else is EXTRACT_INCOMPLETE and halts.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-34-21",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T13:35:52+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 24416,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "189f87148c64"
+    },
+    {
+      "bytes": 1658,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2_1.md",
+      "present": true,
+      "sha256": "50297fb3110d"
+    }
+  ],
+  "metric": "Counts from one forward pass per text variant, and the running totals saved for the fits.",
+  "notes": "Readout 0 is the embedding output and readout 24 is the last layer. This library applies the model's final normalisation to readout 24 only, which is a property of the library, recorded here rather than changed. Every one of the 432 text variants gets one deterministic forward pass. Training documents at widths 200 and 280 are read and labelled, and their positions are deliberately kept out of the fit's running totals, because the design trains on the seven widths 20 through 140 only. No text is generated at any point. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "n_variants": 432
+  },
+  "values": {
+    "degenerate_variants": {},
+    "device": "cuda",
+    "dtype": "float16",
+    "fold_assignment": {
+      "0": 0,
+      "1": 4,
+      "10": 3,
+      "11": 3,
+      "12": 1,
+      "13": 3,
+      "14": 3,
+      "15": 4,
+      "16": 4,
+      "17": 1,
+      "18": 1,
+      "19": 2,
+      "2": 3,
+      "20": 2,
+      "21": 0,
+      "22": 1,
+      "23": 0,
+      "24": 4,
+      "25": 2,
+      "26": 1,
+      "27": 0,
+      "28": 2,
+      "29": 2,
+      "3": 4,
+      "30": 2,
+      "31": 0,
+      "32": 2,
+      "33": 3,
+      "34": 1,
+      "35": 1,
+      "4": 0,
+      "5": 0,
+      "6": 0,
+      "7": 4,
+      "8": 3,
+      "9": 4
+    },
+    "held_out_rows_by_aperture": {
+      "140": 10578,
+      "200": 10451,
+      "280": 10353
+    },
+    "n_positions_by_group": {
+      "fold0": 52262,
+      "fold1": 47643,
+      "fold2": 46705,
+      "fold3": 47139,
+      "fold4": 46308,
+      "test_w100": 10748,
+      "test_w120": 10647,
+      "test_w140": 10578,
+      "test_w20": 13268,
+      "test_w200": 10451,
+      "test_w280": 10353,
+      "test_w40": 11613,
+      "test_w60": 11137,
+      "test_w80": 10897
+    },
+    "n_positions_in_fit_totals": 339749,
+    "n_positions_outside_fit_totals": 63644,
+    "n_readouts": 25,
+    "n_variants": 432,
+    "seconds": 37.1,
+    "training_widths_excluded_from_fit": [
+      200,
+      280
+    ],
+    "training_widths_in_fit": [
+      20,
+      40,
+      60,
+      80,
+      100,
+      120,
+      140
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+=== stage calibrate ===
+[calibrate] ridge strength 1000, best training readout 6, cross-validated quality 0.7750
+[calibrate] character-count window 1 to 140; token-count window 1 to 42
+[calibrate] ambient dimension 1, retained mode pairs 1, predicted spacing 140.0
+[calibrate] searched band 46 to 60 characters, 1 whole cycle counts inside it
+[record] BAND_OK -> results_seedD/out/arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+[record] BAND_OK -> results_seedD/out/arm-search_band_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+=== stage calibrate done in 21.7 s ===

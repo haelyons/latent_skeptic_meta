@@ -1,0 +1,99 @@
+{
+  "cell": {
+    "arm": "setup_check",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step128000",
+    "stage": "extract"
+  },
+  "decision": "SETUP_OK",
+  "decision_rule": "The text file's hash must equal the committed hash exactly, the revision must be one of the twelve the design names, the layer count must equal 24, and the hidden size must equal 2048. Anything else is SETUP_FAILURE and halts the run before any measurement.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T22:25:47+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    }
+  ],
+  "metric": "Committed text file hash, the revision name, and the downloaded configuration's layer count and hidden size.",
+  "notes": "Layer count 24 and hidden size 2048 are recalled from the Pythia paper, arXiv 2304.01373 table 1, and checked against this checkpoint's own download, which is authoritative. A mismatch halts before any measurement. The text is loaded exactly as committed and is never regenerated or re-wrapped; it is the same file behind the committed 0.876302 and 0.514227. The training corpus is served pre-shuffled, so the hard-wrapped share of each batch is steady and exposure grows in step with the step count. Formation timing in steps is therefore formation timing in exposure. No corpus is downloaded or inspected here, and the design forbids both. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "hidden_size": 2048,
+    "n_layers": 24,
+    "revision_one_of": [
+      "step0",
+      "step512",
+      "step1000",
+      "step2000",
+      "step4000",
+      "step8000",
+      "step16000",
+      "step32000",
+      "step64000",
+      "step96000",
+      "step128000",
+      "step143000"
+    ],
+    "stimulus_sha256": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd"
+  },
+  "values": {
+    "access_token_source": "HF_KEY_ONE",
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": null,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": null,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "baseline_decision": "BASELINE_RECORDED",
+    "baseline_quality": null,
+    "baseline_void_floor": 0.6134113999999999,
+    "context_limit": 2048,
+    "control_record_expected_sha256": "9d48648a09ad3b3fca5255aab1b989a610baf8d4f6ecca0c301dc33397e027e0",
+    "control_record_found": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+    "design_record_expected_sha256": "1de4f659006e36b5ac280543d2a9cbb6cd014cbb8d371a36ba7e5730ae6fe282",
+    "design_record_found": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+    "gate_record_expected_sha256": "604c934583da8e3fcb1b430b10409f43667cf9d6af7569baf5dc0b57e082f13a",
+    "gate_record_found": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+    "hidden_size": 2048,
+    "hidden_size_expected": 2048,
+    "measurement_order_index": 11,
+    "model_id": "EleutherAI/pythia-1.4b-deduped",
+    "n_layers": 24,
+    "n_layers_expected": 24,
+    "revision": "step128000",
+    "revision_is_one_of_the_twelve": true,
+    "stimulus_hash_match": true,
+    "stimulus_sha256": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd",
+    "stimulus_sha256_expected": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd",
+    "this_record_voided_by_a_gate": false,
+    "training_step": 128000
+  }
+}

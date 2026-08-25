@@ -1,0 +1,131 @@
+{
+ "seed": "This is the scale rung of a seed chain. Completed runs on the final checkpoint of Pythia-410m-deduped (seed D1: records/seedD_v2_design_diff_triage.json; seed D2.1: records/seedD2_1_design_diff_triage.json, TAKEAWAYS_seedD2_1.md) established with a twice-replicated instrument: a character-count curve with held-out R-squared 0.781031 (pooled over wrap widths 20-140, layer 6, fresh disjoint text; the first run measured 0.780903 on other text); ambient dimension 1 to 3 at every probe window; and NO repeating pattern (\"ripple\") separable from a 200-draw label-shuffle null at any window up to 280 characters - the observed structure ranked 199 of 200 at the well-represented window, smoother than chance. The original study's ripple (Gurnee et al., \"When Models Manipulate Manifolds\", Transformer Circuits, Oct 2025; Claude 3.5 Haiku) lived at ambient dimension about 6. The working reading: at 410m the count code is too low-dimensional for Gibbs-style ripple to exist. That makes the next decidable question the PRECONDITION, one model-size rung up.\n\nQuestion: at the final pretraining checkpoint of EleutherAI/pythia-1.4b-deduped (HuggingFace revision step143000, base model, no interventions - one cell; sweeps, other models, causal tests out of scope), measured with the same committed instrument: (1) does the count curve exist at all (a floor gate, defined below - no external anchor exists for this model, unlike 410m); (2) does the count representation's ambient dimension at the anchor layer reach 4 or more at any probe window (GUESS threshold, motivated by Haiku's 6 against 410m's 1-3 - the regime where the capacity-truncation account predicts a resolvable ripple); and (3) does any window clear the maximum-power shuffle null, with the invariance fork over clearing windows? Pythia-1.4b is chosen over externally-anchored alternatives (Gemma-2-9B, reproduction R-squared 0.868) because only Pythia releases the 154 training checkpoints and exact data order the program's parent question (equilibrium versus fossil) requires; a ripple found here can be swept, one found in Gemma cannot.\n\nSubstrate facts: 24 layers and hidden size 2048 are MEMORY (Pythia paper, arXiv 2304.01373, table 1); the downloaded config is authoritative and a mismatch halts. Same GPT-NeoX tokenizer family as 410m (MEMORY; verified on the box by tokenizer download). Layer index 0 is the embedding output; layer locations are recorded, never gated.\n\nStimuli, unchanged from seed D2.1: stimulus_linewrap_v2.json (sha256 b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd), 48 documents at nine widths, documents 0-35 train and 36-47 test. Load exactly; halt if absent. The stimulus is model-agnostic text; nothing about it is Pythia-410m-specific.\n\nInstrument, unchanged from seed D2.1 except the four corrections below: labels per seed D2 definition 1, with newline tokens landing at width plus one and EXCLUDED from every label window (the window ends at the width; stated here because seed D2.1's endpoint files never said so); ridge grid {1, 10, 100, 1000, 10000, 100000} with five-fold train-only cross-validation and the interior-argmax flag; layer selection and floor gate on held-out R-squared pooled over widths 20-140; ripple statistic at the anchor layer per window in {140, 200, 280}: per-label mean vectors, grand mean subtracted, cosine matrix, off-diagonal profile of length labels-minus-20, degree-2 polynomial detrend, maximum power over all whole-cycle periods of 4 or more in the labelling's own units; null of 200 within-document shuffles per window per labelling, clearing = rank 10 or better; seeds streamed from base seed 0 per (window, labelling), recorded; every draw's full spectrum and the observed per-label mean vectors saved into fetched results; every record carries the floor gate's decision and a voided-by-gate flag; per-bin Pearson range check at width 280 (bins of 35; low = ends at or below 140, high = starts above 175; measurable if any high bin reaches 0.5; not represented if all low bins reach 0.5 and all high bins stay under 0.2; 141-175 recorded, excluded); token-position control per window with per-window characters-per-token.\n\nCorrections, from the seed D2.1 post record (records/seedD2_1_post_elicit_qtriage.json):\n\n1. Floor gate replacing the anchor gate: no reproduction ever measured this model, so the gate is existence, not replication - held-out R-squared pooled over widths 20-140 must reach at least 0.60 at some layer (GUESS floor: the 410m instrument gave 0.78 twice; the reproduction's smaller Pythia-160m gave 0.744 and GPT-2 gave 0.363, so 0.60 separates curve-exists from curve-absent). Below it, every ripple result is void and the rung is recorded as CURVE_TOO_WEAK. This gate is weaker than 410m's replication anchor and says so.\n\n2. The token-position control's decision gains a no-signal branch: when NEITHER labelling clears its null, the decision is NO_PATTERN_TO_ATTRIBUTE - never a \"distinguished\" verdict over two absent patterns (seed D2.1's records read CHARACTER_COUNT_DISTINGUISHED at windows where nothing cleared).\n\n3. The token label window's ceiling rule is committed here (it was a runner constant): a token count enters the window only with at least 40 training positions; counts above the ceiling are excluded and the ceiling is recorded next to the observed maximum, so the cut is visible (seed D2.1 cut 41 of 50, 56 of 69, 76 of 94 without a stated rule).\n\n4. Recorded, not gated, at the anchor layer and window 140 only: within-bin Pearson correlation for bins of 35 labels across 1-140 (the same construct as the range check, on the well-represented window). Seed D2.1's width-280 bins showed fine resolution collapsing early even inside the fitted range (0.648 then 0.219, 0.153, 0.271); whether the same collapse holds at width 140 bears on whether a fine-scale ripple was ever measurable, and no run has recorded it.\n\nPre-registered readings: floor fails - CURVE_TOO_WEAK, rung void, next rung is a human decision. Floor passes and no window clears with ambient dimension still below 4 everywhere - PRECONDITION_ABSENT_AT_1P4B, the expected continuation of the 410m result. Floor passes and ambient reaches 4 or more anywhere while no window clears - PRECONDITION_WITHOUT_RIPPLE, a strike against the capacity-truncation account itself. Any window clears - the invariance fork of seed D2.1 (INVARIANT / PROPORTIONAL / MIXED / UNDETERMINED) decides, and INVARIANT reopens the checkpoint sweep on THIS model, where checkpoints exist.",
+ "design": {
+  "hypothesis": "Does Pythia-1.4b-deduped's final checkpoint clear a floor for the character-count curve, reach ambient dimension 4 or more, and show a ripple beyond chance? This tests the ripple precondition one size rung above Pythia-410m-deduped, which showed dimension 1 to 3 and no ripple.",
+  "models": [
+   "EleutherAI/pythia-1.4b-deduped, HuggingFace revision step143000 (final pretraining checkpoint), base model, no interventions - the only model in this design."
+  ],
+  "data": "stimulus_linewrap_v2.json, sha256 b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd: 48 documents spread across nine line-wrap widths; documents 0 to 35 form the 36-document training split, documents 36 to 47 form the 12-document held-out test split. Loaded exactly as-is from seed D2.1; no new stimulus is created; the run halts if the file or its hash does not match. Token-count labelling uses the model's GPT-NeoX-family tokenizer (MEMORY: same tokenizer family as Pythia-410m-deduped, verified by tokenizer download on the box).",
+  "arms": [
+   "Main cell: Pythia-1.4b-deduped, revision step143000, base weights, no interventions - the only model and checkpoint tested here.",
+   "Floor-gate arm: held-out R-squared for the character-count label, pooled over widths 20-140, scored at every layer from 0 through 24 (MEMORY: 24 transformer layers, Pythia paper table 1).",
+   "Character-count real arm: ripple statistic on true per-label mean vectors at the anchor layer, at windows 140, 200, and 280.",
+   "Character-count null control: same statistic on 200 within-document label shuffles per window, base seed 0, streamed and recorded.",
+   "Token-count real arm (position control): same ripple statistic using token-position labels; counts needing fewer than 40 training positions excluded, ceiling recorded next to the observed maximum.",
+   "Token-count null control: 200 within-document shuffles per window for the token-position labelling, same seeding scheme as the character-count control.",
+   "Range-check diagnostic at width 280: Pearson r within 35-label bins, low bins (ending at or below 140) versus high bins (starting above 175); recorded, not a gate.",
+   "Recorded-only diagnostic: Pearson r within 35-label bins across characters 1 to 140, anchor layer, window 140 only; recorded, never gates a decision."
+  ],
+  "endpoints": [
+   {
+    "metric": "Best-layer held-out R-squared for the character-count curve, pooled over wrap widths 20 to 140.",
+    "threshold": "At least 0.60 at some layer (GUESS floor, carried verbatim from the question's own reasoning).",
+    "refuting_outcome": "CURVE_TOO_WEAK: every layer stays below 0.60; the rung is recorded void and every ripple result carries the voided-by-gate flag."
+   },
+   {
+    "metric": "Ambient dimension of the count representation at the anchor layer, checked at windows 140, 200, and 280.",
+    "threshold": "Reaches 4 or more (GUESS threshold, carried verbatim from the question) at any one window.",
+    "refuting_outcome": "Dimension stays 1 to 3 at every window, extending the 410m result; combined with no window clearing, this reads PRECONDITION_ABSENT_AT_1P4B."
+   },
+   {
+    "metric": "Rank of the observed maximum ripple power among 200 within-document shuffle draws, per window, per labelling.",
+    "threshold": "Rank 10 or better out of 200 (top 5 percent), at any of the three windows, either labelling.",
+    "refuting_outcome": "No window clears for either labelling; verdict is PRECONDITION_ABSENT_AT_1P4B if dimension also never reached 4, otherwise PRECONDITION_WITHOUT_RIPPLE."
+   },
+   {
+    "metric": "Which labelling, character-count or token-count, clears its null at a given window.",
+    "threshold": "At least one of the two labellings must clear (rank 10 or better) before a distinguishing verdict is drawn.",
+    "refuting_outcome": "NO_PATTERN_TO_ATTRIBUTE: neither labelling clears at that window, so no 'distinguished' verdict is recorded."
+   },
+   {
+    "metric": "Within-bin Pearson r at width 280, low bins (ending at or below 140) versus high bins (starting above 175).",
+    "threshold": "Measurable if any high bin reaches r of 0.5 or more.",
+    "refuting_outcome": "NOT_REPRESENTED: every low bin reaches 0.5 or more while every high bin stays under 0.2, so fine resolution is absent at width 280."
+   }
+  ],
+  "sampling": "No text generation or sampling occurs: hidden states come from one deterministic forward pass per document over the 48 fixed stimulus documents (36 train, 12 held-out test) - deterministic weights mean no decode temperature applies. Ridge regression uses five-fold cross-validation restricted to the 36 training documents, grid {1, 10, 100, 1000, 10000, 100000}, interior-argmax flagged. The cross-validation fold-split seed is not fixed by the question (GUESS: fix one arbitrary seed and record it, since a different split could shift which strength wins near a fold boundary). Label-shuffle null: 200 within-document shuffles per window (140, 200, 280) per labelling (character-count, token-count) - 1200 draws total; seeds streamed from base seed 0 per window-and-labelling pair and recorded; every draw's full spectrum plus the observed per-label mean vectors are saved. n per cell: one model, one checkpoint, one cell, exactly as the question specifies.",
+  "budget_usd": 30,
+  "does_not_test": [
+   "Ripple at any checkpoint besides the final one (step143000); the 154-checkpoint sweep is a separate, later study, and a ripple could appear earlier then vanish by convergence.",
+   "Whether 0.60 and dimension-4 are the true existence and capacity boundaries; both are GUESSes carried from the question and could sit higher or lower.",
+   "Any causal role for the count representation; this is purely observational probing, not ablation or activation patching.",
+   "Generalization beyond Pythia; Gemma-2-9B and other externally-anchored models are explicitly out of scope for this cell.",
+   "Replication of this specific 1.4b result; unlike the twice-replicated 410m instrument, this is a single run and could land differently on a repeat.",
+   "The invariance-fork's internal decision rule (INVARIANT, PROPORTIONAL, MIXED, UNDETERMINED); that logic is defined in seed D2.1 and is not redefined here.",
+   "Ripple at layers other than the single floor-gate-selected anchor layer; a pattern could exist at a non-anchor layer and be missed.",
+   "Exact GPU hardware, rental price, and wall-clock hours; not fixed by the question, so the budget above is a GUESS that could be off by several times.",
+   "The cross-validation fold-split random seed; not specified by the question, so a different arbitrary choice could shift a borderline ridge-strength decision."
+  ],
+  "layers_strengths": "Layer sweep: layer 0 (embedding output) through layer 24 (final layer) - 25 probe points, a corollary of the MEMORY fact that Pythia-1.4b-deduped has 24 transformer layers and hidden size 2048 (Pythia paper, arXiv 2304.01373, table 1). The anchor layer is whichever layer posts the highest held-out R-squared pooled over widths 20-140, subject to the 0.60 floor gate. Ridge strength grid: {1, 10, 100, 1000, 10000, 100000}, chosen by five-fold train-only cross-validation; an interior-argmax flag marks whenever the winning strength sits at a grid edge instead of strictly inside it."
+ },
+ "diff": {
+  "departures": [
+   {
+    "what": "The plan never states the rule for deciding how many directions count as an 'ambient dimension.' This is the count of directions holding most of the spread in the model's activity at a given probe window. A comparable measurement on the smaller model showed this exact rule choice matters enormously. A stricter cutoff turned a result of 1 to 3 directions into 56 to 92 directions.",
+    "question": "What rule decides how many directions count toward ambient dimension? How much does the pass-or-fail answer on reaching four or more directions depend on that rule?"
+   },
+   {
+    "what": "The plan treats a repeating pattern found only in the token-position control as enough to count as a real finding. The character-count pattern, not the token-position control, is the one actually named in the main question. The token-position check was meant only as a control for attributing a finding, not as its own trigger.",
+    "question": "If only the token-position control shows a pattern beyond chance, while the character-count pattern does not, should that still count as a real finding? Should it still trigger the same follow-up study that a genuine character-count finding would?"
+   },
+   {
+    "what": "The plan sets a $30 total spending limit for this run. The original question never mentions any budget at all. This project's own past runs on the smaller model each cost well under $1.",
+    "question": "Is $30 a reasonable spending limit for this run, given the smaller model's run cost under $1? Should it be set higher or lower instead?"
+   },
+   {
+    "what": "The plan picks one arbitrary starting value for randomly splitting the training documents into five groups. That grouping choice affects which setting gets picked when fitting the statistical model. The question never specifies this starting value, and the plan itself warns a different choice could tip a close decision.",
+    "question": "Should this random splitting be fixed to one particular starting value? If so, which value, or is any arbitrary choice acceptable here?"
+   },
+   {
+    "what": "The question calls two specific checks 'recorded, not gated,' meaning they should never decide pass or fail on their own. The plan lists both of them as two of five official test outcomes, each given its own pass-or-fail wording.",
+    "question": "Should these two recorded-only checks carry formal pass-or-fail wording at all? Or should they stay purely descriptive, with no threshold attached?"
+   }
+  ]
+ },
+ "triage": {
+  "claims": [
+   {
+    "id": "design-core",
+    "grounding": {
+     "grounding": "unauditable",
+     "observed": "No pythia-1.4b artifact exists (all 40 files in results_seedD2_1/out are pythia-410m-deduped step143000). Cited prior re-derived from raw: ambient dimension by window {140:2, 200:3, 280:1} = \"1 to 3\" (matches); ripple ranks re-derived from null_spectra_*.jsonl (observed vs 200 draws): chars 199/201, 201/201, 34/201; tokens 201/201, 201/201, 201/201 -> none rank<=10, \"no ripple\" matches. 410m anchor pooled R2 = 0.781031 at readout 6.",
+     "note": "The 1.4b cell is an unrun pre-registration -- no result JSON, mean-vector npz, or null spectra were ever saved for it; the cited 410m priors (dim 1-3, no ripple, stimulus sha b0aa4255...) do reproduce exactly from raw artifacts, but two design/instrument mismatches surface: the claim's 0.60 floor gate differs from the 410m instrument's actual two-sided band 0.701-0.861, and the 410m run recorded endpoint_7 = CHARACTER_COUNT_DISTINGUISHED at all three windows even though neither labelling cleared rank 10, contradicting the claim's own NO_PATTERN_TO_ATTRIBUTE rule.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/stimulus_linewrap_v2.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/aperture-140_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-140_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-140_labels-tokens.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-200_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-200_labels-tokens.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-280_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-280_labels-tokens.jsonl"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "Decidability by construction: the floor-gate/anchor-layer selection is calibrated only on wrap widths 20\u2013140, then reused unmodified to license (or void) ripple/dimension verdicts at windows 140, 200, and 280 \u2014 a range the gate was never validated on. The verdict logic (voided-by-gate on floor failure; PRECONDITION_ABSENT_AT_1P4B when dimension+ripple both fail) is pre-wired to collapse to the same null-precondition label regardless of whether real structure exists at the untested wider windows, and the identical protocol/thresholds are carried verbatim from the 410m run without scale recalibration.",
+      "status": "EXPLAINS",
+      "crux": "The floor-gate's tested scope (widths 20-140) does not cover the windows (140/200/280, extending to double the calibration ceiling) that its pass/fail outcome is used to gate and interpret \u2014 an H2 scope violation that lets the same narrow-range gate mechanically reproduce a \"precondition absent\" verdict across model scales independent of true 1.4b representational capacity."
+     },
+     {
+      "confound": "Coordinates/scale (layer 0-24 sweep, ridge grid 1-1e5, windows 140/200/280, character-vs-token units) could make every cell degenerate or null independent of whether a real count-representation signal exists in Pythia-1.4b.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the actual per-layer held-out R\u00b2 surface and ridge-strength argmax distribution show real, layer-varying signal (interior argmax, R\u00b2 rising and falling across layers/widths) versus a flat near-zero surface with edge-clipped ridge strengths, which would indicate the floor-gate failure is a scale artifact rather than a genuine absence of the count representation."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "floor-gate and anchor-layer selection scored separately per width-window (20-140 vs 140/200/280) rather than pooled-then-extrapolated, to test whether the gate outcome and anchor layer choice change when calibrated on the actual windows being probed.",
+     "diagnostic reporting per-layer R\u00b2 curve, per-layer activation-norm scale, and interior-argmax-flag rate across the ridge grid {1,10,100,1000,10000,100000} for the character-count floor-gate arm, to distinguish a genuinely flat/degenerate signal from one suppressed by unnormalized layer scale or a clipped ridge grid, before trusting a sub-0.60 result as PRECONDITION_ABSENT rather than CURVE_TOO_WEAK-by-artifact."
+    ],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute"
+}

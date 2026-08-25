@@ -1,0 +1,1346 @@
+{
+  "cell": {
+    "model": "meta-llama/Llama-2-13b-chat-hf",
+    "n_classes": 4,
+    "probe": "logistic_C1",
+    "readout": "last_token_reading_prompt",
+    "smoke": false,
+    "task": "ext_agebracket"
+  },
+  "decision": "RECOVERED",
+  "decision_rule": "chance = 1/n_classes; se = sqrt(chance*(1-chance)/n_test); test_acc >= chance + max(0.10, 3*se) -> RECOVERED; test_acc <= chance + 2*se -> AT_CHANCE; else INDETERMINATE; mean permuted-label test_acc must lie within chance +/- max(0.05, 3*se), else PERM_ANOMALY (readout instrument invalid for this task)",
+  "env": {
+    "git_rev": null,
+    "host": "150-136-67-129",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T16:15:08+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1786340,
+      "n_items": 6068,
+      "path": "dataset.jsonl",
+      "present": true,
+      "sha256": "8a67e05589e5"
+    },
+    {
+      "bytes": 1578,
+      "n_items": null,
+      "path": "dataset_manifest.json",
+      "present": true,
+      "sha256": "2d9add0bd6fa"
+    },
+    {
+      "bytes": 4674,
+      "n_items": null,
+      "path": "PREREG.md",
+      "present": true,
+      "sha256": "c11e591575f3"
+    },
+    {
+      "bytes": 31289,
+      "n_items": null,
+      "path": "convgen.py",
+      "present": true,
+      "sha256": "e13f610a65fd"
+    },
+    {
+      "bytes": 13154,
+      "n_items": null,
+      "path": "/home/ubuntu/auto_interp/run_probe_study.py",
+      "present": true,
+      "sha256": "36b63d8bcce5"
+    },
+    {
+      "bytes": 420021236,
+      "n_items": 1000,
+      "path": "out/acts_ext_agebracket.npz",
+      "present": true,
+      "sha256": "49bf629bb432"
+    }
+  ],
+  "metric": "heldout_test_accuracy_template_disjoint",
+  "notes": "classes=['b18_25', 'b26_40', 'b41_60', 'b61plus']",
+  "rows": [
+    {
+      "id": "ext_agebracket-b18_25-f09-i189",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i190",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i191",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i192",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i193",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i194",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i195",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i196",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i197",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i198",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i199",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i200",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i201",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i202",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i203",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i204",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i205",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i206",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i207",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i208",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f09-i209",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i210",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i211",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i212",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i213",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i214",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i215",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i216",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i217",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i218",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i219",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i220",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i221",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i222",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i223",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i224",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i225",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i226",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i227",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i228",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f10-i229",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i230",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i231",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i232",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i233",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i234",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i235",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i236",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i237",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i238",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i239",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i240",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i241",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i242",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i243",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i244",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i245",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i246",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i247",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i248",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b18_25-f11-i249",
+      "label": "b18_25",
+      "pred": "b18_25"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i189",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i190",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i191",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i192",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i193",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i194",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i195",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i196",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i197",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i198",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i199",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i200",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i201",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i202",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i203",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i204",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i205",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i206",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i207",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i208",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f09-i209",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i210",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i211",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i212",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i213",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i214",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i215",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i216",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i217",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i218",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i219",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i220",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i221",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i222",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i223",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i224",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i225",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i226",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i227",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i228",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f10-i229",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i230",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i231",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i232",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i233",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i234",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i235",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i236",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i237",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i238",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i239",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i240",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i241",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i242",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i243",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i244",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i245",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i246",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i247",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i248",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b26_40-f11-i249",
+      "label": "b26_40",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i189",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i190",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i191",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i192",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i193",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i194",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i195",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i196",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i197",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i198",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i199",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i200",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i201",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i202",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i203",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i204",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i205",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i206",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i207",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i208",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f09-i209",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i210",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i211",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i212",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i213",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i214",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i215",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i216",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i217",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i218",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i219",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i220",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i221",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i222",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i223",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i224",
+      "label": "b41_60",
+      "pred": "b26_40"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i225",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i226",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i227",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i228",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f10-i229",
+      "label": "b41_60",
+      "pred": "b41_60"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i230",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i231",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i232",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i233",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i234",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i235",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i236",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i237",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i238",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i239",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i240",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i241",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i242",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i243",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i244",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i245",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i246",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i247",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i248",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b41_60-f11-i249",
+      "label": "b41_60",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i189",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i190",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i191",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i192",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i193",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i194",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i195",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i196",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i197",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i198",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i199",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i200",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i201",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i202",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i203",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i204",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i205",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i206",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i207",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i208",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f09-i209",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i210",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i211",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i212",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i213",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i214",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i215",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i216",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i217",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i218",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i219",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i220",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i221",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i222",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i223",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i224",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i225",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i226",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i227",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i228",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f10-i229",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i230",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i231",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i232",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i233",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i234",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i235",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i236",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i237",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i238",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i239",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i240",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i241",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i242",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i243",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i244",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i245",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i246",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i247",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i248",
+      "label": "b61plus",
+      "pred": "b61plus"
+    },
+    {
+      "id": "ext_agebracket-b61plus-f11-i249",
+      "label": "b61plus",
+      "pred": "b61plus"
+    }
+  ],
+  "threshold": {
+    "chance": 0.25,
+    "margin": "max(0.10, 3*se)"
+  },
+  "values": {
+    "best_layer": 20,
+    "chance": 0.25,
+    "n_test": 244,
+    "n_train": 588,
+    "n_val": 168,
+    "perm_test_accs": [
+      0.30327868852459017,
+      0.21721311475409835
+    ],
+    "test_acc": 0.9057377049180327,
+    "val_acc_best": 0.7142857142857143,
+    "val_acc_per_layer": [
+      0.25,
+      0.24404761904761904,
+      0.3392857142857143,
+      0.44642857142857145,
+      0.4583333333333333,
+      0.44047619047619047,
+      0.3630952380952381,
+      0.44047619047619047,
+      0.4166666666666667,
+      0.5654761904761905,
+      0.5773809523809523,
+      0.6666666666666666,
+      0.6845238095238095,
+      0.7023809523809523,
+      0.6964285714285714,
+      0.6726190476190477,
+      0.6726190476190477,
+      0.6666666666666666,
+      0.6785714285714286,
+      0.6547619047619048,
+      0.7142857142857143,
+      0.6607142857142857,
+      0.6607142857142857,
+      0.6726190476190477,
+      0.6547619047619048,
+      0.6607142857142857,
+      0.6666666666666666,
+      0.6785714285714286,
+      0.6726190476190477,
+      0.6726190476190477,
+      0.6785714285714286,
+      0.7083333333333334,
+      0.7083333333333334,
+      0.7023809523809523,
+      0.6904761904761905,
+      0.6964285714285714,
+      0.7083333333333334,
+      0.7023809523809523,
+      0.7023809523809523,
+      0.7023809523809523,
+      0.6726190476190477
+    ]
+  }
+}

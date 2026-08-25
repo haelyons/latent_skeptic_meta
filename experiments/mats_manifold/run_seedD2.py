@@ -1,0 +1,2378 @@
+#!/usr/bin/env python3
+"""Measures a character-count curve and a periodic wobble at three probe widths.
+
+WHAT THIS RUNS. One public checkpoint of one open language model reads fixed,
+committed text. The text is prose hard-wrapped at nine line widths. At every token
+position we know how many characters have passed since the last line break. A ridge
+regression (a linear fit with a penalty on large weights) predicts that count from the
+model's internal vector at that position. We report the fit quality on held-out
+documents, one number per layer. Then, at the best-scoring layer, we look for a faint
+periodic pattern in the similarity structure of the per-count average vectors. That
+pattern is the wobble. A label-shuffling comparison says whether it beats chance.
+
+THE QUESTION. The wobble is measured at three probe widths: 140, 200 and 280
+characters. If a wobble beats chance at two or more widths, its period is compared
+across them. A period that stays fixed in characters is a property of the model. A
+period that grows in step with the probe width is an artefact of the probe. If no
+width beats chance, that is a negative, unless a separate check shows the wide probes
+could not have measured anything at all.
+
+The complete specification is the design object inside
+records/seedD2_design_diff_triage.json. This file implements it and changes nothing.
+Every constant the design marks as a guess is treated as binding here. The five
+committed answers in records/GATE_COMMIT_seedD2.md are treated the same way.
+
+NO TEXT IS GENERATED ANYWHERE. The design says so in one line: "No text is generated
+by the model here; every measurement reads hidden activations from one deterministic
+forward pass per document per wrap width." So this file has no sampling settings, no
+decoding, and no answer parsing. The build brief that produced this file asks for a
+generation stage, a reasoning-tag parser, and an answer extractor. Those three things
+cannot exist for this experiment. That brief is a fixed template shared with a
+different, text-generating project (pipeline.js line 104). The three closest real
+equivalents are implemented and self-tested instead, and each is named where it is
+defined below. The same choice was made, for the same reason, by this project's
+earlier runner run_seedD.py.
+
+STAGES, in order, each runnable on its own:
+  --stage extract    checks the text file and the model, then runs one forward pass
+                     per text variant and saves what the later stages need.
+  --stage calibrate  fixes every remaining constant using training documents only,
+                     and writes that record before any held-out number is computed.
+  --stage endpoints  computes the per-layer fit, the wobble at each of the three
+                     probe widths, the shuffle comparisons, the token-position
+                     control, and the measurable-range check.
+  --stage all        the three above, in order.
+  --selftest         uses only the Python standard library, loads no model, needs no
+                     graphics card, and exits non-zero on any failure.
+
+Only one model exists in this experiment, so only one is ever resident. It is loaded
+once, in the first stage, and released before any analysis stage runs.
+
+Every result stage writes one self-describing record through provenance.py. A record
+carries its own identity, its inputs with content hashes, its measurement, the rule
+that judges it, and the resulting call. Every rule text in this file is written before
+any value is known.
+
+A second run of this script on the same rented box is a rerun of one instrument. It is
+not a replication. No output here calls it one.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import math
+import os
+import sys
+import time
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+
+
+# ---------------------------------------------------------------------------
+# Constants. The source of each is marked.
+#   DESIGN  the committed design object.
+#   GATE    the committed answer in records/GATE_COMMIT_seedD2.md.
+#   MEMORY  recalled from a paper, and checked against the download.
+#   GUESS   fixed by this file because the design leaves it to implementation.
+# ---------------------------------------------------------------------------
+
+MODEL_ID = "EleutherAI/pythia-410m-deduped"          # DESIGN
+REVISION = "step143000"                              # DESIGN, final pretraining checkpoint
+EXPECT_LAYERS = 24                                   # MEMORY, Pythia paper arXiv 2304.01373 table 1
+EXPECT_HIDDEN = 1024                                 # MEMORY, same table
+STIMULUS_SHA256 = "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd"   # DESIGN
+DESIGN_SHA256 = "bca0ff7b59bfa11c72d2009c3f601ec5139c784105a31c7aa23a9692d3dc9593"      # this record, hashed on the workstation 2026-08-21
+
+WIDTHS = [20, 40, 60, 80, 100, 120, 140, 200, 280]   # DESIGN, all nine wrap widths
+APERTURES = [140, 200, 280]                          # DESIGN, the three probe widths
+N_DOCS = 48                                          # DESIGN
+N_TRAIN_DOCS = 36                                    # DESIGN, documents 0 to 35
+N_TEST_DOCS = 12                                     # DESIGN, documents 36 to 47
+
+RIDGE_GRID = [1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0]   # GATE answer 2, binding
+N_FOLDS = 5                                          # GUESS, five-way split of the training documents
+SEED = 0                                             # DESIGN, the one fixed seed
+N_DRAWS = 200                                        # DESIGN, shuffle draws per width per labelling
+NULL_RANK_MAX = 10                                   # DESIGN, top 5 percent of 200 draws
+
+ANCHOR_LO = 0.701                                    # DESIGN, 0.781 minus 0.08
+ANCHOR_HI = 0.861                                    # DESIGN, 0.781 plus 0.08
+PRIOR_ANCHOR = 0.780903                              # the earlier run's held-out fit quality
+PRIOR_LAYER = 6                                      # the earlier run's best layer
+
+INVARIANCE_MAX_GAP_CHARS = 10.0                      # DESIGN GUESS, fixed-period rule
+PROPORTION_MAX_RATIO_GAP = 0.1                       # DESIGN GUESS, fixed-proportion rule
+CONFOUND_MARGIN_CHARS = 3.0                          # DESIGN GUESS, token-position control margin
+
+BIN_WIDTH = 35                                       # DESIGN, width of a label bin
+N_BINS = 8                                           # DESIGN, eight bins covering labels 1 to 280
+RANGE_LOW_FLOOR = 0.5                                # DESIGN GUESS, low bins must exceed this
+RANGE_HIGH_CEIL = 0.3                                # DESIGN GUESS, high bins must fall below this
+LOW_BIN_MAX_LABEL = 140                              # DESIGN, a bin counts as low if it ends at or below this
+HIGH_BIN_MIN_LABEL = 150                             # DESIGN, a bin counts as high if it starts above this
+
+PERIOD_MIN = 4                                       # DESIGN, shortest period the statistic considers
+DETREND_DEGREE = 2                                   # DESIGN, the best-fitting degree-2 polynomial
+VARIANCE_TARGET = 0.95                               # GUESS, the 95 percent convention used by the earlier run
+MIN_ENTRIES_PER_DELTA = 20                           # GUESS, a distance needs 20 matrix entries to be used
+MIN_TRAIN_POSITIONS_PER_LABEL = 20                   # GUESS, a character label needs 20 training positions
+MAX_WINDOW_START = 8                                 # GUESS, how far above 1 a label window may start
+TOKEN_WINDOW_MIN_TRAIN = 40                          # GUESS, a token count needs 40 training positions
+REPEAT_BLOCK_MAX = 8                                 # GUESS, longest repeating block the degenerate check looks for
+REPEAT_MIN_RUNS = 6                                  # GUESS, that many back-to-back repeats counts as degenerate
+CONTEXT_LIMIT_FALLBACK = 2048                        # MEMORY, Pythia context length; the download overrides it
+
+RESULTS_DIR_DEFAULT = "results_seedD2"
+
+RERUN_NOTE = ("A further run of this script on the same box is a rerun of the same "
+              "instrument, not a replication.")
+
+
+class Halt(Exception):
+    """Raised where the design says halt. Never caught to keep a run going."""
+
+
+# ---------------------------------------------------------------------------
+# Part 1. The position labeller.
+#
+# This is the real equivalent of the reasoning-tag parser the build template asks
+# for. There, an opening marker can be missing because a chat template already
+# emitted it, so only the closing marker appears in the text. The same shape occurs
+# here twice, and the self-test covers both:
+#   - the first line of a document has no line break in front of it, so its opening
+#     boundary is implied rather than present in the text;
+#   - one token can swallow a line break, so the boundary sits inside a unit rather
+#     than between two units.
+# Getting either wrong shifts every label on a line and silently moves the whole
+# measurement. So this code is small, pure, and tested.
+# ---------------------------------------------------------------------------
+
+def line_columns(text: str):
+    """For each character, its column on its line, and its line number.
+
+    A character's column is the count of characters on its line up to and including
+    itself. It is 1 for the first character of a line. A line-break character belongs
+    to the line it ends, and takes the next column after the last visible character.
+    Counting restarts at zero after each line break. This is definition 1 of the
+    design.
+    """
+    cols = [0] * len(text)
+    lines = [0] * len(text)
+    col = 0
+    line = 0
+    for i, ch in enumerate(text):
+        col += 1
+        cols[i] = col
+        lines[i] = line
+        if ch == "\n":
+            col = 0
+            line += 1
+    return cols, lines
+
+
+def labels_for_spans(text: str, spans):
+    """Labels for token positions, from character ranges over the same text.
+
+    `spans` holds one (start, end) character range per token, in reading order, as a
+    tokenizer that reports offsets gives them. Returns three lists:
+      character labels: the column of the token's last character;
+      token labels: how many tokens have ended on that line so far, counting this one;
+      line numbers: which line the token's last character sits on.
+    A token with an empty range gets None in all three, and is never counted.
+    """
+    cols, lines = line_columns(text)
+    n = len(text)
+    char_labels = []
+    token_labels = []
+    line_nums = []
+    per_line_counts = {}
+    for (start, end) in spans:
+        if end <= start or end > n or start < 0:
+            char_labels.append(None)
+            token_labels.append(None)
+            line_nums.append(None)
+            continue
+        last = end - 1
+        line = lines[last]
+        per_line_counts[line] = per_line_counts.get(line, 0) + 1
+        char_labels.append(cols[last])
+        token_labels.append(per_line_counts[line])
+        line_nums.append(line)
+    return char_labels, token_labels, line_nums
+
+
+# ---------------------------------------------------------------------------
+# Part 2. The degenerate-input detector.
+#
+# This is the real equivalent of the degenerate-generation detector the template asks
+# for. Its two cases map onto the only two that can occur here:
+#   - the length-cap case: a text variant whose token count reaches the model's
+#     context limit, so the committed text would be silently cut short;
+#   - the repeated-sequence case: a text variant holding the same short block of
+#     tokens many times over, which would flood one label with copies of one vector.
+# ---------------------------------------------------------------------------
+
+def max_block_repeats(seq, max_block: int = REPEAT_BLOCK_MAX) -> int:
+    """Largest number of back-to-back copies of any block of 1 to max_block items."""
+    best = 1
+    n = len(seq)
+    for b in range(1, max_block + 1):
+        i = 0
+        while i + b <= n:
+            if i >= b and seq[i - b:i] == seq[i:i + b]:
+                i += 1                      # already inside a run counted earlier
+                continue
+            runs = 1
+            j = i + b
+            while j + b <= n and seq[j:j + b] == seq[i:i + b]:
+                runs += 1
+                j += b
+            if runs > best:
+                best = runs
+            i += 1
+    return best
+
+
+def degenerate_flags(n_tokens: int, context_limit: int, token_texts) -> list:
+    """Names of the degenerate conditions present. An empty list means clean."""
+    flags = []
+    if n_tokens >= context_limit:
+        flags.append("token_cap")
+    if max_block_repeats(list(token_texts)) >= REPEAT_MIN_RUNS:
+        flags.append("repeated_sequence")
+    return flags
+
+
+# ---------------------------------------------------------------------------
+# Part 3. Exact-match checks and exact slot assignment.
+#
+# This is the real equivalent of the exact-match answer extraction the template asks
+# for. Nothing here is fuzzy, normalised, or rounded. Three things must match
+# exactly: the text file's content hash, the downloaded configuration's layer count
+# and width, and the whole-number label of a position against a slot of the
+# similarity matrix. An off-by-one in the last one would move every row of that
+# matrix with no error anywhere.
+# ---------------------------------------------------------------------------
+
+def sha256_file(path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def exact_hash_match(actual: str, expected: str) -> bool:
+    return isinstance(actual, str) and isinstance(expected, str) and actual == expected
+
+
+def exact_config_match(n_layers, hidden_size) -> bool:
+    return n_layers == EXPECT_LAYERS and hidden_size == EXPECT_HIDDEN
+
+
+def label_slot(label, window_lo: int, n_labels: int):
+    """Slot index of a label inside a window, or None when it falls outside.
+
+    Membership is exact whole-number equality against one of the window's values. A
+    fractional value, a true-or-false value, and an absent value are never accepted.
+    """
+    if label is None or isinstance(label, bool) or not isinstance(label, int):
+        return None
+    off = label - window_lo
+    if 0 <= off < n_labels:
+        return off
+    return None
+
+
+def slot_counts(labels, window_lo: int, n_labels: int):
+    """Per-slot position counts, and the slot of every label (None when outside)."""
+    counts = [0] * n_labels
+    slots = []
+    for lab in labels:
+        s = label_slot(lab, window_lo, n_labels)
+        slots.append(s)
+        if s is not None:
+            counts[s] += 1
+    return counts, slots
+
+
+def window_from_counts(counts_by_label, top: int, min_count: int,
+                       max_start: int = MAX_WINDOW_START):
+    """Lowest window start whose labels up to `top` all reach min_count.
+
+    The lowest possible label is 1, because a label counts the characters up to and
+    including a token's last character. The lowest column of a line is often thin,
+    since it needs a one-character opening token. So the start may sit a little above
+    1, and how far above is recorded. The top of the window is the probe width
+    itself, which is what makes the width comparison meaningful.
+    """
+    for lo in range(1, max_start + 2):
+        if all(counts_by_label.get(v, 0) >= min_count for v in range(lo, top + 1)):
+            return lo
+    return None
+
+
+def token_window_top(counts_by_label, min_count: int = TOKEN_WINDOW_MIN_TRAIN) -> int:
+    """Highest token count whose values from 1 upward all reach min_count.
+
+    A token count occurs at most once per line, so the highest counts are reached by
+    only a handful of the longest lines. The minimum here is set well above the
+    character-label minimum for that reason: the held-out documents are a third as
+    many, and a token count carried by only a few training lines can be missing from
+    them altogether, which would leave its average vector undefined.
+    """
+    top = 0
+    while counts_by_label.get(top + 1, 0) >= min_count:
+        top += 1
+    return top
+
+
+def label_bins(bin_width: int = BIN_WIDTH, n_bins: int = N_BINS):
+    """The eight label bins of the measurable-range check, as (low, high) pairs."""
+    return [(1 + bin_width * i, bin_width * (i + 1)) for i in range(n_bins)]
+
+
+def bin_role(lo: int, hi: int) -> str:
+    """Whether a bin is a low bin, a high bin, or straddles the boundary.
+
+    The committed answer 4 in the gate file settles the bin from 141 to 175: it is
+    recorded and left out of the decision, because it holds labels on both sides of
+    150. Four bins end at or below 140, and three bins start above 150.
+    """
+    if hi <= LOW_BIN_MAX_LABEL:
+        return "low"
+    if lo > HIGH_BIN_MIN_LABEL:
+        return "high"
+    return "straddles"
+
+
+# ---------------------------------------------------------------------------
+# Part 4. The wobble statistic. Pure Python, so the self-test needs no extra
+# packages. There is no search band anywhere in this design: the statistic is the
+# largest power over every whole number of cycles whose period is at least 4 and at
+# most the profile's own length.
+# ---------------------------------------------------------------------------
+
+def offdiag_profile(matrix, max_delta: int):
+    """Mean of the entries a given distance above the diagonal, per distance.
+
+    `matrix` is a square similarity matrix as a list of rows. The distance runs from
+    1 to max_delta. This is the profile the design calls m(delta).
+    """
+    n = len(matrix)
+    if max_delta < 1 or max_delta >= n:
+        raise Halt("distance limit %r is out of range for a %d by %d matrix"
+                   % (max_delta, n, n))
+    prof = []
+    for d in range(1, max_delta + 1):
+        total = 0.0
+        count = n - d
+        row = 0
+        while row < count:
+            total += matrix[row][row + d]
+            row += 1
+        prof.append(total / count)
+    return prof
+
+
+def _solve_small(a, b):
+    """Gaussian elimination with partial pivoting, for a few unknowns."""
+    n = len(b)
+    m = [list(a[i]) + [b[i]] for i in range(n)]
+    for c in range(n):
+        piv = max(range(c, n), key=lambda r: abs(m[r][c]))
+        if abs(m[piv][c]) < 1e-300:
+            raise Halt("the detrend fit has no unique solution")
+        m[c], m[piv] = m[piv], m[c]
+        for r in range(n):
+            if r == c:
+                continue
+            f = m[r][c] / m[c][c]
+            for k in range(c, n + 1):
+                m[r][k] -= f * m[c][k]
+    return [m[i][n] / m[i][i] for i in range(n)]
+
+
+def poly_detrend(y, degree: int = DETREND_DEGREE):
+    """Subtract the best-fitting polynomial in distance, of the given degree.
+
+    The design fixes this at degree 2 and rejects a moving average. Subtracting a
+    moving average of window W removes every period longer than about W, which is
+    where this study predicts the pattern lies. A degree-2 polynomial removes the
+    profile's slow decay and its curvature, and leaves every period the statistic
+    ranges over.
+    """
+    n = len(y)
+    if n < degree + 2:
+        raise Halt("a profile of length %d is too short to detrend at degree %d"
+                   % (n, degree))
+    ts = [(2.0 * i / (n - 1)) - 1.0 for i in range(n)]
+    powers = [[t ** p for p in range(degree + 1)] for t in ts]
+    a = [[0.0] * (degree + 1) for _ in range(degree + 1)]
+    b = [0.0] * (degree + 1)
+    for i in range(n):
+        pi = powers[i]
+        for r in range(degree + 1):
+            b[r] += pi[r] * y[i]
+            for c in range(degree + 1):
+                a[r][c] += pi[r] * pi[c]
+    coef = _solve_small(a, b)
+    return [y[i] - sum(coef[p] * powers[i][p] for p in range(degree + 1)) for i in range(n)]
+
+
+_TRIG_CACHE = {}
+
+
+def _trig_table(n: int):
+    tab = _TRIG_CACHE.get(n)
+    if tab is None:
+        tab = []
+        for k in range(1, n // 2 + 1):
+            row = []
+            for t in range(n):
+                ang = 2.0 * math.pi * k * t / n
+                row.append((math.cos(ang), math.sin(ang)))
+            tab.append(row)
+        _TRIG_CACHE[n] = tab
+    return tab
+
+
+def dft_power(y):
+    """Power at each whole number of cycles across the profile.
+
+    Returns a dictionary from cycle count to power. The zero-cycle term is dropped,
+    because the detrend has already removed the profile's mean and slope. The period
+    of a cycle count k is the profile length divided by k.
+    """
+    n = len(y)
+    tab = _trig_table(n)
+    out = {}
+    for idx, row in enumerate(tab):
+        k = idx + 1
+        re = 0.0
+        im = 0.0
+        for t in range(n):
+            c, s = row[t]
+            re += y[t] * c
+            im -= y[t] * s
+        out[k] = (re * re + im * im) / (n * n)
+    return out
+
+
+def periods_in_range(length: int, min_period: int = PERIOD_MIN):
+    """Cycle counts whose period is at least min_period, longest period first.
+
+    The longest is the profile length itself, at one cycle. The design names this
+    range explicitly, and removes the search band the earlier run used.
+    """
+    out = []
+    for k in range(1, length // 2 + 1):
+        period = length / k
+        if period >= min_period - 1e-9:
+            out.append((k, period))
+    return out
+
+
+def max_power_stat(matrix, max_delta: int, degree: int = DETREND_DEGREE,
+                   min_period: int = PERIOD_MIN, keep_profile: bool = False):
+    """Largest power and its period, from one similarity matrix.
+
+    Returns a dictionary. "max_power" is the largest power at any period from
+    min_period up to the profile length. "wavelength" is that period, in the units of
+    the matrix's own labels. When two periods tie on power, the longer one wins, so
+    the answer never depends on ordering. The whole spectrum is returned every time,
+    which is what the design requires to be saved for each shuffle draw.
+    """
+    prof = offdiag_profile(matrix, max_delta)
+    det = poly_detrend(prof, degree)
+    power = dft_power(det)
+    usable = periods_in_range(len(det), min_period)
+    if not usable:
+        raise Halt("a profile of length %d carries no period of at least %d"
+                   % (len(det), min_period))
+    best_k, best_period = usable[0]
+    best_power = power[best_k]
+    for k, period in usable[1:]:
+        if power[k] > best_power:
+            best_k, best_period, best_power = k, period, power[k]
+    spectrum = [{"cycles": k, "period": len(det) / k, "power": power[k],
+                 "in_range": (len(det) / k) >= min_period - 1e-9}
+                for k in sorted(power)]
+    out = {
+        "max_power": best_power,
+        "wavelength": best_period,
+        "cycles": best_k,
+        "n_periods_in_range": len(usable),
+        "profile_length": len(det),
+        "spectrum": spectrum,
+    }
+    if keep_profile:
+        out["profile"] = prof
+        out["detrended"] = det
+    return out
+
+
+# ---------------------------------------------------------------------------
+# Part 5. Endpoint arithmetic. Every function here is a pure function of numbers, so
+# the self-test can plant values whose correct call is known in advance.
+# ---------------------------------------------------------------------------
+
+RULE_SETUP = (
+    "The text file's hash must equal the committed hash exactly, the layer count must "
+    "equal 24, and the hidden size must equal 1024. Anything else is SETUP_FAILURE "
+    "and halts the run before any measurement."
+)
+RULE_EXTRACT = (
+    "All 48 documents at all 9 wrap widths must produce one forward pass each, 432 in "
+    "total, with no variant flagged as reaching the context limit. Anything else is "
+    "EXTRACT_INCOMPLETE and halts."
+)
+RULE_CALIBRATION = (
+    "Every one of the three probe widths must yield a label window whose profile is "
+    "long enough to detrend at degree 2 and to carry at least one period of 4 or "
+    "more, under both labellings. Anything else is CALIBRATION_UNUSABLE and halts "
+    "before any held-out number is computed."
+)
+RULE_ANCHOR = (
+    "Held-out fit quality at width 140, at the best layer, must lie between 0.701 and "
+    "0.861 inclusive. Outside that is ANCHOR_OUT_OF_BAND: an instrument fault that "
+    "voids every wobble result of this run and blocks any next run. It is not "
+    "evidence about the model."
+)
+RULE_CLEARED = (
+    "The rank of the observed largest power among 200 label-shuffled draws, counting "
+    "the observed value itself, must be 10 or better. That is the top 5 percent. "
+    "Worse is NULL_NOT_CLEARED, meaning no separable wobble at that probe width."
+)
+RULE_COUNT = (
+    "If no probe width clears its own shuffle draws, the reading depends on the "
+    "measurable-range check. Wide counts measurable gives DECISIVE_NEGATIVE. Wide "
+    "counts not represented gives RANGE_NOT_REPRESENTED. A range pattern matching "
+    "neither reading gives NEGATIVE_NOT_CLASSIFIABLE."
+)
+RULE_WAVELENGTH_GAP = (
+    "Over the probe widths that cleared their own shuffle draws, the largest gap "
+    "between any two periods, in characters, must be at most 10. Larger rules out a "
+    "single fixed period. Fewer than two widths clearing leaves the gap undefined."
+)
+RULE_RATIO_GAP = (
+    "Over the probe widths that cleared their own shuffle draws, the largest gap "
+    "between any two period-to-width ratios must be at most 0.1. Larger, together "
+    "with a period gap above 10 characters, rules out a fixed proportion as well."
+)
+RULE_RANGE = (
+    "At width 280, held-out fit quality is measured inside each bin of 35 label "
+    "values, against that bin's own spread. Any bin starting above label 150 that "
+    "exceeds 0.3 means wide counts ARE measurable. Otherwise, if all four bins "
+    "ending at or below 140 exceed 0.5 and all three bins starting above 150 fall "
+    "below 0.3, wide counts are NOT represented. Any other pattern is "
+    "RANGE_PATTERN_UNMATCHED. The bin from 141 to 175 is recorded and excluded."
+)
+RULE_CONFOUND = (
+    "At a probe width, the character-count wobble is credited over token position "
+    "when the two periods differ by more than 3 characters, or when exactly one of "
+    "the two labellings clears its own shuffle draws. Otherwise the wobble is "
+    "CONFOUNDED_WITH_TOKEN_POSITION at that width."
+)
+RULE_HEADLINE = (
+    "A failed anchor voids everything. Otherwise, two or more clearing widths are "
+    "classified as INVARIANT when all period gaps are at most 10 characters, else "
+    "PROPORTIONAL when all period-to-width ratio gaps are at most 0.1, else MIXED. "
+    "Exactly one clearing width is UNDETERMINED by design. None clearing defers to "
+    "the measurable-range check."
+)
+
+
+def decide_setup(hash_ok: bool, n_layers, hidden_size) -> str:
+    if hash_ok and exact_config_match(n_layers, hidden_size):
+        return "SETUP_OK"
+    return "SETUP_FAILURE"
+
+
+def decide_anchor(r2) -> str:
+    if r2 is None or r2 != r2:                        # absent, or not a number
+        return "ANCHOR_OUT_OF_BAND"
+    return "ANCHOR_IN_BAND" if ANCHOR_LO <= r2 <= ANCHOR_HI else "ANCHOR_OUT_OF_BAND"
+
+
+def null_rank(observed, draws) -> int:
+    """Place of the observed value among the draws plus itself, largest first."""
+    return 1 + sum(1 for v in draws if v >= observed)
+
+
+def decide_cleared(rank: int) -> str:
+    return "NULL_CLEARED" if rank <= NULL_RANK_MAX else "NULL_NOT_CLEARED"
+
+
+def decide_range(low_r2s, high_r2s) -> str:
+    if any(r is None for r in list(low_r2s) + list(high_r2s)):
+        return "RANGE_CHECK_INCOMPLETE"
+    if any(r > RANGE_HIGH_CEIL for r in high_r2s):
+        return "WIDE_COUNTS_MEASURABLE"
+    if all(r > RANGE_LOW_FLOOR for r in low_r2s) and all(r < RANGE_HIGH_CEIL for r in high_r2s):
+        return "WIDE_COUNTS_NOT_REPRESENTED"
+    return "RANGE_PATTERN_UNMATCHED"
+
+
+def decide_count(n_cleared: int, range_decision: str) -> str:
+    if n_cleared > 0:
+        return "AT_LEAST_ONE_CLEARED"
+    if range_decision == "WIDE_COUNTS_MEASURABLE":
+        return "DECISIVE_NEGATIVE"
+    if range_decision == "WIDE_COUNTS_NOT_REPRESENTED":
+        return "RANGE_NOT_REPRESENTED"
+    return "NEGATIVE_NOT_CLASSIFIABLE"
+
+
+def pairwise_gaps(cleared):
+    """Largest period gap and largest ratio gap over cleared widths.
+
+    `cleared` is a list of (probe width, period in characters) pairs. Returns
+    (None, None) when fewer than two widths cleared, so no pair exists.
+    """
+    if len(cleared) < 2:
+        return None, None
+    gap = 0.0
+    ratio_gap = 0.0
+    for i in range(len(cleared)):
+        for j in range(i + 1, len(cleared)):
+            a_w, a_l = cleared[i]
+            b_w, b_l = cleared[j]
+            gap = max(gap, abs(a_l - b_l))
+            ratio_gap = max(ratio_gap, abs(a_l / float(a_w) - b_l / float(b_w)))
+    return gap, ratio_gap
+
+
+def decide_wavelength_gap(gap) -> str:
+    if gap is None:
+        return "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED"
+    return ("WAVELENGTH_GAP_WITHIN_10" if gap <= INVARIANCE_MAX_GAP_CHARS
+            else "WAVELENGTH_GAP_EXCEEDS_10")
+
+
+def decide_ratio_gap(gap) -> str:
+    if gap is None:
+        return "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED"
+    return ("RATIO_GAP_WITHIN_0.1" if gap <= PROPORTION_MAX_RATIO_GAP
+            else "RATIO_GAP_EXCEEDS_0.1")
+
+
+def decide_invariance(cleared) -> str:
+    """The headline fork over the probe widths that cleared their own draws.
+
+    A single fixed period is checked first, because it is the stronger claim about
+    the model and the design lists it first. Both rules can hold at once when the
+    periods sit close together; that case is recorded alongside the call.
+    """
+    if not cleared:
+        return "NO_WIDTH_CLEARED"
+    if len(cleared) == 1:
+        return "UNDETERMINED"
+    gap, ratio_gap = pairwise_gaps(cleared)
+    if gap <= INVARIANCE_MAX_GAP_CHARS:
+        return "INVARIANT"
+    if ratio_gap <= PROPORTION_MAX_RATIO_GAP:
+        return "PROPORTIONAL"
+    return "MIXED"
+
+
+def decide_confound(wl_chars, wl_token_in_chars, char_cleared, token_cleared) -> str:
+    if wl_token_in_chars is None or token_cleared is None:
+        return "TOKEN_CONTROL_NOT_COMPUTABLE"
+    if abs(wl_chars - wl_token_in_chars) > CONFOUND_MARGIN_CHARS:
+        return "CHARACTER_COUNT_DISTINGUISHED"
+    if bool(char_cleared) != bool(token_cleared):
+        return "CHARACTER_COUNT_DISTINGUISHED"
+    return "CONFOUNDED_WITH_TOKEN_POSITION"
+
+
+def decide_headline(anchor_decision: str, cleared, range_decision: str) -> str:
+    """One call for the whole run, from the calls already made."""
+    if anchor_decision != "ANCHOR_IN_BAND":
+        return "VOID_ANCHOR_FAILED"
+    if not cleared:
+        return decide_count(0, range_decision)
+    return decide_invariance(cleared)
+
+
+# ---------------------------------------------------------------------------
+# Part 6. Ridge fitting from running totals.
+#
+# Storing every internal vector of every position would need over 40 gigabytes. It is
+# not needed. A ridge fit and a fit-quality score depend on the data only through five
+# running totals per layer: the sum of outer products of the vectors, the sum of the
+# vectors, the sum of vector times label, the sum of labels, and the sum of squared
+# labels. So the first stage accumulates those, per layer, per group of documents.
+# ---------------------------------------------------------------------------
+
+def ridge_fit_from_stats(gram, vec_sum, cross, label_sum, n, alpha):
+    """Weights and offset of a ridge fit, from running totals. Needs numpy."""
+    import numpy as np
+    xbar = vec_sum / n
+    ybar = label_sum / n
+    centred_gram = gram - np.outer(vec_sum, vec_sum) / n
+    centred_cross = cross - vec_sum * (label_sum / n)
+    dim = centred_gram.shape[0]
+    weights = np.linalg.solve(centred_gram + alpha * np.eye(dim), centred_cross)
+    offset = ybar - float(weights @ xbar)
+    return weights, offset
+
+
+def r2_from_stats(weights, offset, gram, vec_sum, cross, label_sum, label_sq_sum, n):
+    """Fit quality on a group, from that group's running totals. Needs numpy."""
+    sse = (float(weights @ gram @ weights)
+           + 2.0 * offset * float(weights @ vec_sum)
+           - 2.0 * float(weights @ cross)
+           + n * offset * offset
+           - 2.0 * offset * label_sum
+           + label_sq_sum)
+    sstot = label_sq_sum - (label_sum * label_sum) / n
+    if sstot <= 0:
+        raise Halt("the held-out labels have no spread, so fit quality is undefined")
+    return 1.0 - sse / sstot, sse, sstot
+
+
+def binned_r2(pred, actual):
+    """Fit quality inside one bin, against that bin's own spread. Needs numpy."""
+    import numpy as np
+    if pred.size < 2:
+        return None, None, None
+    mean = float(np.mean(actual))
+    sse = float(np.sum((pred - actual) ** 2))
+    sstot = float(np.sum((actual - mean) ** 2))
+    if sstot <= 0:
+        return None, sse, sstot
+    return 1.0 - sse / sstot, sse, sstot
+
+
+# ---------------------------------------------------------------------------
+# Part 7. Shared plumbing.
+# ---------------------------------------------------------------------------
+
+def load_provenance():
+    """Import provenance.py from beside this file, or from the frozen folder."""
+    try:
+        import provenance                        # on the box the file sits alongside
+    except ImportError:
+        sys.path.insert(0, str(HERE / "frozen"))
+        import provenance                        # on the workstation it sits in frozen/
+    if not hasattr(provenance, "write_result"):
+        raise Halt("provenance.py has no write_result; refusing to run without records")
+    return provenance
+
+
+def find_first(names):
+    for name in names:
+        p = HERE / name
+        if p.exists():
+            return p
+    return None
+
+
+def stimulus_path(explicit=None):
+    if explicit:
+        p = Path(explicit)
+        if not p.exists():
+            raise Halt("the named text file %s is absent; the design says halt, never "
+                       "regenerate" % p)
+        return p
+    p = find_first(["stimulus_linewrap_v2.json", "records/stimulus_linewrap_v2.json"])
+    if p is None:
+        raise Halt("stimulus_linewrap_v2.json is absent; the design says halt, never "
+                   "regenerate, re-wrap, or reconstruct it")
+    return p
+
+
+def design_record_path(explicit=None):
+    if explicit:
+        p = Path(explicit)
+        return p if p.exists() else None
+    return find_first([
+        "seedD2_design_diff_triage.json",              # box layout, flat
+        "records/seedD2_design_diff_triage.json",      # workstation layout
+    ])
+
+
+def gate_record_path():
+    return find_first(["GATE_COMMIT_seedD2.md", "records/GATE_COMMIT_seedD2.md"])
+
+
+def hf_token():
+    """Access token, and the name of the variable it came from.
+
+    The build brief names HF_KEY_ONE. The launcher forwards the same secret as
+    HF_TOKEN, and the bootstrap script also exports HUGGING_FACE_HUB_TOKEN. All three
+    are tried, in that order. This model is public, so an absent token is fine and is
+    recorded as such. No token value is ever printed or written.
+    """
+    for name in ("HF_KEY_ONE", "HF_TOKEN", "HUGGING_FACE_HUB_TOKEN"):
+        val = os.environ.get(name)
+        if val:
+            return val, name
+    return None, "none"
+
+
+def load_stimulus(path):
+    """Read the committed text file and check it against the design, or halt."""
+    with open(path, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+    meta = data.get("meta", {})
+    docs = data.get("docs", [])
+    problems = []
+    if len(docs) != N_DOCS:
+        problems.append("document count %d, expected %d" % (len(docs), N_DOCS))
+    if list(meta.get("widths", [])) != WIDTHS:
+        problems.append("wrap widths %r, expected %r" % (meta.get("widths"), WIDTHS))
+    if meta.get("train_docs") != N_TRAIN_DOCS:
+        problems.append("training document count %r, expected %d"
+                        % (meta.get("train_docs"), N_TRAIN_DOCS))
+    train_ids = sorted(int(d["id"]) for d in docs if d.get("split") == "train")
+    test_ids = sorted(int(d["id"]) for d in docs if d.get("split") == "test")
+    if train_ids != list(range(N_TRAIN_DOCS)):
+        problems.append("training documents are %r, expected 0 to %d in book order"
+                        % (train_ids[:5], N_TRAIN_DOCS - 1))
+    if test_ids != list(range(N_TRAIN_DOCS, N_DOCS)):
+        problems.append("held-out documents are %r, expected %d to %d"
+                        % (test_ids[:5], N_TRAIN_DOCS, N_DOCS - 1))
+    for d in docs:
+        missing = [str(w) for w in WIDTHS if str(w) not in d.get("wrapped", {})]
+        if missing:
+            problems.append("document %r lacks widths %r" % (d.get("id"), missing))
+            break
+    if problems:
+        raise Halt("the text file does not match the design: " + "; ".join(problems))
+    return meta, docs
+
+
+def fold_of_documents(train_ids):
+    """Which of the five groups each training document belongs to.
+
+    Splitting by document, not by position, keeps sentences of one document out of
+    both sides of a split. The one fixed seed makes the split repeatable.
+    """
+    import numpy as np
+    rng = np.random.default_rng(SEED)
+    order = list(rng.permutation(len(train_ids)))
+    assign = {}
+    for rank, pos in enumerate(order):
+        assign[train_ids[int(pos)]] = rank % N_FOLDS
+    return assign
+
+
+def group_names():
+    """The groups the running totals are kept for.
+
+    Five groups split the training documents, for choosing the ridge strength. One
+    group per wrap width holds the held-out documents, so the pooled held-out score
+    and the width-140 score both come from the same totals.
+    """
+    return list(TRAIN_GROUPS) + list(TEST_GROUPS)
+
+
+TRAIN_GROUPS = ["fold%d" % f for f in range(N_FOLDS)]
+TEST_GROUPS = ["test_w%d" % w for w in WIDTHS]
+
+
+def paths_for(results_dir):
+    out = Path(results_dir) / "out"
+    work = Path(results_dir) / "work"
+    out.mkdir(parents=True, exist_ok=True)
+    work.mkdir(parents=True, exist_ok=True)
+    return out, work
+
+
+def record_inputs(prov, stim, design, gate, extra=()):
+    items = [prov.describe_input(stim, n_items=N_DOCS * len(WIDTHS))]
+    if design is not None:
+        items.append(prov.describe_input(design, n_items=1))
+    if gate is not None:
+        items.append(prov.describe_input(gate, n_items=1))
+    for path, n in extra:
+        items.append(prov.describe_input(path, n_items=n))
+    return items
+
+
+def base_cell(stage, arm, endpoint=None, aperture=None):
+    cell = {"model": "pythia-410m-deduped", "revision": REVISION,
+            "stage": stage, "arm": arm}
+    if endpoint is not None:
+        cell["endpoint"] = endpoint
+    if aperture is not None:
+        cell["aperture"] = aperture
+    return cell
+
+
+def write_record(prov, out_dir, cell, **kwargs):
+    path = Path(out_dir) / (prov.cell_slug(cell) + ".json")
+    prov.write_result(path, cell=cell, **kwargs)
+    print("[record] %s -> %s" % (kwargs.get("decision", ""), path))
+    return path
+
+
+def act_file(work_dir, aperture, layer):
+    return Path(work_dir) / ("act_a%d_layer%02d.f32" % (aperture, layer))
+
+
+def labels_file(work_dir, aperture):
+    return Path(work_dir) / ("labels_a%d.npz" % aperture)
+
+
+# ---------------------------------------------------------------------------
+# Part 8. Stage one: check the inputs, run the forward passes, save the totals.
+# ---------------------------------------------------------------------------
+
+def stage_extract(args):
+    import numpy as np
+    import torch
+    from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
+
+    prov = load_provenance()
+    out_dir, work_dir = paths_for(args.results_dir)
+    stim = stimulus_path(args.stimulus)
+    design = design_record_path(args.design_record)
+    gate = gate_record_path()
+
+    actual_hash = sha256_file(stim)
+    hash_ok = exact_hash_match(actual_hash, STIMULUS_SHA256)
+    print("[extract] text file %s" % stim)
+    print("[extract] hash %s (expected %s) match=%s"
+          % (actual_hash, STIMULUS_SHA256, hash_ok))
+    meta, docs = load_stimulus(stim)
+
+    token, token_env = hf_token()
+    print("[extract] access token from %s" % token_env)
+    kw = {"revision": REVISION}
+    if token:
+        kw["token"] = token
+
+    config = AutoConfig.from_pretrained(MODEL_ID, **kw)
+    n_layers = getattr(config, "num_hidden_layers", None)
+    hidden = getattr(config, "hidden_size", None)
+    context_limit = int(getattr(config, "max_position_embeddings", CONTEXT_LIMIT_FALLBACK)
+                        or CONTEXT_LIMIT_FALLBACK)
+    print("[extract] configuration layers=%r hidden=%r context=%d"
+          % (n_layers, hidden, context_limit))
+
+    decision = decide_setup(hash_ok, n_layers, hidden)
+    write_record(
+        prov, out_dir, base_cell("extract", "setup_check"),
+        inputs=record_inputs(prov, stim, design, gate),
+        metric="Committed text file hash, and the downloaded configuration's layer count and hidden size.",
+        values={"stimulus_sha256": actual_hash,
+                "stimulus_sha256_expected": STIMULUS_SHA256,
+                "stimulus_hash_match": hash_ok,
+                "n_layers": n_layers, "hidden_size": hidden,
+                "context_limit": context_limit,
+                "model_id": MODEL_ID, "revision": REVISION,
+                "design_record_found": str(design) if design else None,
+                "design_record_expected_sha256": DESIGN_SHA256,
+                "gate_record_found": str(gate) if gate else None,
+                "access_token_source": token_env,
+                "text_source": meta.get("source"),
+                "disjoint_from": meta.get("disjoint_from")},
+        threshold={"stimulus_sha256": STIMULUS_SHA256, "n_layers": EXPECT_LAYERS,
+                   "hidden_size": EXPECT_HIDDEN},
+        decision_rule=RULE_SETUP,
+        decision=decision,
+        notes=("Layer count 24 and hidden size 1024 are recalled from the Pythia paper, "
+               "arXiv 2304.01373 table 1, and checked against the download. The text is "
+               "loaded exactly as committed and is never regenerated or re-wrapped. "
+               + RERUN_NOTE),
+    )
+    if decision != "SETUP_OK":
+        raise Halt("the setup check failed: hash match=%s layers=%r hidden=%r"
+                   % (hash_ok, n_layers, hidden))
+
+    tok = AutoTokenizer.from_pretrained(MODEL_ID, **kw)
+    if not getattr(tok, "is_fast", False):
+        raise Halt("this tokenizer reports no character offsets, so labels cannot be computed")
+
+    # Only one model exists in this experiment, and it is resident only here.
+    # Reduced-precision matrix products are turned off so the running totals stay
+    # accurate; the accumulation itself is in double precision.
+    torch.backends.cuda.matmul.allow_tf32 = False
+    torch.backends.cudnn.allow_tf32 = False
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    dtype = torch.float16 if device == "cuda" else torch.float32
+    dtype_name = "float16" if device == "cuda" else "float32"
+    print("[extract] loading the model in %s on %s" % (dtype_name, device))
+    if device != "cuda":
+        print("[extract] WARNING: no graphics card visible, so half precision is "
+              "replaced by single precision on the processor")
+    model = AutoModelForCausalLM.from_pretrained(MODEL_ID, torch_dtype=dtype, **kw)
+    model.eval()
+    model.to(device)
+    torch.set_grad_enabled(False)
+
+    n_read = EXPECT_LAYERS + 1                        # readout 0 is the embedding output
+    groups = group_names()
+    gram = {g: np.zeros((n_read, EXPECT_HIDDEN, EXPECT_HIDDEN), dtype=np.float64) for g in groups}
+    vec_sum = {g: np.zeros((n_read, EXPECT_HIDDEN), dtype=np.float64) for g in groups}
+    cross = {g: np.zeros((n_read, EXPECT_HIDDEN), dtype=np.float64) for g in groups}
+    label_sum = {g: 0.0 for g in groups}
+    label_sq = {g: 0.0 for g in groups}
+    n_pos = {g: 0 for g in groups}
+
+    train_ids = [int(d["id"]) for d in docs if d["split"] == "train"]
+    folds = fold_of_documents(train_ids)
+
+    # Per-position internal vectors are kept only for the held-out documents at the
+    # three probe widths, at every readout. The best readout is not known until the
+    # last stage, so all 25 are kept. Nothing else needs per-position vectors.
+    act_files = {a: [open(act_file(work_dir, a, l), "wb") for l in range(n_read)]
+                 for a in APERTURES}
+    lab = {a: {"doc": [], "is_test": [], "char": [], "token": [], "line": []}
+           for a in APERTURES}
+
+    # Every text variant is saved verbatim, with its own hash. Every labelled
+    # position of the three probe widths on held-out documents is saved as its own
+    # row. The same table for all 432 variants is far larger and stays in the working
+    # folder, which is never fetched.
+    rows_var = open(Path(out_dir) / "rows_variants.jsonl", "w", encoding="utf-8")
+    rows_ap = open(Path(out_dir) / "rows_positions_apertures.jsonl", "w", encoding="utf-8")
+    rows_all = open(Path(work_dir) / "rows_positions_all.jsonl", "w", encoding="utf-8")
+
+    started = time.time()
+    n_variants = 0
+    all_flags = {}
+    try:
+        for doc in docs:
+            did = int(doc["id"])
+            split = doc["split"]
+            for width in WIDTHS:
+                group = ("test_w%d" % width) if split == "test" else ("fold%d" % folds[did])
+                text = doc["wrapped"][str(width)]
+                enc = tok(text, return_offsets_mapping=True, add_special_tokens=False)
+                ids = enc["input_ids"]
+                spans = [tuple(s) for s in enc["offset_mapping"]]
+                char_labels, token_labels, line_nums = labels_for_spans(text, spans)
+                pieces = tok.convert_ids_to_tokens(ids)
+                flags = degenerate_flags(len(ids), context_limit, pieces)
+                if flags:
+                    all_flags["doc%d_w%d" % (did, width)] = flags
+                if "token_cap" in flags:
+                    raise Halt("document %d at width %d reaches the context limit of %d "
+                               "tokens, so the committed text would be cut short"
+                               % (did, width, context_limit))
+
+                keep = [i for i, c in enumerate(char_labels) if c is not None]
+                y = np.array([char_labels[i] for i in keep], dtype=np.float64)
+                t_ids = torch.tensor([ids], dtype=torch.long, device=device)
+                out = model(input_ids=t_ids, output_hidden_states=True, use_cache=False)
+                states = out.hidden_states
+                if len(states) != n_read:
+                    raise Halt("the model returned %d readouts, expected %d"
+                               % (len(states), n_read))
+                idx = torch.tensor(keep, dtype=torch.long, device=device)
+                y_t = torch.tensor(y, dtype=torch.float32, device=device)
+                want_act = (width in APERTURES) and (split == "test")
+                for l in range(n_read):
+                    x = states[l][0].index_select(0, idx).float()
+                    gram[group][l] += (x.T @ x).double().cpu().numpy()
+                    vec_sum[group][l] += x.sum(0).double().cpu().numpy()
+                    cross[group][l] += (x.T @ y_t).double().cpu().numpy()
+                    if want_act:
+                        x.cpu().numpy().astype(np.float32).tofile(act_files[width][l])
+                label_sum[group] += float(y.sum())
+                label_sq[group] += float((y * y).sum())
+                n_pos[group] += len(keep)
+
+                if width in APERTURES:
+                    is_test = 1 if split == "test" else 0
+                    lab[width]["doc"].extend([did] * len(keep))
+                    lab[width]["is_test"].extend([is_test] * len(keep))
+                    lab[width]["char"].extend([char_labels[i] for i in keep])
+                    lab[width]["token"].extend([token_labels[i] for i in keep])
+                    lab[width]["line"].extend([line_nums[i] for i in keep])
+                for i in keep:
+                    row = {"doc": did, "width": width, "split": split, "group": group,
+                           "tok_index": i, "tok_text": pieces[i],
+                           "char_start": spans[i][0], "char_end": spans[i][1],
+                           "line": line_nums[i], "char_label": char_labels[i],
+                           "token_label": token_labels[i]}
+                    line = json.dumps(row, ensure_ascii=False) + "\n"
+                    rows_all.write(line)
+                    if want_act:
+                        rows_ap.write(line)
+                rows_var.write(json.dumps({
+                    "doc": did, "width": width, "split": split, "group": group,
+                    "n_chars": len(text), "n_tokens": len(ids), "n_labelled": len(keep),
+                    "n_lines": text.count("\n") + 1,
+                    "degenerate_flags": flags,
+                    "sha256_text": hashlib.sha256(text.encode("utf-8")).hexdigest(),
+                    "text": text}, ensure_ascii=False) + "\n")
+                n_variants += 1
+                del out, states
+        elapsed = time.time() - started
+    finally:
+        rows_var.close()
+        rows_ap.close()
+        rows_all.close()
+        for a in APERTURES:
+            for fh in act_files[a]:
+                fh.close()
+
+    del model
+    if device == "cuda":
+        torch.cuda.empty_cache()
+
+    payload = {"groups": np.array(groups),
+               "label_sum": np.array([label_sum[g] for g in groups]),
+               "label_sq": np.array([label_sq[g] for g in groups]),
+               "n_pos": np.array([n_pos[g] for g in groups]),
+               "n_read": np.array([n_read]), "hidden": np.array([EXPECT_HIDDEN])}
+    for g in groups:
+        payload["gram__" + g] = gram[g]
+        payload["vec_sum__" + g] = vec_sum[g]
+        payload["cross__" + g] = cross[g]
+    np.savez(Path(work_dir) / "totals.npz", **payload)
+    for a in APERTURES:
+        np.savez(labels_file(work_dir, a),
+                 doc=np.array(lab[a]["doc"], dtype=np.int32),
+                 is_test=np.array(lab[a]["is_test"], dtype=np.int8),
+                 char_label=np.array(lab[a]["char"], dtype=np.int32),
+                 token_label=np.array(lab[a]["token"], dtype=np.int32),
+                 line=np.array(lab[a]["line"], dtype=np.int32))
+    with open(Path(work_dir) / "folds.json", "w", encoding="utf-8") as fh:
+        json.dump({"seed": SEED, "assignment": {str(k): v for k, v in folds.items()}},
+                  fh, indent=2)
+
+    rows_per_aperture = {a: int(sum(lab[a]["is_test"])) for a in APERTURES}
+    write_record(
+        prov, out_dir, base_cell("extract", "forward_passes"),
+        inputs=record_inputs(prov, stim, design, gate),
+        metric="Counts from one forward pass per text variant, and the running totals saved for the fits.",
+        values={"n_variants": n_variants,
+                "n_positions_by_group": {g: n_pos[g] for g in groups},
+                "n_positions_total": int(sum(n_pos.values())),
+                "n_readouts": n_read, "device": device, "dtype": dtype_name,
+                "seconds": round(elapsed, 1),
+                "held_out_rows_by_aperture": rows_per_aperture,
+                "degenerate_variants": all_flags,
+                "fold_assignment": {str(k): v for k, v in folds.items()}},
+        threshold={"n_variants": N_DOCS * len(WIDTHS)},
+        decision_rule=RULE_EXTRACT,
+        decision=("EXTRACT_OK" if n_variants == N_DOCS * len(WIDTHS)
+                  else "EXTRACT_INCOMPLETE"),
+        notes=("Readout 0 is the embedding output and readout 24 is the last layer. This "
+               "library applies the model's final normalisation to readout 24 only, which "
+               "is a property of the library, recorded here rather than changed. No text "
+               "is generated at any point: each variant gets one deterministic forward "
+               "pass over fixed text. " + RERUN_NOTE),
+    )
+    print("[extract] %d variants, %d labelled positions, %.1f s"
+          % (n_variants, sum(n_pos.values()), elapsed))
+    if n_variants != N_DOCS * len(WIDTHS):
+        raise Halt("only %d of %d text variants were read"
+                   % (n_variants, N_DOCS * len(WIDTHS)))
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Part 9. Stage two: fix every remaining constant, using training documents only.
+# ---------------------------------------------------------------------------
+
+def load_totals(work_dir):
+    import numpy as np
+    z = np.load(Path(work_dir) / "totals.npz", allow_pickle=False)
+    groups = [str(g) for g in z["groups"]]
+    tot = {"groups": groups, "n_read": int(z["n_read"][0]),
+           "gram": {}, "vec_sum": {}, "cross": {},
+           "label_sum": {}, "label_sq": {}, "n_pos": {}}
+    for i, g in enumerate(groups):
+        tot["gram"][g] = z["gram__" + g]
+        tot["vec_sum"][g] = z["vec_sum__" + g]
+        tot["cross"][g] = z["cross__" + g]
+        tot["label_sum"][g] = float(z["label_sum"][i])
+        tot["label_sq"][g] = float(z["label_sq"][i])
+        tot["n_pos"][g] = int(z["n_pos"][i])
+    return tot
+
+
+def sum_groups(tot, names, layer):
+    """Running totals of several groups added together, at one readout."""
+    g = sum(tot["gram"][k][layer] for k in names)
+    v = sum(tot["vec_sum"][k][layer] for k in names)
+    c = sum(tot["cross"][k][layer] for k in names)
+    ls = sum(tot["label_sum"][k] for k in names)
+    lq = sum(tot["label_sq"][k] for k in names)
+    n = sum(tot["n_pos"][k] for k in names)
+    return g, v, c, ls, lq, n
+
+
+def counts_from_labels(values):
+    out = {}
+    for v in values:
+        out[v] = out.get(v, 0) + 1
+    return out
+
+
+def stage_calibrate(args):
+    import numpy as np
+
+    prov = load_provenance()
+    out_dir, work_dir = paths_for(args.results_dir)
+    stim = stimulus_path(args.stimulus)
+    design = design_record_path(args.design_record)
+    gate = gate_record_path()
+    tot = load_totals(work_dir)
+    n_read = tot["n_read"]
+
+    # Ridge strength, by five-way cross-validation over training documents only.
+    table = {}
+    for held in range(N_FOLDS):
+        fit_names = [g for g in TRAIN_GROUPS if g != "fold%d" % held]
+        eval_names = ["fold%d" % held]
+        for layer in range(n_read):
+            g, v, c, ls, lq, n = sum_groups(tot, fit_names, layer)
+            ge, ve, ce, lse, lqe, ne = sum_groups(tot, eval_names, layer)
+            for alpha in RIDGE_GRID:
+                w, off = ridge_fit_from_stats(g, v, c, ls, n, alpha)
+                r2, _, _ = r2_from_stats(w, off, ge, ve, ce, lse, lqe, ne)
+                table.setdefault((alpha, layer), []).append(float(r2))
+    cv_mean = {key: sum(vals) / len(vals) for key, vals in table.items()}
+    per_alpha_best = {}
+    for alpha in RIDGE_GRID:
+        best_layer = max(range(n_read), key=lambda l: cv_mean[(alpha, l)])
+        per_alpha_best[alpha] = (best_layer, cv_mean[(alpha, best_layer)])
+    alpha_star = max(RIDGE_GRID, key=lambda a: per_alpha_best[a][1])
+    train_best_layer, train_best_r2 = per_alpha_best[alpha_star]
+    interior = alpha_star not in (RIDGE_GRID[0], RIDGE_GRID[-1])
+    print("[calibrate] ridge strength %g (interior on the grid: %s), best training "
+          "readout %d, cross-validated quality %.4f"
+          % (alpha_star, interior, train_best_layer, train_best_r2))
+
+    # Label windows and profile lengths, one set per probe width, on training text
+    # at that width only. No held-out number exists yet, and none may.
+    per_aperture = {}
+    problems = []
+    for a in APERTURES:
+        z = np.load(labels_file(work_dir, a), allow_pickle=False)
+        train_mask = z["is_test"] == 0
+        char_counts = counts_from_labels(z["char_label"][train_mask].tolist())
+        token_counts = counts_from_labels(z["token_label"][train_mask].tolist())
+        window_lo = window_from_counts(char_counts, a, MIN_TRAIN_POSITIONS_PER_LABEL)
+        if window_lo is None:
+            problems.append("width %d has no label window ending at %d whose values all "
+                            "reach %d training positions"
+                            % (a, a, MIN_TRAIN_POSITIONS_PER_LABEL))
+            continue
+        n_labels = a - window_lo + 1
+        max_delta = n_labels - MIN_ENTRIES_PER_DELTA
+        token_hi = token_window_top(token_counts)
+        tok_max_delta = token_hi - MIN_ENTRIES_PER_DELTA
+        char_periods = periods_in_range(max_delta) if max_delta >= DETREND_DEGREE + 2 else []
+        tok_periods = periods_in_range(tok_max_delta) if tok_max_delta >= DETREND_DEGREE + 2 else []
+        if not char_periods:
+            problems.append("width %d leaves a character profile of length %d, too short "
+                            "to detrend or to carry a period of %d"
+                            % (a, max_delta, PERIOD_MIN))
+        if not tok_periods:
+            problems.append("width %d leaves a token profile of length %d, too short to "
+                            "detrend or to carry a period of %d"
+                            % (a, tok_max_delta, PERIOD_MIN))
+        per_aperture[a] = {
+            "character_window_low": window_lo,
+            "character_window_high": a,
+            "n_labels": n_labels,
+            "min_training_positions_per_label":
+                int(min(char_counts.get(v, 0) for v in range(window_lo, a + 1))),
+            "max_delta": max_delta,
+            "n_periods_in_range": len(char_periods),
+            "longest_period": (char_periods[0][1] if char_periods else None),
+            "shortest_period": (char_periods[-1][1] if char_periods else None),
+            "token_window_high": token_hi,
+            "token_max_delta": tok_max_delta,
+            "token_n_periods_in_range": len(tok_periods),
+        }
+        print("[calibrate] width %d: character labels %d to %d, profile length %d, "
+              "%d periods; token labels 1 to %d, profile length %d, %d periods"
+              % (a, window_lo, a, max_delta, len(char_periods), token_hi,
+                 tok_max_delta, len(tok_periods)))
+
+    calib_decision = "CALIBRATION_OK" if not problems else "CALIBRATION_UNUSABLE"
+    values = {
+        "ridge_strength": alpha_star,
+        "ridge_grid": RIDGE_GRID,
+        "ridge_argmax_interior_on_grid": bool(interior),
+        "cross_validated_quality_by_strength_and_readout":
+            {"%g|%d" % (a, l): round(cv_mean[(a, l)], 6)
+             for a in RIDGE_GRID for l in range(n_read)},
+        "cross_validated_best_per_strength":
+            {"%g" % a: {"readout": per_alpha_best[a][0],
+                        "quality": round(per_alpha_best[a][1], 6)} for a in RIDGE_GRID},
+        "training_best_readout": train_best_layer,
+        "training_best_quality": round(train_best_r2, 6),
+        "fold_count": N_FOLDS,
+        "seed": SEED,
+        "detrend_method": "polynomial",
+        "detrend_degree": DETREND_DEGREE,
+        "shortest_period": PERIOD_MIN,
+        "min_entries_per_delta": MIN_ENTRIES_PER_DELTA,
+        "min_training_positions_per_label": MIN_TRAIN_POSITIONS_PER_LABEL,
+        "token_window_min_training_positions": TOKEN_WINDOW_MIN_TRAIN,
+        "shuffle_draws": N_DRAWS,
+        "per_aperture": {str(a): per_aperture[a] for a in sorted(per_aperture)},
+        "problems": problems,
+    }
+    notes = [
+        "Every number here comes from training documents only. No held-out number exists yet.",
+        "The label window at a probe width ends at that width, which is what makes the "
+        "comparison across widths a comparison of apertures.",
+        "The window's low end can sit above 1, because the first column of a line needs a "
+        "one-character opening token and is thin. How far above 1 is recorded per width.",
+        "A label enters a window only if training text carries it often enough that the "
+        "held-out text, a third the size, is very unlikely to leave it empty. An empty "
+        "held-out label has no average vector, so the character reading would halt and the "
+        "token reading would be recorded as not computable.",
+        "The profile length is the label count minus 20, so every distance used averages at "
+        "least 20 matrix entries.",
+        "There is no search band. The statistic ranges over every whole number of cycles "
+        "whose period is at least 4 and at most the profile length.",
+        "The design's cross-validated maximum picked the ridge strength. Whether that "
+        "maximum sits inside the grid rather than at an end is recorded above, as the gate "
+        "file requires. No levelling-off is required.",
+    ]
+    if not interior:
+        notes.append("The chosen ridge strength sits at an end of the grid, so a wider grid "
+                     "might score higher. The gate file requires this to be stated, not fixed.")
+    notes.append(RERUN_NOTE)
+
+    write_record(
+        prov, out_dir, base_cell("calibrate", "constants"),
+        inputs=record_inputs(prov, stim, design, gate,
+                             extra=[(Path(work_dir) / "totals.npz", n_read)]),
+        metric="Every remaining constant of the fit and of the wobble readout, fixed on training documents only.",
+        values=values,
+        threshold={"shortest_period": PERIOD_MIN, "detrend_degree": DETREND_DEGREE},
+        decision_rule=RULE_CALIBRATION,
+        decision=calib_decision,
+        notes=" ".join(notes),
+    )
+    with open(Path(out_dir) / "calibration.json", "w", encoding="utf-8") as fh:
+        json.dump({"decision": calib_decision, "values": values}, fh, indent=2, sort_keys=True)
+    if calib_decision != "CALIBRATION_OK":
+        raise Halt("calibration is unusable: " + "; ".join(problems))
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Part 10. Stage three: the held-out fit, the wobble at each width, the shuffles,
+# the token-position control, and the measurable-range check.
+# ---------------------------------------------------------------------------
+
+def read_aperture_layer(work_dir, aperture, layer, n_rows, hidden=EXPECT_HIDDEN):
+    import numpy as np
+    path = act_file(work_dir, aperture, layer)
+    arr = np.fromfile(path, dtype=np.float32)
+    if arr.size != n_rows * hidden:
+        raise Halt("saved vectors for width %d readout %d hold %d numbers, expected %d"
+                   % (aperture, layer, arr.size, n_rows * hidden))
+    return arr.reshape(n_rows, hidden)
+
+
+def means_by_slot(x, slots, n_slots):
+    """Average vector per slot, and how many positions entered each. Needs numpy."""
+    import numpy as np
+    keep = slots >= 0
+    xk = x[keep]
+    sk = slots[keep]
+    ind = np.zeros((n_slots, xk.shape[0]), dtype=np.float32)
+    ind[sk, np.arange(xk.shape[0])] = 1.0
+    counts = ind.sum(axis=1)
+    if float(counts.min()) < 1.0:
+        empty = [int(i) for i in np.nonzero(counts < 1.0)[0]]
+        raise Halt("label slots %r hold no held-out position, so their average vector is "
+                   "undefined" % empty[:10])
+    sums = ind @ xk
+    return (sums / counts[:, None]).astype(np.float64), counts.astype(int)
+
+
+def cosine_matrix(mat):
+    """Cosine similarity between every pair of rows, as nested lists. Needs numpy."""
+    import numpy as np
+    norms = np.linalg.norm(mat, axis=1, keepdims=True)
+    if float(norms.min()) <= 0:
+        raise Halt("a per-label average vector is exactly zero, so cosine similarity is "
+                   "undefined")
+    unit = mat / norms
+    return (unit @ unit.T).tolist()
+
+
+def slots_array(labels, window_lo, n_labels):
+    import numpy as np
+    off = labels - window_lo
+    off = np.where((off >= 0) & (off < n_labels), off, -1)
+    return off.astype(np.int64)
+
+
+def ambient_dimension(centred, target=VARIANCE_TARGET):
+    """How many directions carry the target share of the spread. Needs numpy."""
+    import numpy as np
+    sv = np.linalg.svd(centred, compute_uv=False)
+    var = sv ** 2
+    share = (var / var.sum()).tolist()
+    cum = 0.0
+    dim = len(share)
+    for i, s in enumerate(share):
+        cum += s
+        if cum >= target:
+            dim = i + 1
+            break
+    return dim, share
+
+
+def shuffle_within_docs(labels, docs, rng):
+    """Permute labels among the positions of each document.
+
+    Every label keeps exactly the same number of positions overall, so no slot can
+    become empty in a draw that was not empty in the observed data.
+    """
+    import numpy as np
+    out = labels.copy()
+    for d in np.unique(docs):
+        sel = np.nonzero(docs == d)[0]
+        out[sel] = labels[sel][rng.permutation(sel.size)]
+    return out
+
+
+def wobble_with_null(x, labels, docs, window_lo, n_slots, max_delta, n_draws, rng,
+                     spectra_path, unit):
+    """Observed largest power and its shuffle draws, on one set of positions.
+
+    Every draw's whole spectrum is written to `spectra_path`, one line per draw, as
+    the design requires. The observed spectrum is the first line.
+    """
+    import numpy as np
+    slots = slots_array(labels, window_lo, n_slots)
+    mat, counts = means_by_slot(x, slots, n_slots)
+    grand = mat.mean(axis=0, keepdims=True)
+    centred = mat - grand
+    cos = cosine_matrix(centred)
+    observed = max_power_stat(cos, max_delta, keep_profile=True)
+    dim, share = ambient_dimension(centred)
+
+    with open(spectra_path, "w", encoding="utf-8") as fh:
+        fh.write(json.dumps({
+            "kind": "observed", "draw": None, "unit": unit,
+            "profile_length": observed["profile_length"],
+            "max_power": observed["max_power"], "wavelength": observed["wavelength"],
+            "cycles": observed["cycles"],
+            "spectrum": observed["spectrum"]}) + "\n")
+        draws = []
+        for i in range(n_draws):
+            shuffled = shuffle_within_docs(labels, docs, rng)
+            s2 = slots_array(shuffled, window_lo, n_slots)
+            m2, _ = means_by_slot(x, s2, n_slots)
+            c2 = m2 - m2.mean(axis=0, keepdims=True)
+            stat = max_power_stat(cosine_matrix(c2), max_delta)
+            draws.append(stat["max_power"])
+            fh.write(json.dumps({
+                "kind": "shuffle", "draw": i, "unit": unit,
+                "profile_length": stat["profile_length"],
+                "max_power": stat["max_power"], "wavelength": stat["wavelength"],
+                "cycles": stat["cycles"],
+                "spectrum": stat["spectrum"]}) + "\n")
+    rank = null_rank(observed["max_power"], draws)
+    return {"observed": observed, "draws": draws, "rank": rank,
+            "counts": [int(c) for c in counts], "means": mat, "grand_mean": grand[0],
+            "cosine": cos, "ambient_dimension": dim, "variance_share": share}
+
+
+def stage_endpoints(args):
+    import numpy as np
+
+    prov = load_provenance()
+    out_dir, work_dir = paths_for(args.results_dir)
+    stim = stimulus_path(args.stimulus)
+    design = design_record_path(args.design_record)
+    gate = gate_record_path()
+    calib_path = Path(out_dir) / "calibration.json"
+    if not calib_path.exists():
+        raise Halt("no calibration record at %s; the calibrate stage must run first"
+                   % calib_path)
+    with open(calib_path, "r", encoding="utf-8") as fh:
+        calib = json.load(fh)
+    if calib.get("decision") != "CALIBRATION_OK":
+        raise Halt("the calibration record says %r, so no held-out number may be computed"
+                   % calib.get("decision"))
+    cv = calib["values"]
+    alpha = float(cv["ridge_strength"])
+    per_ap = {int(k): v for k, v in cv["per_aperture"].items()}
+
+    tot = load_totals(work_dir)
+    n_read = tot["n_read"]
+
+    # ---- The layer sweep, and the anchor gate at width 140. -----------------
+    # The record carries rounded numbers for reading. The best readout and the anchor
+    # call are taken from the unrounded ones, so no rounding can move a decision.
+    per_layer = []
+    exact = []
+    for layer in range(n_read):
+        g, v, c, ls, lq, n = sum_groups(tot, TRAIN_GROUPS, layer)
+        w, off = ridge_fit_from_stats(g, v, c, ls, n, alpha)
+        row = {"readout": layer}
+        ge, ve, ce, lse, lqe, ne = sum_groups(tot, TEST_GROUPS, layer)
+        pooled, _, _ = r2_from_stats(w, off, ge, ve, ce, lse, lqe, ne)
+        row["held_out_quality_pooled"] = round(float(pooled), 6)
+        by_width = {}
+        for width in WIDTHS:
+            gw, vw, cw, lsw, lqw, nw = sum_groups(tot, ["test_w%d" % width], layer)
+            r2w, _, _ = r2_from_stats(w, off, gw, vw, cw, lsw, lqw, nw)
+            by_width[width] = float(r2w)
+            row["held_out_quality_w%d" % width] = round(float(r2w), 6)
+        per_layer.append(row)
+        exact.append({"readout": layer, "pooled": float(pooled), "by_width": by_width})
+    best_exact = max(exact, key=lambda r: r["pooled"])
+    best_layer = int(best_exact["readout"])
+    anchor_r2 = best_exact["by_width"][140]
+    best = per_layer[best_layer]
+    anchor_decision = decide_anchor(anchor_r2)
+    print("[endpoints] best readout %d, pooled held-out quality %.6f, width-140 quality "
+          "%.6f -> %s" % (best_layer, best_exact["pooled"], anchor_r2, anchor_decision))
+    write_record(
+        prov, out_dir, base_cell("endpoints", "anchor_gate", endpoint=1),
+        inputs=record_inputs(prov, stim, design, gate,
+                             extra=[(Path(work_dir) / "totals.npz", n_read)]),
+        metric="Held-out fit quality at width 140, at the best readout, on text the earlier run never saw.",
+        values={"best_readout": best_layer,
+                "held_out_quality_w140": round(anchor_r2, 6),
+                "held_out_quality_pooled": best["held_out_quality_pooled"],
+                "ridge_strength": alpha,
+                "ridge_argmax_interior_on_grid": cv["ridge_argmax_interior_on_grid"],
+                "training_positions": int(sum(tot["n_pos"][k] for k in TRAIN_GROUPS)),
+                "held_out_positions": int(sum(tot["n_pos"][k] for k in TEST_GROUPS)),
+                "earlier_run_quality": PRIOR_ANCHOR,
+                "earlier_run_readout": PRIOR_LAYER},
+        threshold={"low": ANCHOR_LO, "high": ANCHOR_HI},
+        decision_rule=RULE_ANCHOR,
+        decision=anchor_decision,
+        rows=per_layer,
+        notes=("The best readout is chosen by held-out quality pooled over all nine wrap "
+               "widths, exactly as the design says. The anchor number is that readout's "
+               "quality at width 140 alone. The readout's location is recorded and never "
+               "judged. The earlier value 0.780903 at readout 6 came from a different, "
+               "disjoint text file on the same instrument lineage. " + RERUN_NOTE),
+    )
+
+    # ---- The wobble at each probe width, against its own shuffle draws. -----
+    results = {}
+    for a in APERTURES:
+        info = per_ap[a]
+        window_lo = int(info["character_window_low"])
+        n_labels = int(info["n_labels"])
+        max_delta = int(info["max_delta"])
+        z = np.load(labels_file(work_dir, a), allow_pickle=False)
+        test_mask = z["is_test"] == 1
+        n_rows = int(test_mask.sum())
+        x = read_aperture_layer(work_dir, a, best_layer, n_rows)
+        docs_test = z["doc"][test_mask]
+        char_test = z["char_label"][test_mask]
+        token_test = z["token_label"][test_mask]
+
+        spectra = Path(out_dir) / ("null_spectra_aperture-%d_labels-characters.jsonl" % a)
+        rng = np.random.default_rng([SEED, a, 0])
+        t0 = time.time()
+        res = wobble_with_null(x, char_test, docs_test, window_lo, n_labels, max_delta,
+                              N_DRAWS, rng, spectra, "characters")
+        decision = decide_cleared(res["rank"])
+        print("[endpoints] width %d: largest power %.6g at period %.2f characters, rank "
+              "%d of %d -> %s (%.1f s)"
+              % (a, res["observed"]["max_power"], res["observed"]["wavelength"],
+                 res["rank"], N_DRAWS, decision, time.time() - t0))
+
+        np.savez(Path(out_dir) / ("mean_vectors_aperture-%d_labels-characters.npz" % a),
+                 labels=np.arange(window_lo, a + 1, dtype=np.int32),
+                 counts=np.array(res["counts"], dtype=np.int32),
+                 means=res["means"], grand_mean=res["grand_mean"],
+                 cosine=np.array(res["cosine"], dtype=np.float64),
+                 readout=np.array([best_layer]), aperture=np.array([a]))
+
+        write_record(
+            prov, out_dir,
+            base_cell("endpoints", "wobble_vs_shuffle", endpoint=2, aperture=a),
+            inputs=record_inputs(prov, stim, design, gate,
+                                 extra=[(labels_file(work_dir, a), n_rows),
+                                        (spectra, N_DRAWS + 1)]),
+            metric="Rank of the observed largest power among 200 label-shuffled draws, at one probe width.",
+            values={"aperture": a, "readout": best_layer,
+                    "max_power": res["observed"]["max_power"],
+                    "wavelength_chars": res["observed"]["wavelength"],
+                    "cycles": res["observed"]["cycles"],
+                    "profile_length": res["observed"]["profile_length"],
+                    "n_periods_in_range": res["observed"]["n_periods_in_range"],
+                    "rank": res["rank"], "draws": N_DRAWS,
+                    "empirical_share": round(res["rank"] / (N_DRAWS + 1.0), 5),
+                    "null_max": max(res["draws"]),
+                    "null_median": sorted(res["draws"])[len(res["draws"]) // 2],
+                    "character_window_low": window_lo, "character_window_high": a,
+                    "n_labels": n_labels,
+                    "held_out_rows": n_rows,
+                    "positions_per_label_min": min(res["counts"]),
+                    "positions_per_label_max": max(res["counts"]),
+                    "ambient_dimension_at_95_percent": res["ambient_dimension"],
+                    "variance_share_first_ten": [round(s, 6) for s in res["variance_share"][:10]],
+                    "profile": [round(v, 8) for v in res["observed"]["profile"]],
+                    "spectrum": res["observed"]["spectrum"],
+                    "spectra_file": spectra.name,
+                    "mean_vectors_file": ("mean_vectors_aperture-%d_labels-characters.npz" % a)},
+            threshold={"rank_at_most": NULL_RANK_MAX, "draws": N_DRAWS},
+            decision_rule=RULE_CLEARED,
+            decision=decision,
+            rows=[{"draw": i, "max_power": v} for i, v in enumerate(res["draws"])],
+            notes=("Shuffling permutes the character-count labels inside each held-out "
+                   "document, so every label keeps exactly the same number of positions. "
+                   "With 200 draws the finest share this can resolve is about 0.5 percent. "
+                   "The number of directions carrying 95 percent of the spread is recorded "
+                   "here and constrains nothing, unlike the earlier run. Every draw's whole "
+                   "spectrum is in the named file beside this record. " + RERUN_NOTE),
+        )
+        results[a] = {"char": res, "char_decision": decision,
+                      "x": x, "docs": docs_test, "token": token_test,
+                      "char_labels": char_test, "n_rows": n_rows}
+
+    # ---- The token-position control, one record per probe width. ------------
+    variants_path = Path(out_dir) / "rows_variants.jsonl"
+    if not variants_path.exists():
+        raise Halt("no per-variant rows at %s; the extract stage must run first"
+                   % variants_path)
+    chars_by_width = {a: 0 for a in APERTURES}
+    with open(variants_path, "r", encoding="utf-8") as fh:
+        for line in fh:
+            row = json.loads(line)
+            if row["split"] == "test" and row["width"] in chars_by_width:
+                chars_by_width[row["width"]] += row["n_chars"]
+
+    for a in APERTURES:
+        info = per_ap[a]
+        res = results[a]
+        obs_wl = res["char"]["observed"]["wavelength"]
+        char_cleared = res["char_decision"] == "NULL_CLEARED"
+        token_hi = int(info["token_window_high"])
+        tok_max_delta = int(info["token_max_delta"])
+        n_rows = res["n_rows"]
+        chars_per_token = chars_by_width[a] / float(n_rows) if n_rows else None
+        vals = {"aperture": a, "readout": best_layer,
+                "token_window_high": token_hi,
+                "token_max_delta": tok_max_delta,
+                "held_out_characters": chars_by_width[a],
+                "held_out_positions": n_rows,
+                "chars_per_token": (round(chars_per_token, 4) if chars_per_token else None),
+                "character_wavelength_chars": obs_wl,
+                "character_cleared_shuffle": char_cleared}
+        note = ["The characters-per-token rate is measured on this probe width's own "
+                "held-out documents, as the gate file's answer 5 requires, because the "
+                "tokenisation shifts a little with the wrap width."]
+        tok_wl_chars = None
+        tok_cleared = None
+        try:
+            if not chars_per_token:
+                raise Halt("no held-out positions at this probe width")
+            spectra = Path(out_dir) / ("null_spectra_aperture-%d_labels-tokens.jsonl" % a)
+            rng = np.random.default_rng([SEED, a, 1])
+            t0 = time.time()
+            tres = wobble_with_null(res["x"], res["token"], res["docs"], 1, token_hi,
+                                    tok_max_delta, N_DRAWS, rng, spectra, "tokens")
+            tok_cleared = decide_cleared(tres["rank"]) == "NULL_CLEARED"
+            tok_wl_chars = tres["observed"]["wavelength"] * chars_per_token
+            np.savez(Path(out_dir) / ("mean_vectors_aperture-%d_labels-tokens.npz" % a),
+                     labels=np.arange(1, token_hi + 1, dtype=np.int32),
+                     counts=np.array(tres["counts"], dtype=np.int32),
+                     means=tres["means"], grand_mean=tres["grand_mean"],
+                     cosine=np.array(tres["cosine"], dtype=np.float64),
+                     readout=np.array([best_layer]), aperture=np.array([a]))
+            vals.update({
+                "token_max_power": tres["observed"]["max_power"],
+                "token_wavelength_tokens": tres["observed"]["wavelength"],
+                "token_wavelength_chars": round(tok_wl_chars, 4),
+                "token_cycles": tres["observed"]["cycles"],
+                "token_profile_length": tres["observed"]["profile_length"],
+                "token_n_periods_in_range": tres["observed"]["n_periods_in_range"],
+                "token_rank": tres["rank"], "draws": N_DRAWS,
+                "token_null_max": max(tres["draws"]),
+                "token_positions_per_label_min": min(tres["counts"]),
+                "token_positions_per_label_max": max(tres["counts"]),
+                "token_ambient_dimension_at_95_percent": tres["ambient_dimension"],
+                "token_cleared_shuffle": tok_cleared,
+                "token_spectra_file": spectra.name,
+                "token_mean_vectors_file":
+                    ("mean_vectors_aperture-%d_labels-tokens.npz" % a)})
+            note.append("The token period is turned into characters with that measured rate, "
+                        "because the design's margin of 3 is in characters.")
+            note.append("The shortest period of 4 is applied in each labelling's own units, "
+                        "since this design has no search band to convert between them.")
+            print("[endpoints] width %d token control: period %.2f tokens, %.2f characters, "
+                  "rank %d of %d (%.1f s)"
+                  % (a, tres["observed"]["wavelength"], tok_wl_chars, tres["rank"],
+                     N_DRAWS, time.time() - t0))
+        except Halt as exc:
+            vals["not_computable_reason"] = str(exc)
+            vals["token_cleared_shuffle"] = None
+            note.append("The token-position control could not be computed: %s" % exc)
+        confound = decide_confound(obs_wl, tok_wl_chars, char_cleared, tok_cleared)
+        note.append("One line at this width holds far fewer tokens than characters, so the "
+                    "two labellings cannot range over the same number of periods.")
+        note.append(RERUN_NOTE)
+        print("[endpoints] width %d token-position control -> %s" % (a, confound))
+        write_record(
+            prov, out_dir,
+            base_cell("endpoints", "token_position_control", endpoint=7, aperture=a),
+            inputs=record_inputs(prov, stim, design, gate,
+                                 extra=[(labels_file(work_dir, a), n_rows)]),
+            metric="Wobble period and shuffle result under character-count labels against token-position labels, at one probe width.",
+            values=vals,
+            threshold={"margin_chars": CONFOUND_MARGIN_CHARS},
+            decision_rule=RULE_CONFOUND,
+            decision=confound,
+            notes=" ".join(note),
+        )
+        results[a]["confound"] = confound
+
+    # ---- The measurable-range check, at width 280 only. --------------------
+    bins = label_bins()
+    a280 = 280
+    z = np.load(labels_file(work_dir, a280), allow_pickle=False)
+    test_mask = z["is_test"] == 1
+    labels_280 = z["char_label"][test_mask].astype(np.float64)
+    x280 = results[a280]["x"]
+    g, v, c, ls, lq, n = sum_groups(tot, TRAIN_GROUPS, best_layer)
+    w, off = ridge_fit_from_stats(g, v, c, ls, n, alpha)
+    pred_280 = x280 @ w + off
+    bin_rows = []
+    low_r2s = []
+    high_r2s = []
+    for (lo, hi) in bins:
+        role = bin_role(lo, hi)
+        sel = (labels_280 >= lo) & (labels_280 <= hi)
+        r2, sse, sstot = binned_r2(pred_280[sel], labels_280[sel])
+        bin_rows.append({"bin_low": lo, "bin_high": hi, "role": role,
+                         "n_positions": int(sel.sum()),
+                         "held_out_quality": (round(float(r2), 6) if r2 is not None else None),
+                         "sum_squared_error": (round(float(sse), 4) if sse is not None else None),
+                         "own_spread": (round(float(sstot), 4) if sstot is not None else None)})
+        if role == "low":
+            low_r2s.append(r2)
+        elif role == "high":
+            high_r2s.append(r2)
+    range_decision = decide_range(low_r2s, high_r2s)
+    print("[endpoints] measurable range at width 280 -> %s" % range_decision)
+    write_record(
+        prov, out_dir, base_cell("endpoints", "measurable_range", endpoint=6, aperture=a280),
+        inputs=record_inputs(prov, stim, design, gate,
+                             extra=[(labels_file(work_dir, a280), int(test_mask.sum()))]),
+        metric="Held-out fit quality inside each bin of 35 label values at width 280, against that bin's own spread.",
+        values={"readout": best_layer, "ridge_strength": alpha,
+                "bin_width": BIN_WIDTH, "n_bins": N_BINS,
+                "low_bin_qualities": [None if r is None else round(float(r), 6) for r in low_r2s],
+                "high_bin_qualities": [None if r is None else round(float(r), 6) for r in high_r2s],
+                "excluded_bin": "141 to 175",
+                "low_floor": RANGE_LOW_FLOOR, "high_ceiling": RANGE_HIGH_CEIL},
+        threshold={"low_bins_exceed": RANGE_LOW_FLOOR, "high_bins_below": RANGE_HIGH_CEIL},
+        decision_rule=RULE_RANGE,
+        decision=range_decision,
+        rows=bin_rows,
+        notes=("The bin from 141 to 175 holds labels on both sides of 150, so the gate "
+               "file's answer 4 records it and leaves it out of this decision. The "
+               "decision uses the four bins ending at or below 140 against the three bins "
+               "starting above 150. Training pressure in this model's own corpus sits near "
+               "70 to 72 characters per line, which is context for a narrow measurable "
+               "range, not a prediction. " + RERUN_NOTE),
+    )
+
+    # ---- The three cross-width endpoints. ----------------------------------
+    cleared = [(a, results[a]["char"]["observed"]["wavelength"]) for a in APERTURES
+               if results[a]["char_decision"] == "NULL_CLEARED"]
+    n_cleared = len(cleared)
+    count_decision = decide_count(n_cleared, range_decision)
+    write_record(
+        prov, out_dir, base_cell("endpoints", "widths_clearing_count", endpoint=3),
+        inputs=record_inputs(prov, stim, design, gate),
+        metric="How many of the three probe widths cleared their own 200 shuffle draws.",
+        values={"n_cleared": n_cleared,
+                "cleared_apertures": [a for a, _ in cleared],
+                "per_aperture_decision":
+                    {str(a): results[a]["char_decision"] for a in APERTURES},
+                "per_aperture_rank": {str(a): results[a]["char"]["rank"] for a in APERTURES},
+                "per_aperture_wavelength_chars":
+                    {str(a): results[a]["char"]["observed"]["wavelength"] for a in APERTURES},
+                "measurable_range_decision": range_decision},
+        threshold={"decisive_negative_requires": "0 of 3 clearing and wide counts measurable"},
+        decision_rule=RULE_COUNT,
+        decision=count_decision,
+        notes=("Three tests at 5 percent each carry roughly a 14 percent chance that at "
+               "least one clears by luck alone. The headline fork absorbs that, because it "
+               "conditions on which widths cleared. " + RERUN_NOTE),
+    )
+
+    gap, ratio_gap = pairwise_gaps(cleared)
+    gap_decision = decide_wavelength_gap(gap)
+    write_record(
+        prov, out_dir, base_cell("endpoints", "wavelength_gap", endpoint=4),
+        inputs=record_inputs(prov, stim, design, gate),
+        metric="Largest gap in characters between the wobble periods of any two probe widths that both cleared.",
+        values={"largest_gap_chars": (None if gap is None else round(float(gap), 4)),
+                "cleared_apertures": [a for a, _ in cleared],
+                "wavelengths_chars": {str(a): wl for a, wl in cleared}},
+        threshold={"at_most_chars": INVARIANCE_MAX_GAP_CHARS},
+        decision_rule=RULE_WAVELENGTH_GAP,
+        decision=gap_decision,
+        notes=("A period drifting by, say, 12 characters would be called not fixed here, "
+               "even if it were one mechanism plus noise. The 10-character cutoff is the "
+               "design's own guess and is binding. " + RERUN_NOTE),
+    )
+
+    ratio_decision = decide_ratio_gap(ratio_gap)
+    write_record(
+        prov, out_dir, base_cell("endpoints", "ratio_gap", endpoint=5),
+        inputs=record_inputs(prov, stim, design, gate),
+        metric="Largest gap between period-to-width ratios of any two probe widths that both cleared.",
+        values={"largest_ratio_gap": (None if ratio_gap is None else round(float(ratio_gap), 6)),
+                "cleared_apertures": [a for a, _ in cleared],
+                "ratios": {str(a): round(wl / float(a), 6) for a, wl in cleared}},
+        threshold={"at_most": PROPORTION_MAX_RATIO_GAP},
+        decision_rule=RULE_RATIO_GAP,
+        decision=ratio_decision,
+        notes=("A mixed, unclassifiable result needs both this gap above 0.1 and the "
+               "period gap above 10 characters. Both cutoffs are the design's own guesses "
+               "and are binding. " + RERUN_NOTE),
+    )
+
+    # ---- One call for the whole run, from the calls already made. -----------
+    setup_path = Path(out_dir) / (prov.cell_slug(base_cell("extract", "setup_check")) + ".json")
+    setup_decision = "RECORD_ABSENT"
+    if setup_path.exists():
+        with open(setup_path, "r", encoding="utf-8") as fh:
+            setup_decision = json.load(fh).get("decision", "RECORD_UNREADABLE")
+    headline = decide_headline(anchor_decision, cleared, range_decision)
+    summary = {
+        "setup_check": setup_decision,
+        "calibration": calib.get("decision"),
+        "endpoint_1_anchor_gate": anchor_decision,
+        "endpoint_2_wobble_vs_shuffle":
+            {str(a): results[a]["char_decision"] for a in APERTURES},
+        "endpoint_3_widths_clearing_count": count_decision,
+        "endpoint_4_wavelength_gap": gap_decision,
+        "endpoint_5_ratio_gap": ratio_decision,
+        "endpoint_6_measurable_range": range_decision,
+        "endpoint_7_token_position_control":
+            {str(a): results[a]["confound"] for a in APERTURES},
+        "best_readout": best_layer,
+        "held_out_quality_w140": round(anchor_r2, 6),
+        "held_out_quality_pooled": best["held_out_quality_pooled"],
+        "ridge_strength": alpha,
+        "ridge_argmax_interior_on_grid": cv["ridge_argmax_interior_on_grid"],
+        "n_widths_clearing": n_cleared,
+        "wavelengths_chars": {str(a): results[a]["char"]["observed"]["wavelength"]
+                              for a in APERTURES},
+        "ambient_dimension_by_aperture":
+            {str(a): results[a]["char"]["ambient_dimension"] for a in APERTURES},
+        "largest_gap_chars": (None if gap is None else round(float(gap), 4)),
+        "largest_ratio_gap": (None if ratio_gap is None else round(float(ratio_gap), 6)),
+        "headline": headline,
+    }
+    write_record(
+        prov, out_dir, base_cell("endpoints", "run_summary"),
+        inputs=record_inputs(prov, stim, design, gate),
+        metric="One call per endpoint, and the headline fork, from the records written beside this one.",
+        values=summary,
+        threshold={},
+        decision_rule=RULE_HEADLINE,
+        decision=headline,
+        notes=("A failed anchor makes every wobble number here uninterpretable as evidence "
+               "about the model, so the whole run is void in that case. Exactly one width "
+               "clearing is left undetermined by design, not decided. " + RERUN_NOTE),
+    )
+    print("[endpoints] summary %s" % json.dumps(summary))
+    return 0
+
+
+# ---------------------------------------------------------------------------
+# Part 11. Self-test. Standard library only. No model, no graphics card.
+# ---------------------------------------------------------------------------
+
+def _check(fails, name, got, want, tol=0.0):
+    if isinstance(want, float) and isinstance(got, (int, float)) and not isinstance(got, bool):
+        ok = abs(got - want) <= tol
+    else:
+        ok = got == want
+    print("  %-62s %s" % (name, "ok" if ok else "FAIL got=%r want=%r" % (got, want)))
+    if not ok:
+        fails.append(name)
+
+
+def selftest() -> int:
+    fails = []
+
+    print("== position labeller ==")
+    text = "ab\ncd"
+    spans = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5)]
+    ch, tk, ln = labels_for_spans(text, spans)
+    _check(fails, "columns on a two-line text", ch, [1, 2, 3, 1, 2])
+    _check(fails, "token counts on a two-line text", tk, [1, 2, 3, 1, 2])
+    _check(fails, "line numbers on a two-line text", ln, [0, 0, 0, 1, 1])
+    # The opening boundary of the first line is implied, not present in the text. This
+    # is the same shape as a template that already emitted an opening marker, so only
+    # the closing one appears in what the model produced.
+    ch1, tk1, _ = labels_for_spans("abcd", [(0, 2), (2, 4)])
+    _check(fails, "implied opening boundary, columns", ch1, [2, 4])
+    _check(fails, "implied opening boundary, token counts", tk1, [1, 2])
+    # A line break swallowed inside one token: the boundary sits inside a unit.
+    ch2, tk2, ln2 = labels_for_spans("ab\ncd", [(0, 2), (2, 4), (4, 5)])
+    _check(fails, "swallowed line break, columns", ch2, [2, 1, 2])
+    _check(fails, "swallowed line break, token counts", tk2, [1, 1, 2])
+    _check(fails, "swallowed line break, line numbers", ln2, [0, 1, 1])
+    # A line break as its own token takes the column after the last visible character.
+    ch3, _, _ = labels_for_spans("abc\nd", [(0, 3), (3, 4), (4, 5)])
+    _check(fails, "line-break token takes the next column", ch3, [3, 4, 1])
+    # A whole line of the wrapped width, then its line break at width plus one.
+    ch5, _, _ = labels_for_spans("abcd\ne", [(0, 4), (4, 5), (5, 6)])
+    _check(fails, "line-break token at width plus one", ch5, [4, 5, 1])
+    ch4, tk4, _ = labels_for_spans("ab", [(0, 0), (0, 2)])
+    _check(fails, "empty range is unlabelled", ch4, [None, 2])
+    _check(fails, "empty range is not counted", tk4, [None, 1])
+
+    print("== degenerate-input detector ==")
+    _check(fails, "length-cap case flags", degenerate_flags(2048, 2048, ["a", "b"]), ["token_cap"])
+    _check(fails, "under the length cap does not flag",
+           degenerate_flags(700, 2048, ["a", "b", "c"]), [])
+    rep = ["x", "y"] * 7
+    _check(fails, "repeated-sequence case flags", degenerate_flags(14, 2048, rep),
+           ["repeated_sequence"])
+    _check(fails, "seven back-to-back copies counted", max_block_repeats(rep), 7)
+    _check(fails, "five back-to-back copies is below the cutoff",
+           degenerate_flags(10, 2048, ["x", "y"] * 5), [])
+    _check(fails, "prose-like tokens are clean",
+           degenerate_flags(9, 2048, ["It", " will", " be", " seen", " that", " this",
+                                      " mere", " b", "\n"]), [])
+    _check(fails, "both cases can flag together",
+           degenerate_flags(2048, 2048, ["q"] * 6), ["token_cap", "repeated_sequence"])
+
+    print("== exact-match checks and exact slot assignment ==")
+    _check(fails, "hash equal", exact_hash_match("a" * 64, "a" * 64), True)
+    _check(fails, "hash one character off", exact_hash_match("a" * 63 + "b", "a" * 64), False)
+    _check(fails, "hash absent", exact_hash_match(None, "a" * 64), False)
+    _check(fails, "configuration match", exact_config_match(24, 1024), True)
+    _check(fails, "configuration layer mismatch", exact_config_match(23, 1024), False)
+    _check(fails, "configuration width mismatch", exact_config_match(24, 2048), False)
+    _check(fails, "lowest window value maps to slot 0", label_slot(1, 1, 140), 0)
+    _check(fails, "highest window value maps to the last slot", label_slot(140, 1, 140), 139)
+    _check(fails, "one below the window is outside", label_slot(0, 1, 140), None)
+    _check(fails, "one above the window is outside", label_slot(141, 1, 140), None)
+    _check(fails, "a fractional label is never accepted", label_slot(1.0, 1, 140), None)
+    _check(fails, "a true value is never accepted as 1", label_slot(True, 1, 140), None)
+    counts, slots = slot_counts([1, 2, 2, 5, 0], 1, 4)
+    _check(fails, "slot counts", counts, [1, 2, 0, 0])
+    _check(fails, "slot indices", slots, [0, 1, 1, None, None])
+    _check(fails, "window start when the lowest value is thin",
+           window_from_counts({1: 3, 2: 20, 3: 20}, 3, 20), 2)
+    _check(fails, "window start when every value is thick",
+           window_from_counts({1: 20, 2: 20, 3: 20}, 3, 20), 1)
+    _check(fails, "no window when a middle value is thin",
+           window_from_counts({1: 20, 2: 1, 3: 20}, 3, 20, max_start=1), None)
+    _check(fails, "token window stops at the first thin value",
+           token_window_top({1: 9, 2: 9, 3: 1}, 5), 2)
+
+    print("== label bins of the measurable-range check ==")
+    bins = label_bins()
+    _check(fails, "eight bins", len(bins), 8)
+    _check(fails, "first bin", bins[0], (1, 35))
+    _check(fails, "fourth bin ends at 140", bins[3], (106, 140))
+    _check(fails, "fifth bin straddles 150", bins[4], (141, 175))
+    _check(fails, "last bin ends at 280", bins[7], (246, 280))
+    _check(fails, "roles", [bin_role(lo, hi) for lo, hi in bins],
+           ["low", "low", "low", "low", "straddles", "high", "high", "high"])
+    _check(fails, "four low bins", sum(1 for lo, hi in bins if bin_role(lo, hi) == "low"), 4)
+    _check(fails, "three high bins", sum(1 for lo, hi in bins if bin_role(lo, hi) == "high"), 3)
+
+    print("== wobble statistic, no search band ==")
+    n = 40
+    want = [1.0 / (1 + d) for d in range(n)]
+    mat = [[want[abs(i - j)] for j in range(n)] for i in range(n)]
+    prof = offdiag_profile(mat, 20)
+    _check(fails, "profile at distance 1", prof[0], want[1], 1e-12)
+    _check(fails, "profile at distance 20", prof[19], want[20], 1e-12)
+    line = [3.0 + 0.5 * i for i in range(60)]
+    _check(fails, "a straight line detrends to zero",
+           max(abs(v) for v in poly_detrend(line, 2)), 0.0, 1e-9)
+    curve = [1.0 - 0.01 * i + 0.0002 * i * i for i in range(60)]
+    _check(fails, "a curve of degree 2 detrends to zero",
+           max(abs(v) for v in poly_detrend(curve, 2)), 0.0, 1e-9)
+    wave = [math.cos(2 * math.pi * i / 12.0) for i in range(60)]
+    power = dft_power(poly_detrend(wave, 2))
+    peak = max(power, key=lambda k: power[k])
+    _check(fails, "a 12-step wave peaks at 5 cycles over 60 steps", peak, 5)
+    _check(fails, "that peak is a period of 12", 60 / peak, 12.0, 1e-9)
+    _check(fails, "the period range reaches the profile length",
+           periods_in_range(120)[0], (1, 120.0))
+    _check(fails, "the period range stops at 4",
+           periods_in_range(120)[-1], (30, 4.0))
+    _check(fails, "periods below 4 are excluded",
+           all(p >= 4.0 for _, p in periods_in_range(121)), True)
+    # A distance-dependent matrix carrying a known period recovers that period.
+    n = 160
+    entries = [1.0 - 0.004 * d + 0.05 * math.cos(2 * math.pi * d / 40.0) for d in range(n)]
+    mat = [[entries[abs(i - j)] for j in range(n)] for i in range(n)]
+    stat = max_power_stat(mat, 120)
+    _check(fails, "planted period of 40 recovered", stat["wavelength"], 40.0, 1e-9)
+    _check(fails, "whole spectrum returned", len(stat["spectrum"]), 60)
+    _check(fails, "periods ranged over", stat["n_periods_in_range"], 30)
+    # The profile length itself is reachable, which the earlier run could not rank.
+    # The planted single cycle starts at zero and rises, because a single cycle that
+    # starts at its peak is shaped like a bowl, and the degree-2 detrend the design
+    # fixes absorbs most of a bowl. That is a property of the fixed detrend, checked
+    # in the next two lines rather than worked around.
+    entries = [1.0 + 0.05 * math.sin(2 * math.pi * d / 120.0) for d in range(n)]
+    mat = [[entries[abs(i - j)] for j in range(n)] for i in range(n)]
+    stat = max_power_stat(mat, 120)
+    _check(fails, "a period equal to the profile length is reachable",
+           stat["wavelength"], 120.0, 1e-9)
+    _check(fails, "that period is one cycle", stat["cycles"], 1)
+    entries = [1.0 + 0.05 * math.cos(2 * math.pi * d / 120.0) for d in range(n)]
+    mat = [[entries[abs(i - j)] for j in range(n)] for i in range(n)]
+    _check(fails, "a bowl-shaped single cycle is largely absorbed by the detrend",
+           max_power_stat(mat, 120)["cycles"], 2)
+    try:
+        max_power_stat(mat, 3)
+        fails.append("too short a profile should halt")
+        print("  %-62s FAIL no halt" % "too short a profile halts")
+    except Halt:
+        print("  %-62s ok" % "too short a profile halts")
+
+    print("== endpoint arithmetic on planted values ==")
+    _check(fails, "setup, all three match", decide_setup(True, 24, 1024), "SETUP_OK")
+    _check(fails, "setup, hash differs", decide_setup(False, 24, 1024), "SETUP_FAILURE")
+    _check(fails, "setup, layer count differs", decide_setup(True, 12, 1024), "SETUP_FAILURE")
+    _check(fails, "setup, width differs", decide_setup(True, 24, 512), "SETUP_FAILURE")
+
+    _check(fails, "anchor, the earlier value 0.780903", decide_anchor(0.780903), "ANCHOR_IN_BAND")
+    _check(fails, "anchor, exactly 0.701", decide_anchor(0.701), "ANCHOR_IN_BAND")
+    _check(fails, "anchor, exactly 0.861", decide_anchor(0.861), "ANCHOR_IN_BAND")
+    _check(fails, "anchor, 0.700", decide_anchor(0.700), "ANCHOR_OUT_OF_BAND")
+    _check(fails, "anchor, 0.862", decide_anchor(0.862), "ANCHOR_OUT_OF_BAND")
+    _check(fails, "anchor, below zero", decide_anchor(-0.2), "ANCHOR_OUT_OF_BAND")
+    _check(fails, "anchor, absent", decide_anchor(None), "ANCHOR_OUT_OF_BAND")
+
+    draws = [float(i) for i in range(200)]                      # 0.0 up to 199.0
+    _check(fails, "rank of a value above every draw", null_rank(500.0, draws), 1)
+    _check(fails, "rank of a value above all but nine", null_rank(190.5, draws), 10)
+    _check(fails, "rank of a value above all but ten", null_rank(189.5, draws), 11)
+    _check(fails, "rank counts ties against the observed value", null_rank(199.0, draws), 2)
+    _check(fails, "clearing at rank 1", decide_cleared(1), "NULL_CLEARED")
+    _check(fails, "clearing at rank 10", decide_cleared(10), "NULL_CLEARED")
+    _check(fails, "not clearing at rank 11", decide_cleared(11), "NULL_NOT_CLEARED")
+
+    # Planted bin rows for the measurable-range check.
+    good_low = [0.82, 0.79, 0.71, 0.62]
+    dead_high = [0.11, 0.05, 0.02]
+    live_high = [0.11, 0.41, 0.02]
+    _check(fails, "range, low bins strong and high bins dead",
+           decide_range(good_low, dead_high), "WIDE_COUNTS_NOT_REPRESENTED")
+    _check(fails, "range, one high bin alive",
+           decide_range(good_low, live_high), "WIDE_COUNTS_MEASURABLE")
+    _check(fails, "range, a high bin exactly at 0.3",
+           decide_range(good_low, [0.11, 0.30, 0.02]), "RANGE_PATTERN_UNMATCHED")
+    _check(fails, "range, a low bin exactly at 0.5",
+           decide_range([0.82, 0.5, 0.71, 0.62], dead_high), "RANGE_PATTERN_UNMATCHED")
+    _check(fails, "range, a low bin weak and high bins dead",
+           decide_range([0.82, 0.79, 0.71, 0.20], dead_high), "RANGE_PATTERN_UNMATCHED")
+    _check(fails, "range, a bin not computable",
+           decide_range(good_low, [0.1, None, 0.1]), "RANGE_CHECK_INCOMPLETE")
+
+    _check(fails, "count, none clear and wide counts measurable",
+           decide_count(0, "WIDE_COUNTS_MEASURABLE"), "DECISIVE_NEGATIVE")
+    _check(fails, "count, none clear and wide counts not represented",
+           decide_count(0, "WIDE_COUNTS_NOT_REPRESENTED"), "RANGE_NOT_REPRESENTED")
+    _check(fails, "count, none clear and the range pattern matches neither",
+           decide_count(0, "RANGE_PATTERN_UNMATCHED"), "NEGATIVE_NOT_CLASSIFIABLE")
+    _check(fails, "count, one clears", decide_count(1, "WIDE_COUNTS_MEASURABLE"),
+           "AT_LEAST_ONE_CLEARED")
+
+    # Planted rows for the width comparison, with known correct calls.
+    fixed = [(140, 60.0), (200, 62.0), (280, 66.0)]             # gaps up to 6 characters
+    grows = [(140, 60.0), (200, 85.0), (280, 120.0)]            # ratios 0.4286, 0.425, 0.4286
+    messy = [(140, 60.0), (200, 130.0), (280, 90.0)]            # neither rule holds
+    g_fixed, r_fixed = pairwise_gaps(fixed)
+    _check(fails, "planted fixed periods, largest gap", g_fixed, 6.0, 1e-9)
+    g_grows, r_grows = pairwise_gaps(grows)
+    _check(fails, "planted growing periods, largest gap", g_grows, 60.0, 1e-9)
+    _check(fails, "planted growing periods, largest ratio gap", r_grows, 0.003571, 1e-6)
+    _check(fails, "one width leaves the gap undefined", pairwise_gaps([(140, 60.0)]), (None, None))
+    _check(fails, "gap within 10 characters", decide_wavelength_gap(g_fixed),
+           "WAVELENGTH_GAP_WITHIN_10")
+    _check(fails, "gap of exactly 10 characters", decide_wavelength_gap(10.0),
+           "WAVELENGTH_GAP_WITHIN_10")
+    _check(fails, "gap above 10 characters", decide_wavelength_gap(g_grows),
+           "WAVELENGTH_GAP_EXCEEDS_10")
+    _check(fails, "gap undefined", decide_wavelength_gap(None),
+           "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED")
+    _check(fails, "ratio gap within 0.1", decide_ratio_gap(r_grows), "RATIO_GAP_WITHIN_0.1")
+    _check(fails, "ratio gap of exactly 0.1", decide_ratio_gap(0.1), "RATIO_GAP_WITHIN_0.1")
+    _check(fails, "ratio gap above 0.1", decide_ratio_gap(0.3), "RATIO_GAP_EXCEEDS_0.1")
+    _check(fails, "ratio gap undefined", decide_ratio_gap(None),
+           "GAP_UNDEFINED_FEWER_THAN_TWO_CLEARED")
+    _check(fails, "planted fixed periods classify as fixed", decide_invariance(fixed), "INVARIANT")
+    _check(fails, "planted growing periods classify as proportional",
+           decide_invariance(grows), "PROPORTIONAL")
+    _check(fails, "planted messy periods classify as mixed", decide_invariance(messy), "MIXED")
+    _check(fails, "two widths, close periods", decide_invariance([(140, 60.0), (280, 64.0)]),
+           "INVARIANT")
+    _check(fails, "one width is undetermined", decide_invariance([(200, 60.0)]), "UNDETERMINED")
+    _check(fails, "no width cleared", decide_invariance([]), "NO_WIDTH_CLEARED")
+
+    _check(fails, "token control, periods 60 and 31",
+           decide_confound(60.0, 31.0, True, True), "CHARACTER_COUNT_DISTINGUISHED")
+    _check(fails, "token control, periods 60 and 57.5",
+           decide_confound(60.0, 57.5, True, True), "CONFOUNDED_WITH_TOKEN_POSITION")
+    _check(fails, "token control, periods 60 and 56.5",
+           decide_confound(60.0, 56.5, True, True), "CHARACTER_COUNT_DISTINGUISHED")
+    _check(fails, "token control, periods differ by exactly 3",
+           decide_confound(60.0, 57.0, True, True), "CONFOUNDED_WITH_TOKEN_POSITION")
+    _check(fails, "token control, close periods but only one clears",
+           decide_confound(60.0, 57.5, True, False), "CHARACTER_COUNT_DISTINGUISHED")
+    _check(fails, "token control, both fail and periods are close",
+           decide_confound(60.0, 57.5, False, False), "CONFOUNDED_WITH_TOKEN_POSITION")
+    _check(fails, "token control absent", decide_confound(60.0, None, True, None),
+           "TOKEN_CONTROL_NOT_COMPUTABLE")
+
+    print("== headline fork on planted values ==")
+    _check(fails, "a failed anchor voids everything",
+           decide_headline("ANCHOR_OUT_OF_BAND", fixed, "WIDE_COUNTS_MEASURABLE"),
+           "VOID_ANCHOR_FAILED")
+    _check(fails, "fixed periods with a sound anchor",
+           decide_headline("ANCHOR_IN_BAND", fixed, "WIDE_COUNTS_MEASURABLE"), "INVARIANT")
+    _check(fails, "growing periods with a sound anchor",
+           decide_headline("ANCHOR_IN_BAND", grows, "WIDE_COUNTS_MEASURABLE"), "PROPORTIONAL")
+    _check(fails, "one width clearing",
+           decide_headline("ANCHOR_IN_BAND", [(140, 60.0)], "WIDE_COUNTS_MEASURABLE"),
+           "UNDETERMINED")
+    _check(fails, "no width clearing and wide counts measurable",
+           decide_headline("ANCHOR_IN_BAND", [], "WIDE_COUNTS_MEASURABLE"), "DECISIVE_NEGATIVE")
+    _check(fails, "no width clearing and wide counts blind",
+           decide_headline("ANCHOR_IN_BAND", [], "WIDE_COUNTS_NOT_REPRESENTED"),
+           "RANGE_NOT_REPRESENTED")
+
+    print("== supporting checks ==")
+    _check(fails, "the three probe widths are among the nine wrap widths",
+           all(a in WIDTHS for a in APERTURES), True)
+    _check(fails, "the ridge grid extends past 1000", max(RIDGE_GRID) > 1000.0, True)
+    _check(fails, "the ridge grid is the committed one", RIDGE_GRID,
+           [1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0])
+    _check(fails, "the anchor band is 0.781 plus or minus 0.08",
+           (round(ANCHOR_LO + 0.08, 6), round(ANCHOR_HI - 0.08, 6)), (0.781, 0.781))
+    _check(fails, "the eight bins cover labels 1 to 280", label_bins()[-1][1], 280)
+    _check(fails, "the shuffle seed is zero", SEED, 0)
+    _check(fails, "there are five totals groups for training documents",
+           len(TRAIN_GROUPS), 5)
+    _check(fails, "there is one totals group per wrap width for held-out documents",
+           len(TEST_GROUPS), 9)
+    _check(fails, "the totals groups are the training and held-out groups together",
+           group_names(), list(TRAIN_GROUPS) + list(TEST_GROUPS))
+    _check(fails, "every totals group name is distinct",
+           len(set(group_names())), len(group_names()))
+    _check(fails, "the held-out group for width 140 exists",
+           "test_w140" in TEST_GROUPS, True)
+    try:
+        prov = load_provenance()
+        print("  %-62s ok" % "record writer importable")
+        for name in ("write_result", "describe_input", "cell_slug"):
+            if not hasattr(prov, name):
+                fails.append("record writer lacks " + name)
+                print("  %-62s FAIL" % ("record writer has " + name))
+    except Exception as exc:                                    # noqa: BLE001
+        fails.append("record writer import: %s" % exc)
+        print("  %-62s FAIL %s" % ("record writer importable", exc))
+
+    try:
+        import numpy as np
+    except ImportError:
+        print("  %-62s skipped (numpy absent)" % "ridge fit from running totals")
+    else:
+        import random as _r
+        _r.seed(7)
+        rows = [[_r.uniform(-1, 1), _r.uniform(-1, 1)] for _ in range(50)]
+        ys = [2.0 * a - 3.0 * b + 0.5 + _r.uniform(-0.01, 0.01) for a, b in rows]
+        xm = np.array(rows)
+        ym = np.array(ys)
+        gram = xm.T @ xm
+        vec = xm.sum(0)
+        cross = xm.T @ ym
+        w, off = ridge_fit_from_stats(gram, vec, cross, float(ym.sum()), len(ys), 1e-6)
+        r2, sse, sstot = r2_from_stats(w, off, gram, vec, cross, float(ym.sum()),
+                                       float((ym * ym).sum()), len(ys))
+        pred = xm @ w + off
+        direct_sse = float(((pred - ym) ** 2).sum())
+        direct_r2 = 1.0 - direct_sse / float(((ym - ym.mean()) ** 2).sum())
+        _check(fails, "sum of squared errors from running totals", sse, direct_sse, 1e-6)
+        _check(fails, "fit quality from running totals", r2, direct_r2, 1e-9)
+        _check(fails, "planted weights recovered",
+               float(abs(w[0] - 2.0) + abs(w[1] + 3.0)), 0.0, 0.02)
+        # Fit quality inside one bin, against that bin's own spread.
+        actual = np.array([10.0, 12.0, 14.0, 16.0])
+        _check(fails, "bin quality of a perfect fit",
+               binned_r2(actual.copy(), actual)[0], 1.0, 1e-12)
+        _check(fails, "bin quality of a flat guess at the bin mean",
+               binned_r2(np.full(4, 13.0), actual)[0], 0.0, 1e-12)
+        # Labels 10, 12, 14, 16 have a spread of 20 about their mean of 13. A flat
+        # guess of 23 costs 420, so the quality is 1 minus 420 over 20.
+        _check(fails, "bin quality of a biased flat guess",
+               binned_r2(np.full(4, 23.0), actual)[0], -20.0, 1e-9)
+        _check(fails, "a bin with one position is not computable",
+               binned_r2(np.array([1.0]), np.array([1.0]))[0], None)
+        _check(fails, "a bin with no spread is not computable",
+               binned_r2(np.array([1.0, 1.0]), np.array([5.0, 5.0]))[0], None)
+        # Shuffling inside a document keeps every label's position count.
+        labels = np.array([1, 2, 3, 4, 5, 6])
+        docs = np.array([0, 0, 0, 1, 1, 1])
+        out = shuffle_within_docs(labels, docs, np.random.default_rng(SEED))
+        _check(fails, "shuffling preserves the label multiset",
+               sorted(out.tolist()), [1, 2, 3, 4, 5, 6])
+        _check(fails, "shuffling stays inside each document",
+               sorted(out[:3].tolist()) == [1, 2, 3] and sorted(out[3:].tolist()) == [4, 5, 6],
+               True)
+
+        print("== analysis plumbing on small planted arrays ==")
+        import tempfile
+        # Slots, average vectors, and cosine similarity, on values chosen by hand.
+        _check(fails, "labels map to slots and outsiders to minus one",
+               slots_array(np.array([0, 1, 2, 3]), 1, 2).tolist(), [-1, 0, 1, -1])
+        xs = np.array([[1.0, 0.0], [3.0, 0.0], [0.0, 2.0], [0.0, 4.0]], dtype=np.float32)
+        mat, counts = means_by_slot(xs, np.array([0, 0, 1, 1]), 2)
+        _check(fails, "average vector of the first slot", mat[0].tolist(), [2.0, 0.0])
+        _check(fails, "average vector of the second slot", mat[1].tolist(), [0.0, 3.0])
+        _check(fails, "positions per slot", counts.tolist(), [2, 2])
+        try:
+            means_by_slot(xs, np.array([0, 0, 0, 0]), 2)
+            fails.append("an empty slot should halt")
+            print("  %-62s FAIL no halt" % "an empty slot halts")
+        except Halt:
+            print("  %-62s ok" % "an empty slot halts")
+        cos = cosine_matrix(np.array([[1.0, 0.0], [2.0, 0.0], [0.0, 1.0]]))
+        _check(fails, "identical directions have similarity 1", cos[0][1], 1.0, 1e-12)
+        _check(fails, "square directions have similarity 0", cos[0][2], 0.0, 1e-12)
+        # A pattern lying along one direction needs one direction to describe it.
+        one_way = np.outer(np.arange(1.0, 9.0), np.array([1.0, 2.0, 3.0]))
+        _check(fails, "a one-direction pattern measures one direction",
+               ambient_dimension(one_way - one_way.mean(axis=0, keepdims=True))[0], 1)
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            # Running totals survive a save and reload, and add across groups.
+            groups = ["fold0", "fold1"]
+            payload = {"groups": np.array(groups), "label_sum": np.array([3.0, 7.0]),
+                       "label_sq": np.array([9.0, 49.0]), "n_pos": np.array([2, 5]),
+                       "n_read": np.array([2]), "hidden": np.array([3])}
+            for i, g in enumerate(groups):
+                payload["gram__" + g] = np.full((2, 3, 3), float(i + 1))
+                payload["vec_sum__" + g] = np.full((2, 3), float(i + 1))
+                payload["cross__" + g] = np.full((2, 3), float(i + 1))
+            np.savez(d / "totals.npz", **payload)
+            tot = load_totals(d)
+            _check(fails, "reloaded readout count", tot["n_read"], 2)
+            g, v, c, ls, lq, n = sum_groups(tot, groups, 1)
+            _check(fails, "gram of two groups added", float(g[0][0]), 3.0, 1e-12)
+            _check(fails, "labels of two groups added", ls, 10.0, 1e-12)
+            _check(fails, "positions of two groups added", n, 7)
+            # Saved per-position vectors reload with the row count they were written at.
+            (d / "act_a140_layer03.f32").write_bytes(
+                np.arange(12, dtype=np.float32).tobytes())
+            back = read_aperture_layer(d, 140, 3, 4, hidden=3)
+            _check(fails, "saved vectors reload with the right shape", back.shape, (4, 3))
+            _check(fails, "saved vectors reload with the right values",
+                   back[1].tolist(), [3.0, 4.0, 5.0])
+            try:
+                read_aperture_layer(d, 140, 3, 5, hidden=3)
+                fails.append("a wrong row count should halt")
+                print("  %-62s FAIL no halt" % "a wrong row count halts")
+            except Halt:
+                print("  %-62s ok" % "a wrong row count halts")
+            # The whole wobble path, with a period planted in the average vectors. The
+            # planted period is 10 over a profile of length 20, which is a whole number
+            # of cycles. A period off that grid, such as 8 over 20, cannot be returned:
+            # the nearest whole-cycle periods are 10 and about 6.67.
+            n_slots = 24
+            planted = 10.0
+            base = np.zeros((n_slots, 6), dtype=np.float32)
+            for s in range(n_slots):
+                base[s, 0] = float(s)
+                base[s, 1] = 6.0 * math.sin(2 * math.pi * s / planted)
+                base[s, 2] = 6.0 * math.cos(2 * math.pi * s / planted)
+            reps = 5
+            x = np.repeat(base, reps, axis=0)
+            lab = np.repeat(np.arange(1, n_slots + 1, dtype=np.int32), reps)
+            dcs = np.tile(np.arange(reps, dtype=np.int32), n_slots)
+            spectra = d / "spectra.jsonl"
+            res = wobble_with_null(x, lab, dcs, 1, n_slots, n_slots - 4, 20,
+                                   np.random.default_rng(SEED), spectra, "characters")
+            lines = spectra.read_text().strip().split("\n")
+            _check(fails, "one saved spectrum per draw plus the observed", len(lines), 21)
+            first = json.loads(lines[0])
+            _check(fails, "the observed spectrum is the first line", first["kind"], "observed")
+            _check(fails, "every saved line carries a whole spectrum",
+                   all(len(json.loads(l)["spectrum"]) == 10 for l in lines), True)
+            _check(fails, "the planted period is recovered", res["observed"]["wavelength"],
+                   planted, 1e-9)
+            _check(fails, "the observed beats every draw of pure noise", res["rank"], 1)
+            _check(fails, "positions per label are preserved", min(res["counts"]), reps)
+            _check(fails, "the average vectors have one row per label",
+                   res["means"].shape, (n_slots, 6))
+
+    print("selftest:", "PASS" if not fails else "%d FAILURES" % len(fails))
+    for f in fails:
+        print("FAIL", f)
+    return 1 if fails else 0
+
+
+# ---------------------------------------------------------------------------
+# Part 12. Entry point.
+# ---------------------------------------------------------------------------
+
+STAGES = {"extract": stage_extract, "calibrate": stage_calibrate,
+          "endpoints": stage_endpoints}
+
+NO_GENERATION_MESSAGE = (
+    "There is no generation stage in this experiment. The design says no text is "
+    "generated: one deterministic forward pass per document per wrap width, over "
+    "fixed committed text. The stage that sits in this position is calibrate, which "
+    "fixes every remaining constant on training documents only, before any held-out "
+    "number exists."
+)
+
+
+def main(argv=None) -> int:
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    ap.add_argument("--stage", choices=sorted(STAGES) + ["all", "generate"],
+                    help="which stage to run")
+    ap.add_argument("--selftest", action="store_true",
+                    help="standard-library checks only; no model, no graphics card")
+    ap.add_argument("--results-dir", default=os.environ.get("RESULTS_DIR", RESULTS_DIR_DEFAULT))
+    ap.add_argument("--stimulus", default=None, help="path to the committed text file")
+    ap.add_argument("--design-record", default=None, help="path to the committed design record")
+    args = ap.parse_args(argv)
+
+    if args.selftest:
+        return selftest()
+    if not args.stage:
+        ap.error("give --stage extract, calibrate, endpoints, or all; or give --selftest")
+    if args.stage == "generate":
+        print(NO_GENERATION_MESSAGE, file=sys.stderr)
+        return 2
+
+    order = ["extract", "calibrate", "endpoints"] if args.stage == "all" else [args.stage]
+    for name in order:
+        print("=== stage %s ===" % name)
+        started = time.time()
+        try:
+            rc = STAGES[name](args)
+        except Halt as exc:
+            print("HALT in stage %s: %s" % (name, exc), file=sys.stderr)
+            return 3
+        if rc:
+            return rc
+        print("=== stage %s done in %.1f s ===" % (name, time.time() - started))
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

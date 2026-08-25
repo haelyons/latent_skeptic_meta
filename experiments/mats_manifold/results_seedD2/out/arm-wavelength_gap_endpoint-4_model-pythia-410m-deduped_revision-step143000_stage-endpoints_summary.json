@@ -1,0 +1,58 @@
+{
+  "cell": {
+    "arm": "wavelength_gap",
+    "endpoint": 4,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "WAVELENGTH_GAP_EXCEEDS_10",
+  "decision_rule": "Over the probe widths that cleared their own shuffle draws, the largest gap between any two periods, in characters, must be at most 10. Larger rules out a single fixed period. Fewer than two widths clearing leaves the gap undefined.",
+  "env": {
+    "git_rev": null,
+    "host": "161-153-8-80",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T12:02:59+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 23625,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_design_diff_triage.json",
+      "present": true,
+      "sha256": "bca0ff7b59bf"
+    },
+    {
+      "bytes": 3015,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2.md",
+      "present": true,
+      "sha256": "a617ec25ffde"
+    }
+  ],
+  "metric": "Largest gap in characters between the wobble periods of any two probe widths that both cleared.",
+  "notes": "A period drifting by, say, 12 characters would be called not fixed here, even if it were one mechanism plus noise. The 10-character cutoff is the design's own guess and is binding. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "at_most_chars": 10.0
+  },
+  "values": {
+    "cleared_apertures": [
+      140,
+      200,
+      280
+    ],
+    "largest_gap_chars": 113.6364,
+    "wavelengths_chars": {
+      "140": 40.0,
+      "200": 16.363636363636363,
+      "280": 130.0
+    }
+  }
+}

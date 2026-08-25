@@ -1,0 +1,69 @@
+{
+  "cell": {
+    "arm": "widths_clearing_count",
+    "endpoint": 3,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "AT_LEAST_ONE_CLEARED",
+  "decision_rule": "If no probe width clears its own shuffle draws, the reading depends on the measurable-range check. Wide counts measurable gives DECISIVE_NEGATIVE. Wide counts not represented gives RANGE_NOT_REPRESENTED. A range pattern matching neither reading gives NEGATIVE_NOT_CLASSIFIABLE.",
+  "env": {
+    "git_rev": null,
+    "host": "161-153-8-80",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-21T12:02:59+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 23625,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD2_design_diff_triage.json",
+      "present": true,
+      "sha256": "bca0ff7b59bf"
+    },
+    {
+      "bytes": 3015,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD2.md",
+      "present": true,
+      "sha256": "a617ec25ffde"
+    }
+  ],
+  "metric": "How many of the three probe widths cleared their own 200 shuffle draws.",
+  "notes": "Three tests at 5 percent each carry roughly a 14 percent chance that at least one clears by luck alone. The headline fork absorbs that, because it conditions on which widths cleared. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "decisive_negative_requires": "0 of 3 clearing and wide counts measurable"
+  },
+  "values": {
+    "cleared_apertures": [
+      140,
+      200,
+      280
+    ],
+    "measurable_range_decision": "RANGE_PATTERN_UNMATCHED",
+    "n_cleared": 3,
+    "per_aperture_decision": {
+      "140": "NULL_CLEARED",
+      "200": "NULL_CLEARED",
+      "280": "NULL_CLEARED"
+    },
+    "per_aperture_rank": {
+      "140": 1,
+      "200": 10,
+      "280": 3
+    },
+    "per_aperture_wavelength_chars": {
+      "140": 40.0,
+      "200": 16.363636363636363,
+      "280": 130.0
+    }
+  }
+}

@@ -1,0 +1,128 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_seedD4_1.sh
+=== onbox_seedD4_1 model=EleutherAI/pythia-1.4b-deduped results=results_seedD4_1 ===
+=== twelve checkpoints, measured step143000 first, then step0, then step512 to step128000 ===
+=== gate 1: step143000 within 0.02 of 0.876302 AND boundary ratio at least 0.3, else void ===
+=== gate 2: step0 is the baseline floor; it voids only at or above 0.6134114 ===
+=== formation thresholds are measured up from that floor toward 0.876302 ===
+=== instance=7e92f510481e48dd9a8cac2c2ac9e8f4 host=129-146-64-58 commit=unknown ===
+NVIDIA A100-SXM4-40GB, 40960 MiB, 570.148.08
+[inputs] stimulus_linewrap_v2.json present, hash matches the committed b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd
+[inputs] design record: seedD4_1_design_diff_triage.json, hash 1de4f659006e... expected
+[inputs] gate record: GATE_COMMIT_seedD4_1.md, hash 604c934583da... expected
+[inputs] control record: CONTROL_d4_1_label_reachability.txt, hash 9d48648a09ad... expected
+=== SELFTESTS (no model, no graphics card; a broken instrument must show first) ===
+  provenance.py: rc=0  selftest: PASS
+  run_seedD4_1.py: rc=0  selftest: PASS
+=== PACKAGES (verify what remote_run.sh left; add only what is missing) ===
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[packages] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[packages] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 GPTNeoXForCausalLM resolvable
+[token] HF_KEY_ONE taken from the forwarded HF_TOKEN
+=== DISK: 482187 MB free where results are written (about 5 GB is live at once) ===
+=== MEMORY: 218226 MB available (about 10.1 GB of running totals are held at once) ===
+=== seedD4_1_sweep RUNNING ===
+--- seedD4_1_sweep tail ---
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step96000_stage-extract.json
+[sweep] step96000 done in 204.6 s; working vectors and weights deleted
+[sweep] 11 of 12 checkpoints measured, 73.8 minutes so far
+[sweep] checkpoint step128000 (step 128000), measurement 12 of 12, downloading into results_seedD4_1/work/downloads/step128000
+[record] SETUP_OK -> results_seedD4_1/out/arm-setup_check_model-pythia-1.4b-deduped_revision-step128000_stage-extract.json
+[sweep] step128000: loading in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 4914.67it/s]
+[sweep] step128000: running totals 12 groups times 25 readouts at hidden 2048 = 10.08 GB
+[sweep] step128000: 336 variants in 261.3 s; downloaded weights deleted: True
+[record] EXTRACT_OK -> results_seedD4_1/out/arm-forward_passes_model-pythia-1.4b-deduped_revision-step128000_stage-extract.json
+[sweep] step128000: ridge strength 1000, cross-validated best readout 5 at 0.8760 (188.2 s)
+[record] CALIBRATION_OK -> results_seedD4_1/out/arm-constants_model-pythia-1.4b-deduped_revision-step128000_stage-extract.json
+[sweep] step128000: best readout 5, pooled quality over widths 20 to 140 0.874290, median readout 0.607343, peak above median 0.266947, LOCALIZED_INTERIOR_PEAK (7.5 s)
+[sweep] step128000: kept the vectors of readout 5, deleted 24 other readouts
+[sweep] step128000: profile [0.64139, 0.820081, 0.207186, 0.230228], boundary ratio 0.512028, directions {'0.9': 1, '0.95': 3, '0.99': 80}, coordinates COORDINATES_INTERIOR
+[record] COORDINATES_INTERIOR -> results_seedD4_1/out/arm-checkpoint_reading_model-pythia-1.4b-deduped_revision-step128000_stage-extract.json
+[sweep] step128000 done in 459.3 s; working vectors and weights deleted
+[sweep] 12 of 12 checkpoints measured, 81.7 minutes so far
+[sweep] all 12 checkpoints measured in 81.7 minutes
+=== stage extract done in 4900.5 s ===
+=== seedD4_1_sweep OK ===
+=== seedD4_1_endpoints RUNNING ===
+--- seedD4_1_endpoints tail ---
+=== stage endpoints ===
+[trajectory] baseline floor 0.341495; formation threshold 0.6088985; formed threshold 0.8228213
+[trajectory] quality by step {'0': 0.341495, '512': 0.827079, '1000': 0.851364, '2000': 0.765581, '4000': 0.715426, '8000': 0.725391, '16000': 0.764327, '32000': 0.829878, '64000': 0.867423, '96000': 0.872099, '128000': 0.87429, '143000': 0.876302}
+[trajectory] boundary ratio by step {'0': -0.05242, '512': 0.259086, '1000': 0.203763, '2000': -0.160578, '4000': -0.198033, '8000': -0.247611, '16000': 0.113313, '32000': 0.211511, '64000': 0.524118, '96000': 0.526207, '128000': 0.512028, '143000': 0.514227}
+[trajectory] best readout by step {'0': 24, '512': 23, '1000': 23, '2000': 23, '4000': 22, '8000': 22, '16000': 6, '32000': 6, '64000': 5, '96000': 5, '128000': 5, '143000': 5}
+[trajectory] formation step 512, formed step 512, boundary crossing 64000, localization 512
+[record] FORMATION_REACHED -> results_seedD4_1/out/arm-formation_existence_endpoint-3_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] OUTSIDE_BAND -> results_seedD4_1/out/arm-hold_test_quality_endpoint-3_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] EARLY_AT_OR_BEFORE_STEP16000 -> results_seedD4_1/out/arm-formation_timing_endpoint-3_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] BOUNDARY_PRESENT -> results_seedD4_1/out/arm-boundary_presence_endpoint-4_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] OUTSIDE_BAND -> results_seedD4_1/out/arm-hold_test_boundary_endpoint-4_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] BOUNDARY_AFTER_COUNTER -> results_seedD4_1/out/arm-boundary_timing_endpoint-5_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] RECORDED_NO_DECISION -> results_seedD4_1/out/arm-recorded_trajectories_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[record] UNSTABLE_NOT_CLASSIFIABLE -> results_seedD4_1/out/arm-run_summary_model-pythia-1.4b-deduped_revision-sweep_twelve_checkpoints_stage-endpoints.json
+[trajectory] summary {"headline": "UNSTABLE_NOT_CLASSIFIABLE", "boundary_trajectory_reading": "BOUNDARY_AFTER_COUNTER", "baseline_quality": 0.341495, "formation_step": 512, "formed_step": 512, "boundary_crossing_step": 64000, "hold_test": "UNSTABLE_NOT_CLASSIFIABLE", "boundary_presence": "BOUNDARY_PRESENT", "quality_range_after_formed": 0.16087600000000002, "boundary_range_after_formed": 0.773818}
+=== stage endpoints done in 0.0 s ===
+=== seedD4_1_endpoints OK ===
+=== COLLECT results_seedD4_1/out -> out/ ===
+-rw-rw-r-- 1 ubuntu ubuntu 1733459 Aug 22 22:33 rows_positions_w140_step143000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1711895 Aug 22 22:33 rows_positions_w140_step16000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1702365 Aug 22 22:33 rows_positions_w140_step2000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1712687 Aug 22 22:33 rows_positions_w140_step32000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1702089 Aug 22 22:33 rows_positions_w140_step4000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1680682 Aug 22 22:33 rows_positions_w140_step512.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1712258 Aug 22 22:33 rows_positions_w140_step64000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1702399 Aug 22 22:33 rows_positions_w140_step8000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1712104 Aug 22 22:33 rows_positions_w140_step96000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1330612 Aug 22 22:33 rows_variants_step0.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1332628 Aug 22 22:33 rows_variants_step1000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1333972 Aug 22 22:33 rows_variants_step128000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1333972 Aug 22 22:33 rows_variants_step143000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1333300 Aug 22 22:33 rows_variants_step16000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1332628 Aug 22 22:33 rows_variants_step2000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1333300 Aug 22 22:33 rows_variants_step32000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1332628 Aug 22 22:33 rows_variants_step4000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1331956 Aug 22 22:33 rows_variants_step512.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1333300 Aug 22 22:33 rows_variants_step64000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1332628 Aug 22 22:33 rows_variants_step8000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1333300 Aug 22 22:33 rows_variants_step96000.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu    9813 Aug 22 22:33 run_detached.log
+-rw-rw-r-- 1 ubuntu ubuntu    2649 Aug 22 22:33 seedD4_1_endpoints.log
+-rw-rw-r-- 1 ubuntu ubuntu   13149 Aug 22 22:33 seedD4_1_onbox_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu       0 Aug 22 22:33 seedD4_1_status.err
+-rw-rw-r-- 1 ubuntu ubuntu   21118 Aug 22 22:33 seedD4_1_sweep.log
+-rw-rw-r-- 1 ubuntu ubuntu      15 Aug 22 21:11 selftest_provenance.log
+-rw-rw-r-- 1 ubuntu ubuntu   28518 Aug 22 21:11 selftest_run_seedD4_1.log
+-rw-rw-r-- 1 ubuntu ubuntu   16192 Aug 22 22:33 sweep_table.json
+-rw-rw-r-- 1 ubuntu ubuntu   16192 Aug 22 22:33 sweep_table_summary.json
+8.0K	results_seedD4_1/work
+=== EXIT CODES: selftest_provenance=0 selftest_run_seedD4_1=0 packages=0 disk=0 memory=0 seedD4_1_sweep=0 seedD4_1_endpoints=0 ===
+=== ALLDONE_SEEDD4_1 OK ===

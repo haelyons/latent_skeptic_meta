@@ -1,0 +1,23 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/home/ubuntu/.local/lib/python3.10/site-packages/sklearn/linear_model/_logistic.py:473: ConvergenceWarning: lbfgs failed to converge after 2000 iteration(s) (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT
+
+Increase the number of iterations to improve the convergence (max_iter=2000).
+You might also want to scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+=== stage endpoints ===
+[endpoints] best readout 6, held-out fit quality 0.7809 -> ANCHOR_IN_BAND
+[record] ANCHOR_IN_BAND -> results_seedD/out/arm-count_curve_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] ripple size 1.24491e-05 at period 60.00 characters, rank 109 of 200 -> NULL_NOT_CLEARED
+[record] NULL_NOT_CLEARED -> results_seedD/out/arm-ripple_vs_shuffle_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] token-position control -> TOKEN_CONTROL_NOT_COMPUTABLE
+[record] TOKEN_CONTROL_NOT_COMPUTABLE -> results_seedD/out/arm-token_position_control_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] fitted-probe cross-check -> PERIODS_AGREE_PRESENCE_NOT_DECIDABLE
+[record] PERIODS_AGREE_PRESENCE_NOT_DECIDABLE -> results_seedD/out/arm-fitted_probe_crosscheck_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] GATE_CLOSED -> results_seedD/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] summary {"endpoint_1_setup": "SETUP_OK", "endpoint_2_search_band": "BAND_OK", "endpoint_3_count_curve": "ANCHOR_IN_BAND", "endpoint_4_ripple_vs_shuffle": "NULL_NOT_CLEARED", "endpoint_5_token_position_control": "TOKEN_CONTROL_NOT_COMPUTABLE", "endpoint_6_fitted_probe_crosscheck": "PERIODS_AGREE_PRESENCE_NOT_DECIDABLE", "best_readout": 6, "best_held_out_quality": 0.780903, "ripple_wavelength_chars": 60.0, "ripple_rank_of_draws": 109}
+=== stage endpoints done in 191.8 s ===

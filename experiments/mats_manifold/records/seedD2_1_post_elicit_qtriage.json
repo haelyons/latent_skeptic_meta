@@ -1,0 +1,291 @@
+{
+ "elicited": {
+  "questions": [
+   {
+    "question": "Correlation between predicted and true character count is 0.647858 in the first 35 characters of a line. It drops to 0.219109, 0.152837, and 0.271371 in the next three 35-character stretches, up to character 140. All four stretches sit inside the range used to fit the model. Why does the match collapse so sharply, this early, still inside the model's own fitted range?",
+    "where": "The represented-range check for the widest probe window (280 characters), rows for character stretches 1-35, 36-70, 71-105, and 106-140, in the file named for that check (arm-measurable_range).",
+    "if_true": "The straight-line read of characters since the last line break may only track the first few dozen characters well. It may not be a genuine running count across a full line.",
+    "changes": "This would undercut the basic premise that a continuous counter exists whose repeating pattern is worth searching for at windows up to 280 characters."
+   },
+   {
+    "question": "The number of directions holding most of the spread in the model's activity is 2 at the 140-character window, 3 at 200 characters, and 1 at 280 characters. The design's own reasoning for why a repeating pattern's size should be comparable across windows rests on that number being 1 everywhere. Does that reasoning still hold when the number changes window to window?",
+    "where": "The run summary's per-window count of dominant directions (ambient_dimension_by_aperture: 140 gives 2, 200 gives 3, 280 gives 1), against the design text's claim that a single such direction is what makes window sizes comparable.",
+    "if_true": "The three windows may be measuring geometrically different kinds of objects, not the same kind of curve at three sizes.",
+    "changes": "This would call into question whether comparing repeating-pattern sizes across windows, the design's central fork, is even a fair comparison here."
+   },
+   {
+    "question": "At every one of the three probe windows, neither the character-count pattern nor the token-position pattern beat its own 200 random-shuffle comparisons. Yet each window's record still declares character count the winner over token position. Can that declared winner mean anything when neither side showed a real pattern to credit?",
+    "where": "The token-position-control record at each window (140, 200, 280): both its character-cleared and token-cleared results read false, while its decision reads CHARACTER_COUNT_DISTINGUISHED.",
+    "if_true": "This label may be comparing two patterns that are both absent, rather than crediting a genuine repeating pattern to the right cause.",
+    "changes": "This would mean this per-window label can read as a positive finding even though the underlying run found nothing, unless checked against the separate no-pattern result."
+   },
+   {
+    "question": "At the 280-character window, the fit between predicted and true character count is worse than just guessing the average (a score of -0.528865). Yet this same window comes closest to beating chance on the repeating-pattern test, ranking 34th out of 200 comparisons. The 140-character window has a much better fit (0.664024) but ranks 199th, far from beating chance. Why does the worst-fitting window come closest to a positive result?",
+    "where": "The count-of-windows-clearing-chance file's per-window rank (140: 199, 200: 201, 280: 34), next to the validity-gate file's per-window fit scores (140: 0.664024, 200: 0.087857, 280: -0.528865).",
+    "if_true": "The near-miss at the widest, worst-fitting window may come from a broken linear read, not from any real repeating pattern in the model.",
+    "changes": "This would warn against treating window 280's closer rank as a hint of a genuine pattern, since its underlying read barely works at all."
+   },
+   {
+    "question": "This run's validity-check fit score, measured on twelve documents with text disjoint from the prior run, is 0.781031. The prior run's score, on different documents, was 0.780903. The two scores agree to within 0.000128 despite reading unrelated text. Why would completely different held-out documents produce almost the same fit score?",
+    "where": "The validity-gate file's notes, comparing the prior run's score (0.780903) to this run's score (0.781031), both taken at the same chosen layer.",
+    "if_true": "This fit score may depend mainly on how many windows and positions go into it, not on which text is actually read.",
+    "changes": "This would weaken the validity check's job of confirming the model represents these particular new documents well, rather than just repeating a fixed property of the test's own construction."
+   },
+   {
+    "question": "At the 140-character window, 53 of 10,578 recorded positions carry a character-count label of 141, one past the window's own stated size. Similar extra labels (201, 281) appear at the 200- and 280-character windows. Every endpoint file's own count of labels stops at the window's plain size (140, 200, 280) and never mentions this extra one. What happens to these extra-labeled positions inside the calculation?",
+    "where": "The raw per-character rows file shows character labels reaching 141, 201, and 281 (one label from the line-break character itself). The endpoint files' label counts and window-size fields stop at 140, 200, and 280.",
+    "if_true": "A small, systematic slice of positions, coming from the line-break character, sits outside every stated label range in the endpoint files.",
+    "changes": "This would shift the exact number of labels and the profile length used in the repeating-pattern search by one at every window, in a way no file explains."
+   },
+   {
+    "question": "The token-position search is stated to stop at 41 tokens for the 140-character window, at 56 tokens for 200 characters, and at 76 tokens for 280 characters. The raw rows, though, actually contain token counts up to 50, 69, and 94 at those same three windows. Why is part of the observed token range left out of the search, with no stated rule for the cutoff?",
+    "where": "The calibration file's per-window token-count ceiling (41, 56, 76) against the raw rows file's actual highest token counts (50, 69, 94) at the 140-, 200-, and 280-character windows.",
+    "if_true": "Some of the rarest, longest token counts per line may be cut from the token-position check without any rule stated in the design.",
+    "changes": "This would change how completely the token-position check covers its own range, and whether its comparison against the character-count result is fair."
+   },
+   {
+    "question": "A flag in the raw rows, named for whether a position was used to fit the model, reads true for every held-out test-document row. This includes windows (200 and 280) that were never used to choose the layer or the fitting strength. Training-document rows, by contrast, correctly read false at those same two windows. Why does a fitting-inclusion flag read true where nothing was actually fit?",
+    "where": "The raw rows files: test-split rows read true on this flag at all three windows (140, 200, 280) alike, while train-split rows correctly read false at 200 and 280.",
+    "if_true": "The flag's name may not describe what it actually marks, since it fails to separate 'used to fit' from 'read for held-out results.'",
+    "changes": "This would not change any reported number, since the position counts elsewhere add up correctly, but it leaves unclear which stored rows a future reader can safely assume were used for fitting."
+   }
+  ]
+ },
+ "qtriage": {
+  "claims": [
+   {
+    "id": "q1",
+    "grounding": {
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/aperture-280_arm-measurable_range_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-280_arm-measurable_range_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/rows_positions_apertures.jsonl"
+     ],
+     "grounding": "unauditable",
+     "note": "Result JSON verbatim matches the claim (0.647858/0.219109/0.152837/0.271371) and the raw input rows independently reproduce every bin's n_positions (1309/1272/1301/1295) plus all width-280 positions flagged in_training_fit with char_label 1-281, so \"inside the fitted range\" holds; but no per-position predictions (or activations/labels_a280.npz \u2014 cited at results_seedD2_1/work/, which does not exist locally) were saved, so the Pearson values themselves cannot be re-derived, and the earlier seedD2 run of the same cell reports a different statistic (negative within-bin R^2, e.g. -24.34 for bin 1-35) rather than correlations.",
+     "observed": "claim 0.647858, 0.219109, 0.152837, 0.271371; re-derived: bin counts 1309/1272/1301/1295 match, label range 1-281 all in_training_fit; correlations not recomputable (no saved predictions); sibling run seedD2 gives -24.343564/-35.165575/-18.826312/-3.827423 (R^2 metric)"
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation \u2014 the possibility that the correlation collapse reflects the probe/readout being evaluated off the distribution it was fit on, rather than a real breakdown of a running counter.",
+      "status": "RULED_OUT",
+      "crux": "Whether the four 35-character stretches (1-35...106-140) fall inside the range used to fit the model for the 280-char probe window \u2014 the represented-range check confirms all four are in-range, so the collapse cannot be attributed to off-distribution evaluation."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the sharp correlation drop reflects a causally-disrupted counter that downstream layers compensate for in the model's actual output (self-repair), versus simply a linear probe/read-out that never represented a genuine running count past the first stretch (the representational-range explanation already given in evidence) \u2014 the committed data only contains passive probe-correlation numbers, no ablation/patching data that would reveal compensation."
+     },
+     {
+      "confound": "Selection bias would mean the \"represented range\" (up to 280 chars) or the model's fitted window was chosen post-hoc to make the counter-hypothesis look supportable, and that the four 35-char sub-stretch correlations are being read selectively (e.g. window boundaries or the decision to report only these four slices) rather than reflecting a real, uniform signal decay across the whole fitted range.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the 0\u2013280 \"fitted range\" boundary and the four 35-char reporting slices were fixed by a pre-registered/independent criterion (e.g. the range the underlying probe was trained on) versus chosen after inspecting where correlations looked good or bad \u2014 the evidence given only restates the four correlation numbers and the interpretive claim, with no record of how the fitted range or slice boundaries were determined, so I cannot tell if selection produced the appearance of collapse or if the collapse is a faithful in-range measurement."
+     },
+     {
+      "confound": "Readout artifact: the linear probe reading \"characters since last line break\" may only track a genuine running count for the first few dozen characters, then fail \u2014 not because no counter exists, but because the straight-line readout can't follow it (e.g. saturation, non-linearity, or drift in the true representation as line-position grows).",
+      "status": "EXPLAINS",
+      "crux": "All four correlations (0.648, 0.219, 0.153, 0.271) come from stretches 1-140, which sit inside the 0-280 range the linear probe was fit on \u2014 so the collapse after the first 35 characters is exactly the signature the confound predicts (readout tracks only the early portion), and nothing in the evidence distinguishes \"no real counter\" from \"real counter, bad linear readout.\" No held-out/different-probe number is cited to separate these."
+     },
+     {
+      "confound": "Regime specificity: the linear chars-since-line-break readout may only track well in the first ~35 characters, not as a genuine running counter across the line.",
+      "status": "EXPLAINS",
+      "crux": "Correlation drops from 0.648 to 0.219/0.153/0.271 right after the first 35-char stretch, all within the fitted 280-char range, matching the predicted signature of an early-only readout rather than a sustained counter; no data in the table shows sustained high correlation past char 35."
+     },
+     {
+      "confound": "construct validity \u2014 the \"predicted character count\" probe may only be reading off a straight-line/early-position signal that happens to correlate with true count for the first few dozen characters, rather than tapping a genuine continuous running counter that persists across a full line.",
+      "status": "EXPLAINS",
+      "crux": "The committed correlations (0.648 to 0.219 to 0.153 to 0.271) collapse sharply within the very first 140 characters, all still inside the model's fitted range, exactly the signature the if_true condition describes: it may only track the first few dozen characters and not be a genuine running count. Nothing in the cited evidence (a single represented-range check table) distinguishes a real-but-noisy counter from an early-position proxy with no true counter beyond ~35 chars; both predict this collapse pattern, so the numbers corroborate rather than rule out the confound."
+     },
+     {
+      "confound": "scale incomparability \u2014 the \"predicted vs true character count\" correlation is being compared across four 35-char stretches as if it measures the same underlying quantity throughout, but the fitted counter may only be locally valid near line-start.",
+      "status": "EXPLAINS",
+      "crux": "The evidence (if_true) states directly that the straight-line read of \"characters since last line break\" may only track well for the first few dozen characters and may not be a genuine running count across a full line \u2014 this is precisely the mechanism that would produce a correlation of 0.65 in chars 1-35 collapsing to 0.15-0.27 in chars 36-140, even though all four windows are nominally inside the model's fitted range (0-280). No committed number in the evidence (e.g., a held-out or re-fit check showing the counter remains linear/comparable across 1-140) rules this out; the only data given is the four correlation values themselves, which are exactly what the confound predicts."
+     },
+     {
+      "confound": "noise floor: the low correlations (0.22, 0.15, 0.27) in stretches 2-4 could simply be within the range of correlation expected from measurement/sampling noise given the number of lines/tokens used to compute each windowed correlation, rather than reflecting a genuine collapse of a real signal.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether 0.219/0.153/0.271 sit inside or outside the null/noise-floor correlation band expected at this sample size (e.g., from a shuffled-label or permutation control) \u2014 the evidence only gives the four observed correlation values with no accompanying null baseline or CI to judge against."
+     },
+     {
+      "confound": "ceiling or floor effect",
+      "status": "EXPLAINS",
+      "crux": "The evidence's own stated mechanism (if_true) is that the \"predicted character count\" signal only tracks the true count well for the first few dozen characters and then stops moving with it \u2014 i.e., predicted values plateau/saturate while true counts keep climbing through 36-140. That is exactly a ceiling effect on the predicted variable within a range that is nominally \"inside the fitted range\": once predictions stop varying, correlation with the still-varying true count mechanically collapses regardless of any real underlying signal. No committed statistic here (e.g., variance/std of predicted values per 35-char stretch, or a residual/saturation plot) is given that would show predicted values continue to vary proportionally with true count in windows 2-4 \u2014 which is the only thing that could rule the ceiling story out."
+     },
+     {
+      "confound": "single-case overfit",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the four correlation values (0.647858/0.219109/0.152837/0.271371) are computed by aggregating over many distinct lines/samples at each 35-char stretch, or are derived from a single line (or a very small n) \u2014 the committed evidence describes a different mechanism (early-position-only tracking) and never states the sample size or line-count behind each correlation row."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "ablation/patching study on the putative character-counter direction at each 35-char stretch, comparing direct effect (immediate readout after ablation) vs total effect (final output/behavior after ablation) to test whether downstream layers restore accuracy that the probe correlation says is lost.",
+     "control that recomputes correlation on randomly-placed 35-char windows (not aligned to fixed 0-35/36-70/etc. boundaries) within the same fitted 0-280 range, and separately confirms the 0-280 fit range was set by the probe's training procedure (not chosen after seeing this collapse pattern) \u2014 if window-boundary jitter and independent-range confirmation both leave the sharp early collapse intact, selection bias is ruled out; if the collapse is boundary-sensitive or the range was chosen post-hoc, selection bias explains the claim.",
+     "permutation/shuffle-null control that computes predicted-vs-true correlation on label-shuffled (or resampled) data at the same n per 35-char stretch, to establish the noise-floor band the 0.219/0.153/0.271 values should be compared to.",
+     "rerun the represented-range check (280-char probe window) reporting n (distinct lines/samples) contributing to each of the four 35-char-stretch correlations, and compare correlation stability when computed on a held-out set of lines vs. the fitted set, to determine whether the sharp drop reflects a single-case/few-case fit rather than a population-level decay in tracking fidelity."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q2",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "Re-derived from raw mean-vector matrices (mean_vectors_aperture-{140,200,280}_labels-characters.npz, shapes 140/200/280 x 1024, centred SVD at the code's VARIANCE_TARGET=0.95): dim = 2, 3, 1 \u2014 identical to the claim's and to the summary's ambient_dimension_by_aperture. Leading variance shares: 0.9341/0.9295/0.9635; second components 0.0242/0.0182/0.0073. At target 0.90 all three windows give dim = 1; at 0.99 they give 56/92/71.",
+     "note": "The 2/3/1 numbers reproduce exactly, but they are a 0.95-threshold artifact: PC1 alone holds 93-96% of the spread at every window, so the design's one-dominant-direction premise is not actually contradicted and the cross-window comparison is not undermined by this number.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints_summary.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/mean_vectors_aperture-140_labels-characters.npz",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/mean_vectors_aperture-200_labels-characters.npz",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/mean_vectors_aperture-280_labels-characters.npz",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/aperture-140_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/run_seedD2_1.py"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation \u2014 the \"dominant direction\" counts (2/3/1) may reflect an ablation-based measurement procedure that pushes activations outside the training distribution differently at each window length, rather than a genuine geometric property of the activity being compared.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether ambient_dimension_by_aperture was computed via an off-distribution ablation (e.g., zero/mean ablation of candidate directions) versus an on-distribution variance/PCA measure \u2014 the evidence gives only the resulting counts (140:2, 200:3, 280:1) with no stated measurement methodology, so the confound can neither be confirmed nor ruled out from what's committed."
+     },
+     {
+      "confound": "Downstream compensation/self-repair is a mechanism whereby ablating or perturbing a direction has its effect masked because later layers compensate \u2014 it operates on causal-intervention measurements (ablation/patching), not on a static count of dominant variance directions. The \"ambient_dimension_by_aperture\" numbers (2/3/1) as described are a PCA-like spread/variance-explained count over activations at each window size, not an ablation-derived causal-effect count. Nothing in the evidence states the dimension-count pipeline runs any ablation or patching step through which self-repair could act, nor does it rule that out \u2014 the methodology behind ambient_dimension_by_aperture is not specified beyond the label.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether ambient_dimension_by_aperture is computed from a causal/ablation-based procedure (where self-repair could suppress or inflate the apparent number of independent directions differently per window length) versus a purely observational variance/PCA decomposition of activations (where self-repair has no mechanism to act) \u2014 the evidence given never states which, so the confound can neither be confirmed nor excluded from the committed numbers alone."
+     },
+     {
+      "confound": "Selection bias here would mean: the \"number of dominant directions\" per window isn't a robust geometric fact but an artifact of wherever a variance/eigenvalue-explained cutoff happens to land for that window's particular data. If the criterion for counting \"dominant directions\" (e.g., a %-variance-explained threshold or an eigenvalue-gap rule) is anywhere near a boundary, small sampling noise in each window's activity covariance could flip the count between 1, 2, and 3 without any real change in the underlying geometric object being measured across apertures.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the reported counts (2 at 140, 3 at 200, 1 at 280) are stable across reasonable choices of the dominant-direction criterion (variance threshold / eigenvalue-gap rule) or flip depending on where the cutoff is drawn \u2014 the evidence gives only the final counts, not the criterion's robustness, so it's consistent with either a genuine geometric difference across windows or a threshold-sensitive artifact."
+     },
+     {
+      "confound": "The reported \"ambient_dimension_by_aperture\" (2 at 140 chars, 3 at 200, 1 at 280) is the output of some dimensionality-counting readout (e.g. a PCA/explained-variance threshold or participation ratio) applied to activity captured over windows of different lengths. Such counts are notoriously sensitive to the readout's own knobs \u2014 variance-explained cutoff, number of samples/tokens available at each window length, normalization/scaling of the covariance \u2014 independent of any real change in the underlying geometry. A longer or shorter capture window mechanically changes the sample count and possibly the scale of the activity fed into the estimator, so the estimator could report 2, 3, or 1 \"dominant directions\" purely because the readout's threshold behaves differently at different sample sizes, not because the model's activity is genuinely 2-D, 3-D, and 1-D at those three windows.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the per-window dominant-direction count (2/3/1) was produced by a threshold/method that is invariant to window-length-induced changes in sample size and activity scale, or whether it is an artifact of the readout's own sensitivity to those changes \u2014 the evidence given only states the three numbers themselves, with no committed control showing the count is stable when sample size/scale is equalized across windows."
+     },
+     {
+      "confound": "Regime specificity: the three window sizes (140/200/280 chars) may not be sampling the same kind of object at different scales at all. The design's argument for why \"repeating pattern size\" is comparable across windows presupposes that in each case the activity spread is dominated by a single (1) direction \u2014 i.e., that each window's dynamics reduce to the same kind of low-dimensional object, differing only in scale/period. The committed ambient_dimension_by_aperture numbers (140\u21922, 200\u21923, 280\u21921) show that presupposition is false: the dominant-direction count itself varies with the window, meaning the object being measured is not held fixed across the comparison. That is exactly the signature regime-specificity predicts \u2014 different apertures elicit geometrically different regimes (2D, 3D, 1D dominant subspaces), so a \"pattern size\" extracted from each window is not commensurable with the others.",
+      "status": "EXPLAINS",
+      "crux": "The design's comparability argument is explicitly conditioned on the dominant-direction count being 1 at every window; the only committed number bearing on this (ambient_dimension_by_aperture = 2, 3, 1) directly contradicts that condition rather than supporting it, and no other committed data shows the three windows nonetheless measure the same kind of object."
+     },
+     {
+      "confound": "construct validity",
+      "status": "EXPLAINS",
+      "crux": "The design's justification for comparing \"pattern size\" across windows explicitly rests on there being exactly 1 dominant direction (a single curve) in every window; the committed ambient_dimension_by_aperture numbers show 2 at 140 chars and 3 at 200 chars (only 280 chars gives 1), so in 2 of 3 windows the object being measured is a higher-dimensional surface, not the single curve the comparability argument requires."
+     },
+     {
+      "confound": "scale incomparability",
+      "status": "EXPLAINS",
+      "crux": "The design's own stated precondition for cross-window comparability is that the dominant-direction count be 1 at every aperture; the committed ambient_dimension_by_aperture values are 140:2, 200:3, 280:1, so that precondition holds only at 280. This means the three windows are measuring objects of different intrinsic dimensionality (a 2-D and a 3-D spread vs. a 1-D one), so the reported \"sizes\" (2, 3, 1) are not on a common scale and the design's comparability argument does not survive contact with its own numbers."
+     },
+     {
+      "confound": "noise floor",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the per-window \"dominant direction\" counts (2 at 140, 3 at 200, 1 at 280) reflect real above-noise signal structure or are themselves an artifact of where each window's variance spectrum happens to sit relative to the measurement's noise floor (e.g. a participation-ratio/eigenvalue-gap threshold that a shuffled or trial-shuffled control would cross differently at each window length purely from finite-sample noise)."
+     },
+     {
+      "confound": "Ceiling/floor effect: the \"number of dominant directions\" (2 at 140, 3 at 200, 1 at 280) could be mechanically capped by the number of usable samples/trials or by the max achievable rank at each aperture, rather than reflecting true geometric structure \u2014 e.g., the 280-char window could be floored at 1 by having too few samples/too little variance to resolve more directions, independent of the underlying pattern's real dimensionality.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the per-window sample/trial count (or effective max rank) and the variance-explained threshold used to count \"dominant directions\" are documented and show the 280-window count of 1 is not simply the floor imposed by too few samples/too little rank relative to embedding dimension."
+     },
+     {
+      "confound": "single-case overfit \u2014 the reported dominant-direction counts (2 at 140, 3 at 200, 1 at 280) come from the run summary's ambient_dimension_by_aperture field, which reflects a single measured case (one model run / one dataset instance) at each window size. No evidence is given that this count is stable across independent samples, seeds, or input instances at the same window size.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the per-window dominant-direction count (2/3/1) is a stable property of the window size itself, or an artifact of the particular single case/sample used to compute the covariance/PCA spectrum at each aperture \u2014 the evidence given is only one summary number per window, with no replication across cases or seeds to show the count is reproducible rather than noise from a single measurement."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "Recompute ambient_dimension_by_aperture at 140/200/280 using an on-distribution, non-ablation estimator (pure covariance/PCA on raw activations, no zero/mean ablation or patching step) and check whether the 2/3/1 pattern collapses to a stable count once any off-distribution ablation or downstream-compensation pathway is removed.",
+     "Sweep the dominant-direction count under several variance-explained thresholds (e.g. 80/90/95%) or an eigenvalue-gap criterion for each aperture (140/200/280) to check whether 2/3/1 is stable or a threshold artifact.",
+     "Recompute ambient_dimension for each window (140/200/280) after equalizing sample count and activity-magnitude normalization (subsample to same token count, z-score/whiten) across windows before applying the same fixed threshold, to check whether 2/3/1 persists or collapses to a constant.",
+     "Compute the eigenvalue/variance spectrum (or participation ratio) at each aperture (140/200/280) against a shuffled-trials or shuffled-time null baseline, and report whether the dominant-direction counts sit clearly above that null with a pre-declared threshold.",
+     "Report, for each aperture (140/200/280), the number of samples/trials used, the embedding/ambient dimension, and the variance-explained threshold applied to count dominant directions, to check whether the 280-window's count of 1 is a sample-count floor rather than a free measurement.",
+     "Recompute ambient_dimension (dominant-direction count via participation ratio / eigenvalue-gap criterion) at each of 140/200/280-char windows across multiple independent samples or seeds, and check whether 2/3/1 is stable across repeats rather than an artifact of a single case."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q3",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "All three token_position_control records (aperture 140/200/280) have character_cleared_shuffle=false AND token_cleared_shuffle=false with decision=\"CHARACTER_COUNT_DISTINGUISHED\". Re-derived from raw null_spectra jsonl (1 observed + 200 nulls each): token obs max_power vs null_max = 4.19e-5 vs 1.34e-2 (rank 201/201), 3.44e-5 vs 9.89e-3 (201/201), 2.27e-5 vs 2.39e-3 (201/201); character = 4.18e-5 vs 6.53e-4 (rank 199/201), 2.26e-6 vs 3.13e-4 (201/201), 4.07e-5 vs 1.33e-4 (rank 34/201). No side beats its own shuffles. Decision comes solely from the period-margin branch: |char_wl - token_wl_in_chars| = 91.4, 105.7, 13.3 chars, all > margin 3.",
+     "note": "Claim reproduces exactly: decide_confound() (run_seedD2_1.py:720-727) returns CHARACTER_COUNT_DISTINGUISHED on the period-gap test before ever requiring either labelling to clear its shuffle null, so the label is emitted from two absent signals whose peak periods merely differ.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-140_labels-tokens.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-140_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-200_labels-tokens.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-200_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-280_labels-tokens.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/null_spectra_aperture-280_labels-characters.jsonl",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/run_seedD2_1.py"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation: the 200 random-shuffle comparisons that define \"cleared\" may themselves be off-distribution ablations (shuffled character/token orderings the model was never exposed to), giving the clearance test degraded power to detect a real pattern for either cause \u2014 which would make \"both false\" an artifact of the control's invalidity rather than proof of no real pattern, while a separate decision rule still emits a categorical winner.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the shuffle-control's null result (character_cleared=false, token_cleared=false at all three windows) reflects a genuine absence of signal, or reflects the shuffle ablation being off-distribution enough that it cannot detect a real pattern for either cause \u2014 no committed number describes how the 200 shuffles are constructed (e.g., whether they preserve on-distribution statistics) or shows an on-distribution control giving the same null."
+     },
+     {
+      "confound": "downstream compensation (self-repair)",
+      "status": "EXPLAINS",
+      "crux": "The claim is fundamentally a null finding: at each of the three windows, both character-count and token-position patterns failed to clear their own 200-shuffle controls (character_cleared=false, token_cleared=false). A generic self-repair/downstream-compensation mechanism \u2014 later layers or later token positions compensating for whatever signal the probe is targeting \u2014 is exactly the kind of thing that would wash out a real underlying pattern and produce this flat, non-significant result at every window, for both features, simultaneously. Nothing in the committed evidence (the cleared flags, or the decision field) distinguishes \"there was never a pattern\" from \"there was a pattern but downstream compensation masked it in the measured window.\" The separate oddity \u2014 that CHARACTER_COUNT_DISTINGUISHED is still emitted as the decision despite both cleared flags being false \u2014 is a decision-rule labeling artifact, but it does not supply the missing evidence needed to rule self-repair in or out; it only confirms the label is decoupled from the significance test, which is consistent with (not contrary to) a self-repair explanation for the underlying null."
+     },
+     {
+      "confound": "selection bias",
+      "status": "EXPLAINS",
+      "crux": "The per-window decision field (CHARACTER_COUNT_DISTINGUISHED) is emitted regardless of whether either side's cleared flag is true \u2014 at all three windows (140, 200, 280) both character-cleared and token-cleared are false, yet a \"winner\" is still named. That means the decision logic selects a nominal winner by comparing two noise-level results against each other (whichever looks relatively less null, e.g. by raw stat magnitude or p-value ordering) rather than requiring either pattern to first clear its own 200-shuffle null. This is exactly the selection-bias mechanism: picking a \"winner\" from a comparison where neither candidate has been shown to be non-null manufactures an apparent positive finding out of two negatives."
+     },
+     {
+      "confound": "readout artifact \u2014 the per-window \"decision\" field (e.g. CHARACTER_COUNT_DISTINGUISHED) is computed independently of the character-cleared/token-cleared booleans, so it can output a \"winner\" label even when both underlying pattern checks read false.",
+      "status": "EXPLAINS",
+      "crux": "At each of the three windows (140/200/280) the record shows character_cleared=false AND token_cleared=false, yet decision=CHARACTER_COUNT_DISTINGUISHED \u2014 proving the decision label is generated without gating on whether either side actually cleared its shuffle-control comparison, i.e. the \"winner\" is a readout/labeling artifact, not a credited real pattern. Note the claim itself is asserting this null/artifact \u2014 the confound here IS the claim's content, not something separate that would refute it."
+     },
+     {
+      "confound": "If the CHARACTER_COUNT_DISTINGUISHED label at each window really meant something, it should track a regime-specific effect (e.g., only appearing at particular window sizes where a real per-window pattern exists). But the evidence shows the identical (false, false) \u2192 CHARACTER_COUNT_DISTINGUISHED outcome recurring uniformly at all three tested windows (140, 200, 280). A regime-specific mechanism would predict variation across windows \u2014 some windows showing a real winner, others not, or different declared winners. Instead the record is invariant across the three regimes tested, which is the signature of a fixed decision-rule/labeling artifact (e.g., a tie-break or default that always favors CHARACTER_COUNT_DISTINGUISHED when both checks are false) rather than a genuine regime-dependent phenomenon being mistakenly attributed to the wrong window.",
+      "status": "RULED_OUT",
+      "crux": "Whether the false/false\u2192CHARACTER_COUNT_DISTINGUISHED outcome varies across the three probe windows (which would support regime-specificity) or is identical across all three (which rules it out). The evidence states it is identical at all three windows (140, 200, 280): character-cleared=false, token-cleared=false, decision=CHARACTER_COUNT_DISTINGUISHED at every one."
+     },
+     {
+      "confound": "Construct validity: the \"winner\" decision field is generated by comparing raw magnitudes (or shuffle-percentile ranks) between the two candidate features, without gating on whether either feature actually cleared its own significance test. The evidence shows exactly this: at all three windows character_cleared=false and token_cleared=false, yet decision=CHARACTER_COUNT_DISTINGUISHED. So the decision label's construct (\"distinguished/winner\") does not mean \"showed a real, shuffle-beating pattern\" \u2014 it means something else (e.g., smaller p-value, larger raw stat, or a tie-break default toward character count), which is a mismatch between what the label claims to measure and what was actually established.",
+      "status": "EXPLAINS",
+      "crux": "The decision field (CHARACTER_COUNT_DISTINGUISHED) is computed and reported independently of the cleared/not-cleared significance flags \u2014 both flags are false at every window yet the decision still fires \u2014 so the label's construct does not require a real pattern to declare a \"winner,\" meaning the declared winner cannot be interpreted as evidence of a genuine character-count effect."
+     },
+     {
+      "confound": "scale incomparability",
+      "status": "EXPLAINS",
+      "crux": "The per-window \"decision\" field (e.g. CHARACTER_COUNT_DISTINGUISHED) is produced by comparing raw effect magnitudes between two different units (character-count deviation vs. token-position deviation) rather than by either metric clearing its own null distribution \u2014 and the committed record shows character-cleared=false and token-cleared=false at all three windows (140, 200, 280) while the decision still names a winner. That is exactly what scale incomparability produces: a magnitude comparison across incommensurate units gets reported as a substantive \"winner\" even though neither side is distinguishable from its own 200-shuffle null, i.e. neither showed a real pattern to credit."
+     },
+     {
+      "confound": "noise floor",
+      "status": "EXPLAINS",
+      "crux": "The per-window decision field (CHARACTER_COUNT_DISTINGUISHED) is computed independently of the character-cleared/token-cleared booleans \u2014 at all three windows (140, 200, 280) both booleans read false, meaning neither pattern beat its 200-shuffle noise floor, yet a \"winner\" is still emitted. That means the declared winner is just whichever raw value was numerically larger between two quantities that are both statistically indistinguishable from shuffled noise \u2014 exactly the artifact the noise-floor confound predicts: a magnitude comparison dressed up as a distinguishability finding, with no gate checking that either side actually cleared its own null."
+     },
+     {
+      "confound": "ceiling or floor effect (here: comparing two null/absent results and declaring one a \"winner\")",
+      "status": "EXPLAINS",
+      "crux": "At each of the three windows (140/200/280) the record shows character-cleared=false AND token-cleared=false, yet the decision field still reads CHARACTER_COUNT_DISTINGUISHED \u2014 the winner label is emitted regardless of whether either side actually cleared its shuffle-control bar, so it cannot be read as evidence of a real character-count pattern."
+     },
+     {
+      "confound": "single-case overfit: if the character-count/token-position \"patterns\" are fit and tested on too small/narrow a sample (e.g. one case or a handful of examples per window) rather than a broad distribution, neither would have power to clear a 200-shuffle null \u2014 exactly what's reported (character-cleared=false, token-cleared=false at 140/200/280). Under this confound, the record's \"winner\" field is not a real effect comparison at all; it's a label being emitted from an underpowered/overfit comparison that never had a chance to show a genuine pattern on either side.",
+      "status": "EXPLAINS",
+      "crux": "The claim itself is a null-result claim (\"neither pattern is real, so the declared winner is meaningless\") \u2014 and the single-case-overfit confound is one specific account of *why* neither pattern cleared its shuffle control (insufficient/narrow evidence to detect either), which is consistent with, not a refutation of, the claim's own null finding. There is no committed number in evidence (e.g., case/sample count per window, or a multi-case replication showing the same false/false pattern holds at larger n) that would let me distinguish \"underpowered single-case comparison\" from some other reason both sides read false \u2014 so the confound stands as a live, unrefuted explanation of the reported false/false + spurious-winner pattern."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "an on-distribution (or distribution-matched) ablation control replacing the 200 random-shuffles, re-run at windows 140/200/280, to check whether character_cleared/token_cleared remain false \u2014 if they do, the off-distribution confound is ruled out and the null (and the meaningless \"winner\" label) stands on its own."
+    ],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "takeaways": "File written: `/home/hal/dev/interp/dm_hack/mats_manifold/TAKEAWAYS_seedD2_1.md`\n\nSources used: `/home/hal/dev/interp/dm_hack/mats_manifold/records/seedD2_1_design_diff_triage.json`, and the endpoint/provenance records in `/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2_1/out/` (anchor gate, run summary, all three per-window wobble-vs-shuffle and token-position-control records, the width-280 measurable-range record, calibration/constants, setup check, and the raw `rows_positions_apertures.jsonl` / `rows_variants.jsonl` files, which I queried directly to confirm the exact off-by-one label counts and the `in_training_fit` flag behavior cited in the open questions).\n\nVerbatim gate output:\n\n```\nTAKEAWAYS_seedD2_1.md: 0.0 codes/1000 words (0 codes, 1242 words); threshold 10.0\n0 unscoped result sentence(s)\n```\n\nBoth gates exit 0 (pass)."
+}

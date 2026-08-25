@@ -1,0 +1,441 @@
+{
+  "cell": {
+    "arm": "checkpoint_reading",
+    "model": "pythia-1.4b-deduped",
+    "revision": "step16000",
+    "stage": "extract"
+  },
+  "decision": "COORDINATES_INTERIOR",
+  "decision_rule": "Recorded for one checkpoint, with no pass-or-fail call of its own: the held-out pooled quality at every readout, the best readout, the selected ridge strength, the four-part precision profile at that readout, the boundary ratio, the direction counts at 90, 95 and 99 percent, how flat quality is across readouts, and the per-width qualities. A selection sitting at an end of its search range is flagged. The two integrity gates decide whether these numbers may be read at all, and both decisions are carried in these values.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T22:07:45+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    },
+    {
+      "bytes": 212816,
+      "n_items": 10578,
+      "path": "results_seedD4_1/work/labels_step16000.npz",
+      "present": true,
+      "sha256": "d05f8b24cf8d"
+    }
+  ],
+  "metric": "One checkpoint's held-out pooled quality at every readout, its best readout, its four-part precision profile, its boundary ratio, its direction counts, and its two shape signatures.",
+  "notes": "The best readout is this checkpoint's own, chosen by this checkpoint's own pooled quality, which the previous rung's committed gate record settles in its third answer of record: fixing one readout everywhere would presume the answer, and the readout's trajectory is itself a recorded observable. The profile statistic is the Pearson correlation between predicted and true count inside each part, which the same record settles in its fourth answer. The two shape signatures the untrained sibling showed are recorded here at every checkpoint and gate nothing: how flat quality is across readouts, and the per-width qualities, where the narrowest width read -2.479186 on that untrained sibling. The boundary ratio is the mean of the profile's first two parts minus the mean of its last two. Its bar stays absolute at 0.3, with no baseline correction, because the smaller sibling's untrained checkpoint read -0.080316, which is effectively zero. On that sibling's final checkpoint the ratio reads -0.090673, so the boundary is absent at 410 million weights and present at 1.4 billion. That is why this formation sweep runs on the larger model. The selected best readout and the selected ridge strength are logged beside the pooled quality and the boundary ratio, and a selection sitting at an end of its search range is flagged. The ends are readout 0, readout 24, strength 1 and strength 100000. The previous rung's committed gate record adopts this control as binding and this rung's design carries it forward. Both state in advance that the initialization checkpoint is expected to trip it, because a random model has no meaningful best readout: on the smaller sibling it selected readout 24 at strength 10000. There the flag is confirmation, not alarm. The direction counts at 90, 95 and 99 percent are recorded and gate nothing. If either integrity gate recorded in these values failed, this record is void as evidence about the model, and is an instrument fault only. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "rows": [
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.021839,
+      "held_out_quality_w100": -0.116002,
+      "held_out_quality_w120": -0.323636,
+      "held_out_quality_w140": -0.55122,
+      "held_out_quality_w20": -23.772201,
+      "held_out_quality_w40": -2.25661,
+      "held_out_quality_w60": -0.158363,
+      "held_out_quality_w80": 0.043433,
+      "readout": 0
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.613866,
+      "held_out_quality_w100": 0.591411,
+      "held_out_quality_w120": 0.460572,
+      "held_out_quality_w140": 0.278068,
+      "held_out_quality_w20": -4.430063,
+      "held_out_quality_w40": -0.122233,
+      "held_out_quality_w60": 0.434869,
+      "held_out_quality_w80": 0.626231,
+      "readout": 1
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.687726,
+      "held_out_quality_w100": 0.686133,
+      "held_out_quality_w120": 0.580819,
+      "held_out_quality_w140": 0.423937,
+      "held_out_quality_w20": -3.822919,
+      "held_out_quality_w40": -0.019512,
+      "held_out_quality_w60": 0.51052,
+      "held_out_quality_w80": 0.69386,
+      "readout": 2
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.724211,
+      "held_out_quality_w100": 0.718508,
+      "held_out_quality_w120": 0.64267,
+      "held_out_quality_w140": 0.494436,
+      "held_out_quality_w20": -3.046698,
+      "held_out_quality_w40": 0.020984,
+      "held_out_quality_w60": 0.572405,
+      "held_out_quality_w80": 0.702003,
+      "readout": 3
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.743244,
+      "held_out_quality_w100": 0.768821,
+      "held_out_quality_w120": 0.690607,
+      "held_out_quality_w140": 0.523239,
+      "held_out_quality_w20": -3.688046,
+      "held_out_quality_w40": 0.002508,
+      "held_out_quality_w60": 0.592171,
+      "held_out_quality_w80": 0.739886,
+      "readout": 4
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.729563,
+      "held_out_quality_w100": 0.71896,
+      "held_out_quality_w120": 0.669362,
+      "held_out_quality_w140": 0.500156,
+      "held_out_quality_w20": -3.203226,
+      "held_out_quality_w40": 0.184284,
+      "held_out_quality_w60": 0.568906,
+      "held_out_quality_w80": 0.669932,
+      "readout": 5
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.764327,
+      "held_out_quality_w100": 0.746926,
+      "held_out_quality_w120": 0.733537,
+      "held_out_quality_w140": 0.604242,
+      "held_out_quality_w20": -2.59539,
+      "held_out_quality_w40": 0.055171,
+      "held_out_quality_w60": 0.565091,
+      "held_out_quality_w80": 0.654533,
+      "readout": 6
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.742044,
+      "held_out_quality_w100": 0.709081,
+      "held_out_quality_w120": 0.707837,
+      "held_out_quality_w140": 0.594758,
+      "held_out_quality_w20": -3.19222,
+      "held_out_quality_w40": -0.036305,
+      "held_out_quality_w60": 0.491386,
+      "held_out_quality_w80": 0.601161,
+      "readout": 7
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.718159,
+      "held_out_quality_w100": 0.684297,
+      "held_out_quality_w120": 0.679189,
+      "held_out_quality_w140": 0.56261,
+      "held_out_quality_w20": -3.60924,
+      "held_out_quality_w40": -0.129395,
+      "held_out_quality_w60": 0.425458,
+      "held_out_quality_w80": 0.560915,
+      "readout": 8
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.68954,
+      "held_out_quality_w100": 0.647278,
+      "held_out_quality_w120": 0.634616,
+      "held_out_quality_w140": 0.51565,
+      "held_out_quality_w20": -3.975606,
+      "held_out_quality_w40": -0.202344,
+      "held_out_quality_w60": 0.37026,
+      "held_out_quality_w80": 0.536576,
+      "readout": 9
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.656162,
+      "held_out_quality_w100": 0.609351,
+      "held_out_quality_w120": 0.589041,
+      "held_out_quality_w140": 0.465371,
+      "held_out_quality_w20": -4.433283,
+      "held_out_quality_w40": -0.346621,
+      "held_out_quality_w60": 0.304913,
+      "held_out_quality_w80": 0.49207,
+      "readout": 10
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.62822,
+      "held_out_quality_w100": 0.578836,
+      "held_out_quality_w120": 0.546096,
+      "held_out_quality_w140": 0.40593,
+      "held_out_quality_w20": -4.785373,
+      "held_out_quality_w40": -0.415256,
+      "held_out_quality_w60": 0.294805,
+      "held_out_quality_w80": 0.471691,
+      "readout": 11
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.621023,
+      "held_out_quality_w100": 0.568307,
+      "held_out_quality_w120": 0.534233,
+      "held_out_quality_w140": 0.398016,
+      "held_out_quality_w20": -4.713762,
+      "held_out_quality_w40": -0.398179,
+      "held_out_quality_w60": 0.278615,
+      "held_out_quality_w80": 0.43711,
+      "readout": 12
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.602818,
+      "held_out_quality_w100": 0.542799,
+      "held_out_quality_w120": 0.507021,
+      "held_out_quality_w140": 0.37508,
+      "held_out_quality_w20": -4.922327,
+      "held_out_quality_w40": -0.500046,
+      "held_out_quality_w60": 0.243366,
+      "held_out_quality_w80": 0.41522,
+      "readout": 13
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.582994,
+      "held_out_quality_w100": 0.51594,
+      "held_out_quality_w120": 0.483551,
+      "held_out_quality_w140": 0.355002,
+      "held_out_quality_w20": -5.400093,
+      "held_out_quality_w40": -0.637738,
+      "held_out_quality_w60": 0.207541,
+      "held_out_quality_w80": 0.386706,
+      "readout": 14
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.567006,
+      "held_out_quality_w100": 0.497221,
+      "held_out_quality_w120": 0.466015,
+      "held_out_quality_w140": 0.344745,
+      "held_out_quality_w20": -5.953279,
+      "held_out_quality_w40": -0.787974,
+      "held_out_quality_w60": 0.161521,
+      "held_out_quality_w80": 0.371813,
+      "readout": 15
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.548472,
+      "held_out_quality_w100": 0.467742,
+      "held_out_quality_w120": 0.435369,
+      "held_out_quality_w140": 0.320111,
+      "held_out_quality_w20": -6.375434,
+      "held_out_quality_w40": -0.886961,
+      "held_out_quality_w60": 0.157347,
+      "held_out_quality_w80": 0.360896,
+      "readout": 16
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.650738,
+      "held_out_quality_w100": 0.509455,
+      "held_out_quality_w120": 0.503897,
+      "held_out_quality_w140": 0.479521,
+      "held_out_quality_w20": -3.658768,
+      "held_out_quality_w40": 0.015419,
+      "held_out_quality_w60": 0.392843,
+      "held_out_quality_w80": 0.506631,
+      "readout": 17
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.641042,
+      "held_out_quality_w100": 0.494032,
+      "held_out_quality_w120": 0.488897,
+      "held_out_quality_w140": 0.466482,
+      "held_out_quality_w20": -3.563761,
+      "held_out_quality_w40": -0.018288,
+      "held_out_quality_w60": 0.360283,
+      "held_out_quality_w80": 0.488444,
+      "readout": 18
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.636677,
+      "held_out_quality_w100": 0.484543,
+      "held_out_quality_w120": 0.481185,
+      "held_out_quality_w140": 0.459175,
+      "held_out_quality_w20": -3.616319,
+      "held_out_quality_w40": -0.025851,
+      "held_out_quality_w60": 0.368538,
+      "held_out_quality_w80": 0.482154,
+      "readout": 19
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.683413,
+      "held_out_quality_w100": 0.545972,
+      "held_out_quality_w120": 0.547849,
+      "held_out_quality_w140": 0.547097,
+      "held_out_quality_w20": -3.343485,
+      "held_out_quality_w40": 0.007595,
+      "held_out_quality_w60": 0.451,
+      "held_out_quality_w80": 0.552539,
+      "readout": 20
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.706412,
+      "held_out_quality_w100": 0.59303,
+      "held_out_quality_w120": 0.596658,
+      "held_out_quality_w140": 0.588437,
+      "held_out_quality_w20": -3.742247,
+      "held_out_quality_w40": -0.010584,
+      "held_out_quality_w60": 0.470263,
+      "held_out_quality_w80": 0.593656,
+      "readout": 21
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.697007,
+      "held_out_quality_w100": 0.579537,
+      "held_out_quality_w120": 0.585182,
+      "held_out_quality_w140": 0.570385,
+      "held_out_quality_w20": -3.702801,
+      "held_out_quality_w40": -0.084428,
+      "held_out_quality_w60": 0.454061,
+      "held_out_quality_w80": 0.589079,
+      "readout": 22
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.685983,
+      "held_out_quality_w100": 0.564273,
+      "held_out_quality_w120": 0.569347,
+      "held_out_quality_w140": 0.557995,
+      "held_out_quality_w20": -3.83171,
+      "held_out_quality_w40": -0.150252,
+      "held_out_quality_w60": 0.428496,
+      "held_out_quality_w80": 0.573543,
+      "readout": 23
+    },
+    {
+      "held_out_quality_pooled_widths_20_to_140": 0.676171,
+      "held_out_quality_w100": 0.55915,
+      "held_out_quality_w120": 0.549775,
+      "held_out_quality_w140": 0.53585,
+      "held_out_quality_w20": -3.978462,
+      "held_out_quality_w40": -0.18283,
+      "held_out_quality_w60": 0.424493,
+      "held_out_quality_w80": 0.575468,
+      "readout": 24
+    }
+  ],
+  "threshold": {
+    "recorded_not_gated": true
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": null,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": null,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "baseline_decision": "BASELINE_RECORDED",
+    "baseline_quality": null,
+    "baseline_void_floor": 0.6134113999999999,
+    "best_layer": 6,
+    "best_layer_equals_prior_run_readout": false,
+    "best_layer_interior": true,
+    "boundary_ratio": 0.113313,
+    "boundary_ratio_definition": "mean of the parts 1 to 35 and 36 to 70 minus mean of 71 to 105 and 106 to 140",
+    "coordinate_decision": "COORDINATES_INTERIOR",
+    "coordinate_flags": [],
+    "corpus_dominant_wrap_length_chars": "about 70 to 72",
+    "count_window_low": 1,
+    "cross_validated_best_layer": 6,
+    "degenerate_coordinates": false,
+    "dimensions": {
+      "0.9": 14,
+      "0.95": 52,
+      "0.99": 113
+    },
+    "held_out_profile_rows": 10578,
+    "layer_median_quality": 0.676171,
+    "layer_quality_spread": 0.742488,
+    "localization_decision": "NOT_YET_LOCALIZED",
+    "localization_margin": 0.1,
+    "mean_vectors_file": "mean_vectors_step16000.npz",
+    "measurement_order_index": 7,
+    "narrow_width_quality_negative": true,
+    "narrowest_width_read": 20,
+    "peak_over_layer_median": 0.088156,
+    "per_position_rows_file": "rows_positions_w140_step16000.jsonl",
+    "pooled_quality": 0.764327,
+    "prior_run_pooled_quality_same_text": 0.876302,
+    "prior_run_profile_fresh_text": [
+      0.649801,
+      0.83044,
+      0.19771,
+      0.244373
+    ],
+    "prior_run_profile_same_text": [
+      0.645989,
+      0.8196,
+      0.210583,
+      0.226552
+    ],
+    "prior_run_readout_same_text": 5,
+    "profile_correlations": [
+      0.715266,
+      0.317051,
+      0.523721,
+      0.281969
+    ],
+    "profile_part_positions": [
+      2638,
+      2552,
+      2594,
+      2741
+    ],
+    "profile_parts": [
+      "1 to 35",
+      "36 to 70",
+      "71 to 105",
+      "106 to 140"
+    ],
+    "quality_at_narrowest_width": -2.59539,
+    "quality_by_width": {
+      "100": 0.746926,
+      "120": 0.733537,
+      "140": 0.604242,
+      "20": -2.59539,
+      "40": 0.055171,
+      "60": 0.565091,
+      "80": 0.654533
+    },
+    "revision": "step16000",
+    "ridge_strength": 10000.0,
+    "seconds": 457.2,
+    "sibling_untrained_narrow_width_quality": -2.479186,
+    "sibling_untrained_pooled_quality": 0.344634,
+    "step": 16000,
+    "this_record_voided_by_a_gate": false,
+    "variance_share_first_ten": [
+      0.793838,
+      0.047238,
+      0.019877,
+      0.011057,
+      0.005079,
+      0.004308,
+      0.00351,
+      0.003394,
+      0.002643,
+      0.002485
+    ],
+    "variance_targets_recorded_only": [
+      0.9,
+      0.95,
+      0.99
+    ],
+    "verbatim_variant_rows_file": "rows_variants_step16000.jsonl"
+  }
+}

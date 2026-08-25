@@ -1,0 +1,85 @@
+{
+  "runner": "onbox_seedD3.sh",
+  "model": "EleutherAI/pythia-1.4b-deduped",
+  "revision": "step143000",
+  "expected_layers": 24,
+  "expected_hidden_size": 2048,
+  "probe_windows": [
+    140,
+    200,
+    280
+  ],
+  "selection_and_gate_widths": [
+    20,
+    40,
+    60,
+    80,
+    100,
+    120,
+    140
+  ],
+  "widths_recorded_never_gated": [
+    200,
+    280
+  ],
+  "floor_gate": 0.6,
+  "dimension_threshold": 4,
+  "variance_target_gated": 0.95,
+  "variance_targets_recorded_only": [
+    0.9,
+    0.99
+  ],
+  "token_ceiling_min_training_positions": 40,
+  "generation_performed": false,
+  "per_draw_mean_vectors_saved": false,
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedD3": "0",
+    "packages": "0",
+    "disk": "0",
+    "memory": "0",
+    "seedD3_extract": "0",
+    "seedD3_calibrate": "0",
+    "seedD3_endpoints": "0"
+  },
+  "any_failed": false,
+  "records_present": [
+    "aperture-140_arm-bin_correlations_width_140_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-140_arm-labelling_attribution_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-140_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-200_arm-labelling_attribution_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-200_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-280_arm-labelling_attribution_endpoint-4_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-280_arm-measurable_range_endpoint-5_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-280_arm-pattern_vs_shuffle_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "arm-ambient_dimension_endpoint-2_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "arm-any_window_cleared_endpoint-3_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "arm-constants_model-pythia-1.4b-deduped_revision-step143000_stage-calibrate.json",
+    "arm-floor_gate_endpoint-1_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "arm-forward_passes_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json",
+    "arm-ratio_gap_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "arm-run_summary_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "arm-setup_check_model-pythia-1.4b-deduped_revision-step143000_stage-extract.json",
+    "arm-wavelength_gap_model-pythia-1.4b-deduped_revision-step143000_stage-endpoints.json",
+    "calibration.json"
+  ],
+  "spectra_files": [
+    "null_spectra_aperture-140_labels-characters.jsonl",
+    "null_spectra_aperture-140_labels-tokens.jsonl",
+    "null_spectra_aperture-200_labels-characters.jsonl",
+    "null_spectra_aperture-200_labels-tokens.jsonl",
+    "null_spectra_aperture-280_labels-characters.jsonl",
+    "null_spectra_aperture-280_labels-tokens.jsonl"
+  ],
+  "mean_vector_files": [
+    "mean_vectors_aperture-140_labels-characters.npz",
+    "mean_vectors_aperture-140_labels-tokens.npz",
+    "mean_vectors_aperture-200_labels-characters.npz",
+    "mean_vectors_aperture-200_labels-tokens.npz",
+    "mean_vectors_aperture-280_labels-characters.npz",
+    "mean_vectors_aperture-280_labels-tokens.npz"
+  ],
+  "instance_id": "e39c47efd2464b97bf74f7bbcb9c6e18",
+  "git_commit": "unknown",
+  "note": "A further run of this script on the same box is a rerun of the same instrument, not a replication. This rung is a single run."
+}

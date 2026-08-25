@@ -1,0 +1,58 @@
+{
+  "runner": "onbox_seedD2.sh",
+  "model": "EleutherAI/pythia-410m-deduped",
+  "revision": "step143000",
+  "apertures": [
+    140,
+    200,
+    280
+  ],
+  "generation_performed": false,
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedD2": "0",
+    "packages": "0",
+    "disk": "0",
+    "seedD2_extract": "0",
+    "seedD2_calibrate": "0",
+    "seedD2_endpoints": "0"
+  },
+  "any_failed": false,
+  "records_present": [
+    "aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-140_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-200_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-280_arm-measurable_range_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "aperture-280_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json",
+    "arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "arm-ratio_gap_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "arm-widths_clearing_count_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+    "calibration.json"
+  ],
+  "spectra_files": [
+    "null_spectra_aperture-140_labels-characters.jsonl",
+    "null_spectra_aperture-140_labels-tokens.jsonl",
+    "null_spectra_aperture-200_labels-characters.jsonl",
+    "null_spectra_aperture-200_labels-tokens.jsonl",
+    "null_spectra_aperture-280_labels-characters.jsonl",
+    "null_spectra_aperture-280_labels-tokens.jsonl"
+  ],
+  "mean_vector_files": [
+    "mean_vectors_aperture-140_labels-characters.npz",
+    "mean_vectors_aperture-140_labels-tokens.npz",
+    "mean_vectors_aperture-200_labels-characters.npz",
+    "mean_vectors_aperture-200_labels-tokens.npz",
+    "mean_vectors_aperture-280_labels-characters.npz",
+    "mean_vectors_aperture-280_labels-tokens.npz"
+  ],
+  "instance_id": "80aa729f8ae8440f9e3d9aa7e5c750ca",
+  "git_commit": "unknown",
+  "note": "A further run of this script on the same box is a rerun of the same instrument, not a replication."
+}

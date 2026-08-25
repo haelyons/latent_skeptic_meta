@@ -1,0 +1,518 @@
+{
+  "cell": {
+    "arm": "run_summary",
+    "model": "pythia-1.4b-deduped",
+    "revision": "sweep_twelve_checkpoints",
+    "stage": "endpoints"
+  },
+  "decision": "UNSTABLE_NOT_CLASSIFIABLE",
+  "decision_rule": "A gate cell missing either of its two bars reads VOID_ANCHOR_FAILED and voids the sweep. A baseline at or above 0.6134114 reads VOID_CONTROL_FAILED and voids the sweep. Otherwise, no checkpoint reaching the formed threshold reads NOT_FORMED_BY_FINAL, treated as an instrument fault. Otherwise the stability test decides: inside both ranges reads FORMED_EARLY_AND_HELD when the formation step is at or before step16000 and FORMED_LATE_AND_HELD when it is later; outside either range with the movement running one way in steps reads FORMED_AND_DRIFTED; outside either range and not one-way reads UNSTABLE_NOT_CLASSIFIABLE, which is the stability test's own committed name for that outcome. If neither channel yields a range at all the stability test reads HOLD_TEST_NOT_COMPUTABLE, which twelve measured checkpoints cannot produce and which is named here rather than left to be invented later.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-64-58",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-22T22:33:38+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 336,
+      "path": "/home/ubuntu/mats_manifold/stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 22965,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/seedD4_1_design_diff_triage.json",
+      "present": true,
+      "sha256": "1de4f659006e"
+    },
+    {
+      "bytes": 2340,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/GATE_COMMIT_seedD4_1.md",
+      "present": true,
+      "sha256": "886e4086b1cd"
+    },
+    {
+      "bytes": 372,
+      "n_items": 1,
+      "path": "/home/ubuntu/mats_manifold/CONTROL_d4_1_label_reachability.txt",
+      "present": true,
+      "sha256": "9d48648a09ad"
+    },
+    {
+      "bytes": 16192,
+      "n_items": 12,
+      "path": "results_seedD4_1/out/sweep_table.json",
+      "present": true,
+      "sha256": "ebe5074c109a"
+    }
+  ],
+  "metric": "One call per endpoint, and the two pre-registered readings, from the records written beside this one.",
+  "notes": "The pre-registered readings are FORMED_EARLY_AND_HELD, FORMED_LATE_AND_HELD, FORMED_AND_DRIFTED, NOT_FORMED_BY_FINAL, UNSTABLE_NOT_CLASSIFIABLE, VOID_ANCHOR_FAILED and VOID_CONTROL_FAILED. The boundary's own timing is a second reading, recorded beside this one: BOUNDARY_WITH_COUNTER, BOUNDARY_AFTER_COUNTER or BOUNDARY_NOT_FORMED_BY_FINAL. Both rival accounts have a live refuting outcome here: a held reading refutes drift, and a drifted reading refutes the fossil account. The committed label-reachability control settles, before any spend, that the coarse twelve-point grid and these bands do not force one label: five synthetic trajectories read only at the twelve grid steps produce all five formation-and-stability labels. Those five trajectories and their five labels are replayed by this file's self-test, which fails if any label or crossing moves. One thing about these thresholds is on the record in advance. The gate cell forces the final checkpoint to sit within 0.02 of the anchor quality, and the formed threshold is nine tenths of the way from the baseline to that same anchor. So the final checkpoint satisfies the formed threshold by arithmetic, and the reading NOT_FORMED_BY_FINAL cannot fire once the gate passes: it names an instrument fault, not a possible finding. Which of the four live labels fires still depends entirely on the ten intermediate checkpoints, and the committed label-reachability control shows all of them are reachable. Two crossings are computed, both measured up from the baseline floor toward the committed anchor quality. The pooled quality first reaching the half-distance point locates when the counter becomes usable; that crossing decides whether formation counts as early or late against step16000. The pooled quality first reaching the nine-tenths point marks where the stability test starts, for both channels. The committed gate record assigns each crossing that job in its second and fourth answers of record. The design object's third endpoint states the early-late comparison against the nine-tenths crossing instead, so both comparisons are recorded and the reading follows the committed answer. The boundary ratio is the mean of the profile's first two parts minus the mean of its last two. Its bar stays absolute at 0.3, with no baseline correction, because the smaller sibling's untrained checkpoint read -0.080316, which is effectively zero. On that sibling's final checkpoint the ratio reads -0.090673, so the boundary is absent at 410 million weights and present at 1.4 billion. That is why this formation sweep runs on the larger model. The training corpus is served pre-shuffled, so the hard-wrapped share of each batch is steady and exposure grows in step with the step count. Formation timing in steps is therefore formation timing in exposure. No corpus is downloaded or inspected here, and the design forbids both. Twelve named checkpoints cannot resolve anything finer than the gaps between them, and one training run cannot speak for other training seeds. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "boundary_floor": 0.3,
+    "early_at_or_before_step": 16000,
+    "formation_threshold": 0.6088985,
+    "formed_threshold": 0.8228213,
+    "hold_boundary_within": 0.15,
+    "hold_quality_within": 0.1
+  },
+  "values": {
+    "anchor_gate_anchor_value": 0.876302,
+    "anchor_gate_boundary_ratio": 0.514227,
+    "anchor_gate_decision": "ANCHOR_IN_BAND",
+    "anchor_gate_quality": 0.876302,
+    "anchor_gate_ratio_floor": 0.3,
+    "anchor_gate_tolerance": 0.02,
+    "baseline_decision": "BASELINE_RECORDED",
+    "baseline_expected_range": [
+      0.2,
+      0.45
+    ],
+    "baseline_inside_expected_range": true,
+    "baseline_quality": 0.341495,
+    "baseline_step": 0,
+    "baseline_void_floor": 0.6134113999999999,
+    "best_layer_by_step": {
+      "0": 24,
+      "1000": 23,
+      "128000": 5,
+      "143000": 5,
+      "16000": 6,
+      "2000": 23,
+      "32000": 6,
+      "4000": 22,
+      "512": 23,
+      "64000": 5,
+      "8000": 22,
+      "96000": 5
+    },
+    "boundary_crossing_floor": 0.3,
+    "boundary_crossing_revision": "step64000",
+    "boundary_crossing_step": 64000,
+    "boundary_presence_decision": "BOUNDARY_PRESENT",
+    "boundary_presence_floor": 0.3,
+    "boundary_range_after_formed": 0.773818,
+    "boundary_range_from_its_own_crossing_recorded_only": 0.014178999999999942,
+    "boundary_ratio_at_baseline": -0.05242,
+    "boundary_ratio_at_final": 0.514227,
+    "boundary_ratio_at_formation_step": 0.259086,
+    "boundary_ratio_at_formed_step": 0.259086,
+    "boundary_ratio_by_step": {
+      "0": -0.05242,
+      "1000": 0.203763,
+      "128000": 0.512028,
+      "143000": 0.514227,
+      "16000": 0.113313,
+      "2000": -0.160578,
+      "32000": 0.211511,
+      "4000": -0.198033,
+      "512": 0.259086,
+      "64000": 0.524118,
+      "8000": -0.247611,
+      "96000": 0.526207
+    },
+    "boundary_series_one_way_in_steps": false,
+    "boundary_timing_decision": "BOUNDARY_AFTER_COUNTER",
+    "boundary_trajectory_reading": "BOUNDARY_AFTER_COUNTER",
+    "checkpoints_at_or_after_formed": [
+      "step512",
+      "step1000",
+      "step2000",
+      "step4000",
+      "step8000",
+      "step16000",
+      "step32000",
+      "step64000",
+      "step96000",
+      "step128000",
+      "step143000"
+    ],
+    "committed_anchor_quality": 0.876302,
+    "coordinate_flags_by_step": {
+      "0": [
+        "best_layer_at_readout_24"
+      ],
+      "1000": [],
+      "128000": [],
+      "143000": [],
+      "16000": [],
+      "2000": [],
+      "32000": [],
+      "4000": [],
+      "512": [],
+      "64000": [],
+      "8000": [
+        "ridge_strength_at_100000"
+      ],
+      "96000": []
+    },
+    "degenerate_coordinates_by_step": {
+      "0": true,
+      "1000": false,
+      "128000": false,
+      "143000": false,
+      "16000": false,
+      "2000": false,
+      "32000": false,
+      "4000": false,
+      "512": false,
+      "64000": false,
+      "8000": true,
+      "96000": false
+    },
+    "dimensions_by_step": {
+      "0": {
+        "0.9": 77,
+        "0.95": 100,
+        "0.99": 128
+      },
+      "1000": {
+        "0.9": 22,
+        "0.95": 51,
+        "0.99": 106
+      },
+      "128000": {
+        "0.9": 1,
+        "0.95": 3,
+        "0.99": 80
+      },
+      "143000": {
+        "0.9": 1,
+        "0.95": 3,
+        "0.99": 81
+      },
+      "16000": {
+        "0.9": 14,
+        "0.95": 52,
+        "0.99": 113
+      },
+      "2000": {
+        "0.9": 55,
+        "0.95": 85,
+        "0.99": 124
+      },
+      "32000": {
+        "0.9": 2,
+        "0.95": 21,
+        "0.99": 98
+      },
+      "4000": {
+        "0.9": 76,
+        "0.95": 101,
+        "0.99": 129
+      },
+      "512": {
+        "0.9": 19,
+        "0.95": 37,
+        "0.99": 89
+      },
+      "64000": {
+        "0.9": 2,
+        "0.95": 12,
+        "0.99": 93
+      },
+      "8000": {
+        "0.9": 76,
+        "0.95": 101,
+        "0.99": 130
+      },
+      "96000": {
+        "0.9": 1,
+        "0.95": 6,
+        "0.99": 87
+      }
+    },
+    "early_late_cutoff_step": 16000,
+    "endpoint_1_anchor_gate": "ANCHOR_IN_BAND",
+    "endpoint_2_baseline": "BASELINE_RECORDED",
+    "endpoint_3_formation_existence": "FORMATION_REACHED",
+    "endpoint_3_formation_timing": "EARLY_AT_OR_BEFORE_STEP16000",
+    "endpoint_3_hold_test_quality": "OUTSIDE_BAND",
+    "endpoint_4_boundary_presence": "BOUNDARY_PRESENT",
+    "endpoint_4_hold_test_boundary": "OUTSIDE_BAND",
+    "endpoint_5_boundary_timing": "BOUNDARY_AFTER_COUNTER",
+    "final_quality": 0.876302,
+    "final_step": 143000,
+    "formation_exists_decision": "FORMATION_REACHED",
+    "formation_revision": "step512",
+    "formation_share_of_gap": 0.5,
+    "formation_step": 512,
+    "formation_step_from_measured_final_recorded_only": 512,
+    "formation_threshold": 0.6088985,
+    "formation_threshold_from_measured_final_recorded_only": 0.6088985,
+    "formation_timing_decision": "EARLY_AT_OR_BEFORE_STEP16000",
+    "formation_timing_from_formed_marker_recorded_only": "EARLY_AT_OR_BEFORE_STEP16000",
+    "formed_revision": "step512",
+    "formed_share_of_gap": 0.9,
+    "formed_step": 512,
+    "formed_step_from_measured_final_recorded_only": 512,
+    "formed_threshold": 0.8228213,
+    "formed_threshold_from_measured_final_recorded_only": 0.8228213,
+    "generation_performed": false,
+    "headline": "UNSTABLE_NOT_CLASSIFIABLE",
+    "highest_quality_any_checkpoint": 0.876302,
+    "hold_test": "UNSTABLE_NOT_CLASSIFIABLE",
+    "hold_test_boundary_channel": "OUTSIDE_BAND",
+    "hold_test_boundary_limit": 0.15,
+    "hold_test_decision": "UNSTABLE_NOT_CLASSIFIABLE",
+    "hold_test_quality_channel": "OUTSIDE_BAND",
+    "hold_test_quality_limit": 0.1,
+    "layer_median_quality_by_step": {
+      "0": 0.338748,
+      "1000": 0.528111,
+      "128000": 0.607343,
+      "143000": 0.616793,
+      "16000": 0.676171,
+      "2000": 0.540165,
+      "32000": 0.702146,
+      "4000": 0.559874,
+      "512": 0.601918,
+      "64000": 0.654834,
+      "8000": 0.582333,
+      "96000": 0.629545
+    },
+    "layer_quality_spread_by_step": {
+      "0": 0.334866,
+      "1000": 0.825355,
+      "128000": 0.807519,
+      "143000": 0.810422,
+      "16000": 0.742488,
+      "2000": 0.756482,
+      "32000": 0.802991,
+      "4000": 0.703506,
+      "512": 0.781277,
+      "64000": 0.840245,
+      "8000": 0.723335,
+      "96000": 0.848302
+    },
+    "localization_by_step": {
+      "0": "NOT_YET_LOCALIZED",
+      "1000": "LOCALIZED_INTERIOR_PEAK",
+      "128000": "LOCALIZED_INTERIOR_PEAK",
+      "143000": "LOCALIZED_INTERIOR_PEAK",
+      "16000": "NOT_YET_LOCALIZED",
+      "2000": "LOCALIZED_INTERIOR_PEAK",
+      "32000": "LOCALIZED_INTERIOR_PEAK",
+      "4000": "LOCALIZED_INTERIOR_PEAK",
+      "512": "LOCALIZED_INTERIOR_PEAK",
+      "64000": "LOCALIZED_INTERIOR_PEAK",
+      "8000": "LOCALIZED_INTERIOR_PEAK",
+      "96000": "LOCALIZED_INTERIOR_PEAK"
+    },
+    "localization_margin": 0.1,
+    "localization_revision_recorded_only": "step512",
+    "localization_step_recorded_only": 512,
+    "n_checkpoints": 12,
+    "peak_over_layer_median_by_step": {
+      "0": 0.002747,
+      "1000": 0.323253,
+      "128000": 0.266947,
+      "143000": 0.259509,
+      "16000": 0.088156,
+      "2000": 0.225415,
+      "32000": 0.127731,
+      "4000": 0.155552,
+      "512": 0.225161,
+      "64000": 0.21259,
+      "8000": 0.143058,
+      "96000": 0.242555
+    },
+    "pooled_quality_by_step": {
+      "0": 0.341495,
+      "1000": 0.851364,
+      "128000": 0.87429,
+      "143000": 0.876302,
+      "16000": 0.764327,
+      "2000": 0.765581,
+      "32000": 0.829878,
+      "4000": 0.715426,
+      "512": 0.827079,
+      "64000": 0.867423,
+      "8000": 0.725391,
+      "96000": 0.872099
+    },
+    "profile_at_final": [
+      0.645989,
+      0.8196,
+      0.210583,
+      0.226552
+    ],
+    "profile_at_initialization": [
+      0.227269,
+      0.033907,
+      0.01716,
+      0.348856
+    ],
+    "profile_width": 140,
+    "quality_by_width_by_step": {
+      "0": {
+        "100": 0.092531,
+        "120": 0.076931,
+        "140": -0.007607,
+        "20": -2.421041,
+        "40": -1.058358,
+        "60": -0.479982,
+        "80": -0.054713
+      },
+      "1000": {
+        "100": 0.828634,
+        "120": 0.832115,
+        "140": 0.788329,
+        "20": -1.151896,
+        "40": 0.27632,
+        "60": 0.637744,
+        "80": 0.765974
+      },
+      "128000": {
+        "100": 0.873002,
+        "120": 0.840743,
+        "140": 0.748507,
+        "20": -0.965307,
+        "40": 0.633329,
+        "60": 0.841167,
+        "80": 0.882305
+      },
+      "143000": {
+        "100": 0.875876,
+        "120": 0.841972,
+        "140": 0.751376,
+        "20": -0.887613,
+        "40": 0.64691,
+        "60": 0.843111,
+        "80": 0.883949
+      },
+      "16000": {
+        "100": 0.746926,
+        "120": 0.733537,
+        "140": 0.604242,
+        "20": -2.59539,
+        "40": 0.055171,
+        "60": 0.565091,
+        "80": 0.654533
+      },
+      "2000": {
+        "100": 0.696168,
+        "120": 0.660448,
+        "140": 0.630162,
+        "20": -2.010196,
+        "40": 0.252184,
+        "60": 0.646753,
+        "80": 0.687499
+      },
+      "32000": {
+        "100": 0.819933,
+        "120": 0.825631,
+        "140": 0.743524,
+        "20": -2.350004,
+        "40": 0.214238,
+        "60": 0.632077,
+        "80": 0.737735
+      },
+      "4000": {
+        "100": 0.64997,
+        "120": 0.591793,
+        "140": 0.533529,
+        "20": -2.733107,
+        "40": 0.188583,
+        "60": 0.533865,
+        "80": 0.635593
+      },
+      "512": {
+        "100": 0.796081,
+        "120": 0.790316,
+        "140": 0.739014,
+        "20": -1.08132,
+        "40": 0.314147,
+        "60": 0.570175,
+        "80": 0.740005
+      },
+      "64000": {
+        "100": 0.863368,
+        "120": 0.824668,
+        "140": 0.731463,
+        "20": -0.872863,
+        "40": 0.653228,
+        "60": 0.835231,
+        "80": 0.878378
+      },
+      "8000": {
+        "100": 0.634137,
+        "120": 0.608453,
+        "140": 0.571667,
+        "20": -2.771843,
+        "40": 0.25275,
+        "60": 0.55038,
+        "80": 0.625379
+      },
+      "96000": {
+        "100": 0.870866,
+        "120": 0.834008,
+        "140": 0.736094,
+        "20": -0.868312,
+        "40": 0.674629,
+        "60": 0.847139,
+        "80": 0.884431
+      }
+    },
+    "quality_range_after_formed": 0.16087600000000002,
+    "quality_series_one_way_in_steps": false,
+    "revisions_in_order": [
+      "step0",
+      "step512",
+      "step1000",
+      "step2000",
+      "step4000",
+      "step8000",
+      "step16000",
+      "step32000",
+      "step64000",
+      "step96000",
+      "step128000",
+      "step143000"
+    ],
+    "ridge_strength_by_step": {
+      "0": 10000.0,
+      "1000": 1000.0,
+      "128000": 1000.0,
+      "143000": 1000.0,
+      "16000": 10000.0,
+      "2000": 10000.0,
+      "32000": 10000.0,
+      "4000": 10000.0,
+      "512": 100.0,
+      "64000": 10000.0,
+      "8000": 100000.0,
+      "96000": 10000.0
+    },
+    "single_run_not_replicated": true,
+    "steps_in_order": [
+      0,
+      512,
+      1000,
+      2000,
+      4000,
+      8000,
+      16000,
+      32000,
+      64000,
+      96000,
+      128000,
+      143000
+    ],
+    "text_file": "stimulus_linewrap_v2.json",
+    "this_record_voided_by_a_gate": false,
+    "widths_read": [
+      20,
+      40,
+      60,
+      80,
+      100,
+      120,
+      140
+    ]
+  }
+}

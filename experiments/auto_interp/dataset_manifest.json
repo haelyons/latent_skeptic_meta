@@ -1,0 +1,86 @@
+{
+  "n_items": 6068,
+  "seed": 20260821,
+  "sha256_convgen_py": "e13f610a65fd12eab6e862dc3b23d7443378d65632bea84fd2f1ab7ba8f99b27",
+  "sha256_dataset_jsonl": "8a67e05589e5c0d5bec76435692bdec71242573c07f29b79c9060fb70a8166ef",
+  "tasks": {
+    "anchor_age": {
+      "classes": [
+        "adolescent",
+        "adult",
+        "child",
+        "older"
+      ],
+      "n_items": 1000,
+      "n_test": 244
+    },
+    "anchor_education": {
+      "classes": [
+        "college_beyond",
+        "high_school",
+        "some_schooling"
+      ],
+      "n_items": 750,
+      "n_test": 183
+    },
+    "anchor_gender": {
+      "classes": [
+        "female",
+        "male"
+      ],
+      "n_items": 600,
+      "n_test": 150
+    },
+    "anchor_ses": {
+      "classes": [
+        "lower",
+        "middle",
+        "upper"
+      ],
+      "n_items": 750,
+      "n_test": 183
+    },
+    "ext_agebracket": {
+      "classes": [
+        "b18_25",
+        "b26_40",
+        "b41_60",
+        "b61plus"
+      ],
+      "n_items": 1000,
+      "n_test": 244
+    },
+    "ext_emotion": {
+      "classes": [
+        "calm",
+        "frustrated"
+      ],
+      "n_items": 600,
+      "n_test": 150
+    },
+    "ext_expertise": {
+      "classes": [
+        "high",
+        "low"
+      ],
+      "n_items": 600,
+      "n_test": 150
+    },
+    "ext_formality": {
+      "classes": [
+        "casual",
+        "formal"
+      ],
+      "n_items": 384,
+      "n_test": 96
+    },
+    "ext_native": {
+      "classes": [
+        "native",
+        "nonnative"
+      ],
+      "n_items": 384,
+      "n_test": 96
+    }
+  }
+}

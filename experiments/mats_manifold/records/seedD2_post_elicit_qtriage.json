@@ -1,0 +1,286 @@
+{
+ "elicited": {
+  "questions": [
+   {
+    "question": "Did the check meant to void the whole run actually stop the three window-by-window pattern results from being reported as clean, confident findings?",
+    "where": "The model-fit check at probe width 140 scored 0.549167, far under the required range of 0.701 to 0.861 (file arm-anchor_gate...json). Yet the three separate window files (widths 140, 200, 280) each still report a clean 'pattern beat chance' decision. Only one other file, the run summary, records the whole run as void.",
+    "if_true": "Every wobble number this run produced is, by the design's own rule, not evidence about the model. A reader who opens only the three window files would see three confident-looking positive results with no warning attached to any of them.",
+    "changes": "It would mean the pipeline computes and publishes headline-looking numbers even after its own gate says to discard them. Nothing about window size, invariance, or the token-position confound in this run could be trusted without also citing the void status."
+   },
+   {
+    "question": "Do the three spacings that reportedly beat chance form any coherent pattern once window size is accounted for, or are they three unrelated noise peaks?",
+    "where": "The three window files report spacings of 40.0 characters at width 140, about 16.36 characters at width 200, and 130.0 characters at width 280. One file records a spread of 113.6364 characters between the two most different values.",
+    "if_true": "The study's own three-way framework, same spacing everywhere, spacing that grows with window size, or no pattern at all, has no box for three different, non-scaling spacings.",
+    "changes": "It would mean the found 'pattern' is likely three separate false alarms rather than one real periodic code, undercutting the claim that a genuine wobble was found anywhere."
+   },
+   {
+    "question": "Why does the window where the character-counting model fits best (width 140) show a pattern that cannot be told apart from simple token position, while the two worse-fitting windows can?",
+    "where": "The width-140 file records 'CONFOUNDED_WITH_TOKEN_POSITION'. The width-200 and width-280 files both record 'CHARACTER_COUNT_DISTINGUISHED'.",
+    "if_true": "The one condition closest to a trustworthy model fit is also the one where the effect might simply be counting tokens, not characters.",
+    "changes": "It would flip which window should anchor confidence. The strongest-fitting window becomes the weakest evidence for genuine character counting, reversing the usual reading that best fit means best evidence."
+   },
+   {
+    "question": "Should a result that barely crosses the chance cutoff count as equal evidence to two results that cross it by a wide margin?",
+    "where": "At width 200, the observed value ranks 10th out of 200 chance draws, exactly at the cutoff (share 0.04975). Widths 140 and 280 rank 1st and 3rd, with much smaller shares of 0.00498 and 0.01493.",
+    "if_true": "One of the three 'beats chance' results sits a hair from failing, while the run summary counts all three as equally clearing their test.",
+    "changes": "It would weaken the 'three of three windows show a pattern' headline, since a third of that count is right at the edge of noise."
+   },
+   {
+    "question": "Would the validity check have nearly passed, instead of failing badly, if the layer favored by the earlier calibration step had been used instead of the layer chosen later?",
+    "where": "The calibration file shows one layer (readout 6) consistently outscoring another (readout 5) when tested on training documents alone. The width-140 check uses readout 5, scoring 0.549167, while readout 6's own width-140 score in that same file is 0.700601, just 0.000399 short of the 0.701 floor.",
+    "if_true": "The size of the validity failure, a huge shortfall versus a razor-thin one, depends entirely on which of two disagreeing internal procedures picked the layer.",
+    "changes": "It would suggest the failure may be a near-miss from an unstable layer choice, rather than proof that the model, method, or fresh text is fundamentally broken, a very different story for what to try next."
+   },
+   {
+    "question": "Did the pre-registered safety check meant to tell whether wide character counts are measurable at all produce a usable answer?",
+    "where": "One file reports fit scores of roughly -24, -35, -19, and -4 in the four low-count bins, which were expected above 0.5, and roughly -39, -90, and -147 in the three high-count bins, which were expected below 0.3. The decision recorded is 'RANGE_PATTERN_UNMATCHED'.",
+    "if_true": "The fit is so poor everywhere, even in the bins the design expected to work well, that the check cannot say whether wide counts are measurable or not.",
+    "changes": "It removes the one pre-registered escape hatch the design relied on to interpret a clean negative result at the two widest windows."
+   },
+   {
+    "question": "Where was the rule fixing each window's usable pattern length at exactly the window width minus 20 characters written down before the run, if anywhere?",
+    "where": "The rule producing pattern lengths of 120, 180, and 260 for the three windows appears only as free text inside the calibration file's notes, not in the pre-registered design or seed question.",
+    "if_true": "A specific numeric choice limiting which pattern lengths could ever be detected was fixed during the run itself, not committed to beforehand.",
+    "changes": "It would mean part of what counts as a detectable pattern was decided after seeing the setup, which is exactly what pre-registration is meant to prevent."
+   },
+   {
+    "question": "Was the character-to-token conversion rate meant to be measured once for the whole study, or separately per window, and does using three different rates change any comparison?",
+    "where": "The design's own review lists this exact question as unresolved. The output shows three different rates, about 4.0798, 4.1294, and 4.1685 characters per token, one per window, in the token-position-control files.",
+    "if_true": "An explicitly flagged open question was quietly resolved by the code's own default, measuring per window, without anyone deciding it on purpose.",
+    "changes": "It would mean at least one methodological choice in the test for confounding with token position was never actually approved, only defaulted into."
+   }
+  ]
+ },
+ "qtriage": {
+  "claims": [
+   {
+    "id": "q1",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "anchor w140 held-out quality re-derived from rows[] at best pooled readout (readout 5, pooled 0.657823) = 0.549167, vs band [0.701, 0.861] -> ANCHOR_OUT_OF_BAND; claim's 0.549167 matches exactly. All three wobble_vs_shuffle files (aperture 140/200/280) carry decision \"NULL_CLEARED\" with zero occurrences of void/anchor/out_of_band/caveat/invalid; only arm-run_summary (+its _summary) and the anchor_gate file mention the void (headline VOID_ANCHOR_FAILED).",
+     "note": "Gate fired and is recorded only in the anchor_gate and run_summary files; the three per-width wobble result JSONs report NULL_CLEARED with no void flag, so the claim reproduces.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-140_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-200_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-280_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation (patching probes/activations off the model's natural manifold could make wobble/pattern results spurious)",
+      "status": "RULED_OUT",
+      "crux": "The claim is about whether void status propagated into the three window report files, which is a file-content/pipeline fact directly observed in the evidence, not a statistical inference that off-distribution ablation could rescue or produce differently."
+     },
+     {
+      "confound": "Downstream compensation (self-repair) \u2014 the claim under audit is a reporting-pipeline propagation defect, not a claim about wobble magnitude/invariance, so self-repair has no mechanism by which it could produce or explain the failure of void-status to propagate.",
+      "status": "RULED_OUT",
+      "crux": "The three window files (widths 140, 200, 280) report clean 'pattern beat chance' decisions with no void annotation, despite arm-anchor_gate...json scoring 0.549167 against a required 0.701\u20130.861 range and the run-summary file marking the whole run void \u2014 this is a schema/propagation fact established directly by the committed files, independent of any self-repair mechanism in the model."
+     },
+     {
+      "confound": "Selection bias would require that the three \"clean\" window results were chosen from a larger set of trial windows/thresholds that hid unfavorable outcomes. Nothing in the evidence indicates multiple candidate widths were computed and discarded \u2014 140, 200, 280 appear to be the fixed, pre-set reporting windows, and 140 is exactly the width the gate itself was scored on. There is no cherry-picking mechanism available to produce the observed gate/report disconnect.",
+      "status": "RULED_OUT",
+      "crux": "The claim is a direct factual observation (gate failed but report status wasn't propagated), established by the committed gate score itself, not a statistical pattern that selection among candidates could have manufactured."
+     },
+     {
+      "confound": "readout artifact \u2014 the per-window report generator prints its \"pattern beat chance\" decision independently of the run-level validity gate, so a failed gate does not suppress or flag downstream window outputs",
+      "status": "EXPLAINS",
+      "crux": "The three window files (widths 140/200/280) print clean positive decisions with no void/invalidity annotation, while the gate failure (0.549167 vs required 0.701\u20130.861) is recorded only in the separate run-summary file \u2014 confirming the void status never propagates into the headline window outputs."
+     },
+     {
+      "confound": "Regime specificity would require that widths 200/280 sit in a different, independently-validated regime from the failed width-140 gate, so their clean reports are legitimately un-voided. The evidence shows only one gate check (width 140, score 0.549167) and one run summary that marks the ENTIRE run void \u2014 not a width-140-specific regime. There's no committed per-width gate for 200/280 that passed, and the design's own rule (as reflected in the run summary) applies run-wide, not regime-by-regime.",
+      "status": "RULED_OUT",
+      "crux": "Whether the void status is scoped to the width-140 regime or applies to the whole run; the run summary file commits to the latter (whole-run void), which removes any regime boundary the confound could hide behind."
+     },
+     {
+      "confound": "construct validity",
+      "status": "RULED_OUT",
+      "crux": "The design's own rule (stated in evidence) treats gate failure as voiding all of this run's outputs, i.e. the gate and the window checks are stipulated to share the same run-level construct; construct validity could only rescue the claim's target by showing they test different, separable constructs, and the evidence forecloses that."
+     },
+     {
+      "confound": "Scale incomparability would require conflating the gate's fit-score scale (0.549 vs 0.701\u20130.861) with the window files' internal pattern-detection statistics. But the claim only concerns whether a void flag propagated from the gate/summary file into the three window files \u2014 a metadata/reporting question, not a scale-comparison one.",
+      "status": "RULED_OUT",
+      "crux": "The three window files (widths 140/200/280) report their clean decisions as independently computed fields, with the void flag existing only in the run-summary file \u2014 this is a non-propagation/wiring gap, not a mismatch of measurement scales."
+     },
+     {
+      "confound": "Noise floor would explain away the *substance* of the three window-level \"pattern beat chance\" results (i.e., claim they're spurious signal-vs-noise artifacts). But the CLAIM here is not about whether the pattern is real \u2014 it's a reporting/propagation question: did the void-triggering gate failure actually suppress or annotate the three window files. That is a bookkeeping fact, not a statistical one, so a noise-floor confound has no mechanism to act on it.",
+      "status": "RULED_OUT",
+      "crux": "The evidence already states as established fact that the gate scored 0.549167 (below the 0.701\u20130.861 requirement) and that only the run-summary file records void status, while all three window files (widths 140/200/280) independently still report clean 'pattern beat chance' decisions with no void annotation attached."
+     },
+     {
+      "confound": "Ceiling/floor effect would require the window-level 'pattern beat chance' metrics to be saturated at an extreme, making them look positive regardless of true signal. But the claim concerns whether the gate's failure (0.549167 vs required 0.701-0.861) was propagated into those three files' reported status \u2014 a reporting/bookkeeping fact, not a property of the window metrics' distribution. Ceiling/floor saturation of window statistics has no bearing on whether the void flag was written into those files.",
+      "status": "RULED_OUT",
+      "crux": "The gate score 0.549167 fails the pre-specified range [0.701, 0.861] with clear margin (~0.15 below the lower bound, not an exact-threshold or post-hoc case), and this failure is a real, already-committed fact independent of any ceiling/floor property of the window-level statistics \u2014 so a ceiling/floor artifact in the window files cannot be what explains the gate's failure being unpropagated."
+     },
+     {
+      "confound": "single-case overfit",
+      "status": "RULED_OUT",
+      "crux": "The claim is about pipeline metadata propagation (did the void flag reach the window files), not about statistical generalizability of the window numbers; single-case overfit only speaks to the latter and cannot produce or explain a missing-flag bug in the former."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [],
+    "runner_results": null
+   },
+   {
+    "id": "q2",
+    "grounding": {
+     "grounding": "reproduces",
+     "observed": "Re-derived from the per-aperture wobble_vs_shuffle values: 140 -> profile_length 120 / 3 cycles = 40.0 chars; 200 -> 180 / 11 = 16.3636 chars; 280 -> 260 / 2 = 130.0 chars; largest gap = 130.0 - 16.3636 = 113.6364 chars. Claim states 40.0, 16.36, 130.0, gap 113.6364 \u2014 identical.",
+     "note": "Numbers reproduce exactly, and the raw files strengthen the \"unrelated peaks\" reading: only aperture 140 beat its own shuffle max (1.996e-5 > 1.326e-5); apertures 200 and 280 had peak power BELOW their null max (4.87e-6 < 7.73e-6; 3.34e-6 < 3.75e-6) and cleared only on the empirical-share rule, with 200 at 0.04975 vs the 0.05 cutoff, and cycle counts 3/11/2 show no scaling with window size.",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-140_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-200_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-280_arm-wobble_vs_shuffle_endpoint-2_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the three reported spacings (40.0 @140, ~16.36 @200, 130.0 @280) were measured under an ablation that stays on the data manifold (mean/resample) or an off-distribution one (e.g. zero-ablation). The evidence only gives the three raw numbers and their spread; it never states the ablation method, so there is no committed number showing the pattern survives under an on-distribution ablation control. If the ablation is off-distribution, each window size pushes activations off-manifold differently, which would itself produce three incoherent, non-scaling 'spacings' that look like independent noise peaks -- exactly the non-scaling pattern reported -- without needing a real periodic code."
+     },
+     {
+      "confound": "downstream compensation (self-repair): ablating or probing near one layer/window can be masked or altered by compensatory downstream computation, which would predict effect-size or spacing artifacts that vary with how much downstream computation exists to compensate (e.g., with window size or depth).",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the three spacings (40.0@140, 16.36@200, 130.0@280) reflect a compensation-driven artifact requires comparing a metric that permits downstream self-repair (e.g. standard ablation) against one that doesn't (e.g. direct-effect-only / frozen-downstream patching) at each window size \u2014 no such direct-vs-total-effect decomposition is present in the committed data, only the raw non-monotonic spacing values themselves."
+     },
+     {
+      "confound": "Selection bias: if each window (140/200/280) independently searched many candidate lags/spacings for \"beats chance,\" picking whichever exceeded a per-window threshold, three unrelated significant spacings are exactly the expected output \u2014 no shared periodic mechanism required.",
+      "status": "EXPLAINS",
+      "crux": "The three reported spacings (40.0 @140, ~16.36 @200, 130.0 @280) show no scaling or proportional relationship to window width and span a 113.6364-character range between the two most different values \u2014 i.e., the data as committed already falls into the \"no pattern at all\" bucket of the study's own framework, which is precisely what independent per-window multiple-comparison selection (three separate best-of-many picks) would produce."
+     },
+     {
+      "confound": "readout artifact \u2014 the possibility that each reported \"spacing\" is a byproduct of the measurement window's own resolution/binning rather than a real periodic signal in the underlying data.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the three reported spacings (40.0@140, 16.36@200, 130.0@280) track a known readout-resolution artifact (e.g., an FFT/binning resolution formula tied to window width or sample count) versus being independent of window mechanics \u2014 the committed evidence gives only the three raw numbers and one spread (113.6364), with no formula, no null/shuffle distribution, and no monotonic relationship to width (140\u219240, 200\u219216.36, 280\u2192130 is non-monotonic), so neither a scaling-artifact fit nor a coherent-signal fit can be confirmed from what's on record."
+     },
+     {
+      "confound": "Regime specificity: the three \"beat chance\" spacings (40.0 @ w=140, 16.36 @ w=200, 130.0 @ w=280) show no monotonic or proportional relationship to window size \u2014 going down then sharply up \u2014 and a same-file-reported spread of 113.6364 chars between the two most different values. The study's own taxonomy (constant spacing / spacing scaling with window / no pattern) has no slot for this case, meaning the observed triplet doesn't even fit as evidence of a single scaling law, let alone a constant period.",
+      "status": "EXPLAINS",
+      "crux": "Whether the three window-specific spacings are quantitatively related to their window sizes; the committed numbers show they are not (40.0, 16.36, 130.0 for widths 140/200/280, non-monotonic, spread 113.6364), which is exactly the signature regime-specificity/noise-peak-picking predicts, not a single genuine periodic code re-detected across scales."
+     },
+     {
+      "confound": "test",
+      "status": "EXPLAINS",
+      "crux": "test"
+     },
+     {
+      "confound": "scale incomparability \u2014 comparing raw character-spacing values (40.0, 16.36, 130.0) measured at three different window widths (140, 200, 280) as if they were on a common scale, when detection resolution/quantization for a periodicity search scales with window width itself.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether converting each reported spacing into frequency space (1/spacing) and comparing against each window's own frequency resolution (~1/window_width) shows the three measurements converging on one consistent underlying period (real code, obscured by naive raw-unit comparison) versus remaining scattered even after that correction (genuinely three unrelated peaks). The three raw numbers alone don't establish which."
+     },
+     {
+      "confound": "Noise floor: if each window's reported spacing is just the strongest peak in what is actually flat/random noise, different window sizes will yield different, non-scaling spacing values purely by chance \u2014 exactly the 40.0/16.36/130.0 pattern at widths 140/200/280, with a 113.6364-char spread between extremes.",
+      "status": "EXPLAINS",
+      "crux": "The claim is itself a null-pattern claim (no coherent structure across window sizes). The noise-floor confound predicts exactly that signature: independent, non-scaling peak locations. So the confound explaining the numbers IS the claim (three unrelated noise peaks) being correct, not a rival account undermining it."
+     },
+     {
+      "confound": "ceiling or floor effect",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the per-window statistic that produced each reported spacing (40.0 @140, ~16.36 @200, 130.0 @280) sits near its measurement ceiling/floor (saturated) rather than reflecting a genuine mid-range peak; the committed evidence gives only the spacing values and their spread (113.6364), not the raw scores or their bounds, so saturation cannot be assessed from what's recorded."
+     },
+     {
+      "confound": "single-case overfit \u2014 each window size's reported \"winning\" spacing was likely selected as the best/only peak clearing a per-window threshold from one run, not validated against repeated or independent samples, so three windows naturally yield three unrelated numbers.",
+      "status": "EXPLAINS",
+      "crux": "The three spacings (40.0 @140, 16.36 @200, 130.0 @280) neither stay constant nor scale proportionally with window width (ratios 3.5, 12.2, 2.15), and no committed data shows any of them replicating across independent runs/seeds at a given window size \u2014 so the observed incoherence is exactly what single-case overfit predicts, and the claim itself (no coherent pattern) is that same fact restated, not something the confound must be distinguished from."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "rerun the three window-size sweeps (140/200/280) with mean-ablation and resample-ablation, and separately with a direct-effect/self-repair-blocked metric (e.g. path patching / frozen-downstream-activation ablation), and check whether the same three spacings (40.0/16.36/130.0) or a scaling relationship reappear under these on-distribution and direct-effect controls \u2014 only zero/off-distribution, total-effect ablation appears to be on record.",
+     "for each window width, compute the null distribution of 'detected spacing' under phase-randomized/shuffled surrogate data and under the window's known resolution formula (e.g., bin width = signal length / width or FFT resolution at that width), then check whether the three observed spacings (40.0, 16.36, 130.0) fall inside that per-window null band.",
+     "recompute each window's detected periodicity in frequency terms (1/spacing) and check consistency against each window's frequency resolution (1/window_width), rather than comparing the three raw character spacings directly; also check whether the two windows' reported spacings are compatible under simple modular aliasing of a single period (currently 130 mod 140 \u2260 40).",
+     "for each of the three window files, report the raw peak statistic value alongside its theoretical min/max (or the empirical null distribution's range) to check whether the winning spacing at width 140/200/280 is near a ceiling/floor bound rather than a genuine interior peak."
+    ],
+    "runner_results": null
+   },
+   {
+    "id": "q3",
+    "grounding": {
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/aperture-140_arm-wobble_vs_shuffle_endpoint-2_...json (all three widths)",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/arm-widths_clearing_count_endpoint-3_...json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/arm-wavelength_gap_endpoint-4_...json",
+      "/home/hal/dev/interp/dm_hack/mats_manifold/results_seedD2/out/arm-run_summary_...stage-endpoints.json"
+     ],
+     "grounding": "reproduces",
+     "note": "Decision labels and the margin arithmetic reproduce, and w140 is indeed the strongest fit (shuffle rank 1/200) yet the confounded one; but the run's own summary headline is VOID_ANCHOR_FAILED (endpoint 1 ANCHOR_OUT_OF_BAND), and the cited input labels_a{140,200,280}.npz were never synced off-box, so chars_per_token cannot be re-derived from raw.",
+     "observed": "w140: |40.0 char period - 42.8378 token period in chars| = 2.8378 <= margin 3.0 with both labellings clearing shuffle -> CONFOUNDED_WITH_TOKEN_POSITION (matches). w200: |16.3636 - 74.3286| = 57.97 > 3 -> DISTINGUISHED (matches). w280: |130.0 - 233.4334| = 103.43 > 3 -> DISTINGUISHED (matches). Fit ordering: per_aperture_rank 140=1, 280=3, 200=10 of 200 draws, so 140 is best-fitting; held_out_quality_w140=0.549167 vs pooled 0.657823."
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the intervention used to test character-count-vs-token-position separability at each window width (140 vs 200/280) perturbed activations to off-distribution values (e.g. zero/mean ablation or unnatural counterfactual counts) rather than resampling from the true data distribution \u2014 an off-distribution ablation at widths 200/280 could manufacture the appearance of 'distinguished' variables regardless of the model's real geometry, and nothing in the recorded CONFOUNDED_WITH_TOKEN_POSITION / CHARACTER_COUNT_DISTINGUISHED labels says which ablation method was used or whether it was held constant across widths."
+     },
+     {
+      "confound": "Downstream compensation (self-repair) refers to later layers reconstituting an ablated/patched signal, masking true causal effect size. The claim under audit is about curve-fit distinguishability (character-count vs token-position models) across three window widths, with no evidence given about any ablation/patching pipeline where downstream compensation could act.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the measurement producing 'CONFOUNDED_WITH_TOKEN_POSITION' at width 140 vs 'CHARACTER_COUNT_DISTINGUISHED' at widths 200/280 was derived from a causal ablation/patching design (where downstream self-repair could bias the readout) or from a purely correlational regression fit (where self-repair has no mechanism to act) \u2014 the committed evidence gives only the labels, not the measurement pipeline."
+     },
+     {
+      "confound": "selection bias",
+      "status": "NEEDS_RUN",
+      "crux": "Whether width 140 was chosen as \"best fit\" from a larger swept set of candidate widths (making the best-fit/confound co-occurrence a multiple-comparisons artifact) or whether 140, 200, 280 are the complete tested set with no post-hoc selection \u2014 the committed files only report the three outcomes, not the search/selection procedure that produced \"140 is best.\""
+     },
+     {
+      "confound": "Readout artifact: at width 140 the \"best fit\" is inseparable from a simple token-position readout, so the strongest-looking result is exactly the one where a confound (position/order correlate) could be doing the work instead of character count.",
+      "status": "EXPLAINS",
+      "crux": "The width-140 file itself is labeled CONFOUNDED_WITH_TOKEN_POSITION while width-200/280 are labeled CHARACTER_COUNT_DISTINGUISHED \u2014 this is the committed record of the confound being present exactly where the fit is best, which is the claim, not a fact that rules the confound out."
+     },
+     {
+      "confound": "Regime specificity: the character-counting vs. token-position mechanisms may only be separable in some window-width regimes and not others, purely because of how token/character alignment happens to fall at that width \u2014 not because character counting is more or less \"real\" there.",
+      "status": "EXPLAINS",
+      "crux": "Whether CONFOUNDED_WITH_TOKEN_POSITION at width 140 reflects a genuine regime-specific coincidence (character count and token position happen to covary tightly only in that window) rather than a general property of character-counting \u2014 the claim itself is a report of this regime-dependent confound, i.e., the null/confound finding at the best-fitting width IS the result, not an artifact to be explained away."
+     },
+     {
+      "confound": "Construct validity: \"character count\" and \"token position\" are collinear/confounded at width 140, so the best statistical fit there cannot be attributed to genuine character counting rather than to a simpler, correlated feature (token position). The width-200/280 files show these two constructs can be disambiguated, and in those windows the fit is worse \u2014 consistent with the model's real signal being token position, which only mimics character-count fit when the two are hard to tell apart.",
+      "status": "EXPLAINS",
+      "crux": "The width-140 file's own label is CONFOUNDED_WITH_TOKEN_POSITION \u2014 i.e., at the best-fitting window the data itself cannot distinguish character-count from token-position as the driving variable, whereas width-200/280 (worse fits) explicitly CAN distinguish them. No committed number shows disambiguation succeeding at width 140, so nothing rules the confound out."
+     },
+     {
+      "confound": "Scale incomparability: the fit-quality ranking across window widths (140 \"best,\" 200/280 \"worse\") and the confound labels (CONFOUNDED_WITH_TOKEN_POSITION vs CHARACTER_COUNT_DISTINGUISHED) may not be comparable across widths because narrower windows (140 chars) contain fewer tokens and hence a narrower dynamic range of token indices \u2014 in that regime, token-position and character-count are nearly collinear by construction (few discrete token steps map almost linearly onto char count), which would produce the 'confounded' label independent of any real character-counting mechanism. Wider windows (200/280) have more tokens spread over more character range, giving enough dynamic range for char-count and token-position to decorrelate and be told apart. That is exactly a scale-incomparability artifact: the 'confound' status is a byproduct of window width changing the token/character dynamic range, not evidence that width-140's fit is uniquely diagnostic of genuine character counting.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the CONFOUNDED_WITH_TOKEN_POSITION label at width-140 arises because that window's narrower character range gives token-index and char-count too little independent variance to be distinguished (a scale artifact of window width), versus width-140 genuinely being the best-fitting condition on a metric comparable to the other two widths. The provided evidence only gives the three categorical confound labels; it contains no committed number on token-count dynamic range, char-count/token-position correlation per width, or a cross-width-normalized fit metric."
+     },
+     {
+      "confound": "noise floor",
+      "status": "NEEDS_RUN",
+      "crux": "Whether width-140's CONFOUNDED_WITH_TOKEN_POSITION label reflects genuine collinearity between character count and token position at that window, or merely a noisier/lower-power fit at width-140 that lacks the resolution to separate the two hypotheses (in which case the 'best fit' window's confound is an artifact of the discrimination test's noise floor, not evidence about character counting itself)."
+     },
+     {
+      "confound": "Ceiling/floor effect: at width-140 the best-fitting window may have predictions or count values sitting near a saturation boundary (max/min countable value for that width), leaving too little residual variance to distinguish 'counts characters' from 'counts token position' \u2014 while the worse-fitting wider windows (200/280) have more dynamic range and so the two hypotheses can be teased apart. This is fully consistent with the claim, but no evidence given actually measures saturation.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the width-140 fits/predictions are concentrated near a boundary value (ceiling or floor) relative to width-200/280 \u2014 no such saturation statistic (e.g., % of outputs at min/max, output variance, or range utilization) is reported in the committed evidence, only the three categorical labels."
+     },
+     {
+      "confound": "single-case overfit: the CONFOUNDED_WITH_TOKEN_POSITION label for width-140 (vs CHARACTER_COUNT_DISTINGUISHED for 200/280) could reflect fitting/classifying on a small n or a single case, where token position and character count are nearly collinear, rather than a genuine population-level pattern.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the width-140 classification (CONFOUNDED_WITH_TOKEN_POSITION) was derived from the same number of independent cases/documents as the width-200 and width-280 classifications, or from a smaller/single-case sample where token position and character count are trivially collinear."
+     }
+    ],
+    "run_queue": [],
+    "author_queue": [
+     "Rerun the character-count vs token-position dissociation test at widths 140/200/280 using resample/on-distribution ablation (draw substitute activations from real examples matching the counterfactual character-count or token-position value, rather than zero/mean/fixed-value ablation) and check whether width 140 still shows CONFOUNDED_WITH_TOKEN_POSITION and 200/280 still show CHARACTER_COUNT_DISTINGUISHED.",
+     "Inspect/rerun the width-140 fitting pipeline with layer-wise or ablation-based effect measurements held out (e.g., compare early-layer vs full-model causal effect sizes) to check whether downstream layers are reconstituting a token-position-like signal that masks a genuine character-count signal specifically at width 140.",
+     "Run a control that sweeps additional widths (e.g. every 20 units between 100-300) and records both the fit statistic and the CONFOUNDED_WITH_TOKEN_POSITION/CHARACTER_COUNT_DISTINGUISHED flag for each, to see whether confound status tracks fit rank generally (selection artifact) or is isolated to 140 for a structural reason.",
+     "Compute, per window width, the correlation (or condition number) between token-position and character-count across sampled windows, plus the number of distinct token indices per window at width=140 vs 200/280, to check whether width-140's narrower dynamic range mechanically produces collinearity independent of any character-counting effect.",
+     "Run a control comparing statistical power/noise floor (e.g., residual variance, bootstrap CI width, or effective sample size of the character-count-vs-token-position discrimination test) across width 140, 200, and 280 to check whether width-140's failure to distinguish the hypotheses tracks a higher noise floor rather than a genuine structural degeneracy.",
+     "Compute the distribution (variance, and fraction at min/max of the achievable range) of the character-count model's predicted and actual values for width-140 vs width-200/280, to check whether width-140 sits near a ceiling/floor while the other two do not.",
+     "Report/verify the n (number of distinct cases or documents) used to produce each width's confound-status label, and rerun the width-140 character-count-vs-token-position discrimination test on a larger or held-out multi-case sample to see if CONFOUNDED_WITH_TOKEN_POSITION replicates."
+    ],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "takeaways": "Both gates pass with exit code 0, and the pasted output matches this final run exactly (word count stayed at 1777 since the edit only changed digits inside the code block, not prose word count).\n\n**File:** `/home/hal/dev/interp/dm_hack/mats_manifold/TAKEAWAYS_seedD2.md`\n\n**Gate outputs (verbatim, also included at the end of the file):**\n\n```\n$ python3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_density.py TAKEAWAYS_seedD2.md\nTAKEAWAYS_seedD2.md: 0.0 codes/1000 words (0 codes, 1777 words); threshold 10.0\n```\n\n```\n$ python3 /home/hal/dev/interp/dm_hack/welfare_probe/retro/harness/gates/gate_scope.py TAKEAWAYS_seedD2.md\n0 unscoped result sentence(s)\n```\n\nBoth exited 0 (pass).\n\nSummary of what the file covers, sourced only from `records/seedD2_design_diff_triage.json` and `results_seedD2/out/`: the required validity check (0.701\u20130.861 band, predicted from an earlier run's 0.781 \u00b1 0.08) measured 0.549167 and failed, which by the design's own rule voids the whole run \u2014 yet all three window-level result files still report clean \"beats chance\" wobbles with no void flag, and only the run summary records the void. It also covers that the three reported wobble sizes (40, ~16.3636, 130 characters) don't cohere under either the fixed-size or scales-with-window reading (gap 113.6364 chars, ratio gap 0.382468, both over threshold); that one of the three \"beats chance\" results (the 200-character window, rank 10 of 200) barely clears the cutoff while the other two clear it comfortably; that the best-fitting window (140) is the one confounded with simple token-position counting while the two worse-fitting windows are not; an exploratory note that a different, calibration-preferred layer would have missed the validity floor by only 0.000399 instead of the actual 0.151833 shortfall; that the pre-registered fallback check for measurability also failed to produce a usable answer (all bins strongly negative); and two process notes (the window-minus-20 pattern-length rule and the per-window token-to-character conversion rate) that were resolved informally rather than pre-registered."
+}
