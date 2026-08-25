@@ -1,0 +1,42 @@
+Next run - takeaways to attempt (2026-08-25)
+
+1. Band rule, in the question, replacing guessed bands:
+   "Anchor: reproduce <prior number> from <cited record>. Band = that
+   number +/- 3x the dispersion measured by the calibration stage, over a
+   named source: (a) reruns of the same cell, (b) resamples of items,
+   (c) resplits of families - name one and say why it is the noise this
+   claim must beat. Measured dispersion of zero is a wrong-source error:
+   halt, do not accept an infinitely tight band. The dispersion record is
+   committed before any judged row is read; an out-of-band anchor voids
+   every extension claim."
+   Evidence: applied retroactively from committed artifacts alone,
+   welfare C2's guessed +/-0.25 band matched its measured 3SE band
+   (0.273; family SD 0.288, mean REF -0.9340 = ledger); manifold D2's
+   guessed +/-0.08 was half the tightest measured proxy band, and its
+   VOID does not survive a measured band (0.7006 passes [0.615, 0.947]).
+
+2. Wire the three existing pieces in one run: elicit-tier measurements
+   (arithmetic over committed artifacts, zero GPU) feed the next
+   calibration stage; the gate-check refuses execute until every queued
+   finding, including those measurements, has an answer of record.
+
+3. The envelope sentence, granted at kickoff if a lineage is wanted:
+   "Tools and pipeline frozen, seeds mutable, proceed autonomously,
+   total cap <N> USD, every instance teardown confirmed via the API."
+   Without it the run answers one question and stops at any void
+   (observed: the manager run); with it, seven seeds ran on five human
+   messages (observed: the D lineage).
+
+4. Write phase: the fused prompt (restate question/hypothesis ->
+   predicted vs observed -> expected? -> what does not fit, led by the
+   elicited questions -> "Raw samples, verbatim" as the final section).
+   Language contract with the named banned categories; gates run on the
+   file truncated at the samples line; outputs pasted verbatim.
+   Evidence: the cascade alone scored 23 codes/1000 and 14 unscoped
+   sentences; the named-category contract is the only wording that has
+   ever moved those numbers (0 codes/1777 words on the same run).
+
+5. Measure next, cheaply, before trusting more bands: 2b family SD for
+   the welfare line (its -0.332 "indeterminate" now has a yardstick);
+   true text-resplit dispersion for the manifold probe (the cross-width
+   number above is a proxy).
