@@ -1,0 +1,88 @@
+{
+  "cell": {
+    "endpoint": 1,
+    "pipeline": "v2",
+    "seed": "A",
+    "stage": "endpoints"
+  },
+  "decision": "REFUTED",
+  "decision_rule": "THRESHOLD (design, verbatim): GUESS: correlation at or above 0.30, in the predicted direction, with permutation-test p below 0.05. REFUTING OUTCOME (design, verbatim): Correlation falls below 0.15 in absolute size, or is no larger than the same correlation using the random-direction control instead. READING: The design names no layer for this correlation and reads 'a direction' as one per layer, so it is computed at EACH tested layer and passes on at least one, matching the 'in at least one layer' wording the other endpoints use. Predicted direction is positive: the direction is reasoning minus non-reasoning. 'No larger than the control' is read as |r| <= |r_control|. The permutation test uses 10000 label shuffles at fixed seed 21; the design names a permutation test and a p-value, not a resample count, so these two are implementation constants, not design parameters.",
+  "env": {
+    "git_rev": null,
+    "host": "193-122-152-110",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-19T21:02:27+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 65023,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_items.json",
+      "present": true,
+      "sha256": "25a7f0bab1e1"
+    },
+    {
+      "bytes": 7352,
+      "n_items": 2,
+      "path": "results_seedA/out/seedA_projections.json",
+      "present": true,
+      "sha256": "46974b5efca3"
+    },
+    {
+      "bytes": 3915237,
+      "n_items": 1800,
+      "path": "results_seedA/out/seedA_generations_nonreason.jsonl",
+      "present": true,
+      "sha256": "4ab54945c9d2"
+    },
+    {
+      "bytes": 7012999,
+      "n_items": 2600,
+      "path": "results_seedA/out/seedA_generations_reason.jsonl",
+      "present": true,
+      "sha256": "e847d45ae669"
+    }
+  ],
+  "metric": "Within the reasoning model's own unchanged generations, the correlation between each problem's activation projection onto the direction and that problem's mean think-tag token count.",
+  "notes": "Degenerate rows (512-token cap with no stop token, OR a <=6-token sequence repeated 15+ times in the last 100 tokens) are excluded from every length, rate and accuracy number and reported per cell. The design states a 40% ceiling only for the induction leg; for the enhance/suppress and removal legs the rate is reported, not gated, because adding a ceiling the design does not state would be a different design. A rerun of this stage on the same box, at the same batch size, reproduces these numbers. That is reproduction, not replication: same weights, same box, same seeds is one measurement, not two.",
+  "threshold": {
+    "numeric": {
+      "p_max": 0.05,
+      "permutation_resamples": 10000,
+      "permutation_seed": 21,
+      "r_floor": 0.3,
+      "r_refute_below": 0.15
+    },
+    "refuting_outcome_text": "Correlation falls below 0.15 in absolute size, or is no larger than the same correlation using the random-direction control instead.",
+    "threshold_text": "GUESS: correlation at or above 0.30, in the predicted direction, with permutation-test p below 0.05."
+  },
+  "values": {
+    "layers_meeting_refuting_outcome": [
+      16,
+      24
+    ],
+    "layers_meeting_threshold": [],
+    "mean_think_tokens_baseline": 139.60897435897434,
+    "n_baseline_rows_degenerate": 73,
+    "n_baseline_rows_used": 127,
+    "n_items": 39,
+    "per_layer": {
+      "layer_16": {
+        "meets_refuting_outcome": true,
+        "meets_threshold": false,
+        "perm_p_direction": 0.7653234676532347,
+        "r_direction": 0.048887269289933095,
+        "r_random_control": 0.14058407713299295
+      },
+      "layer_24": {
+        "meets_refuting_outcome": true,
+        "meets_threshold": false,
+        "perm_p_direction": 0.49705029497050296,
+        "r_direction": -0.10973867179260613,
+        "r_random_control": 0.04205013477938902
+      }
+    },
+    "permutation_resamples": 10000,
+    "permutation_seed": 21
+  }
+}

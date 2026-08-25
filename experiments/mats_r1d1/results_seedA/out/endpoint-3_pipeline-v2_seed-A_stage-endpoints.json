@@ -1,0 +1,234 @@
+{
+  "cell": {
+    "endpoint": 3,
+    "pipeline": "v2",
+    "seed": "A",
+    "stage": "endpoints"
+  },
+  "decision": "REFUTED",
+  "decision_rule": "THRESHOLD (design, verbatim): GUESS: at the positive strength, length grows 25%+ versus baseline, beating the control's own change by 10+ points, in at least one layer. GUESS: at the negative strength, length shrinks 25%+ versus baseline, beating the control by 10+ points, in at least one layer. REFUTING OUTCOME (design, verbatim): Length changes under 10% at either strength in both layers, or the change is matched or beaten by the random-direction control. READING: 'Points' is read as percentage points of the percent change versus baseline. Means are over non-degenerate rows. The degenerate rate is REPORTED for every cell in this leg; the design states no ceiling here, so none is applied.",
+  "env": {
+    "git_rev": null,
+    "host": "193-122-152-110",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-19T21:02:27+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 65023,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_items.json",
+      "present": true,
+      "sha256": "25a7f0bab1e1"
+    },
+    {
+      "bytes": 7352,
+      "n_items": 2,
+      "path": "results_seedA/out/seedA_projections.json",
+      "present": true,
+      "sha256": "46974b5efca3"
+    },
+    {
+      "bytes": 3915237,
+      "n_items": 1800,
+      "path": "results_seedA/out/seedA_generations_nonreason.jsonl",
+      "present": true,
+      "sha256": "4ab54945c9d2"
+    },
+    {
+      "bytes": 7012999,
+      "n_items": 2600,
+      "path": "results_seedA/out/seedA_generations_reason.jsonl",
+      "present": true,
+      "sha256": "e847d45ae669"
+    }
+  ],
+  "metric": "Mean think-tag token count for DeepSeek R1 Distill Llama-8B, at each tested layer and non-zero strength, versus its own baseline and the random-direction control.",
+  "notes": "Degenerate rows (512-token cap with no stop token, OR a <=6-token sequence repeated 15+ times in the last 100 tokens) are excluded from every length, rate and accuracy number and reported per cell. The design states a 40% ceiling only for the induction leg; for the enhance/suppress and removal legs the rate is reported, not gated, because adding a ceiling the design does not state would be a different design. A rerun of this stage on the same box, at the same batch size, reproduces these numbers. That is reproduction, not replication: same weights, same box, same seeds is one measurement, not two.",
+  "threshold": {
+    "numeric": {
+      "margin_pass_pct_points": 10.0,
+      "pct_pass": 25.0,
+      "pct_refute_below": 10.0
+    },
+    "refuting_outcome_text": "Length changes under 10% at either strength in both layers, or the change is matched or beaten by the random-direction control.",
+    "threshold_text": "GUESS: at the positive strength, length grows 25%+ versus baseline, beating the control's own change by 10+ points, in at least one layer. GUESS: at the negative strength, length shrinks 25%+ versus baseline, beating the control by 10+ points, in at least one layer."
+  },
+  "values": {
+    "baseline": {
+      "accuracy_pct": 79.5275590551181,
+      "accuracy_pct_all_rows": 57.5,
+      "cell": "base_reason",
+      "degenerate_rate_pct": 36.5,
+      "mean_out_think_tokens": 235.70866141732284,
+      "mean_think_tokens": 137.26771653543307,
+      "n_degenerate": 73,
+      "n_nondegenerate": 127,
+      "n_rows": 200,
+      "n_wellformed_all_rows": 158,
+      "n_wellformed_nondegenerate": 127,
+      "wellformed_rate_pct": 100.0,
+      "wellformed_share_degenerate": 19.620253164556964
+    },
+    "baseline_mean_think_tokens": 137.26771653543307,
+    "cells_called_reasoning_enhanced": [],
+    "layers_meeting_negative_threshold": [],
+    "layers_meeting_positive_threshold": [],
+    "negative_strength": -2.0,
+    "per_cell": {
+      "L16_s+2.0": {
+        "direction": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 0.0,
+          "cell": "steer_dir_L16_s+2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        },
+        "margin_pct_points": NaN,
+        "meets_threshold": false,
+        "pct_change_direction": NaN,
+        "pct_change_random_control": NaN,
+        "random_control": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 0.0,
+          "cell": "steer_rand_L16_s+2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        }
+      },
+      "L16_s-2.0": {
+        "direction": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 1.0,
+          "cell": "steer_dir_L16_s-2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        },
+        "margin_pct_points": NaN,
+        "meets_threshold": false,
+        "pct_change_direction": NaN,
+        "pct_change_random_control": -68.53775884816153,
+        "random_control": {
+          "accuracy_pct": 0.0,
+          "accuracy_pct_all_rows": 1.0,
+          "cell": "steer_rand_L16_s-2.0",
+          "degenerate_rate_pct": 92.0,
+          "mean_out_think_tokens": 0.0,
+          "mean_think_tokens": 43.1875,
+          "n_degenerate": 184,
+          "n_nondegenerate": 16,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": 0.0,
+          "wellformed_share_degenerate": NaN
+        }
+      },
+      "L24_s+2.0": {
+        "direction": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 0.0,
+          "cell": "steer_dir_L24_s+2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        },
+        "margin_pct_points": NaN,
+        "meets_threshold": false,
+        "pct_change_direction": NaN,
+        "pct_change_random_control": NaN,
+        "random_control": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 3.0,
+          "cell": "steer_rand_L24_s+2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        }
+      },
+      "L24_s-2.0": {
+        "direction": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 0.5,
+          "cell": "steer_dir_L24_s-2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        },
+        "margin_pct_points": NaN,
+        "meets_threshold": false,
+        "pct_change_direction": NaN,
+        "pct_change_random_control": -41.84008838808956,
+        "random_control": {
+          "accuracy_pct": 1.7391304347826086,
+          "accuracy_pct_all_rows": 1.5,
+          "cell": "steer_rand_L24_s-2.0",
+          "degenerate_rate_pct": 42.5,
+          "mean_out_think_tokens": 0.0,
+          "mean_think_tokens": 79.83478260869565,
+          "n_degenerate": 85,
+          "n_nondegenerate": 115,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": 0.0,
+          "wellformed_share_degenerate": NaN
+        }
+      }
+    },
+    "positive_strength": 2.0,
+    "strengths_where_control_matches_or_beats_in_both_layers": [
+      2.0,
+      -2.0
+    ],
+    "strengths_with_all_layers_under_refute_pct": [
+      2.0,
+      -2.0
+    ]
+  }
+}

@@ -1,0 +1,144 @@
+{
+ "seed": "If we compare a non-reasoning model's (Llama-3 8B Instruct) activations with a reasoning model's (DeepSeek R1 Distill Llama-8B) activations on identical GSM8K math problems, can we identify a direction in activation space that influences reasoning behaviour? If we add this \"reasoning\" direction to the non-reasoning model, does it induce reasoning behaviour? If we apply it to the reasoning model at varying strengths and layers, can reasoning be enhanced or suppressed? Reasoning behaviour is read from the generated text, including the amount of text inside and outside <think>...</think> tags.",
+ "design": {
+  "hypothesis": "DeepSeek-R1-Distill-Llama-8B (the reasoning model) and Llama-3-8B-Instruct (the non-reasoning model), on identical GSM8K math problems, differ in their internal activations along a direction that is tied specifically to the surface behaviour of producing <think>...</think> reasoning text - not merely to \"being a different model.\" If that is true: (a) adding this direction to Llama-3-8B-Instruct's activations should make it start producing think-block text it never produces on its own; (b) adding, subtracting, or removing this same direction inside DeepSeek-R1-Distill-Llama-8B itself should lengthen, shorten, or reduce its own think-block text respectively; and (c) each of these effects should be larger than what a random direction of matched size produces at the same layer and strength.",
+  "models": [
+   "Llama-3-8B-Instruct, the non-reasoning model (Hugging Face id meta-llama/Meta-Llama-3-8B-Instruct)",
+   "DeepSeek-R1-Distill-Llama-8B, the reasoning model (Hugging Face id deepseek-ai/DeepSeek-R1-Distill-Llama-8B). Note: this model was fine-tuned starting from Llama-3.1-8B, not from Llama-3-8B - the two models share the same architecture (32 transformer layers, 4,096-dimensional residual stream, same tokenizer) but are not the same base checkpoint before/after reasoning training. This mismatch is a known limitation, not something this design resolves (see does_not_test)."
+  ],
+  "data": "GSM8K, a public set of about 8,000 grade-school arithmetic word problems; its 1,319-item test split is used here. 40 problems, drawn with a fixed random seed, are used only to compute the direction from paired activations (a single forward pass per model per problem - no text is generated from these). A disjoint set of 60 problems, drawn with a different fixed seed, is used for every generation-based measurement (the induction, sweep, necessity, and accuracy checks below). No problem appears in both sets.",
+  "arms": [
+   "Non-reasoning baseline: Llama-3-8B-Instruct generates on the 60 held-out problems with no intervention - the reference point for 'does it ever produce think-block text on its own.'",
+   "Reasoning baseline: DeepSeek-R1-Distill-Llama-8B generates on the same 60 problems with no intervention - the reference point every enhancement/suppression result below is measured against.",
+   "Induction, direction added: the extracted direction is added to Llama-3-8B-Instruct's activations at the network's middle layer (layer 16 of 32), at two strengths (1x and 2x the direction's own measured size), throughout generation - the direct test of whether adding it induces think-block text in a model that never produces it.",
+   "Induction, random-direction control: identical to the arm above, but a random direction of the same length is substituted for the extracted direction - checks whether any large-enough push at that layer does the same thing, regardless of which direction.",
+   "Reasoning-model sweep, direction added: the extracted direction is added to DeepSeek-R1-Distill-Llama-8B's own activations at two layers (16 and 24 of 32) and two strengths in each direction (subtracting 2x, or adding 2x, its measured size), throughout generation - tests whether the same direction can turn native reasoning up or down.",
+   "Reasoning-model sweep, random-direction control: identical to the arm above, but with the matched-length random direction - the noise floor for the sweep.",
+   "Necessity, direction removed: at the same two layers, the component of DeepSeek-R1-Distill-Llama-8B's own activations lying along the extracted direction is projected out (set to zero, not just added-to) throughout generation, with nothing added - tests whether native reasoning depends on that direction being present, rather than only testing what boosting it does.",
+   "Necessity, random-direction control: identical zeroing procedure, but zeroing the matched-length random direction instead - the noise floor for the necessity check."
+  ],
+  "endpoints": [
+   {
+    "metric": "Within DeepSeek-R1-Distill-Llama-8B's own no-intervention generations (reasoning baseline arm), the Spearman correlation between each problem's prompt-activation projection onto the extracted direction (at layer 16) and that same problem's mean think-block token count over its 4 decodes.",
+    "threshold": "Correlation >= 0.30 in the predicted positive direction, permutation-test p < 0.05 against the fixed 40/60 split.",
+    "refuting_outcome": "Correlation is below 0.15 in absolute value, or is no larger than the correlation obtained using the matched random-direction's projection instead - meaning the direction does not track how much any given problem gets reasoned about, even if it separates the two models on average."
+   },
+   {
+    "metric": "Rate of well-formed <think>...</think> blocks (opened, closed, at least 20 tokens of content inside) among Llama-3-8B-Instruct's generations: no-intervention vs. direction added (2 strengths) vs. matched random-direction control (same 2 strengths), over 60 problems x 4 decodes (240 generations per condition).",
+    "threshold": "At the stronger strength, the direction-added condition's think-block rate is at least 30% of generations AND at least 15 percentage points above the random-direction control at the identical strength, AND that condition's degenerate-output rate stays at or below 40%.",
+    "refuting_outcome": "The think-block rate under the added direction is within 5 percentage points of the random-direction control at the same strength (any sufficiently large push produces the tags, not this direction specifically); or the excess think-blocks occur mainly inside degenerate/looping generations (degenerate rate above 40% in that cell); or the no-intervention rate is already above 5% (undermining the premise that this model never emits the tags unprompted)."
+   },
+   {
+    "metric": "Mean think-block token count for DeepSeek-R1-Distill-Llama-8B at 2 layers x 2 non-zero strengths (one suppressing, one enhancing coefficient), relative to its own no-intervention baseline and to the matched random-direction control at the identical layer/strength, over 60 problems x 4 decodes.",
+    "threshold": "At the enhancing coefficient, think-block length is at least 25% longer (relative) than baseline, exceeding the random-direction control's own relative change at that coefficient by at least 10 percentage points; at the suppressing coefficient, think-block length is at least 25% shorter (relative) than baseline, again beating the control by at least 10 percentage points - in at least one of the 2 tested layers.",
+    "refuting_outcome": "Think-block length changes by less than 10% (relative) at either coefficient relative to baseline in both layers, or the change is matched or exceeded by the random-direction control's own change at the same coefficient in both layers - showing the effect tracks perturbation size in general, not this specific direction."
+   },
+   {
+    "metric": "Mean think-block token count for DeepSeek-R1-Distill-Llama-8B when the extracted direction's component is projected out (zeroed) at each of the 2 tested layers, vs. no-intervention baseline and vs. zeroing the matched random direction instead, over 60 problems x 4 decodes.",
+    "threshold": "Zeroing the direction reduces think-block length by at least 25% (relative to baseline) in at least one of the 2 layers, exceeding the reduction from zeroing the matched random direction at that layer by at least 10 percentage points.",
+    "refuting_outcome": "Zeroing the direction changes think-block length by less than 10% (relative) in both layers, or by no more than zeroing the random direction does - indicating native reasoning is not concentrated in this one direction and is likely carried redundantly."
+   },
+   {
+    "metric": "GSM8K final-answer accuracy (exact match to the dataset's provided answer) for every condition above, reported next to that condition's think-block-length result rather than separately.",
+    "threshold": "Any condition claimed as 'reasoning enhanced' (passing the sweep endpoint's enhancement criterion) must have accuracy no more than 10 percentage points below DeepSeek-R1-Distill-Llama-8B's own no-intervention accuracy on the same 60 problems.",
+    "refuting_outcome": "A condition shows longer think-blocks (satisfying the induction or sweep length criterion) together with accuracy more than 10 percentage points below the relevant no-intervention baseline - in that case the length increase is reported as inflated/disorganized output, not enhanced reasoning, overturning the enhancement claim even though the raw length numbers alone would have passed."
+   }
+  ],
+  "sampling": "Decoding, every condition: 3 stochastic decodes at temperature 0.7 / top_p 0.9 with fixed seeds 1001, 1002, 1003, plus 1 greedy (temperature 0) decode - 4 generations per evaluation problem, 240 generations per condition, 4,320 generations total across all 8 arms/18 layer-strength cells. max_new_tokens = 512, stopping on the model's own end-of-turn token. A generation is flagged degenerate (reported separately, never silently averaged in) if it hits the 512-token cap without any stop token, or if any single token or 3-token sequence repeats 15+ times consecutively in its last 100 tokens. Item-sampling seed for the 40-item extraction set and the disjoint 60-item evaluation set: 20260819. Random-direction-control seed: 42 per layer (isotropic Gaussian in the 4,096-dimensional residual stream, rescaled to exactly match the extracted direction's length at that layer). Each model is prompted with the identical problem text as the only user-turn content, inside that model's own default chat template (no shared artificial template, since forcing one would itself be a confound); whatever generation prefix DeepSeek-R1-Distill-Llama-8B's own template inserts by default is left exactly as trained and held identical across every condition run on that model, so no difference between its conditions can be attributed to a template change.",
+  "layers_strengths": "Both models: 32 transformer layers, 4,096-dimensional residual stream. Direction d_L at layer L = mean residual-stream activation at the last prompt token over the 40-item extraction set for DeepSeek-R1-Distill-Llama-8B, minus the same quantity for Llama-3-8B-Instruct; computed once, reused everywhere. Induction leg (on Llama-3-8B-Instruct): layer 16 (the middle layer) only, coefficients +1x and +2x d_16's own length, added at every generated token position; paired with the matched random-direction control at the same coefficients. Sweep and necessity legs (on DeepSeek-R1-Distill-Llama-8B): layers 16 and 24 (middle and a later layer); sweep uses coefficients -2x and +2x d_L's length, added at every generated token position; necessity instead projects d_L's component out of the activation entirely (zeroing, not adding) at every generated token position; each paired with the matched random-direction control treated the same way.",
+  "budget_usd": 12,
+  "does_not_test": [
+   "Whether the extracted direction is the only mechanism the reasoning model uses for its own native reasoning, or one of several redundant ones - the necessity check tests this one candidate direction, not completeness.",
+   "Whether the measured difference is really about 'reasoning' rather than 'chat-template / output-format habit': the two models are prompted through their own different default templates, so only the layer/strength sweep run entirely inside DeepSeek-R1-Distill-Llama-8B is template-matched.",
+   "Whether the direction reflects the reasoning fine-tuning step specifically, rather than the separate fact that DeepSeek-R1-Distill-Llama-8B was built from Llama-3.1-8B while the comparison model is Llama-3-8B - separating that would need Llama-3.1-8B-Instruct as a third model, which is out of scope here.",
+   "Whether results generalize evenly across easy vs. hard problems or across different numbers of reasoning steps - the 60 held-out problems are a single random draw, not stratified by difficulty.",
+   "Whether the effect transfers beyond grade-school arithmetic word problems to other reasoning domains such as code or logic puzzles.",
+   "Interaction effects from steering more than one layer at the same time - every condition here intervenes on exactly one layer at a time.",
+   "Reasoning behaviour beyond the 512-token generation cap - longer native reasoning chains are truncated, so any conclusion about 'total' reasoning length is bounded by that cap, not by the model's unconstrained behaviour.",
+   "Whether the reasoning text is logically valid - only surface markers (think-block presence and length) and final-answer correctness are measured; no human or model judge checks whether the intermediate steps make sense."
+  ]
+ },
+ "triage": {
+  "claims": [
+   {
+    "id": "design-core",
+    "grounding": {
+     "grounding": "unauditable",
+     "observed": "Claim states 0 measured numbers; repo holds 0 result records (records/ empty, no generations, no direction vector, no GSM8K item lists) \u2014 nothing to re-derive.",
+     "note": "This is a pre-registered design (endpoints/thresholds only), not a result: no run has been executed, so no extraction-set activations, generations, or endpoint values exist anywhere under /home/hal/dev/interp/dm_hack/mats_r1d1 (records/ is empty; only frozen/index.py, provenance.py, SEALED_PREDICTIONS.md, seeds).",
+     "artifacts_read": [
+      "/home/hal/dev/interp/dm_hack/mats_r1d1/records",
+      "/home/hal/dev/interp/dm_hack/mats_r1d1/frozen/index.py"
+     ]
+    },
+    "findings": [
+     {
+      "confound": "off-distribution ablation: adding/zeroing the direction at 1x-2x its own norm may push activations off-manifold, producing degenerate/looping output that superficially contains think-tags or altered length, rather than revealing a genuine reasoning-specific direction.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the degenerate-output rate (512-token-cap / 15+ token-repeat flag) and the accuracy-drop gate in the enhancement-condition cells stay within the pre-registered bounds (degenerate <=40%, accuracy no more than 10pp below baseline) once the induction/sweep/necessity generations are actually run and scored -- no such measured number is present in the supplied evidence."
+     },
+     {
+      "confound": "Downstream compensation / self-repair: when a direction is added, subtracted, or zeroed at a single layer (16 or 24 of 32) and the effect is read out only at the very end of the generation pipeline (think-block presence/length in the final decoded text), any genuine causal role of the direction can be masked or inflated by later layers renormalizing, compensating for, or amplifying the perturbation before it reaches output. This is a well-documented phenomenon in ablation/steering studies (e.g. \"self-repair\" in circuit ablations) and would specifically threaten the necessity (zeroing) and sweep (add/subtract) endpoints, which infer a layer's causal contribution purely from an end-to-end behavioral readout 16+ layers downstream, with no intermediate check of whether the intervention's effect on the residual stream itself survives to later layers or gets reabsorbed/amplified by them.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the necessity/sweep endpoints' reported (or to-be-reported) effect sizes reflect the direction's true causal weight or are confounded by downstream layers compensating for (or amplifying) the single-layer perturbation before the output is read out \u2014 no committed number in the evidence addresses this, because the evidence provided is the pre-registered design/protocol itself (thresholds, arms, sampling plan, budget_usd:12) with no actual measured results yet. Without a measured outcome, self-repair cannot be ruled out or confirmed as the explanation for any pass/fail on the sweep or necessity endpoints."
+     },
+     {
+      "confound": "Selection bias enters through the degenerate-generation exclusion rule: any generation that hits the 512-token cap without a stop token, or loops 15+ times, is dropped from the mean think-block-length calculation (\"reported separately, never silently averaged in\"). Since stronger interventions (the direction added at 2x, or zeroed) are exactly the conditions most likely to produce more degenerate outputs, and degenerate outputs are disproportionately the ones with pinned-at-cap (very long, unclosed) or pathological (very short/looping) reasoning text, differential exclusion across conditions can mechanically inflate or deflate the reported relative-length effect versus the random-direction control \u2014 independent of whether the extracted direction is doing anything semantically specific. The design commits to reporting degenerate rate only for the induction endpoint's threshold gate (<=40%), not as a per-cell number that could be checked against the sweep/necessity length endpoints.",
+      "status": "NEEDS_RUN",
+      "crux": "No actual measured numbers (correlation value, per-cell think-block rates, per-cell degenerate rates, mean lengths) appear anywhere in the evidence \u2014 only the pre-registered protocol/thresholds exist. Without the per-condition degenerate rate and a length computation that includes vs. excludes degenerate generations, I cannot tell whether the claimed length/rate effects are real or an artifact of asymmetric exclusion of degenerate outputs across conditions."
+     },
+     {
+      "confound": "readout artifact: the layer-16 last-token projection used for the correlation endpoint could be tracking a trivial readout feature (e.g. prompt length / token count / last-token norm) that independently predicts think-block length, rather than a genuine \"reasoning\" direction \u2014 inflating the Spearman correlation without the direction being causally or semantically tied to reasoning.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the reported r>=0.30 correlation (and its excess over the random-direction control) survives controlling for a trivial readout confound like prompt length/token count at the last prompt token \u2014 no actual correlation value, random-direction correlation value, or partial-correlation control appears anywhere in the evidence, only the pre-registered threshold/refutation language."
+     },
+     {
+      "confound": "regime specificity \u2014 the extracted direction is derived from and tested on each model inside its own default chat template/prompt regime, and the two models were never matched to a common base checkpoint before reasoning-tuning (R1-Distill-Llama-8B derives from Llama-3.1-8B, not Llama-3-8B-Instruct). So any \"direction that induces think-blocks in Llama-3-8B-Instruct\" could just be a marker of that model's own template/output-format regime being pushed toward the reasoning-model's regime, not a reasoning-specific direction.",
+      "status": "EXPLAINS",
+      "crux": "The design's own does_not_test list states outright: \"Whether the measured difference is really about 'reasoning' rather than 'chat-template / output-format habit': the two models are prompted through their own different default templates, so only the layer/strength sweep run entirely inside DeepSeek-R1-Distill-Llama-8B is template-matched.\" This means the cross-model induction leg (endpoint/arm that tests claim-component (a), the one that would show the direction transfers to an entirely different model) structurally cannot distinguish a reasoning-specific direction from a template/regime-specific one \u2014 the design authors pre-registered this as an acknowledged, unresolved confound rather than a control they ruled out. No committed number exists yet either (this is a pre-registered protocol, not a reported result), so there is nothing that rules the confound out, and the design itself admits it is out of scope for the cross-model leg."
+     },
+     {
+      "confound": "construct validity \u2014 the risk that the extracted \"reasoning\" direction is actually just a generic Llama-3 vs Llama-3.1-distilled-checkpoint difference (or a chat-template/output-format habit), not something specifically tied to producing think-block text.",
+      "status": "NEEDS_RUN",
+      "crux": "The evidence block is the pre-registered protocol/design spec itself, not measured results \u2014 no Spearman correlation, no think-block rate, no relative length-change number, and no accuracy figure is reported for any arm. Endpoint 1 (within-R1's-own-generations correlation between layer-16 projection and per-problem think length, benchmarked against the matched random-direction's own correlation) is exactly the check that would separate \"direction tracks reasoning-amount\" from \"direction merely marks which-model/template,\" since it never leaves the reasoning model's own generations. But that number has not been produced."
+     },
+     {
+      "confound": "scale incomparability: the mean-activation-difference direction (and any additive/zeroing intervention along it) could simply track a generic magnitude/scale difference between the two models' residual streams rather than anything specific to \"producing think-block text.\" A model that just gets a big enough push in *any* direction could shift into more verbose/degenerate output, mimicking induction or length changes.",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the direction's measured effect (induction rate on Llama, length change in DeepSeek's sweep/necessity legs) exceeds the pre-registered matched-norm random-direction control's effect by the stated margins (15pp for induction, 10pp for sweep/necessity) \u2014 this is exactly the built-in control for scale/magnitude confounds, but no measured numbers from any arm are present in the evidence, only the protocol and thresholds."
+     },
+     {
+      "confound": "noise floor",
+      "status": "NEEDS_RUN",
+      "crux": "The design already builds in a matched-random-direction control at identical layer/strength for every arm (induction, sweep, necessity) and a permutation test for the correlation endpoint, which is exactly the standard noise-floor defense. But the evidence block provided here is only the pre-registered design/spec (models, arms, endpoints, thresholds, sampling) - it contains no actual measured numbers (no correlation value, no think-block rates, no token counts, no accuracy figures) from having run the models. Without a committed number showing the extracted-direction effect vs. the random-direction effect at any endpoint, I cannot tell whether the claim's apparent effects would in fact just be the noise floor (any-large-enough-push artifact) or a real direction-specific effect."
+     },
+     {
+      "confound": "ceiling or floor effect",
+      "status": "NEEDS_RUN",
+      "crux": "The evidence supplied is only the preregistered protocol (arms, endpoints, thresholds, sampling parameters) \u2014 no actual measured numbers (baseline think-block length distribution, degenerate-rate, or correlation value) are reported anywhere in it. A ceiling/floor confound on this design would show up as: (a) DeepSeek's own no-intervention think-block lengths already sitting near the 512-token generation cap, which would compress headroom for the sweep's 'enhancing' arm to show a further +25% relative increase, or truncate the correlation endpoint's variance; or (b) Llama-3's no-intervention think-block rate already at floor (0%) making any added push look disproportionately large in relative terms \u2014 this second one the design partially self-guards against (refuting clause requires no-intervention rate >5% to invalidate), but the sweep/correlation endpoints have no equivalent explicit ceiling guard. Without the actual baseline length/degenerate numbers, I cannot tell whether the design's committed thresholds were cleared honestly or via a compressed/ceiling-bound baseline."
+     },
+     {
+      "confound": "single-case overfit: the extracted direction, the 40/60 item split, and the random-direction control all rely on a single fixed seed pair (item-sampling seed 20260819; random-direction seed 42) with no repetition across independent draws anywhere in the design",
+      "status": "NEEDS_RUN",
+      "crux": "Whether the correlation/induction/sweep/necessity effects replicate across multiple independent extraction-set draws and multiple random-direction seeds, or are specific to the single fixed seed pair (20260819 / 42) \u2014 the evidence given is only the protocol, with no generations run and no numbers committed yet, so there is nothing to check this against"
+     }
+    ],
+    "run_queue": [
+     "Execute the pre-registered induction (Llama-3-8B-Instruct, layer 16, 1x/2x direction vs random-direction control) and sweep/necessity (DeepSeek-R1-Distill-Llama-8B, layers 16/24, +-2x and zeroing, vs random control) generation arms over the 60-problem x 4-decode grid, and report per-cell degenerate-output rate, GSM8K accuracy, think-block rate/length, and baseline (no-intervention) think-block length distribution so the induction/sweep/necessity endpoints' thresholds can be checked against real numbers.",
+     "Execute the direction extraction and endpoint-1 correlation script (layer-16 direction projection vs. mean think-block token count, plus matched random-direction projection control) on DeepSeek-R1-Distill-Llama-8B's no-intervention arm across the 40/60 item split."
+    ],
+    "author_queue": [
+     "Intermediate-activation probe run alongside the sweep/necessity legs: after intervening at layer L, measure the direction's own projection magnitude at each subsequent layer L+1..32 (intervention vs matched random-direction control) to check whether later layers self-repair (restore) the perturbation before generation, so length/rate effects can be attributed to the direction itself.",
+     "For each layer-strength cell, report the degenerate rate alongside two versions of mean think-block length (excluding degenerate generations, and including them with length capped/imputed at 512 tokens), then check whether the sweep/necessity/induction pass/fail verdicts still hold under the inclusive computation.",
+     "Partial-Spearman-correlation control regressing out prompt token-length (and last-token activation norm) before correlating layer-16 projection with mean think-block token count, run alongside the existing random-direction control, on the same 40/60 item split.",
+     "Repeat direction extraction and the random-direction control across >=3 independent 40/60 splits (different item-sampling seeds) and >=3 random-direction seeds per layer, then check whether the correlation and induction/sweep/necessity margins hold up across draws rather than being an artifact of the single fixed seed pair."
+    ],
+    "runner_results": null
+   }
+  ],
+  "shared_queue": [],
+  "instrument_queue": [],
+  "authored": null
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL: human commits the (possibly amended) design before mode=execute"
+}

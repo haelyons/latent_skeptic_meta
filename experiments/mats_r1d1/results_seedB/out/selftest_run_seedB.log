@@ -1,0 +1,21 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+note: records/seedB_v2_design_diff_triage.json is not on this machine, so the quoted design text could not be checked against it
+  ok     0 checks: the quoted design text still matches the design record
+  ok    15 checks: the think-tag parser, including the auto-opened tag
+  ok     5 checks: marker scoring by exact match
+  ok     6 checks: the decode path must not delete the tags the marker rule reads
+  ok     7 checks: the repeated-or-truncated-text detector
+  ok     4 checks: exact-match extraction: the marker phrases and the think block
+  ok     5 checks: the coherence check: repeated text and off topic
+  ok    12 checks: the cells and the row counts
+  ok     5 checks: endpoint 1: the marker gap
+  ok     6 checks: endpoint 2: length
+  ok     4 checks: endpoint 3: coherence
+  ok     5 checks: endpoint 4: suppression on the reasoning model
+  ok     5 checks: endpoint 5: against both same-size controls
+  ok     4 checks: endpoint 6: prompt category
+  ok     2 checks: the pass filter keeps the three passes apart
+  ok     3 checks: one record really can be written
+  ok     5 checks: a same-box rerun is never called replication
+selftest: PASS (93 checks)

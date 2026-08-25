@@ -1,0 +1,228 @@
+{
+  "cell": {
+    "endpoint": 2,
+    "pipeline": "v2",
+    "seed": "A",
+    "stage": "endpoints"
+  },
+  "decision": "REFUTED",
+  "decision_rule": "THRESHOLD (design, verbatim): GUESS: added direction beats the random-direction control by 15+ points at the higher strength. GUESS: degenerate-output rate must stay under 40% in that same cell. REFUTING OUTCOME (design, verbatim): The gap versus the random-direction control is under 5 points, or the excess sits mostly in degenerate output, or the unchanged rate exceeds 5%. READING: Rates are computed over non-degenerate rows; 'the excess sits mostly in degenerate output' is read as more than half of the direction cell's well-formed rows being degenerate rows. The gate is at the higher strength (+2x), with the lower strength reported beside it. A stray closing tag never counts as a well-formed block for this model, whose template opens nothing.",
+  "env": {
+    "git_rev": null,
+    "host": "193-122-152-110",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-19T21:02:27+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 65023,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_items.json",
+      "present": true,
+      "sha256": "25a7f0bab1e1"
+    },
+    {
+      "bytes": 7352,
+      "n_items": 2,
+      "path": "results_seedA/out/seedA_projections.json",
+      "present": true,
+      "sha256": "46974b5efca3"
+    },
+    {
+      "bytes": 3915237,
+      "n_items": 1800,
+      "path": "results_seedA/out/seedA_generations_nonreason.jsonl",
+      "present": true,
+      "sha256": "4ab54945c9d2"
+    },
+    {
+      "bytes": 7012999,
+      "n_items": 2600,
+      "path": "results_seedA/out/seedA_generations_reason.jsonl",
+      "present": true,
+      "sha256": "e847d45ae669"
+    }
+  ],
+  "metric": "Rate of well-formed think-tag blocks in Llama-3 8B Instruct's generations, comparing no change, direction added, and the random-direction control, at matched strengths.",
+  "notes": "Degenerate rows (512-token cap with no stop token, OR a <=6-token sequence repeated 15+ times in the last 100 tokens) are excluded from every length, rate and accuracy number and reported per cell. The design states a 40% ceiling only for the induction leg; for the enhance/suppress and removal legs the rate is reported, not gated, because adding a ceiling the design does not state would be a different design. A rerun of this stage on the same box, at the same batch size, reproduces these numbers. That is reproduction, not replication: same weights, same box, same seeds is one measurement, not two.",
+  "threshold": {
+    "numeric": {
+      "degenerate_ceiling_pct": 40.0,
+      "gap_pass_pct_points": 15.0,
+      "gap_refute_pct_points": 5.0,
+      "unchanged_ceiling_pct": 5.0
+    },
+    "refuting_outcome_text": "The gap versus the random-direction control is under 5 points, or the excess sits mostly in degenerate output, or the unchanged rate exceeds 5%.",
+    "threshold_text": "GUESS: added direction beats the random-direction control by 15+ points at the higher strength. GUESS: degenerate-output rate must stay under 40% in that same cell."
+  },
+  "values": {
+    "higher_strength": 2.0,
+    "layers_meeting_refuting_outcome": [
+      16,
+      24
+    ],
+    "layers_meeting_threshold": [],
+    "per_cell": {
+      "L16_s+1.0": {
+        "direction": {
+          "accuracy_pct": 1.5228426395939085,
+          "accuracy_pct_all_rows": 1.5,
+          "cell": "induce_dir_L16_s+1.0",
+          "degenerate_rate_pct": 1.5,
+          "mean_out_think_tokens": 48.3756345177665,
+          "mean_think_tokens": 0.0,
+          "n_degenerate": 3,
+          "n_nondegenerate": 197,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": 0.0,
+          "wellformed_share_degenerate": NaN
+        },
+        "excess_mostly_degenerate": false,
+        "gap_pct_points": 0.0,
+        "is_higher_strength": false,
+        "random_control": {
+          "accuracy_pct": 3.7735849056603774,
+          "accuracy_pct_all_rows": 2.5,
+          "cell": "induce_rand_L16_s+1.0",
+          "degenerate_rate_pct": 47.0,
+          "mean_out_think_tokens": 103.40566037735849,
+          "mean_think_tokens": 0.0,
+          "n_degenerate": 94,
+          "n_nondegenerate": 106,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": 0.0,
+          "wellformed_share_degenerate": NaN
+        }
+      },
+      "L16_s+2.0": {
+        "direction": {
+          "accuracy_pct": 2.0833333333333335,
+          "accuracy_pct_all_rows": 3.0,
+          "cell": "induce_dir_L16_s+2.0",
+          "degenerate_rate_pct": 76.0,
+          "mean_out_think_tokens": 33.020833333333336,
+          "mean_think_tokens": 0.0,
+          "n_degenerate": 152,
+          "n_nondegenerate": 48,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": 0.0,
+          "wellformed_share_degenerate": NaN
+        },
+        "excess_mostly_degenerate": false,
+        "gap_pct_points": NaN,
+        "is_higher_strength": true,
+        "meets_refuting_outcome": true,
+        "meets_threshold": false,
+        "random_control": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 0.0,
+          "cell": "induce_rand_L16_s+2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        }
+      },
+      "L24_s+1.0": {
+        "direction": {
+          "accuracy_pct": 31.666666666666668,
+          "accuracy_pct_all_rows": 10.5,
+          "cell": "induce_dir_L24_s+1.0",
+          "degenerate_rate_pct": 70.0,
+          "mean_out_think_tokens": 105.16666666666667,
+          "mean_think_tokens": 0.0,
+          "n_degenerate": 140,
+          "n_nondegenerate": 60,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": 0.0,
+          "wellformed_share_degenerate": NaN
+        },
+        "excess_mostly_degenerate": false,
+        "gap_pct_points": 0.0,
+        "is_higher_strength": false,
+        "random_control": {
+          "accuracy_pct": 59.89010989010989,
+          "accuracy_pct_all_rows": 56.0,
+          "cell": "induce_rand_L24_s+1.0",
+          "degenerate_rate_pct": 9.0,
+          "mean_out_think_tokens": 89.38461538461539,
+          "mean_think_tokens": 0.0,
+          "n_degenerate": 18,
+          "n_nondegenerate": 182,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": 0.0,
+          "wellformed_share_degenerate": NaN
+        }
+      },
+      "L24_s+2.0": {
+        "direction": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 0.0,
+          "cell": "induce_dir_L24_s+2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        },
+        "excess_mostly_degenerate": false,
+        "gap_pct_points": NaN,
+        "is_higher_strength": true,
+        "meets_refuting_outcome": true,
+        "meets_threshold": false,
+        "random_control": {
+          "accuracy_pct": NaN,
+          "accuracy_pct_all_rows": 1.5,
+          "cell": "induce_rand_L24_s+2.0",
+          "degenerate_rate_pct": 100.0,
+          "mean_out_think_tokens": NaN,
+          "mean_think_tokens": NaN,
+          "n_degenerate": 200,
+          "n_nondegenerate": 0,
+          "n_rows": 200,
+          "n_wellformed_all_rows": 0,
+          "n_wellformed_nondegenerate": 0,
+          "wellformed_rate_pct": NaN,
+          "wellformed_share_degenerate": NaN
+        }
+      }
+    },
+    "unchanged": {
+      "accuracy_pct": 81.0,
+      "accuracy_pct_all_rows": 81.0,
+      "cell": "base_nonreason",
+      "degenerate_rate_pct": 0.0,
+      "mean_out_think_tokens": 87.28,
+      "mean_think_tokens": 0.0,
+      "n_degenerate": 0,
+      "n_nondegenerate": 200,
+      "n_rows": 200,
+      "n_wellformed_all_rows": 0,
+      "n_wellformed_nondegenerate": 0,
+      "wellformed_rate_pct": 0.0,
+      "wellformed_share_degenerate": NaN
+    },
+    "unchanged_rate_exceeds_ceiling": false
+  }
+}

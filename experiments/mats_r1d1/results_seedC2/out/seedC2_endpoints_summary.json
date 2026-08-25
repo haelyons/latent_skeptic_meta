@@ -1,0 +1,163 @@
+{
+  "anchor_9b_it": {
+    "status": "COMPUTED",
+    "recovered_ref": -0.9340460995435045,
+    "recorded_gap": -0.9,
+    "band": [
+      -1.15,
+      -0.65
+    ],
+    "confirmed": true,
+    "digit_mass_usable": true,
+    "pipeline_trust": "OK"
+  },
+  "digit_mass_gate": {
+    "2b": {
+      "digit_mass_mean": 1.0002716027973384,
+      "n_rows": 100,
+      "floor": 0.5,
+      "usable": true
+    },
+    "9b": {
+      "digit_mass_mean": 1.0002022152068093,
+      "n_rows": 100,
+      "floor": 0.5,
+      "usable": true
+    },
+    "27b": {
+      "digit_mass_mean": 1.0013536937360186,
+      "n_rows": 100,
+      "floor": 0.5,
+      "usable": true
+    }
+  },
+  "ref_self_minus_other": {
+    "2b": {
+      "status": "COMPUTED",
+      "ref": -0.3322956833197317,
+      "self_fail_minus_succ": -0.7980738513308019,
+      "other_fail_minus_succ": -0.4657781680110702,
+      "arm_expected_rating": {
+        "SELF-FAIL": 8.012020947039712,
+        "SELF-SUCC": 8.810094798370514,
+        "OTHER-FAIL": 7.949120121010145,
+        "OTHER-SUCC": 8.414898289021215
+      },
+      "call": "INDETERMINATE"
+    },
+    "9b": {
+      "status": "COMPUTED",
+      "ref": -0.9340460995435045,
+      "self_fail_minus_succ": -0.881289569049831,
+      "other_fail_minus_succ": 0.05275653049367346,
+      "arm_expected_rating": {
+        "SELF-FAIL": 6.425284485753262,
+        "SELF-SUCC": 7.306574054803093,
+        "OTHER-FAIL": 7.140614952731747,
+        "OTHER-SUCC": 7.087858422238074
+      },
+      "call": "PRESENT"
+    },
+    "27b": {
+      "status": "COMPUTED",
+      "ref": -1.386377583336789,
+      "self_fail_minus_succ": -0.9447166261859046,
+      "other_fail_minus_succ": 0.4416609571508845,
+      "arm_expected_rating": {
+        "SELF-FAIL": 5.11747388086423,
+        "SELF-SUCC": 6.0621905070501345,
+        "OTHER-FAIL": 6.0155348032045675,
+        "OTHER-SUCC": 5.573873846053683
+      },
+      "call": "PRESENT"
+    }
+  },
+  "coverage": {
+    "2b": {
+      "status": "tested-usable"
+    },
+    "9b": {
+      "status": "tested-usable"
+    },
+    "27b": {
+      "status": "tested-usable"
+    }
+  },
+  "per_arm": {
+    "2b_NEUTRAL-PAD": {
+      "digit_mass_mean": 1.0002763858714387,
+      "expected_rating_mean": 8.605929903349427,
+      "n_families": 20
+    },
+    "2b_OTHER-FAIL": {
+      "digit_mass_mean": 1.0003997364045063,
+      "expected_rating_mean": 7.949120121010145,
+      "n_families": 20
+    },
+    "2b_OTHER-SUCC": {
+      "digit_mass_mean": 1.0002763499851426,
+      "expected_rating_mean": 8.414898289021215,
+      "n_families": 20
+    },
+    "2b_SELF-FAIL": {
+      "digit_mass_mean": 1.0003230837304726,
+      "expected_rating_mean": 8.012020947039712,
+      "n_families": 20
+    },
+    "2b_SELF-SUCC": {
+      "digit_mass_mean": 1.0000824579951313,
+      "expected_rating_mean": 8.810094798370514,
+      "n_families": 20
+    },
+    "9b_NEUTRAL-PAD": {
+      "digit_mass_mean": 1.0002348901703955,
+      "expected_rating_mean": 7.06820899960216,
+      "n_families": 20
+    },
+    "9b_OTHER-FAIL": {
+      "digit_mass_mean": 1.0003477674195893,
+      "expected_rating_mean": 7.140614952731747,
+      "n_families": 20
+    },
+    "9b_OTHER-SUCC": {
+      "digit_mass_mean": 1.0002894721168558,
+      "expected_rating_mean": 7.087858422238074,
+      "n_families": 20
+    },
+    "9b_SELF-FAIL": {
+      "digit_mass_mean": 0.9999740705010481,
+      "expected_rating_mean": 6.425284485753262,
+      "n_families": 20
+    },
+    "9b_SELF-SUCC": {
+      "digit_mass_mean": 1.000164875826158,
+      "expected_rating_mean": 7.306574054803093,
+      "n_families": 20
+    },
+    "27b_NEUTRAL-PAD": {
+      "digit_mass_mean": 1.0009187332412695,
+      "expected_rating_mean": 5.714236096249662,
+      "n_families": 20
+    },
+    "27b_OTHER-FAIL": {
+      "digit_mass_mean": 1.0007304210841539,
+      "expected_rating_mean": 6.0155348032045675,
+      "n_families": 20
+    },
+    "27b_OTHER-SUCC": {
+      "digit_mass_mean": 1.0006270482641413,
+      "expected_rating_mean": 5.573873846053683,
+      "n_families": 20
+    },
+    "27b_SELF-FAIL": {
+      "digit_mass_mean": 1.00266308982973,
+      "expected_rating_mean": 5.11747388086423,
+      "n_families": 20
+    },
+    "27b_SELF-SUCC": {
+      "digit_mass_mean": 1.0018291762607987,
+      "expected_rating_mean": 6.0621905070501345,
+      "n_families": 20
+    }
+  }
+}

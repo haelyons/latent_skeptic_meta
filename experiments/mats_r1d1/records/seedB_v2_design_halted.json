@@ -1,0 +1,69 @@
+{
+ "seed": "B",
+ "pipeline": "v2",
+ "halt": "budget_over_cap",
+ "design": {
+  "hypothesis": "Reasoning-model and non-reasoning-model activations differ on matched harmful and harmless prompts. That difference defines a direction, a single vector added to or subtracted from internal activations. Adding it to the non-reasoning model should raise reasoning-style behavior.",
+  "models": [
+   "Llama-3 8B, the non-reasoning model named in the question. Its exact release (base or instruction-tuned) is unstated, so instruction-tuned is assumed (GUESS).",
+   "DeepSeek R1 Distill Llama-8B, the reasoning model named in the question. Its exact Llama base version is unstated (GUESS); assumed to share Llama-3 8B's architecture and tokenizer (MEMORY: 32 layers, 4096-wide residual stream)."
+  ],
+  "data": "Two prompt sets are needed; neither is named in the question, so both are GUESS choices. Harmful set: a public red-team instruction list (for example AdvBench-style prompts, MEMORY of a commonly used set), 128 items. Harmless set: a matched benign-instruction list (for example Alpaca-style prompts, MEMORY), 128 items. Each set splits 50/50 into a direction-fitting half and a held-out scoring half. So 64 harmful and 64 harmless prompts are held out, never used to build any direction.",
+  "arms": [
+   "Llama-3 8B generates with nothing added, on held-out prompts. This gives the floor rate of reasoning markers (plain-baseline).",
+   "DeepSeek R1 Distill Llama-8B generates with nothing added, on the same held-out prompts. This gives the ceiling rate of reasoning markers (reasoning-ceiling).",
+   "Llama-3 8B generates with one direction added at every token (pooled-direction-add). That direction is the reasoning model's mean activation minus the plain model's, averaged over harmful and harmless fitting prompts.",
+   "Llama-3 8B generates with a direction built only from harmless fitting prompts (harmless-only-direction-add). It is tested on both harmful and harmless held-out prompts, to check it is not harm-specific.",
+   "Llama-3 8B generates with a direction built only from harmful fitting prompts (harmful-only-direction-add). It is tested the same way, as the mirror check.",
+   "Llama-3 8B generates with a random unit vector added, scaled to the pooled direction's size (random-vector-add). This controls for perturbation size alone.",
+   "Llama-3 8B generates with a direction built the same way as the pooled one, but from randomly relabeled activations (relabeled-placebo-add). This controls for the averaging procedure itself producing a spurious direction.",
+   "DeepSeek R1 Distill Llama-8B generates with the pooled direction subtracted instead of added (pooled-direction-subtract). This is a necessity check: removing a real reasoning direction should lower the ceiling rate."
+  ],
+  "endpoints": [
+   {
+    "metric": "Share of held-out generations with at least one reasoning-continuation phrase (for example 'wait,', 'let me reconsider', 'alternatively,', or a think-tag), pooled-direction-add versus plain-baseline.",
+    "threshold": "Pooled-direction-add's share exceeds plain-baseline's share by at least 20 percentage points (GUESS threshold).",
+    "refuting_outcome": "marker-rate-null: the gap is 5 percentage points or less, so the direction fails to raise reasoning phrasing."
+   },
+   {
+    "metric": "Mean generated length in tokens (word-like units) before the stop token, pooled-direction-add versus plain-baseline.",
+    "threshold": "Pooled-direction-add's mean length is at least 1.5 times plain-baseline's mean length (GUESS multiplier).",
+    "refuting_outcome": "length-null: pooled-direction-add's mean length stays within 10 percent of plain-baseline, so nothing longer is produced."
+   },
+   {
+    "metric": "Share of pooled-direction-add generations judged coherent by a fixed repeated-text and off-topic check.",
+    "threshold": "Coherent share stays at or above 70 percent (GUESS threshold).",
+    "refuting_outcome": "coherence-collapse: coherent share falls below 50 percent, so any gain is degenerate text, not reasoning."
+   },
+   {
+    "metric": "Reasoning-marker share for pooled-direction-subtract versus reasoning-ceiling, both on DeepSeek R1 Distill Llama-8B.",
+    "threshold": "Pooled-direction-subtract's share falls at least 20 percentage points below reasoning-ceiling's share (GUESS threshold).",
+    "refuting_outcome": "no-suppression: the drop is 5 percentage points or less, so removing the direction changes nothing."
+   },
+   {
+    "metric": "Reasoning-marker share of pooled-direction-add compared against random-vector-add and against relabeled-placebo-add.",
+    "threshold": "Pooled-direction-add exceeds both controls by at least 15 percentage points each (GUESS threshold).",
+    "refuting_outcome": "perturbation-confound: pooled-direction-add sits within 5 percentage points of either control, so size alone explains the effect."
+   },
+   {
+    "metric": "Absolute gap between harmless-only-direction-add's marker share on harmful versus harmless held-out prompts, mirrored for harmful-only-direction-add.",
+    "threshold": "Each gap stays at or under 15 percentage points (GUESS threshold).",
+    "refuting_outcome": "category-confound: either gap exceeds 25 percentage points, so the direction tracks harm content, not reasoning."
+   }
+  ],
+  "sampling": "Primary pass uses greedy decoding (always picking the single most likely next word), one generation per prompt, on all 8 arms. Each arm scores 64 harmful and 64 harmless held-out prompts: n=128 per arm, 1024 generations total. A robustness pass adds temperature 0.7, top-p 0.9, 3 seeded generations per prompt (seeds 0, 1, 2; GUESS settings), run only for plain-baseline and pooled-direction-add: 2 arms times 128 prompts times 3 seeds equals 768 more generations. Maximum new tokens is capped at 1024 (GUESS cap) for every generation.",
+  "budget_usd": 30,
+  "does_not_test": [
+   "Does not test real reasoning-quality gains: no math or logic accuracy benchmark is scored, so markers could rise while accuracy stays flat.",
+   "Does not sweep layer depth or steering strength beyond a small check: only layer 16 of 32 (GUESS) and the coefficient grid's middle point (2x, GUESS) are scored against thresholds.",
+   "Does not test other prompt domains such as math or code: only the harmful and harmless pair the question names is used.",
+   "Does not test multi-turn conversation or varied system prompts: every prompt uses one fixed single-turn template (GUESS template).",
+   "Does not confirm the two checkpoints truly share architecture and tokenizer: this is assumed (MEMORY), and if false the borrowed direction is meaningless.",
+   "Does not test a different reasoning-distilled model family: findings are specific to this one named pair and may not transfer.",
+   "Does not verify the fixed marker-phrase list is complete or unbiased: a different list (GUESS) could shift every marker-rate number.",
+   "Does not confirm the distilled model actually uses think-tags in output (MEMORY: common in R1-style models, not guaranteed here); a wrong assumption would undercount markers.",
+   "Does not test sensitivity to prompt-set size or source: 128 items per category is a GUESS count from an unnamed dataset."
+  ],
+  "layers_strengths": "Steering changes the residual stream, the running activation each layer reads and adds to. It is applied at one mid-depth layer, a GUESS choice of layer 16 of 32 (MEMORY: Llama-3 8B has 32 layers and a 4096-wide residual stream). The direction vector is added unnormalized at every generated token position from that layer onward. A coefficient grid of 1x, 2x, and 4x the raw mean-difference vector's own size is tried (GUESS grid); the scored endpoints above use only the 2x point, with 1x and 4x kept as an unscored sensitivity check."
+ }
+}

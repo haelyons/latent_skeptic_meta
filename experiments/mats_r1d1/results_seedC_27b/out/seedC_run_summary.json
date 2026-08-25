@@ -1,0 +1,37 @@
+{
+  "runner": "onbox_seedC.sh",
+  "seed": "C_scale",
+  "size": "27b",
+  "design_record": "records/seedC_scale_design_diff_triage.json",
+  "stages_on_box": [
+    "extract",
+    "generate"
+  ],
+  "endpoints_stage": "run LOCALLY after all three sizes are fetched (cross-size)",
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedC": "0",
+    "seedC_extract": "0",
+    "seedC_generate": "0"
+  },
+  "any_failed": false,
+  "n_provenance_records": 8,
+  "decisions": {
+    "condition-other_seed-C_scale_size-27b_stage-extract_variant-base": "READABLE",
+    "condition-other_seed-C_scale_size-27b_stage-extract_variant-it": "READABLE",
+    "condition-other_seed-C_scale_size-27b_stage-generate_variant-base": "AUDIT_2/20_usable",
+    "condition-other_seed-C_scale_size-27b_stage-generate_variant-it": "AUDIT_20/20_usable",
+    "condition-self_seed-C_scale_size-27b_stage-extract_variant-base": "READABLE",
+    "condition-self_seed-C_scale_size-27b_stage-extract_variant-it": "READABLE",
+    "condition-self_seed-C_scale_size-27b_stage-generate_variant-base": "AUDIT_0/20_usable",
+    "condition-self_seed-C_scale_size-27b_stage-generate_variant-it": "AUDIT_20/20_usable"
+  },
+  "row_files": {
+    "seedC_extract_rows_27b.jsonl": 80,
+    "seedC_generate_rows_27b.jsonl": 80
+  },
+  "batch_size": "8",
+  "instance_id": "a70ff3ac66ea4cf1a01bc6d63c50c4e3",
+  "git_commit": "417d37862813d8ab42a7c14b5d12ba253993f01b",
+  "note": "A re-run of this size on the same box at the same batch size reproduces these numbers. That is reproduction, not replication."
+}

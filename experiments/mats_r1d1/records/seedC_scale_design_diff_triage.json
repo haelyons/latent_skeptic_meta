@@ -1,0 +1,122 @@
+{
+ "seed": "C_scale",
+ "pipeline": "v2.1",
+ "design": {
+  "hypothesis": "The self-versus-other rating drop may be a general Gemma-2 property, not specific to 9 billion parameters. It should appear at 2 billion and 27 billion parameters too, wherever the digit-readout works. Readout usability may itself depend on model size, separate from whether the underlying effect exists.",
+  "models": [
+   "gemma-2-9b-base (stated by the question)",
+   "gemma-2-9b-it (stated by the question)",
+   "gemma-2-2b-base [MEMORY: assumes a 2B base checkpoint exists; may not]",
+   "gemma-2-2b-it [MEMORY: assumes a 2B instruction-tuned checkpoint exists]",
+   "gemma-2-27b-base [MEMORY: assumes a 27B base checkpoint exists; may not]",
+   "gemma-2-27b-it [MEMORY: assumes a 27B instruction-tuned checkpoint exists]"
+  ],
+  "data": "Reuses the original staged-failure conversation script: one scenario family, a checker or tool reporting a failure. GUESS: 20 distinct wordings (items) run once per condition per model. No held-out set; every item is scored in every arm. Total scored transcripts: 12 arms times 20 items equals 240.",
+  "arms": [
+   "gemma-2-9b-it, failure attributed to another assistant (replication-anchor control)",
+   "gemma-2-9b-it, failure attributed to itself (replication-anchor test; known ~0.9-point drop)",
+   "gemma-2-9b-base, failure attributed to another assistant (replication-anchor control)",
+   "gemma-2-9b-base, failure attributed to itself (replication-anchor test)",
+   "gemma-2-2b-it, failure attributed to another assistant (control)",
+   "gemma-2-2b-it, failure attributed to itself (test)",
+   "gemma-2-2b-base, failure attributed to another assistant (control)",
+   "gemma-2-2b-base, failure attributed to itself (test)",
+   "gemma-2-27b-it, failure attributed to another assistant (control)",
+   "gemma-2-27b-it, failure attributed to itself (test)",
+   "gemma-2-27b-base, failure attributed to another assistant (control)",
+   "gemma-2-27b-base, failure attributed to itself (test)"
+  ],
+  "endpoints": [
+   {
+    "metric": "Mean share of next-token probability on the ten digit tokens (0-9) at the rating slot. Averaged over 20 items per condition, per model.",
+    "threshold": "Usable if mean digit-token mass is at least 0.5 (half of next-token probability). GUESS threshold, not fixed by the question.",
+    "refuting_outcome": "Mean digit mass stays below 0.5 for a model. That size's readout is unusable there, not proof the effect is absent."
+   },
+   {
+    "metric": "Difference in probability-weighted expected rating (0-9) between self- and other-attributed conditions. Computed per usable model, self minus other, averaged over 20 items.",
+    "threshold": "Asymmetry counts as present if the drop is at least 0.5 points, same direction as the known 9B result.",
+    "refuting_outcome": "The self-minus-other difference lands between -0.2 and +0.2 points for a usable model. The asymmetry does not appear at that size."
+   },
+   {
+    "metric": "Recovered self-minus-other drop for the freshly run 9B instruction-tuned anchor, versus the ~0.9-point drop already on record.",
+    "threshold": "Confirmed if the recovered drop falls between 0.75 and 1.05 points, matching the known result within 0.15 points.",
+    "refuting_outcome": "Recovered 9B drop falls outside 0.75 to 1.05 points. The new harness does not match the recorded effect, so new-size comparisons are put on hold."
+   }
+  ],
+  "sampling": "No sampling at the rating slot: it is one deterministic forward pass reading softmax probability on tokens '0' through '9'. Earlier scripted turns are fixed text, not generated, so no temperature applies there either. Where any wording must be generated, use temperature 0 and seed 0, for reproducibility only. Runs are deterministic, so a different seed will not change results. GUESS: n = 20 items per arm, 240 forward passes total across 12 arms.",
+  "budget_usd": 10,
+  "does_not_test": [
+   "The usual two-~8B-model budget assumption does not fit a 27B model, which needs about 54GB in bf16. This design instead rents one 80GB GPU, run serially across all three sizes.",
+   "GUESS: uses 20 items per condition and a 0.5 digit-mass usability cutoff. Neither number is fixed by the question. A different cutoff (0.3 or 0.7) could change which sizes count as usable.",
+   "MEMORY: assumes Gemma-2 ships base and instruction-tuned checkpoints at 2B and 27B too. The question only confirms this pairing at 9B. If a base checkpoint is missing at one size, that arm cannot run.",
+   "MEMORY: reuses the original failure-scenario wording unchanged across sizes. This assumes the stimuli were not tuned specifically to 9B's vocabulary. If they were, low digit-mass elsewhere could reflect a mismatched script, not scale.",
+   "Does not test why a self-attributed failure lowers the rating. It cannot separate a real internal-state change from a learned pattern of writing sadder text after taking blame.",
+   "Does not test other failure types, only the one scenario family carried over from the original study. A different failure story might behave differently at any size.",
+   "Does not test sizes between 2B, 9B, and 27B. It cannot show whether any change with scale is smooth or a sudden jump.",
+   "Does not test other rating formats, such as a word or a 0-100 scale. A different format might raise usability at a size where digits fail.",
+   "GUESS: assumes about $2 to $2.50 per hour for an 80GB GPU rental. Assumes about 3 hours total for download, loading, and 240 forward passes. Actual price or duration could differ by two times either way."
+  ],
+  "layers_strengths": "Not applicable: purely behavioral read-out of output probabilities, no layer patching or activation-steering strength used."
+ },
+ "diff": {
+  "departures": [
+   {
+    "what": "The design adds four models the question never confirms exist: a small (2 billion parameter) and a large (27 billion parameter) version of this model family, each in a base and a chat-tuned form. The question only established that base and chat-tuned checkpoints exist at the 9 billion parameter size.",
+    "question": "Do base and chat-tuned checkpoints for both the 2 billion parameter and 27 billion parameter sizes actually exist for you to run, or only some of them?"
+   },
+   {
+    "what": "The design invents a specific cutoff for when a rating readout counts as usable at all: at least half of the model's next-word probability must land on a digit answer. The question only asks whether the readout is usable, without setting a number.",
+    "question": "Is half of the model's next-word probability on digit answers the right cutoff for calling a rating readout usable, or would you set a different number?"
+   },
+   {
+    "what": "The design invents three separate numeric cutoffs for judging results: the self-versus-other rating drop counts as a real effect only above half a point, counts as absent only between -0.2 and +0.2 points, and the repeated 9 billion parameter result must land within 0.15 points of the original 0.9 point drop or all size comparisons are paused.",
+    "question": "Do you agree with these three cutoff numbers, or would different thresholds change which sizes you'd call a match or a real effect?"
+   },
+   {
+    "what": "The design tests each condition using only 20 written failure scenarios per model, a count the question never specifies. This choice determines how much confidence any measured rating change deserves.",
+    "question": "Is 20 written failure scenarios per condition enough repeats to trust a measured rating change, or would you want more?"
+   },
+   {
+    "what": "The design proposes renting one large graphics card for roughly three hours at about 10 dollars total, driven mainly by the need to run the largest (27 billion parameter) version. None of this cost or time figure comes from the question.",
+    "question": "Does spending about 10 dollars and three hours on a single large graphics card rental match what you have budgeted for this study?"
+   }
+  ]
+ },
+ "triage": {
+  "grounding": {
+   "grounding": "unauditable",
+   "observed": "Claim thresholds (digit mass >=0.5; self-minus-other >=0.5; 9B recovery 0.75-1.05). No run artifacts exist: 0 SITREF/digit-mass/rating result files. Only results_seedA and results_seedB (unrelated reasoning-steering study) present.",
+   "note": "Seed C SITREF scale design is only a pre-registered question (seeds/seed_c_scale.md); never run, no results_seedC or per-token/endpoint JSONs saved to check any number.",
+   "artifacts_read": [
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/seeds/seed_c_scale.md",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/SEALED_PREDICTIONS_V2.md",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/results_seedA/out",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/results_seedB/out",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/records"
+   ]
+  },
+  "findings": [
+   {
+    "confound": "Coordinates/scale (layer, strength, units) making cells degenerate regardless of hypothesis",
+    "status": "NEEDS_RUN",
+    "crux": "The evidence is a pre-registered design (thresholds and arms are GUESS-labeled), not actual measured digit-mass or rating-drop numbers \u2014 no forward passes have been reported as run, so there is no committed number showing which models clear the 0.5 digit-mass usability gate or whether the 9B anchor reproduces the 0.75-1.05 drop.",
+    "next": "RUN: execute the 12-arm harness (2b/9b/27b x base/it x self/other, 20 items each) and report per-model mean digit-token mass and self-minus-other expected-rating difference, with the 9b-it anchor check first"
+   },
+   {
+    "confound": "Endpoint 2 (generality test) is gated on \"per usable model,\" and the model roster includes four checkpoints (2B/27B base+it) whose existence is MEMORY-flagged as unconfirmed. If those checkpoints are missing or unusable, they silently drop out of the generality comparison with no stated fallback requiring the report to flag \"untested at size X\" \u2014 the design could then answer a narrower question (does the effect appear at whichever sizes happen to be usable/available) while being reported as answering the seed's actual question (does it generalize across 2B/9B/27B).",
+    "status": "NEEDS_RUN",
+    "crux": "Whether the four non-anchor checkpoints (2B-base, 2B-it, 27B-base, 27B-it) actually exist and load, and whether their digit-mass usability actually clears 0.5 \u2014 none of this is known from the proposal text, since no execution has occurred and no digit-mass, rating-difference, or anchor-recovery numbers are yet on record.",
+    "next": "AUTHOR: a pre-flight checkpoint-availability check for all 6 gemma-2 variants (2b/9b/27b x base/it) plus an explicit reporting rule that any arm failing to load or failing the 0.5 usability gate is reported as \"generality untested at that size,\" not folded silently into the generality conclusion."
+   }
+  ],
+  "adjudication": {
+   "run_queue": [
+    "RUN: execute the 12-arm harness (2b/9b/27b x base/it x self/other, 20 items each) and report per-model mean digit-token mass and self-minus-other expected-rating difference, with the 9b-it anchor check first"
+   ],
+   "author_queue": [
+    "AUTHOR: a pre-flight checkpoint-availability check for all 6 gemma-2 variants (2b/9b/27b x base/it) plus an explicit reporting rule that any arm failing to load or failing the 0.5 usability gate is reported as \"generality untested at that size,\" not folded silently into the generality conclusion."
+   ]
+  }
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL pending"
+}

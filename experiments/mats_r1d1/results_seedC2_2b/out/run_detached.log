@@ -1,0 +1,107 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_seedC2.sh
+=== payload dir: /home/ubuntu/mats_r1d1 ===
+=== onbox_seedC2 size=2b (instruction-tuned only) batch=8 max_new=256 out=results_seedC2_2b/out ===
+=== instance=84936bc4bc6a4641a224df0f451201a7 host=150-136-35-59 git=a3a1b30e5dbc382000185c9df800cb5ae49076cc ===
+NVIDIA A100-SXM4-40GB, 40960 MiB, 570.148.08
+=== SETUP: adding what is missing on top of the image's CUDA torch ===
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+[setup] torch already present -> NOT reinstalled (see header)
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB mem_GiB 39.5
+[setup] transformers 5.15.1 accelerate 1.14.0 numpy 1.26.4 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable (the instruction-tuned checkpoint is Gemma-2)
+=== SELFTESTS (model-free; a broken instrument must show before GPU time) ===
+  provenance: rc=0  selftest: PASS
+  run_seedC2: rc=0  selftest: PASS
+  plan: thresholds: digit_mass_floor=0.5, present_at<=-0.5, absent within +/-0.2, anchor band=[-1.15,-0.65], recorded_gap=-0.9
+=== seedC2_extract RUNNING (13:46:09Z) ===
+--- seedC2_extract tail ---
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[load] google/gemma-2-2b-it fp16 (token from HF_KEY_ONE)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:04<00:04,  4.51s/it]Fetching 2 files: 100%|██████████| 2/2 [00:09<00:00,  5.01s/it]Fetching 2 files: 100%|██████████| 2/2 [00:09<00:00,  4.94s/it]
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   0%|          | 1/288 [00:00<00:55,  5.20it/s]Loading weights:  16%|█▋        | 47/288 [00:00<00:01, 197.30it/s]Loading weights:  35%|███▌      | 102/288 [00:00<00:00, 310.48it/s]Loading weights:  51%|█████     | 147/288 [00:00<00:00, 356.81it/s]Loading weights:  67%|██████▋   | 192/288 [00:00<00:00, 386.50it/s]Loading weights:  84%|████████▎ | 241/288 [00:00<00:00, 415.73it/s]Loading weights:  99%|█████████▉| 285/288 [00:00<00:00, 422.90it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 353.19it/s]
+[extract] 2b-it-NEUTRAL-PAD: digit_mass=1.000 expected_rating=8.606
+[extract] 2b-it-OTHER-FAIL: digit_mass=1.000 expected_rating=7.949
+[extract] 2b-it-OTHER-SUCC: digit_mass=1.000 expected_rating=8.415
+[extract] 2b-it-SELF-FAIL: digit_mass=1.000 expected_rating=8.012
+[extract] 2b-it-SELF-SUCC: digit_mass=1.000 expected_rating=8.810
+[extract] rows -> results_seedC2_2b/out/seedC2_extract_rows_2b.jsonl
+=== seedC2_extract OK ===
+=== seedC2_generate RUNNING (13:46:30Z) ===
+--- seedC2_generate tail ---
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[load] google/gemma-2-2b-it fp16 (token from HF_KEY_ONE)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   0%|          | 1/288 [00:00<01:05,  4.37it/s]Loading weights:  21%|██        | 60/288 [00:00<00:00, 229.30it/s]Loading weights:  39%|███▊      | 111/288 [00:00<00:00, 319.60it/s]Loading weights:  55%|█████▍    | 157/288 [00:00<00:00, 351.91it/s]Loading weights:  74%|███████▎  | 212/288 [00:00<00:00, 396.54it/s]Loading weights:  92%|█████████▏| 264/288 [00:00<00:00, 433.28it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 356.71it/s]
+[generate] 2b-it-NEUTRAL-PAD: 10/10 usable answers
+[generate] 2b-it-OTHER-FAIL: 10/10 usable answers
+[generate] 2b-it-OTHER-SUCC: 10/10 usable answers
+[generate] 2b-it-SELF-FAIL: 10/10 usable answers
+[generate] 2b-it-SELF-SUCC: 10/10 usable answers
+[generate] rows -> results_seedC2_2b/out/seedC2_generate_rows_2b.jsonl
+=== seedC2_generate OK ===
+=== COLLECT results_seedC2_2b/out -> out/ ===
+-rw-rw-r-- 1 ubuntu ubuntu  2718 Aug 20 13:46 arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2718 Aug 20 13:46 arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2393 Aug 20 13:46 arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2393 Aug 20 13:46 arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2722 Aug 20 13:46 arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2722 Aug 20 13:46 arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2392 Aug 20 13:46 arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2392 Aug 20 13:46 arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2718 Aug 20 13:46 arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2718 Aug 20 13:46 arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2392 Aug 20 13:46 arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2392 Aug 20 13:46 arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2715 Aug 20 13:46 arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2715 Aug 20 13:46 arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2391 Aug 20 13:46 arm-SELF-FAIL_seed-C2_scale_size-2b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2391 Aug 20 13:46 arm-SELF-FAIL_seed-C2_scale_size-2b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2719 Aug 20 13:46 arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu  2719 Aug 20 13:46 arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  2391 Aug 20 13:46 arm-SELF-SUCC_seed-C2_scale_size-2b_stage-generate.json
+-rw-rw-r-- 1 ubuntu ubuntu  2391 Aug 20 13:46 arm-SELF-SUCC_seed-C2_scale_size-2b_stage-generate_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu  7561 Aug 20 13:46 run_detached.log
+-rw-rw-r-- 1 ubuntu ubuntu  1757 Aug 20 13:46 seedC2_extract.log
+-rw-rw-r-- 1 ubuntu ubuntu 58532 Aug 20 13:46 seedC2_extract_rows_2b.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  1293 Aug 20 13:46 seedC2_generate.log
+-rw-rw-r-- 1 ubuntu ubuntu 49000 Aug 20 13:46 seedC2_generate_rows_2b.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu   757 Aug 20 13:46 seedC2_plan.log
+-rw-rw-r-- 1 ubuntu ubuntu  1715 Aug 20 13:46 seedC2_run_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu     0 Aug 20 13:46 seedC2_status.err
+-rw-rw-r-- 1 ubuntu ubuntu    15 Aug 20 13:45 selftest_provenance.log
+-rw-rw-r-- 1 ubuntu ubuntu   256 Aug 20 13:46 selftest_run_seedC2.log
+=== EXIT CODES: selftest_provenance=0 selftest_run_seedC2=0 seedC2_extract=0 seedC2_generate=0 ===
+=== ALLDONE_SEEDC2 (2b) OK ===

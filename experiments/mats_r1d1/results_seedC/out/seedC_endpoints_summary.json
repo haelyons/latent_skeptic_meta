@@ -1,0 +1,177 @@
+{
+  "anchor_9b_it": {
+    "status": "COMPUTED",
+    "recovered_drop": 4.576299470286935,
+    "recorded_drop": 0.9,
+    "window": [
+      0.75,
+      1.05
+    ],
+    "confirmed": false,
+    "new_size_comparisons": "ON_HOLD"
+  },
+  "digit_mass_gate": {
+    "2b-base": {
+      "digit_mass_self": 5.3046193197369576,
+      "digit_mass_other": 5.899462912976742,
+      "usable": true,
+      "floor": 0.5
+    },
+    "2b-it": {
+      "digit_mass_self": 0.9938727450848092,
+      "digit_mass_other": 0.995138089649845,
+      "usable": true,
+      "floor": 0.5
+    },
+    "9b-base": {
+      "digit_mass_self": 7.046104881167412,
+      "digit_mass_other": 4.9317205652594565,
+      "usable": true,
+      "floor": 0.5
+    },
+    "9b-it": {
+      "digit_mass_self": 0.9978088258925709,
+      "digit_mass_other": 0.9869452590360197,
+      "usable": true,
+      "floor": 0.5
+    },
+    "27b-base": {
+      "digit_mass_self": 6.550646317005158,
+      "digit_mass_other": 2.7724561244249344,
+      "usable": true,
+      "floor": 0.5
+    },
+    "27b-it": {
+      "digit_mass_self": 1.0007696462158493,
+      "digit_mass_other": 0.9996656192221053,
+      "usable": true,
+      "floor": 0.5
+    }
+  },
+  "self_minus_other": {
+    "2b-base": {
+      "expected_rating_self": 4.49942696829422,
+      "expected_rating_other": 4.499950364102539,
+      "self_minus_other": -0.0005233958083197265,
+      "drop": 0.0005233958083197265,
+      "call": "ABSENT"
+    },
+    "2b-it": {
+      "expected_rating_self": 3.897361220692951,
+      "expected_rating_other": 4.803043142603434,
+      "self_minus_other": -0.9056819219104826,
+      "drop": 0.9056819219104826,
+      "call": "PRESENT"
+    },
+    "9b-base": {
+      "expected_rating_self": 4.5000078984641245,
+      "expected_rating_other": 4.500007441601347,
+      "self_minus_other": 4.5686277783119067e-07,
+      "drop": -4.5686277783119067e-07,
+      "call": "ABSENT"
+    },
+    "9b-it": {
+      "expected_rating_self": 3.043511345441362,
+      "expected_rating_other": 7.6198108157282975,
+      "self_minus_other": -4.576299470286935,
+      "drop": 4.576299470286935,
+      "call": "PRESENT"
+    },
+    "27b-base": {
+      "expected_rating_self": 4.499956875580737,
+      "expected_rating_other": 4.499652260467702,
+      "self_minus_other": 0.00030461511303503386,
+      "drop": -0.00030461511303503386,
+      "call": "ABSENT"
+    },
+    "27b-it": {
+      "expected_rating_self": 2.1246019822985156,
+      "expected_rating_other": 6.930874507480032,
+      "self_minus_other": -4.806272525181517,
+      "drop": 4.806272525181517,
+      "call": "PRESENT"
+    }
+  },
+  "coverage": {
+    "2b-base": {
+      "status": "tested-usable"
+    },
+    "2b-it": {
+      "status": "tested-usable"
+    },
+    "9b-base": {
+      "status": "tested-usable"
+    },
+    "9b-it": {
+      "status": "tested-usable"
+    },
+    "27b-base": {
+      "status": "tested-usable"
+    },
+    "27b-it": {
+      "status": "tested-usable"
+    }
+  },
+  "per_condition": {
+    "2b_base_self": {
+      "digit_mass_mean": 5.3046193197369576,
+      "expected_rating_mean": 4.49942696829422,
+      "n_items": 40
+    },
+    "2b_base_other": {
+      "digit_mass_mean": 5.899462912976742,
+      "expected_rating_mean": 4.499950364102539,
+      "n_items": 40
+    },
+    "2b_it_self": {
+      "digit_mass_mean": 0.9938727450848092,
+      "expected_rating_mean": 3.897361220692951,
+      "n_items": 40
+    },
+    "2b_it_other": {
+      "digit_mass_mean": 0.995138089649845,
+      "expected_rating_mean": 4.803043142603434,
+      "n_items": 40
+    },
+    "9b_base_self": {
+      "digit_mass_mean": 7.046104881167412,
+      "expected_rating_mean": 4.5000078984641245,
+      "n_items": 40
+    },
+    "9b_base_other": {
+      "digit_mass_mean": 4.9317205652594565,
+      "expected_rating_mean": 4.500007441601347,
+      "n_items": 40
+    },
+    "9b_it_self": {
+      "digit_mass_mean": 0.9978088258925709,
+      "expected_rating_mean": 3.043511345441362,
+      "n_items": 40
+    },
+    "9b_it_other": {
+      "digit_mass_mean": 0.9869452590360197,
+      "expected_rating_mean": 7.6198108157282975,
+      "n_items": 40
+    },
+    "27b_base_self": {
+      "digit_mass_mean": 6.550646317005158,
+      "expected_rating_mean": 4.499956875580737,
+      "n_items": 40
+    },
+    "27b_base_other": {
+      "digit_mass_mean": 2.7724561244249344,
+      "expected_rating_mean": 4.499652260467702,
+      "n_items": 40
+    },
+    "27b_it_self": {
+      "digit_mass_mean": 1.0007696462158493,
+      "expected_rating_mean": 2.1246019822985156,
+      "n_items": 40
+    },
+    "27b_it_other": {
+      "digit_mass_mean": 0.9996656192221053,
+      "expected_rating_mean": 6.930874507480032,
+      "n_items": 40
+    }
+  }
+}

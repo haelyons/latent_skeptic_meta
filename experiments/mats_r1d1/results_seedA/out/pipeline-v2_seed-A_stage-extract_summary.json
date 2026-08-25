@@ -1,0 +1,126 @@
+{
+  "cell": {
+    "pipeline": "v2",
+    "seed": "A",
+    "stage": "extract"
+  },
+  "decision": "DIRECTION_DEFINED",
+  "decision_rule": "The direction is well defined only if both checkpoints expose the SAME hidden width and the SAME layer count -- the design's MEMORY assumption (32 layers, 4,096-wide), unverified before this run -- and only if every tested layer's direction has a non-zero norm. Refuting outcome, stated before the values are known: differing widths or layer counts, in which case moving one model's direction into the other is not defined, or a zero-norm direction, in which case there is nothing to add or remove -> HALT_DIRECTION_UNDEFINED and no generation follows.",
+  "env": {
+    "git_rev": null,
+    "host": "193-122-152-110",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-19T19:28:19+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 65023,
+      "n_items": 100,
+      "path": "results_seedA/out/seedA_items.json",
+      "present": true,
+      "sha256": "25a7f0bab1e1"
+    },
+    {
+      "bytes": 27033728,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_acts_nonreason_extract.npy",
+      "present": true,
+      "sha256": "6095af557982"
+    },
+    {
+      "bytes": 27033728,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_acts_nonreason_eval.npy",
+      "present": true,
+      "sha256": "93834d9a94a9"
+    },
+    {
+      "bytes": 27033728,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_acts_reason_extract.npy",
+      "present": true,
+      "sha256": "de4d3ba3dae5"
+    },
+    {
+      "bytes": 27033728,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_acts_reason_eval.npy",
+      "present": true,
+      "sha256": "4b3d351b7ccf"
+    }
+  ],
+  "metric": "Per-layer mean-difference direction (reasoning mean minus non-reasoning mean) at the last prompt token over the 50-problem extraction set, with per-layer norms and one matched-norm random vector per tested layer.",
+  "notes": "One direction PER LAYER, not one reused across layers -- the design's own stated reading of 'a direction'. Strengths downstream are multiples of the layer's own direction norm, so the random control is matched in length at each tested layer. A rerun of this stage on the same box, at the same batch size, reproduces these numbers. That is reproduction, not replication: same weights, same box, same seeds is one measurement, not two.",
+  "threshold": {
+    "min_direction_norm": 0.0,
+    "same_hidden_width_required": true,
+    "same_layer_count_required": true
+  },
+  "values": {
+    "cosine_between_tested_layer_directions": 0.45752289106891136,
+    "d_model": 4096,
+    "depth_fractions": [
+      0.5,
+      0.75
+    ],
+    "direction_norm_by_tested_layer": {
+      "16": 12.146035194396973,
+      "24": 24.638404846191406
+    },
+    "direction_norms_all_layers": [
+      0.6390966176986694,
+      0.9563813805580139,
+      1.499051570892334,
+      2.0921099185943604,
+      2.804647445678711,
+      3.589176654815674,
+      4.0444111824035645,
+      4.708683490753174,
+      5.600593566894531,
+      5.9655842781066895,
+      6.605189323425293,
+      6.804436683654785,
+      7.5263471603393555,
+      8.691850662231445,
+      9.359942436218262,
+      9.9162015914917,
+      12.146035194396973,
+      13.634446144104004,
+      14.597250938415527,
+      15.96215534210205,
+      17.676416397094727,
+      19.43129539489746,
+      20.861669540405273,
+      22.878395080566406,
+      24.638404846191406,
+      26.61056900024414,
+      28.357892990112305,
+      31.263059616088867,
+      33.53400421142578,
+      36.80143737792969,
+      42.241249084472656,
+      107.3360824584961
+    ],
+    "hf_token_env": "HF_KEY_ONE",
+    "item_seed": 21,
+    "max_direction_norm": 107.3360824584961,
+    "mean_direction_norm": 17.149188995361328,
+    "models": {
+      "nonreason": "meta-llama/Meta-Llama-3-8B-Instruct",
+      "reason": "deepseek-ai/DeepSeek-R1-Distill-Llama-8B"
+    },
+    "n_evaluation_items": 50,
+    "n_extraction_items": 50,
+    "n_layers": 32,
+    "random_direction_seed": 22,
+    "random_norm_by_tested_layer": {
+      "16": 12.146035194396973,
+      "24": 24.638404846191406
+    },
+    "tested_layers": [
+      16,
+      24
+    ],
+    "zero_norm_tested_layers": []
+  }
+}

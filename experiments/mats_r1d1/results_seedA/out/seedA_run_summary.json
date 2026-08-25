@@ -1,0 +1,34 @@
+{
+  "runner": "onbox_seedA.sh",
+  "seed": "A",
+  "pipeline": "v2",
+  "design_record": "records/seedA_v2_design_diff_triage.json",
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedA": "0",
+    "seedA_extract": "0",
+    "seedA_generate": "0",
+    "seedA_endpoints": "0"
+  },
+  "any_failed": false,
+  "n_provenance_records": 8,
+  "decisions": {
+    "endpoint-1_pipeline-v2_seed-A_stage-endpoints": "REFUTED",
+    "endpoint-2_pipeline-v2_seed-A_stage-endpoints": "REFUTED",
+    "endpoint-3_pipeline-v2_seed-A_stage-endpoints": "REFUTED",
+    "endpoint-4_pipeline-v2_seed-A_stage-endpoints": "REFUTED",
+    "endpoint-5_pipeline-v2_seed-A_stage-endpoints": "NOT_APPLICABLE_NO_CONDITION_CALLED_ENHANCED",
+    "pipeline-v2_role-nonreason_seed-A_stage-generate": "ROWS_COMPLETE",
+    "pipeline-v2_role-reason_seed-A_stage-generate": "ROWS_COMPLETE",
+    "pipeline-v2_seed-A_stage-extract": "DIRECTION_DEFINED"
+  },
+  "generation_rows": {
+    "seedA_generations_nonreason.jsonl": 1800,
+    "seedA_generations_reason.jsonl": 2600
+  },
+  "rows_total": 4400,
+  "batch_size": "16",
+  "instance_id": "c54d8f6f85b74a049a1db570e7167af7",
+  "git_commit": "e40354d5fc4daf0eab688ef45e7545067b965cd6",
+  "note": "A rerun of this run on the same box at the same batch size reproduces these numbers. That is reproduction, not replication."
+}

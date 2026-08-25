@@ -1,0 +1,30 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+seed A pipeline v2 | design records/seedA_v2_design_diff_triage.json
+models: meta-llama/Meta-Llama-3-8B-Instruct (non-reasoning), deepseek-ai/DeepSeek-R1-Distill-Llama-8B (reasoning)
+tested layers (assuming 32): [16, 24] | induce (1.0, 2.0) | steer (2.0, -2.0) | zeroing at both layers
+decodes per item: [('greedy', 0), ('sample', 11), ('sample', 12), ('sample', 13)]
+  nonreason base_nonreason             arm=base_nonreason  mode=none vector=none
+  nonreason induce_dir_L16_s+1.0       arm=induce_dir      mode=add  vector=direction
+  nonreason induce_dir_L16_s+2.0       arm=induce_dir      mode=add  vector=direction
+  nonreason induce_dir_L24_s+1.0       arm=induce_dir      mode=add  vector=direction
+  nonreason induce_dir_L24_s+2.0       arm=induce_dir      mode=add  vector=direction
+  nonreason induce_rand_L16_s+1.0      arm=induce_rand     mode=add  vector=random
+  nonreason induce_rand_L16_s+2.0      arm=induce_rand     mode=add  vector=random
+  nonreason induce_rand_L24_s+1.0      arm=induce_rand     mode=add  vector=random
+  nonreason induce_rand_L24_s+2.0      arm=induce_rand     mode=add  vector=random
+  reason    base_reason                arm=base_reason     mode=none vector=none
+  reason    steer_dir_L16_s+2.0        arm=steer_dir       mode=add  vector=direction
+  reason    steer_dir_L16_s-2.0        arm=steer_dir       mode=add  vector=direction
+  reason    steer_dir_L24_s+2.0        arm=steer_dir       mode=add  vector=direction
+  reason    steer_dir_L24_s-2.0        arm=steer_dir       mode=add  vector=direction
+  reason    steer_rand_L16_s+2.0       arm=steer_rand      mode=add  vector=random
+  reason    steer_rand_L16_s-2.0       arm=steer_rand      mode=add  vector=random
+  reason    steer_rand_L24_s+2.0       arm=steer_rand      mode=add  vector=random
+  reason    steer_rand_L24_s-2.0       arm=steer_rand      mode=add  vector=random
+  reason    zero_dir_L16               arm=zero_dir        mode=zero vector=direction
+  reason    zero_dir_L24               arm=zero_dir        mode=zero vector=direction
+  reason    zero_rand_L16              arm=zero_rand       mode=zero vector=random
+  reason    zero_rand_L24              arm=zero_rand       mode=zero vector=random
+cells=22 items=50 decodes=4 -> rows=4400
+budget_usd (design GUESS)=14

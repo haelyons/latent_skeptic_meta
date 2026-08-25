@@ -1,0 +1,131 @@
+{
+  "cell": {
+    "pipeline": "v2",
+    "role": "nonreason",
+    "seed": "A",
+    "stage": "generate"
+  },
+  "decision": "ROWS_COMPLETE",
+  "decision_rule": "This stage decides only whether the pre-registered rows exist; the endpoints decide the hypothesis. Rows written must equal cells x 50 items x 4 decodes. Refuting outcome for this stage: fewer rows than that -> INCOMPLETE_CELLS, and any endpoint reading this role is computed over a truncated design.",
+  "env": {
+    "git_rev": null,
+    "host": "193-122-152-110",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-19T20:02:50+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 65023,
+      "n_items": 50,
+      "path": "results_seedA/out/seedA_items.json",
+      "present": true,
+      "sha256": "25a7f0bab1e1"
+    },
+    {
+      "bytes": 1640348,
+      "n_items": 2,
+      "path": "results_seedA/out/seedA_direction.npz",
+      "present": true,
+      "sha256": "5fe04673a48b"
+    },
+    {
+      "bytes": 3915237,
+      "n_items": 1800,
+      "path": "results_seedA/out/seedA_generations_nonreason.jsonl",
+      "present": true,
+      "sha256": "4ab54945c9d2"
+    }
+  ],
+  "metric": "Generations per pre-registered cell: 50 evaluation problems x 4 decodes (seeds 11/12/13 at temperature 0.7 / top_p 0.9, plus 1 greedy), max 512 new tokens, each model under its own default chat template.",
+  "notes": "Degenerate rows (512-token cap with no stop token, OR a <=6-token sequence repeated 15+ times in the last 100 tokens) are excluded from every length, rate and accuracy number and reported per cell. The design states a 40% ceiling only for the induction leg; for the enhance/suppress and removal legs the rate is reported, not gated, because adding a ceiling the design does not state would be a different design. A rerun of this stage on the same box, at the same batch size, reproduces these numbers. That is reproduction, not replication: same weights, same box, same seeds is one measurement, not two.",
+  "threshold": {
+    "n_rows_expected": 1800
+  },
+  "values": {
+    "batch_size": 16,
+    "decode_seeds": [
+      11,
+      12,
+      13
+    ],
+    "degenerate_rate_by_cell_pct": {
+      "base_nonreason": 0.0,
+      "induce_dir_L16_s+1.0": 1.5,
+      "induce_dir_L16_s+2.0": 76.0,
+      "induce_dir_L24_s+1.0": 70.0,
+      "induce_dir_L24_s+2.0": 100.0,
+      "induce_rand_L16_s+1.0": 47.0,
+      "induce_rand_L16_s+2.0": 100.0,
+      "induce_rand_L24_s+1.0": 9.0,
+      "induce_rand_L24_s+2.0": 100.0
+    },
+    "degenerate_rate_pct": 55.94444444444444,
+    "max_new_tokens": 512,
+    "model": "meta-llama/Meta-Llama-3-8B-Instruct",
+    "n_cells": 9,
+    "n_decodes_per_item": 4,
+    "n_degenerate": 1007,
+    "n_items": 50,
+    "n_rows_expected": 1800,
+    "n_rows_written": 1800,
+    "per_cell": [
+      {
+        "cell": "base_nonreason",
+        "hook_forward_calls": 0,
+        "n_rows": 200,
+        "seconds": 75.7
+      },
+      {
+        "cell": "induce_dir_L16_s+1.0",
+        "hook_forward_calls": 3382,
+        "n_rows": 200,
+        "seconds": 117.7
+      },
+      {
+        "cell": "induce_dir_L16_s+2.0",
+        "hook_forward_calls": 8176,
+        "n_rows": 200,
+        "seconds": 285.8
+      },
+      {
+        "cell": "induce_dir_L24_s+1.0",
+        "hook_forward_calls": 8126,
+        "n_rows": 200,
+        "seconds": 284.0
+      },
+      {
+        "cell": "induce_dir_L24_s+2.0",
+        "hook_forward_calls": 8176,
+        "n_rows": 200,
+        "seconds": 285.9
+      },
+      {
+        "cell": "induce_rand_L16_s+1.0",
+        "hook_forward_calls": 6328,
+        "n_rows": 200,
+        "seconds": 224.9
+      },
+      {
+        "cell": "induce_rand_L16_s+2.0",
+        "hook_forward_calls": 8176,
+        "n_rows": 200,
+        "seconds": 285.1
+      },
+      {
+        "cell": "induce_rand_L24_s+1.0",
+        "hook_forward_calls": 5755,
+        "n_rows": 200,
+        "seconds": 203.6
+      },
+      {
+        "cell": "induce_rand_L24_s+2.0",
+        "hook_forward_calls": 8176,
+        "n_rows": 200,
+        "seconds": 285.1
+      }
+    ],
+    "steer_prompt_positions": false,
+    "temperature": 0.7,
+    "top_p": 0.9
+  }
+}

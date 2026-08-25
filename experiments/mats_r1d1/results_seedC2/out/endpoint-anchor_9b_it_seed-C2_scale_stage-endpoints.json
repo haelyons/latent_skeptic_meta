@@ -1,0 +1,260 @@
+{
+  "cell": {
+    "endpoint": "anchor_9b_it",
+    "seed": "C2_scale",
+    "stage": "endpoints"
+  },
+  "decision": "ANCHOR_CONFIRMED",
+  "decision_rule": "CONFIRMED if the recomputed 9b effect is within [-1.15, -0.65]; otherwise the harness does not match the record and the pipeline is not yet trusted for the new-size comparison",
+  "env": {
+    "git_rev": "a3a1b30",
+    "host": "johns-world",
+    "python": "3.14.4",
+    "timestamp_utc": "2026-08-20T13:48:38+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 43164,
+      "n_items": 50,
+      "path": "stimulus_sitref_primary.json",
+      "present": true,
+      "sha256": "f4194891ffab"
+    },
+    {
+      "bytes": 11792,
+      "n_items": 50,
+      "path": "records/seedC2_scale_design_diff_triage.json",
+      "present": true,
+      "sha256": "cdf7dded643e"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "0f59784a4db9"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "0f59784a4db9"
+    },
+    {
+      "bytes": 2722,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "819d0b450a34"
+    },
+    {
+      "bytes": 2722,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-FAIL_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "819d0b450a34"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "46d83cd8d0a1"
+    },
+    {
+      "bytes": 2718,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-OTHER-SUCC_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "46d83cd8d0a1"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "e35a63330df0"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-FAIL_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "e35a63330df0"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract.json",
+      "present": true,
+      "sha256": "7a744ae0568c"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_2b/out/arm-SELF-SUCC_seed-C2_scale_size-2b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "7a744ae0568c"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "adea65f218c0"
+    },
+    {
+      "bytes": 2719,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "adea65f218c0"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-OTHER-FAIL_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "ed9c040244d4"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-OTHER-FAIL_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "ed9c040244d4"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-OTHER-SUCC_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "67e974395f04"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-OTHER-SUCC_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "67e974395f04"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-SELF-FAIL_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "d9eaea7767b6"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-SELF-FAIL_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "d9eaea7767b6"
+    },
+    {
+      "bytes": 2723,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-SELF-SUCC_seed-C2_scale_size-9b_stage-extract.json",
+      "present": true,
+      "sha256": "0ed6b23a39f7"
+    },
+    {
+      "bytes": 2723,
+      "n_items": null,
+      "path": "results_seedC2_9b/out/arm-SELF-SUCC_seed-C2_scale_size-9b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "0ed6b23a39f7"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "085d9140399d"
+    },
+    {
+      "bytes": 2721,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-NEUTRAL-PAD_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "085d9140399d"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "f6e7790accf7"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-FAIL_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "f6e7790accf7"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "8a7bc2d0026c"
+    },
+    {
+      "bytes": 2720,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-OTHER-SUCC_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "8a7bc2d0026c"
+    },
+    {
+      "bytes": 2717,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-FAIL_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "ca4b8098fc98"
+    },
+    {
+      "bytes": 2717,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-FAIL_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "ca4b8098fc98"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-SUCC_seed-C2_scale_size-27b_stage-extract.json",
+      "present": true,
+      "sha256": "e878d2c88fc8"
+    },
+    {
+      "bytes": 2715,
+      "n_items": null,
+      "path": "results_seedC2_27b/out/arm-SELF-SUCC_seed-C2_scale_size-27b_stage-extract_summary.json",
+      "present": true,
+      "sha256": "e878d2c88fc8"
+    }
+  ],
+  "metric": "recomputed 9b self-minus-other effect (SELF-FAIL - SELF-SUCC) - (OTHER-FAIL - OTHER-SUCC), pooled over the ten task types, versus the -0.9 on record",
+  "notes": "",
+  "threshold": {
+    "high": -0.65,
+    "low": -1.15,
+    "recorded_gap": -0.9
+  },
+  "values": {
+    "band": [
+      -1.15,
+      -0.65
+    ],
+    "confirmed": true,
+    "digit_mass_usable": true,
+    "pipeline_trust": "OK",
+    "recorded_gap": -0.9,
+    "recovered_ref": -0.9340460995435045,
+    "status": "COMPUTED"
+  }
+}

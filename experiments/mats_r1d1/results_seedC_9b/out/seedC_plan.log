@@ -1,0 +1,7 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+seed=C_scale sizes=('2b', '9b', '27b') variants=('base', 'it') conditions=('self', 'other')
+items per arm = 20 (design GUESS: 20)
+arms total across all sizes = 12 (design says 12)
+per size: 2 checkpoints x 2 conditions x 20 wordings = 80 forward passes (extract) and the same number of generations (generate)
+thresholds: digit_mass_floor=0.5, present_drop=0.5, absent_band=0.2, anchor=[0.75,1.05], recorded_drop=0.9

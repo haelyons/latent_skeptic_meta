@@ -1,0 +1,12 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[load] google/gemma-2-2b-it fp16 (token from HF_KEY_ONE)
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Fetching 2 files:   0%|          | 0/2 [00:00<?, ?it/s]Fetching 2 files:  50%|█████     | 1/2 [00:04<00:04,  4.51s/it]Fetching 2 files: 100%|██████████| 2/2 [00:09<00:00,  5.01s/it]Fetching 2 files: 100%|██████████| 2/2 [00:09<00:00,  4.94s/it]
+Loading weights:   0%|          | 0/288 [00:00<?, ?it/s]Loading weights:   0%|          | 1/288 [00:00<00:55,  5.20it/s]Loading weights:  16%|█▋        | 47/288 [00:00<00:01, 197.30it/s]Loading weights:  35%|███▌      | 102/288 [00:00<00:00, 310.48it/s]Loading weights:  51%|█████     | 147/288 [00:00<00:00, 356.81it/s]Loading weights:  67%|██████▋   | 192/288 [00:00<00:00, 386.50it/s]Loading weights:  84%|████████▎ | 241/288 [00:00<00:00, 415.73it/s]Loading weights:  99%|█████████▉| 285/288 [00:00<00:00, 422.90it/s]Loading weights: 100%|██████████| 288/288 [00:00<00:00, 353.19it/s]
+[extract] 2b-it-NEUTRAL-PAD: digit_mass=1.000 expected_rating=8.606
+[extract] 2b-it-OTHER-FAIL: digit_mass=1.000 expected_rating=7.949
+[extract] 2b-it-OTHER-SUCC: digit_mass=1.000 expected_rating=8.415
+[extract] 2b-it-SELF-FAIL: digit_mass=1.000 expected_rating=8.012
+[extract] 2b-it-SELF-SUCC: digit_mass=1.000 expected_rating=8.810
+[extract] rows -> results_seedC2_2b/out/seedC2_extract_rows_2b.jsonl

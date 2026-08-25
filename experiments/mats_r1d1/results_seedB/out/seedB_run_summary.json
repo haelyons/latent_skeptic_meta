@@ -1,0 +1,24 @@
+{
+  "runner": "onbox_seedB.sh",
+  "seed": "B",
+  "pipeline": "v2.1",
+  "design_record": "records/seedB_v2_design_diff_triage.json",
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedB": "0",
+    "seedB_extract": "1",
+    "seedB_generate": "skipped",
+    "seedB_endpoints": "skipped"
+  },
+  "any_failed": true,
+  "n_provenance_records": 0,
+  "decisions": {},
+  "generation_rows": {},
+  "rows_total": 0,
+  "rows_expected_total": 2304,
+  "batch_size": "32",
+  "used_venv": true,
+  "instance_id": "75917959d0ec435aa249e44d7ebdec09",
+  "git_commit": "7938ad49025ae497cc54d56ab912d0897aae7db1",
+  "note": "A rerun of this run on the same box at the same batch size reproduces these numbers. That is reproduction, not replication."
+}

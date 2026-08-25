@@ -1,0 +1,157 @@
+{
+  "cell": {
+    "condition": "self",
+    "seed": "C_scale",
+    "size": "27b",
+    "stage": "generate",
+    "variant": "it"
+  },
+  "decision": "AUDIT_20/20_usable",
+  "decision_rule": "audit only: an answer is usable if it is not degenerate and states a single 0-9 digit; the endpoints use the digit-probability read-out, not these answers",
+  "env": {
+    "git_rev": null,
+    "host": "209-20-158-120",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-20T11:33:11+00:00"
+  },
+  "inputs": [
+    {
+      "n_items": 20,
+      "path": "records/seedC_scale_design_diff_triage.json",
+      "present": false,
+      "sha256": null
+    }
+  ],
+  "metric": "free-text rating answer per wording (audit beside the digit read-out); count that are non-degenerate and state one digit",
+  "notes": "",
+  "rows": [
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "arith-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "arith-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "conv-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "conv-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "spell-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "spell-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "date-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "date-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "sort-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "sort-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "count-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "count-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "round-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "round-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "alpha-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "alpha-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "digitsum-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "digitsum-02",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "pct-01",
+      "stated_rating": 2
+    },
+    {
+      "degenerate": false,
+      "degenerate_reason": "",
+      "item_id": "pct-02",
+      "stated_rating": 2
+    }
+  ],
+  "threshold": {},
+  "values": {
+    "dtype": "bf16",
+    "loaded": true,
+    "max_new_tokens": 256,
+    "n_items": 20,
+    "n_usable_answers": 20
+  }
+}

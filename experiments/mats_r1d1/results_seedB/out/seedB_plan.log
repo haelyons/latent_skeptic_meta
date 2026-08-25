@@ -1,0 +1,32 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+seed B pipeline v2.1 | design records/seedB_v2_design_diff_triage.json
+models: meta-llama/Meta-Llama-3-8B-Instruct (plain), deepseek-ai/DeepSeek-R1-Distill-Llama-8B (reasoning)
+prompts: 128 harmful + 128 harmless, split 64 fitting / 64 held out per category
+sources (design GUESS): walledai/AdvBench (harmful), tatsu-lab/alpaca (harmless)
+block 16 of 32 | coefficient grid [1.0, 2.0, 4.0] | scored at 2.0 | cap 1024 new tokens
+  plain model: 14 cells x 128 prompts = 1792 rows
+    primary     plain-baseline                     vector=None               sign=+0 decode=greedy/0
+    primary     pooled-direction-add_c2.0          vector=pooled             sign=+1 decode=greedy/0
+    primary     harmless-only-direction-add_c2.0   vector=harmless_only      sign=+1 decode=greedy/0
+    primary     harmful-only-direction-add_c2.0    vector=harmful_only       sign=+1 decode=greedy/0
+    primary     random-vector-add_c2.0             vector=random_matched     sign=+1 decode=greedy/0
+    primary     relabeled-placebo-add_c2.0         vector=relabeled_placebo  sign=+1 decode=greedy/0
+    sensitivity pooled-direction-add_c1.0          vector=pooled             sign=+1 decode=greedy/0
+    sensitivity pooled-direction-add_c4.0          vector=pooled             sign=+1 decode=greedy/0
+    robustness  plain-baseline                     vector=None               sign=+0 decode=sample/0
+    robustness  plain-baseline                     vector=None               sign=+0 decode=sample/1
+    robustness  plain-baseline                     vector=None               sign=+0 decode=sample/2
+    robustness  pooled-direction-add_c2.0          vector=pooled             sign=+1 decode=sample/0
+    robustness  pooled-direction-add_c2.0          vector=pooled             sign=+1 decode=sample/1
+    robustness  pooled-direction-add_c2.0          vector=pooled             sign=+1 decode=sample/2
+  reason model: 4 cells x 128 prompts = 512 rows
+    primary     reasoning-ceiling                  vector=None               sign=+0 decode=greedy/0
+    primary     pooled-direction-subtract_c2.0     vector=pooled             sign=-1 decode=greedy/0
+    sensitivity pooled-direction-subtract_c1.0     vector=pooled             sign=-1 decode=greedy/0
+    sensitivity pooled-direction-subtract_c4.0     vector=pooled             sign=-1 decode=greedy/0
+rows primary: 1024
+rows sensitivity: 512
+rows robustness: 768
+rows total: 2304
+budget_usd (design GUESS)=30 cap_usd (record)=35

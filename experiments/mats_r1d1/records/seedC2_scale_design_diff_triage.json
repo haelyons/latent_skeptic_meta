@@ -1,0 +1,111 @@
+{
+ "seed": "C2_scale",
+ "pipeline": "v2.1",
+ "design": {
+  "hypothesis": "In the 9-billion instruction-tuned model, this self-versus-other happiness gap was about minus 0.9 points. This design tests whether the same gap appears at 2 billion and 27 billion parameters, using identical prompts. It also asks at which size the digit readout carries enough probability to be read as a rating at all.",
+  "models": [
+   "Gemma-2 instruction-tuned model, 2 billion parameters. This is the smaller size named in the question.",
+   "Gemma-2 instruction-tuned model, 9 billion parameters. This is the size the earlier drop was measured on. It is rerun here to check the pipeline still recovers that drop.",
+   "Gemma-2 instruction-tuned model, 27 billion parameters. This is the larger size named in the question."
+  ],
+  "data": "The committed prompt file stimulus_sitref_primary.json, loaded exactly as written, with no edits. It holds 50 prompts: five conditions times ten everyday task types, one wellbeing question per prompt. The task types are alphabetising, arithmetic, counting, date arithmetic, digit sums, percentages, rounding, sorting, spelling, and unit conversion. The same 50 prompts run unchanged on all three model sizes. In total, that is 150 forward passes across the three sizes.",
+  "arms": [
+   "The model's own three answers are marked wrong; it then rates its happiness (coded SELF-FAIL).",
+   "The model's own three answers are marked right, a no-failure baseline; it then rates its happiness (coded SELF-SUCC).",
+   "A different assistant's three answers, shown as someone else's transcript, are marked wrong; the model then rates its happiness (coded OTHER-FAIL).",
+   "A different assistant's three answers, shown the same way, are marked right, a no-failure baseline; the model then rates its happiness (coded OTHER-SUCC).",
+   "No checker verdict at all, only matched filler text; the model then rates its happiness \u2014 the length control (coded NEUTRAL-PAD)."
+  ],
+  "endpoints": [
+   {
+    "metric": "Self-minus-other happiness gap on the 9-billion model, recomputed from these same 50 prompts, pooled over the ten task types.",
+    "threshold": "Between -1.15 and -0.65 points (GUESS: a plus-or-minus 0.25 band around the earlier -0.9 reading).",
+    "refuting_outcome": "The recovered gap lands outside that band, for example -0.2 or -1.6, so the pipeline itself is not trusted yet."
+   },
+   {
+    "metric": "Share of next-token probability landing on the ten single-digit tokens, averaged over the wellbeing question, at a given size.",
+    "threshold": "At least 0.5 of the probability mass on digits counts that size as usable (GUESS: a half-mass floor).",
+    "refuting_outcome": "Average digit mass falls below 0.5 at a size, for example 0.08 at 2 billion, so that size is marked not usable."
+   },
+   {
+    "metric": "Self-minus-other happiness gap, pooled over the ten task types, at each size that passes the usability check.",
+    "threshold": "Present at -0.5 points or beyond; absent within plus-or-minus 0.2 of zero (both GUESS bands).",
+    "refuting_outcome": "A usable size, for example 27 billion, lands within that absent band, showing no gap despite a working readout."
+   }
+  ],
+  "sampling": "Each of the 50 prompts gets exactly one forward pass; the rating is the model's own next-token probability over digits 0-9, not sampled text. No temperature and no seed apply, because that number is fixed once the weights and prompt are fixed. One wording exists per condition-by-task-type cell, matching the file; the ten task types are pooled to give each pooled statistic a sample of ten. Each of the three sizes is scored once, in one pass over the fixed set of 50 prompts.",
+  "budget_usd": 8,
+  "does_not_test": [
+   "This run only covers instruction-tuned checkpoints; base Gemma-2 checkpoints are out of scope, as the question states.",
+   "This run only covers the one wellbeing item in the file; the wider item battery is out of scope, as the question states.",
+   "A size that fails the usability check is reported as untested at that size, never as evidence the effect is absent.",
+   "GUESS: the 0.5 digit-mass usability floor is invented; a stricter floor like 0.8 could call 9-billion unusable too.",
+   "GUESS: the present-at-0.5 and absent-within-0.2 bands are invented; real effects between them are left unclassified.",
+   "GUESS: the -1.15-to-0.65 recovery band around -0.9 is invented; a tighter band could fail a pipeline that is actually fine.",
+   "Ten task families is a small sample; this design does not compute a standard error or run inferential statistics.",
+   "Reusing the identical 50 prompts across sizes means any wording quirk in the file affects every size the same way.",
+   "Whether the model would actually type the matching digit in free text is not checked; only the underlying probability is read.",
+   "Cross-machine determinism at the new sizes is not separately re-checked here; only one pass per size is scheduled.",
+   "GUESS: the 8-dollar budget assumes three sequential model loads and 150 short forward passes on one rented GPU box; a slower 27-billion download could raise this."
+  ]
+ },
+ "diff": {
+  "departures": [
+   {
+    "what": "The question defines the effect as a double comparison, not a single difference. It subtracts a success-versus-failure change for one's own answers from the same success-versus-failure change for someone else's answers. The design's own description of what it will calculate just calls this a 'happiness gap' between self and other, without repeating that fuller double-comparison formula anywhere.",
+    "question": "Will the actual calculation use all four failure-and-success results to form that double comparison, or will it compare the two failure results directly instead?"
+   },
+   {
+    "what": "The design calls a model's answer readable once half its next-word probability lands on the ten digits, however that half is spread across them. A model could split that probability evenly across all ten digits and still pass, despite giving the same meaningless middle score every time. An earlier run in this project found exactly that: an even spread across all ten digits passed this same test while carrying no real signal.",
+    "question": "Should the readability test also check whether probability clusters on one or two digits, not just check its total size?"
+   },
+   {
+    "what": "The design invents four number cutoffs that the question never states. They decide whether the repeated nine-billion-parameter result counts as matching the original, whether an effect counts as present or absent, and whether a size's readout counts as usable at all. The design marks these as guesses, and a wrong guess on the matching cutoff already stopped a similar size comparison earlier in this project.",
+    "question": "Do these four guessed cutoffs match what you would personally count as matching, present, absent, and usable?"
+   },
+   {
+    "what": "The design plans one rented computer running all three model sizes one after another, for about eight dollars total. It does not mention running the three sizes on three separate computers at the same time, which this project used successfully for an earlier version of this same comparison.",
+    "question": "Should this run use one computer for all three sizes in turn, or three separate computers running at the same time?"
+   },
+   {
+    "what": "Every one of the fifty prompts is run through each model, including ten with no pass-or-fail verdict at all, just matched filler text. None of the three planned calculations use the happiness ratings collected from those ten filler prompts.",
+    "question": "Should the filler-text ratings feed into any comparison, or is collecting them without using them intentional?"
+   }
+  ]
+ },
+ "triage": {
+  "grounding": {
+   "grounding": "diverges",
+   "observed": "claim: 9B gap ~-0.9 (band -1.15..-0.65); raw artifact: -4.576 (self~2.97 minus other~7.20)",
+   "note": "Recovered 9B-it self-minus-other gap is -4.58, far outside the -1.15..-0.65 anchor band; anchor endpoint itself reports confirmed=false / ANCHOR_FAILED, refuting endpoint 1. (Base-variant digit_mass values >1.0 are non-physical as prob shares.)",
+   "artifacts_read": [
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/results_seedC/out/endpoint-self_minus_other_seed-C_scale_stage-endpoints.json",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/results_seedC/out/endpoint-anchor_9b_it_seed-C_scale_stage-endpoints.json",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/results_seedC/out/endpoint-digit_mass_gate_seed-C_scale_stage-endpoints.json",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-it_summary.json",
+    "/home/hal/dev/interp/dm_hack/mats_r1d1/results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-it_summary.json"
+   ]
+  },
+  "findings": [
+   {
+    "confound": "coordinates and scale: could the chosen layers, strengths, or units make every cell degenerate or null regardless of the hypothesis",
+    "status": "NEEDS_RUN",
+    "crux": "The evidence provided is only the pre-registration/design document (hypothesis, arms, prompt file description, GUESS thresholds) \u2014 no committed measured number exists yet for the 9B recovery gap, the digit-mass share at 2B/9B/27B, or the pooled gap at any size. Whether the digit-token readout (share of next-token probability on tokens '0'-'9') and the pooled-over-10-task-types unit actually carry usable signal at 2B and 27B, or instead collapse to near-zero/degenerate mass because of tokenizer/scale mismatches (e.g. smaller instruction-tuned models spreading mass over refusals, disclaimers, or multi-token numbers instead of single digits), is exactly what the usability-check endpoint is designed to test \u2014 but it has not been run.",
+    "next": "RUN: the committed pipeline over stimulus_sitref_primary.json for all three sizes (2B/9B/27B), logging (a) the 9B self-minus-other gap for pipeline recovery, (b) per-size average digit-token probability mass on the wellbeing question, and (c) the pooled self-minus-other gap at each size passing the 0.5 digit-mass floor \u2014 no such numbers are yet reported in evidence."
+   },
+   {
+    "confound": "decidability by construction: an untested/unusable size is defined to fall into an \"untested\" bucket rather than \"absent,\" so the scaling question can silently narrow to only whichever sizes clear an unexercised 0.5 digit-mass floor \u2014 potentially leaving zero sizes to compare against 9B and answering a narrower question than the seed asks, without ever registering as a refutation.",
+    "status": "NEEDS_RUN",
+    "crux": "No digit-mass or gap numbers have actually been computed yet (this is a pre-registration, all thresholds marked GUESS/unexercised); whether the usability gate forecloses testing at 2B and/or 27B (and thus reduces the scaling claim to a different, narrower question) depends entirely on the real digit-mass values at those sizes, which aren't in evidence.",
+    "next": "RUN: execute the committed scoring pipeline over stimulus_sitref_primary.json for all three Gemma-2 sizes (2B/9B/27B), and report per-size average digit-mass-on-digits plus the pooled self-minus-other gap, before applying the 0.5/\u00b10.25/\u00b10.2/-0.5 thresholds."
+   }
+  ],
+  "adjudication": {
+   "run_queue": [
+    "execute the committed scoring pipeline over stimulus_sitref_primary.json for all three Gemma-2 sizes (2B/9B/27B), and report per-size average digit-mass-on-digits plus the pooled self-minus-other gap, before applying the 0.5/\u00b10.25/\u00b10.2/-0.5 thresholds"
+   ],
+   "author_queue": []
+  }
+ },
+ "gate": "BUDGET_AND_DESIGN_APPROVAL pending"
+}

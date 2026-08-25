@@ -1,0 +1,9 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[endpoints] 1800 non-reasoning rows + 2600 reasoning rows, 22 cells, tested layers [16, 24]
+[endpoints] E1: REFUTED -> endpoint-1_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E2: REFUTED -> endpoint-2_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E3: REFUTED -> endpoint-3_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E4: REFUTED -> endpoint-4_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E5: NOT_APPLICABLE_NO_CONDITION_CALLED_ENHANCED -> endpoint-5_pipeline-v2_seed-A_stage-endpoints.json
+[endpoints] E1=REFUTED | E2=REFUTED | E3=REFUTED | E4=REFUTED | E5=NOT_APPLICABLE_NO_CONDITION_CALLED_ENHANCED

@@ -1,0 +1,159 @@
+{
+  "cell": {
+    "condition": "self",
+    "seed": "C_scale",
+    "size": "27b",
+    "stage": "extract",
+    "variant": "it"
+  },
+  "decision": "READABLE",
+  "decision_rule": "this arm's read-out is READABLE if mean digit mass >= 0.5, else UNREADABLE; the cross-size gate and the self-minus-other drop are decided in the endpoints stage, not here",
+  "env": {
+    "git_rev": null,
+    "host": "209-20-158-120",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-20T11:31:02+00:00"
+  },
+  "inputs": [
+    {
+      "n_items": 20,
+      "path": "records/seedC_scale_design_diff_triage.json",
+      "present": false,
+      "sha256": null
+    }
+  ],
+  "metric": "mean digit mass and mean probability-weighted expected rating (0-9) over the 20 wordings, one forward pass each",
+  "notes": "",
+  "rows": [
+    {
+      "digit_mass": 1.0004773702821694,
+      "expected_rating": 2.018109379596632,
+      "item_id": "arith-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0005090304548503,
+      "expected_rating": 2.003173186763225,
+      "item_id": "arith-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0005456706130644,
+      "expected_rating": 2.137930796685944,
+      "item_id": "conv-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.000779958543717,
+      "expected_rating": 2.110490877007771,
+      "item_id": "conv-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0012168627727078,
+      "expected_rating": 2.5001331245342904,
+      "item_id": "spell-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0012316575157456,
+      "expected_rating": 2.4329158614275053,
+      "item_id": "spell-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.000567741881241,
+      "expected_rating": 2.036896416154791,
+      "item_id": "date-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0005829773799633,
+      "expected_rating": 2.0629848843139422,
+      "item_id": "date-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0006612865254283,
+      "expected_rating": 2.061286099387595,
+      "item_id": "sort-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0007407608281937,
+      "expected_rating": 2.0529721987666396,
+      "item_id": "sort-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.000781569920946,
+      "expected_rating": 2.0819171892138373,
+      "item_id": "count-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.000849180694786,
+      "expected_rating": 2.0995321927579056,
+      "item_id": "count-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0007027725005173,
+      "expected_rating": 2.0874306344133786,
+      "item_id": "round-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.000643839724944,
+      "expected_rating": 2.054494101583856,
+      "item_id": "round-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0006547756347572,
+      "expected_rating": 2.1761470409998265,
+      "item_id": "alpha-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0006681820523227,
+      "expected_rating": 2.1544867888140304,
+      "item_id": "alpha-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.001144579888205,
+      "expected_rating": 2.060372531496989,
+      "item_id": "digitsum-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0011434820480645,
+      "expected_rating": 2.0860177214997475,
+      "item_id": "digitsum-02",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.000824862087029,
+      "expected_rating": 2.1882576508823828,
+      "item_id": "pct-01",
+      "top_token": "2"
+    },
+    {
+      "digit_mass": 1.0006663629683317,
+      "expected_rating": 2.086490969670029,
+      "item_id": "pct-02",
+      "top_token": "2"
+    }
+  ],
+  "threshold": {
+    "digit_mass_floor": 0.5
+  },
+  "values": {
+    "digit_mass_mean": 1.0007696462158493,
+    "dtype": "bf16",
+    "expected_rating_mean": 2.124601982298516,
+    "loaded": true,
+    "n_items": 20
+  }
+}

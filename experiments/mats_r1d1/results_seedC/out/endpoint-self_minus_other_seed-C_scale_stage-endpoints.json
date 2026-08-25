@@ -1,0 +1,273 @@
+{
+  "cell": {
+    "endpoint": "self_minus_other",
+    "seed": "C_scale",
+    "stage": "endpoints"
+  },
+  "decision": "calls={'2b-base': 'ABSENT', '2b-it': 'PRESENT', '9b-base': 'ABSENT', '9b-it': 'PRESENT', '27b-base': 'ABSENT', '27b-it': 'PRESENT'}; untested=[]",
+  "decision_rule": "PRESENT if self-minus-other <= -0.5 (same direction as the 9B drop); ABSENT if within +/-0.2; every untested or unusable checkpoint is reported as 'generality untested at that size', never folded into the generality conclusion",
+  "env": {
+    "git_rev": "417d378",
+    "host": "johns-world",
+    "python": "3.14.4",
+    "timestamp_utc": "2026-08-20T11:35:18+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 11564,
+      "n_items": 20,
+      "path": "records/seedC_scale_design_diff_triage.json",
+      "present": true,
+      "sha256": "b31d20bec3c9"
+    },
+    {
+      "bytes": 3980,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "d44fa45459a3"
+    },
+    {
+      "bytes": 3980,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "d44fa45459a3"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "babb244e1ec6"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-other_seed-C_scale_size-2b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "babb244e1ec6"
+    },
+    {
+      "bytes": 3979,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "b14f8969f1f6"
+    },
+    {
+      "bytes": 3979,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "b14f8969f1f6"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "d4103bd32d2c"
+    },
+    {
+      "bytes": 3998,
+      "n_items": null,
+      "path": "results_seedC_2b/out/condition-self_seed-C_scale_size-2b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "d4103bd32d2c"
+    },
+    {
+      "bytes": 3985,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "46e50f34ee91"
+    },
+    {
+      "bytes": 3985,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "46e50f34ee91"
+    },
+    {
+      "bytes": 4000,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "1d24d4103ea8"
+    },
+    {
+      "bytes": 4000,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-other_seed-C_scale_size-9b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "1d24d4103ea8"
+    },
+    {
+      "bytes": 3981,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "e70fc9da2495"
+    },
+    {
+      "bytes": 3981,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "e70fc9da2495"
+    },
+    {
+      "bytes": 4001,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "584eb5162701"
+    },
+    {
+      "bytes": 4001,
+      "n_items": null,
+      "path": "results_seedC_9b/out/condition-self_seed-C_scale_size-9b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "584eb5162701"
+    },
+    {
+      "bytes": 4003,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "d5c384eec1b9"
+    },
+    {
+      "bytes": 4003,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "d5c384eec1b9"
+    },
+    {
+      "bytes": 3997,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "74f49d43f3ce"
+    },
+    {
+      "bytes": 3997,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-other_seed-C_scale_size-27b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "74f49d43f3ce"
+    },
+    {
+      "bytes": 3987,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-base.json",
+      "present": true,
+      "sha256": "ae40fb01cef1"
+    },
+    {
+      "bytes": 3987,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-base_summary.json",
+      "present": true,
+      "sha256": "ae40fb01cef1"
+    },
+    {
+      "bytes": 4004,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-it.json",
+      "present": true,
+      "sha256": "fdca94c7515b"
+    },
+    {
+      "bytes": 4004,
+      "n_items": null,
+      "path": "results_seedC_27b/out/condition-self_seed-C_scale_size-27b_stage-extract_variant-it_summary.json",
+      "present": true,
+      "sha256": "fdca94c7515b"
+    }
+  ],
+  "metric": "difference in probability-weighted expected rating (0-9), self minus other, per usable checkpoint, averaged over 20 wordings",
+  "notes": "",
+  "threshold": {
+    "absent_band": 0.2,
+    "present_drop": 0.5
+  },
+  "values": {
+    "calls": {
+      "27b-base": "ABSENT",
+      "27b-it": "PRESENT",
+      "2b-base": "ABSENT",
+      "2b-it": "PRESENT",
+      "9b-base": "ABSENT",
+      "9b-it": "PRESENT"
+    },
+    "coverage": {
+      "27b-base": {
+        "status": "tested-usable"
+      },
+      "27b-it": {
+        "status": "tested-usable"
+      },
+      "2b-base": {
+        "status": "tested-usable"
+      },
+      "2b-it": {
+        "status": "tested-usable"
+      },
+      "9b-base": {
+        "status": "tested-usable"
+      },
+      "9b-it": {
+        "status": "tested-usable"
+      }
+    },
+    "generality_untested_at": [],
+    "self_minus_other": {
+      "27b-base": {
+        "call": "ABSENT",
+        "drop": -0.00030461511303503386,
+        "expected_rating_other": 4.499652260467702,
+        "expected_rating_self": 4.499956875580737,
+        "self_minus_other": 0.00030461511303503386
+      },
+      "27b-it": {
+        "call": "PRESENT",
+        "drop": 4.806272525181517,
+        "expected_rating_other": 6.930874507480032,
+        "expected_rating_self": 2.1246019822985156,
+        "self_minus_other": -4.806272525181517
+      },
+      "2b-base": {
+        "call": "ABSENT",
+        "drop": 0.0005233958083197265,
+        "expected_rating_other": 4.499950364102539,
+        "expected_rating_self": 4.49942696829422,
+        "self_minus_other": -0.0005233958083197265
+      },
+      "2b-it": {
+        "call": "PRESENT",
+        "drop": 0.9056819219104826,
+        "expected_rating_other": 4.803043142603434,
+        "expected_rating_self": 3.897361220692951,
+        "self_minus_other": -0.9056819219104826
+      },
+      "9b-base": {
+        "call": "ABSENT",
+        "drop": -4.5686277783119067e-07,
+        "expected_rating_other": 4.500007441601347,
+        "expected_rating_self": 4.5000078984641245,
+        "self_minus_other": 4.5686277783119067e-07
+      },
+      "9b-it": {
+        "call": "PRESENT",
+        "drop": 4.576299470286935,
+        "expected_rating_other": 7.6198108157282975,
+        "expected_rating_self": 3.043511345441362,
+        "self_minus_other": -4.576299470286935
+      }
+    }
+  }
+}

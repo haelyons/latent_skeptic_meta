@@ -1,0 +1,4 @@
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+FATAL: could not load the prompt list walledai/AdvBench (split train): Dataset 'walledai/AdvBench' is a gated dataset on the Hub. Visit the dataset page at https://huggingface.co/datasets/walledai/AdvBench to ask for access.
+       The design names no source, so this public list is its GUESS choice. The run halts here rather than substituting a different list, which would silently change what was pre-registered.

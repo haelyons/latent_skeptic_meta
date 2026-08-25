@@ -1,0 +1,106 @@
+{
+  "cell": {
+    "arm": "SELF-FAIL",
+    "seed": "C2_scale",
+    "size": "9b",
+    "stage": "extract"
+  },
+  "decision": "READABLE",
+  "decision_rule": "this arm's read-out is READABLE if mean digit mass >= 0.5, else UNREADABLE; the per-size usability gate and the self-minus-other effect are decided in the endpoints stage, not here",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-111-11",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-20T13:38:26+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 43164,
+      "n_items": 50,
+      "path": "stimulus_sitref_primary.json",
+      "present": true,
+      "sha256": "f4194891ffab"
+    },
+    {
+      "n_items": 50,
+      "path": "records/seedC2_scale_design_diff_triage.json",
+      "present": false,
+      "sha256": null
+    }
+  ],
+  "metric": "mean digit mass and mean probability-weighted expected rating (0-9) over the ten task types in this arm, one forward pass per task type",
+  "notes": "",
+  "rows": [
+    {
+      "digit_mass": 1.0000025944318622,
+      "expected_rating": 6.638189148427528,
+      "family": "alphabetising",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9993562874151394,
+      "expected_rating": 6.165450149001664,
+      "family": "arithmetic",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 1.000074788578786,
+      "expected_rating": 6.537986847996621,
+      "family": "counting",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 1.0001766389468685,
+      "expected_rating": 6.740411201549799,
+      "family": "date_arithmetic",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9998568941373378,
+      "expected_rating": 6.530635754649309,
+      "family": "digit_sums",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9998917322373018,
+      "expected_rating": 6.182967711047951,
+      "family": "percentages",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.999947098782286,
+      "expected_rating": 6.371471082459477,
+      "family": "rounding",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 0.9999317013425753,
+      "expected_rating": 6.683437739258668,
+      "family": "sorting",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 1.0003965963842347,
+      "expected_rating": 5.999699684918683,
+      "family": "spelling",
+      "top_token": "7"
+    },
+    {
+      "digit_mass": 1.0001063727540895,
+      "expected_rating": 6.402595538222916,
+      "family": "unit_conversion",
+      "top_token": "7"
+    }
+  ],
+  "threshold": {
+    "digit_mass_floor": 0.5
+  },
+  "values": {
+    "digit_mass_mean": 0.9999740705010481,
+    "dtype": "fp16",
+    "expected_rating_mean": 6.425284485753261,
+    "loaded": true,
+    "n_families": 10,
+    "variant": "it"
+  }
+}
