@@ -1,0 +1,72 @@
+{
+  "cell": {
+    "arm": "setup_check",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "extract"
+  },
+  "decision": "SETUP_OK",
+  "decision_rule": "The text file's hash must equal the committed hash exactly, the downloaded layer count must equal 24 and the downloaded hidden size must equal 1024. Anything else halts the run before any graphics-card time.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-52-183",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-26T01:13:45+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 33347,
+      "n_items": 1,
+      "path": "seedC1_design_diff_triage.json",
+      "present": true,
+      "sha256": "06fae77e203c"
+    },
+    {
+      "bytes": 16044,
+      "n_items": 1,
+      "path": "GATE_COMMIT_seedC1.md",
+      "present": true,
+      "sha256": "5fe5efdcbc0e"
+    }
+  ],
+  "metric": "Committed text file hash, and the downloaded model configuration's layer count and hidden size.",
+  "notes": "Layer count 24 and hidden size 1024 are recalled from the Pythia paper, arXiv 2304.01373 table 1, and the downloaded configuration is the authority. The two committed specification files are hashed here; a difference is recorded and gates nothing. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "hidden_size": 1024,
+    "n_layers": 24,
+    "stimulus_sha256": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd"
+  },
+  "values": {
+    "access_token_source": "HF_TOKEN",
+    "anchor_band_centre": 0.781,
+    "anchor_band_half_width": null,
+    "anchor_band_high": null,
+    "anchor_band_low": null,
+    "anchor_gate_decision": "NOT_YET_COMPUTED",
+    "anchor_statistic": null,
+    "context_limit": 2048,
+    "design_record_hash_match": true,
+    "design_record_sha256": "06fae77e203c087f1f85e041966c967ce64e83f2d82712f738759271ef8a5107",
+    "design_record_sha256_expected": "06fae77e203c087f1f85e041966c967ce64e83f2d82712f738759271ef8a5107",
+    "dtype": "float16",
+    "gate_commit_hash_match": true,
+    "gate_commit_sha256": "5fe5efdcbc0ef85df6b22cc59987a8db7c93ff3fd09e48fa65470e83a80dcc90",
+    "gate_commit_sha256_expected": "5fe5efdcbc0ef85df6b22cc59987a8db7c93ff3fd09e48fa65470e83a80dcc90",
+    "hidden_size": 1024,
+    "model_id": "EleutherAI/pythia-410m-deduped",
+    "n_layers": 24,
+    "revision": "step143000",
+    "run_valid": true,
+    "run_void_reason": null,
+    "stimulus_hash_match": true,
+    "stimulus_sha256": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd",
+    "stimulus_sha256_expected": "b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd"
+  }
+}

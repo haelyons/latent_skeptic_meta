@@ -1,0 +1,168 @@
+{
+  "cell": {
+    "arm": "main_layer_selection",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "RECORDED_NOT_GATED",
+  "decision_rule": "The layer with the best held-out fit, pooled over all nine wrap widths, is the main layer. Its location is recorded and never judged.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-52-181",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-26T01:27:53+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 33347,
+      "n_items": 1,
+      "path": "seedC1_design_diff_triage.json",
+      "present": true,
+      "sha256": "06fae77e203c"
+    },
+    {
+      "bytes": 16044,
+      "n_items": 1,
+      "path": "GATE_COMMIT_seedC1.md",
+      "present": true,
+      "sha256": "5fe5efdcbc0e"
+    },
+    {
+      "bytes": 3151874910,
+      "n_items": 25,
+      "path": "results_seedC1/work/group_sums.npz",
+      "present": true,
+      "sha256": "16196cdaf8b6"
+    }
+  ],
+  "metric": "Held-out fit quality of the calibrated ridge fit, pooled over all nine wrap widths, at every readout.",
+  "notes": "Readout 0 is the embedding output. Where the fit peaks is recorded and never judged, which the design says in those words. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "rows": [
+    {
+      "held_out_quality": 0.031916,
+      "readout": 0
+    },
+    {
+      "held_out_quality": 0.467589,
+      "readout": 1
+    },
+    {
+      "held_out_quality": 0.429932,
+      "readout": 2
+    },
+    {
+      "held_out_quality": 0.444533,
+      "readout": 3
+    },
+    {
+      "held_out_quality": 0.46456,
+      "readout": 4
+    },
+    {
+      "held_out_quality": 0.657823,
+      "readout": 5
+    },
+    {
+      "held_out_quality": 0.638848,
+      "readout": 6
+    },
+    {
+      "held_out_quality": 0.614725,
+      "readout": 7
+    },
+    {
+      "held_out_quality": 0.58885,
+      "readout": 8
+    },
+    {
+      "held_out_quality": 0.470525,
+      "readout": 9
+    },
+    {
+      "held_out_quality": 0.379515,
+      "readout": 10
+    },
+    {
+      "held_out_quality": 0.315864,
+      "readout": 11
+    },
+    {
+      "held_out_quality": 0.275734,
+      "readout": 12
+    },
+    {
+      "held_out_quality": 0.259843,
+      "readout": 13
+    },
+    {
+      "held_out_quality": 0.258705,
+      "readout": 14
+    },
+    {
+      "held_out_quality": 0.262101,
+      "readout": 15
+    },
+    {
+      "held_out_quality": 0.276101,
+      "readout": 16
+    },
+    {
+      "held_out_quality": 0.302693,
+      "readout": 17
+    },
+    {
+      "held_out_quality": 0.29958,
+      "readout": 18
+    },
+    {
+      "held_out_quality": 0.276134,
+      "readout": 19
+    },
+    {
+      "held_out_quality": 0.290015,
+      "readout": 20
+    },
+    {
+      "held_out_quality": 0.26292,
+      "readout": 21
+    },
+    {
+      "held_out_quality": 0.268912,
+      "readout": 22
+    },
+    {
+      "held_out_quality": 0.282885,
+      "readout": 23
+    },
+    {
+      "held_out_quality": 0.261712,
+      "readout": 24
+    }
+  ],
+  "threshold": {},
+  "values": {
+    "anchor_band_centre": 0.781,
+    "anchor_band_half_width": 0.013605814767710833,
+    "anchor_band_high": 0.7946058147677109,
+    "anchor_band_low": 0.7673941852322892,
+    "anchor_gate_decision": "NOT_YET_COMPUTED",
+    "anchor_statistic": null,
+    "held_out_positions": 99692,
+    "main_layer": 5,
+    "main_layer_held_out_quality": 0.657823,
+    "n_readouts": 25,
+    "ridge_strength": 1000.0,
+    "ridge_strength_interior_on_grid": true,
+    "run_valid": true,
+    "run_void_reason": null,
+    "training_positions": 303701
+  }
+}

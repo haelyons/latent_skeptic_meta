@@ -1,0 +1,12 @@
+{
+  "anchor": {
+    "band_centre": 0.781,
+    "band_half_width": 0.013605814767710833,
+    "band_high": 0.7946058147677109,
+    "band_low": 0.7673941852322892,
+    "decision": "ANCHOR_OUT_OF_BAND",
+    "statistic": 0.85974
+  },
+  "run_valid": false,
+  "void_reason": "the anchor gate failed: held-out fit quality 0.859740 falls outside the measured band 0.767394 to 0.794606, so every result this run produces is an instrument fault and is not evidence about the model"
+}

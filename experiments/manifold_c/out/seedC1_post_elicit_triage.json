@@ -1,0 +1,296 @@
+{
+  "elicited": {
+    "questions": [
+      {
+        "changes": "This would mean the headline finding, that the wave's length grows with the tested width, may be produced by the measuring method rather than by anything in the network. No later width, however chosen, could then be trusted to tell a real wave from this same artifact.",
+        "if_true": "If a method always reports two full waves no matter the width or how position is counted, that outcome may come from the method itself. It could come from how the curve is straightened before searching, or from the few example pairs available at the largest gaps between positions.",
+        "question": "Why does the detected repeating pattern always land at exactly half the tested width, for every width and for both ways of counting position, with no exception?",
+        "where": "In the three character-based pattern files (widths 140, 200, 280) and the two working sub-word-count control files (widths 200, 280), the field recording how many full waves fit the tested width is 2 in every single case. Widths 140, 200, and 280 give wavelengths of 70, 100, and 140 characters; the sub-word versions give 100 and 140 characters again after conversion."
+      },
+      {
+        "changes": "This would mean the project does not yet understand why this checkpoint behaves as it does on this check. Any explanation offered for the failure needs to account for the wrong-direction miss, not just the miss itself.",
+        "if_true": "If the check fails high while every warning beforehand pointed to failing low, the reasoning used to anticipate trouble was wrong about which direction trouble would come from.",
+        "question": "Why did the gatekeeping check land far above its allowed range, when three past readings of the same kind of check (0.700601, 0.549000, 0.664024) all sat far below it?",
+        "where": "The gatekeeping check scored 0.859740, against an allowed range of 0.767394 to 0.794606. This sits in the file recording that check and in a second file listing past readings side by side with this one. The document written before the run predicted failure from the low side, citing those same past readings."
+      },
+      {
+        "changes": "This would mean the gatekeeping check could reject a run for reasons having nothing to do with the model being studied. The project's own written concern, that too narrow a range could do exactly this, would be confirmed rather than ruled out.",
+        "if_true": "If five independent re-checks show zero disagreement on which layer or strength to use, the range built from them is far tighter than ordinary variation between different sets of documents would produce.",
+        "question": "Why did five separate re-checks, meant to measure how much this check naturally varies, all pick the exact same brain layer and the exact same regularization strength?",
+        "where": "The calibration file lists five re-checks, one per row; all five picked layer 7 and strength 100.0. The same file flags the resulting allowed range as unusually narrow, below a limit the project had set for itself in advance."
+      },
+      {
+        "changes": "This would mean the layer every later test depends on rests on numbers that cannot be independently checked from what this run saved. Only the already-summed totals remain available to trust or question.",
+        "if_true": "If the raw lines behind six of the nine widths were never kept, nobody can check, line by line, whether the layer choice was computed correctly.",
+        "question": "Where are the line-by-line measurements for the six text-wrapping widths that fed into the single most consequential choice of this run, which brain layer to study?",
+        "where": "The file choosing which layer to study draws on documents wrapped at nine different widths. The per-line raw file provided alongside it only contains lines for three of those nine widths; the other six widths' lines are not present anywhere in this run's output."
+      },
+      {
+        "changes": "This would call into question whether the theory that motivated this whole redesign, built on a signal packed into one direction, still describes what is being measured now.",
+        "if_true": "If the same kind of signal now needs roughly a hundred to two hundred directions instead of one, its basic shape has changed enormously between the two runs.",
+        "question": "Why does the number of directions needed to capture this signal now come out around 93 to 196, when a closely related earlier run on the same question found just 1?",
+        "where": "The three pattern-detection files each record how many directions out of 1024 are needed to capture 95 percent of the signal's spread: 93, 141, and 196 for the three widths. A separate document describes the earlier related run finding this number to be 1, with a single direction carrying 95.3 percent."
+      },
+      {
+        "changes": "This would weaken the reasoning used elsewhere in the design: that a missing signal at long line lengths simply means it was never measurable there. Here it is measurable, then not, then measurable again.",
+        "if_true": "If detectability skips one range and then returns in a farther range, a simple story of the signal fading out with distance from the training documents does not fit.",
+        "question": "Why is this signal detectable for line lengths from 211 to 280 characters, not detectable for 176 to 210, yet nothing explains the gap between those two ranges?",
+        "where": "The file checking whether long line lengths are measurable at all lists eight ranges of line length; it marks the fourth-from-last range as not detected while marking the two ranges beyond it as detected."
+      },
+      {
+        "changes": "This would mean the pattern check's apparent strength cannot be treated as fully independent evidence, since the documents that picked the layer are the same ones grading it afterward.",
+        "if_true": "If the very same 12 documents both choose the layer and then judge whether that layer shows a pattern, the layer may look better than it would on genuinely fresh documents.",
+        "question": "Does picking the one brain layer to study by testing which layer fits best on the same 12 documents used afterward for the pattern check give that layer a hidden advantage?",
+        "where": "The design instructs that the layer be chosen by scoring fit directly on the 12 held-out documents; the resulting choice, layer 5, is then reused to run every later pattern check on those identical 12 documents."
+      },
+      {
+        "changes": "This would mean that field cannot be trusted as a complete list of data problems for this run or for any future run with a larger overrun of the same kind.",
+        "if_true": "If the field meant to flag missing or out-of-range data catches a shortfall but misses an overrun of the same kind, it is not catching every problem it is meant to catch.",
+        "question": "Why does one line-length overflow at width 140 get explicitly flagged as impossible to compute, while similar overflows at widths 200 and 280 pass with no flag at all?",
+        "where": "At width 140, the sub-word-count control file states plainly that no held-out document reaches the needed line length, so it cannot be computed. At widths 200 and 280, the same kind of file lists zero missing labels, even though the raw per-line file contains one line at width 200 and two lines at width 280 that run longer than the range fixed from training documents alone."
+      }
+    ]
+  },
+  "gatecheck": {
+    "answered": 15,
+    "unanswered": []
+  },
+  "qtriage": {
+    "authored": null,
+    "claims": [
+      {
+        "author_queue": [
+          "a control that isolates self-repair \u2014 rerun the same pattern-detection pipeline on activations collected with downstream self-repair suppressed (e.g. freeze/ablate the compensating downstream heads or use a direct-effect-only readout instead of the full residual stream) at the same widths (140/200/280 chars and sub-word 200/280), and check whether the wave count still locks to exactly 2; no such comparison exists in the current record.",
+          "a control that runs the same detection pipeline on synthetic/injected or null signals of known ground-truth periodicity (including wavelengths that are NOT exactly half the window width, pure noise/shuffled curves, and widths where a 2-cycle fit is geometrically awkward) to check whether the method can recover a non-2 wave count, or whether it always snaps to 2 regardless of true periodicity."
+        ],
+        "findings": [
+          {
+            "confound": "off-distribution ablation (method-forced periodicity: the wave-counting method may hard-code or default to finding exactly 2 full cycles regardless of the actual signal, e.g. via how the curve is detrended/windowed before FFT/autocorrelation, or from having only 2-3 usable position-pairs at the largest lags)",
+            "crux": "The committed evidence shows num_waves=2 in literally every one of the 5 recorded files (widths 140/200/280 char-based, and 200/280 sub-word), with zero exceptions and no file present where num_waves differs from 2. A method that always outputs exactly 2 full waves regardless of tested width is indistinguishable, from this data alone, from a real width-proportional wavelength \u2014 because \"wavelength = width/2\" is just a restatement of \"num_waves is pinned at 2.\" No committed file shows num_waves taking any other value (1, 3, non-integer, etc.) under any width, so there is no counter-example that would rule out a fixed-count artifact of the detrending/windowing step or of having too few position-pairs at large lags to resolve anything but the lowest-order (2-cycle) fit.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "downstream compensation (self-repair)",
+            "crux": "The committed evidence explains the \"always 2 full waves\" pattern entirely in terms of the detection/measurement pipeline (how the curve is detrended before searching, and sparse example pairs at large position gaps) \u2014 it says nothing about ablation, patching, or downstream layers compensating for an upstream intervention, which is what the self-repair confound requires. Self-repair is a mechanism about the network re-routing computation around a perturbed component; the recorded artifact (wave-count pinned at 2 across five independent width/counting configurations) is consistent with a curve-fitting or few-sample-pairs artifact, but no committed number ties it to compensatory downstream activity specifically.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "Selection bias: if the periodicity-detection method itself is biased toward reporting \"2 full waves\" regardless of the actual signal (e.g., because of how the curve is detrended/straightened before searching, or because only a couple of far-apart position pairs are available to fit a period at the largest widths), then wavelength = width/2 would be a mechanical output of the method, not a real growing wave in the network.",
+            "crux": "Across all five committed files (widths 140, 200, 280 char-based, and 200, 280 sub-word-count), the \"number of full waves fitting the tested width\" field is exactly 2 in every single case, with zero exceptions and zero variation, under two different position-counting conventions. That total invariance is exactly the fingerprint of a method that forces/prefers a 2-cycle fit rather than a method that measures a wavelength independently at each width and happens to always land on half \u2014 nothing in the committed evidence shows the detector was tested on a case where it was capable of returning something other than 2 (e.g., a synthetic signal with a known, non-half wavelength, or a width chosen to make 2-waves-exactly geometrically awkward).",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "Readout artifact: the wavelength-detection method may be structurally forced to always report exactly 2 full waves across the tested span, regardless of the actual autocorrelation structure of the network's representation.",
+            "crux": "The committed data shows the \"number of full waves fit\" field equals exactly 2 in all 5 recorded files (widths 140/200/280 character-based, and 200/280 sub-word-count), with zero exceptions, and both counting conventions. This is precisely the fingerprint the confound predicts: a method that is structurally locked to find 2 cycles (e.g., because of how the curve is detrended/normalized before peak-search, or because only 2 well-separated example pairs exist at the largest lags) will report wavelength = width/2 for any width fed to it, with the \"growing wavelength\" being nothing but width/2 arithmetic. No committed number shows n_waves taking any value other than 2, and no held-out or independently-parameterized detection method is on record giving a different, non-2 count for the same signals. Since every tested outcome (every width, every counting convention) is consistent with the confound and none falsifies it, this is EXPLAINS rather than RULED_OUT.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "regime specificity (method artifact producing constant wave-count regardless of true regime)",
+            "crux": "The \"number of full waves fit\" field is committed as exactly 2 in all five files (widths 140, 200, 280 char-based and 200, 280 sub-word), with zero exceptions across every width and both position-counting schemes. A measurement method that always locks onto exactly two half-periods regardless of the underlying data (e.g., due to detrending before search, or too few example pairs at large lags to resolve anything but the widest allowed period) would produce this exact invariant-count signature. Nothing in the committed evidence distinguishes \"wavelength truly equals half the tested width in the network\" from \"this particular period-detection method always outputs count=2 no matter what curve it is given.\"",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "construct validity \u2014 the \"number of full waves\" statistic may be a built-in constant of the detection method (e.g., a detrending/curve-fit or search bounded to always resolve two cycles across the tested span, or so few sample positions at large gaps that only a period of width/2 is expressible) rather than an independently measured property of the network's signal.",
+            "crux": "All five committed files (widths 140, 200, 280 char-based, and 200, 280 sub-word) report the same value, 2, for full waves fitting the tested width, with zero exceptions and across two different position-counting conventions. A statistic that never varies from 2 regardless of width or counting scheme is exactly what a method that mechanically forces a fixed cycle-count (rather than measuring one) would produce \u2014 the \"wavelength grows with width\" headline is then just width/2 restated, not evidence of an underlying periodic feature in the network.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "scale incomparability",
+            "crux": "The evidence itself states the \"number of full waves\" field equals exactly 2 in every single one of the 5 files (widths 140/200/280 char-based, 200/280 sub-word), with no exception across two different position-counting schemes. A method that is actually detecting a real, width-independent wavelength would be expected to report a varying wave count as tested width changes (since the underlying wavelength should be roughly fixed by the network's mechanism, not tied to the sampling window). Instead the count is pinned at 2 regardless of width or counting convention -- this is the exact signature of a detrending/curve-straightening step (or a periodogram search restricted to a couple of candidate frequencies at the largest available position-gaps) that structurally forces \"wavelength = width/2\" independent of any real oscillation in the data. No committed number here shows a case where the wave count differs from 2, or where the same signal is probed at a resolution/scale that would decouple wavelength from width -- so nothing in the evidence rules the artifact out.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "noise floor / method-forced periodicity: the \"number of full waves fitting the tested width\" field is fixed at exactly 2 in all 5 committed files spanning three widths (140/200/280) and two counting conventions (character vs. sub-word-count converted), yielding wavelengths of 70/100/140 (and again 100/140 for the sub-word controls). A method that always detects exactly two cycles regardless of window size (e.g. because of how the curve is detrended/straightened before searching, or because there are only a few example pairs available at the largest position-gaps, biasing the fit toward low-order cycles) would produce precisely this signature: wavelength = width/2 for every width, unconditionally.",
+            "crux": "The claim \"wavelength always equals exactly half the tested width, with no exception across widths and counting conventions\" and the confound's predicted signature (\"a method that always reports two full waves no matter the width\") are the same observation. The evidence cited is n_waves=2 in every one of the 5 files \u2014 there is no committed case where n_waves is 1, 3, or non-integer, no ablation varying the detrending/straightening step, and no test with more example pairs at the extreme gaps. Nothing in the committed data varies the suspected mechanism (detrending or sparse-pair fitting) independently of width, so there is no number that rules out the method itself always locking onto 2 cycles.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "Ceiling/floor effect: the wavelength-detection method itself always returns exactly 2 full waves fitting the tested width, independent of width or position-counting convention.",
+            "crux": "Across all 5 committed files (widths 140/200/280 character-based, and 200/280 sub-word-count), the \"full waves fitting the width\" field is identically 2, with no variation \u2014 this is precisely the signature a method with a fixed search/detrending structure (e.g., one that only ever resolves two cycles across the tested span) would produce, and no committed control (alternate detrending, alternate lag-search range, or a synthetic/shuffled input with known ground-truth wavelength) exists to show the method can report anything other than 2.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "single-case overfit \u2014 but manifests here as a method-artifact: the wave-counting procedure appears hard-wired (or effectively constrained) to always report exactly 2 full waves fitting the tested width, regardless of width or position-counting convention, which trivially yields wavelength = width/2 as a mathematical identity rather than a discovered property of the network.",
+            "crux": "The \"number of full waves fitting the tested width\" field is committed as exactly 2 in all five available cases (widths 140/200/280 character-based, and 200/280 sub-word-count), with zero exceptions across both ways of counting position. A detector that always locks onto 2 cycles necessarily produces wavelength = width/2 for any width fed to it \u2014 the claimed \"growth law\" is then just this constant re-expressed, not independent evidence the network's representation scales. No committed case breaks this constant-2 pattern to show the count can vary.",
+            "status": "EXPLAINS"
+          }
+        ],
+        "grounding": {
+          "artifacts_read": [
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/aperture-140_arm-pattern_vs_shuffle_endpoint-2_labelling-characters_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/aperture-200_arm-pattern_vs_shuffle_endpoint-2_labelling-characters_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/aperture-280_arm-pattern_vs_shuffle_endpoint-2_labelling-characters_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json"
+          ],
+          "grounding": "reproduces",
+          "note": "Headline reproduces exactly from /home/hal/.../out/results_seedC1/out/aperture-*_arm-{pattern_vs_shuffle,token_position_control}*.json; one wording slip in the evidence (token wavelengths convert to 115.28 and 157.74 chars, not 100/140 - those are the character-arm values), and all five files carry run_valid=false / ANCHOR_OUT_OF_BAND (anchor 0.85974 vs band 0.7673-0.7946), a140 token arm being TOKEN_CONTROL_NOT_COMPUTABLE.",
+          "observed": "cycles=2 in all 5 saved values blocks (char a140/a200/a280, token a200/a280), claim says 2 in every case. Wavelengths: chars 70.0/100.0/140.0 = exactly L/2 for L=140/200/280; tokens 33.5=67/2 and 45.5=91/2 profile-length tokens. observed_power_by_cycles[1] is the argmax in all five; profiles are near-monotone ramps, so peak sits at the lowest non-DC whole-cycle period, and rank=1 vs 200 shuffles each time."
+        },
+        "id": "q1",
+        "rejected_findings": [],
+        "run_queue": [
+          "rerun the wave-detection script with a width far outside {140,200,280} (e.g. 60 and 500) and/or with a randomized/shuffled control curve of the same length, and check whether num_waves still reports exactly 2 \u2014 if it does even on a shuffled/null curve, the invariant is the method's default, not the signal."
+        ],
+        "runner_results": null
+      },
+      {
+        "author_queue": [
+          "on-distribution ablation control on the same checkpoint/gatekeeping check (using the checkpoint's own activation statistics rather than the ablation vectors actually used) to see whether the score falls back within the predicted low-side failure range instead of scoring 0.859740",
+          "layer-wise or component-wise decomposition of the gatekeeping check's inputs on this checkpoint (direct vs. downstream-compensated contribution) to see whether late-layer components are overactive relative to the three prior readings, which would be needed before self-repair can be invoked to explain an above-range (not below-range) result.",
+          "pull the run manifest/log for this checkpoint's gatekeeping evaluation and count how many times the check was executed (or how many checkpoint/seed candidates were evaluated) before 0.859740 was the one written to the results file \u2014 a single logged attempt rules out selection bias, multiple attempts with only the max reported would confirm it as an artifact.",
+          "diff the readout/scoring/metric-computation config (formula, normalization, reference set, prompt template, aggregation, sign convention) logged for the current 0.859740 run against the configs logged for the three past readings (0.700601, 0.549000, 0.664024) to confirm the readout pipeline and scale were held constant across all four readings.",
+          "pull the regime/config metadata (checkpoint id, dataset split, seed, and any other run parameters) recorded alongside each of the four readings (0.700601, 0.549000, 0.664024, 0.859740) in the file that lists them side by side, and diff them to see whether the current reading was taken under a materially different regime than the three past ones.",
+          "repeat the gatekeeping check N times (same checkpoint, same seed-free conditions) to build an empirical noise-floor distribution, then test whether 0.859740 falls inside or outside that distribution's plausible range.",
+          "pull the metric's defined scale bounds and a larger sample of historical readings for this check type to see whether scores empirically saturate/cluster near 0.86 or above (evidence of a ceiling) versus being spread continuously through that region.",
+          "per-case breakdown of the gatekeeping check's constituent test items for this run (and ideally for the three past readings), to see whether 0.859740 is driven by one or few outlier cases versus a broad, consistent shift across the case set."
+        ],
+        "findings": [
+          {
+            "confound": "off-distribution ablation",
+            "crux": "Whether the ablation applied to produce this checkpoint's activations was on-distribution (matching the checkpoint's own activation statistics) or off-distribution (e.g. mean/zero vectors from a different population); an off-distribution ablation can push the check's inputs into a region where its score moves unpredictably, including in the opposite direction from what in-distribution degradation would produce, but none of the cited evidence (the score, the allowed range, the three past readings, or the pre-run prediction) says anything about which ablation method was used or reports a matched on-distribution control run to compare against.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "downstream compensation (self-repair)",
+            "crux": "Self-repair predicts the measured effect undershoots toward baseline when an upstream intervention is dampened by downstream compensation; the observed anomaly is an overshoot past the top of the allowed range in the direction opposite the pre-run low-side prediction, which is the wrong shape for a compensation story, but no committed number here shows any upstream intervention or layer-wise/component decomposition to confirm or rule out compensatory activity.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "selection bias",
+            "crux": "Whether 0.859740 was the single predetermined evaluation of this checkpoint's gatekeeping check, or the reported outcome after multiple runs/checkpoints/metrics were tried and this one (the high outlier) was the one carried into the file \u2014 the evidence names only the file recording the result and a second file listing it beside three past readings, with no statement of how many attempts were made or discarded before this number was recorded.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "Readout artifact: a change in how the check's score is computed/normalized (metric formula, prompt template, aggregation, or sign convention) between the three past readings and the current one could make an apparently \"high-side\" failure actually be a readout-pipeline shift rather than a genuine reversal in checkpoint behavior.",
+            "crux": "Whether the scoring/readout pipeline (formula, normalization, prompt template, aggregation) that produced 0.859740 is identical to the one that produced the three past readings (0.700601, 0.549000, 0.664024) \u2014 no committed config/code diff confirming pipeline identity across these four readings is cited in the evidence.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "Regime specificity \u2014 the possibility that the current 0.859740 reading and the three past readings (0.700601, 0.549000, 0.664024) were not taken under the same regime (same checkpoint/config/dataset split/task), so the pre-run prediction's implicit assumption of comparability was simply wrong, and the \"wrong-direction miss\" is an artifact of comparing across regimes rather than a real anomaly in one regime.",
+            "crux": "Whether the three past readings and the current 0.859740 reading were generated under the same regime (same checkpoint version, dataset/split, and check configuration) as each other. The evidence only says they are \"the same kind of check\" and are listed \"side by side\" in a file, and that the pre-run document cited them assuming continuity \u2014 it does not state or rule out that the readings differ in checkpoint identity, data split, or other regime-defining parameters. If they are the same regime, regime specificity cannot explain the direction flip (EXPLAINS is false, the miss is real and unexplained); if they differ in regime, the flip could be a regime artifact rather than a genuine directional surprise.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "construct validity: whether the gatekeeping check's numeric score actually tracks the intended \"gatekeeping\" property consistently across readings, or is only loosely/inconsistently coupled to it",
+            "crux": "The evidence establishes only that the four scores are \"the same kind of check\" (a label), not that the check is construct-valid \u2014 i.e., not that its score reliably and monotonically tracks the property the pre-run reasoning assumed when predicting a low-side failure. If the metric lacks that validity, a high-side reversal relative to a low-side prediction is an expected symptom of the metric being unmoored from the construct, not evidence the checkpoint behaves anomalously.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "Scale incomparability: the three past readings (0.700601, 0.549000, 0.664024) and the current reading (0.859740) are only informative as a \"same kind of check, wrong direction\" story if all four numbers are computed by the same metric/formula and are placed on the same scale as the allowed range. The evidence given never states that the check's definition, normalization, or denominator was held fixed across the runs that produced those four numbers \u2014 it only says a file lists them \"side by side.\" Side-by-side listing is a presentation fact, not a proof of scale identity. If the metric's computation changed (e.g., a different reference set, a different normalization constant, or a different pass/fail formula) between the past runs and this one, then a jump from ~0.55-0.70 to ~0.86 is exactly what scale incomparability predicts, and the \"wrong-direction miss\" is an artifact of comparing incommensurable numbers rather than a real reversal of the failure mechanism.",
+            "crux": "Whether the three past readings and the current 0.859740 were produced by the identical metric definition/formula and normalization as each other and as the allowed-range bounds \u2014 no committed evidence confirms or denies this identity, only that they appear together in a comparison file.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "noise floor: is 0.859740 within the natural run-to-run variance of this gatekeeping check for this checkpoint, or does it require a real (unexplained) directional shift?",
+            "crux": "Whether the check's noise is symmetric enough that a high excursion of this size (\u22480.16 above the highest of the three past readings, \u22483.4 estimated-\u03c3 above their mean) is a plausible noise-floor fluctuation rather than a real effect \u2014 no committed measurement of this check's variance/CI or a repeat-run/null-baseline distribution exists to decide it.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "ceiling or floor effect: the observed score is compressed against a metric-scale boundary (e.g., near a max of 1.0 or some saturation point), producing an artificially extreme high reading that need not reflect a real property of the checkpoint.",
+            "crux": "Whether 0.859740 sits near any actual saturation boundary of this metric's scale (its theoretical max/min, or a point where scores empirically cluster) is not stated anywhere in the evidence \u2014 no metric bound or larger distribution of readings is given, so ceiling/floor compression can neither be confirmed nor excluded from the numbers on record.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "single-case overfit: the 0.859740 score could be driven by one anomalous test item within the gatekeeping check's evaluation set, rather than reflecting a genuine shift in checkpoint behavior across the whole check.",
+            "crux": "Whether the gatekeeping check's 0.859740 score is a single aggregate number over a set of test cases (with no committed per-case breakdown available) or is known to be stable across cases \u2014 the evidence given only states the aggregate score and the allowed range, with no per-item variance or case-count data to confirm or rule out one outlier case driving the whole result.",
+            "status": "NEEDS_RUN"
+          }
+        ],
+        "grounding": {
+          "artifacts_read": [
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/arm-recorded_fit_readings_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/GATE_COMMIT_seedC1.md"
+          ],
+          "grounding": "reproduces",
+          "note": "Every headline number reproduces from the raw artifacts, including the band recomputed from the saved resplits; the pre-run GATE_COMMIT (B1) predicted the void citing the three low priors, so the miss is indeed in the opposite direction from the stated reasoning.",
+          "observed": "anchor_statistic = 0.85974 (held_out_quality, 10578 positions); band low/high = 0.7673941852 / 0.7946058148, which I re-derived independently from the 5 recorded resplit values [0.867072, 0.876217, 0.866433, 0.861897, 0.860696]: median 0.866433, MAD 0.004536, 0.781 +/- 3*MAD = 0.767392 / 0.794608. Prior width-140-only readings in project_records_width140_only = [0.700601, 0.549, 0.664024], all below the band low; anchor sits +0.0651 above band high."
+        },
+        "id": "q2",
+        "rejected_findings": [],
+        "run_queue": [],
+        "runner_results": null
+      },
+      {
+        "author_queue": [
+          "Rerun the five-recheck calibration procedure with each row drawn from a distinct, independently sampled/non-overlapping document set (not a shared/fixed case or overlapping resample), and report the full tested strength grid (min/max) alongside each re-check's pick, to test whether the layer/strength selection still shows zero disagreement across genuinely independent draws (distinguishes readout-artifact / single-case-overfit explanations from a true tight natural-variation band).",
+          "Inspect the calibration script's objective/metric formula to check whether the per-layer/per-strength score is normalized (e.g., relative to a per-layer null baseline) rather than compared on raw incomparable scales; if unnormalized, rerun the calibration with a scale-normalized objective to see whether the same layer/strength still wins."
+        ],
+        "findings": [
+          {
+            "confound": "off-distribution ablation",
+            "crux": "Whether the ablation/patching used during calibration operates within the model's natural activation distribution or pushes activations off-distribution; an off-distribution ablation can produce a fixed, document-independent optimum (same layer, same strength) regardless of which document set is used for calibration, which is exactly the zero-disagreement-across-five-rechecks pattern in the evidence. Nothing in the evidence (just: five rows, all layer 7/strength 100.0, range flagged as narrower than a preset limit) speaks to whether the ablation was checked against the natural activation distribution, so this mechanism is not excluded.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "downstream compensation (self-repair): if intervening at most layers gets \"undone\" by later layers compensating, then whichever layer/strength combo survives self-repair will be the unique calibration optimum regardless of which document set is used to calibrate. That would make the five re-checks converge on the same (layer, strength) not because the check is unusually precise about the model's real property, but because self-repair collapses the search space to one point deterministically \u2014 the \"natural variation between document sets\" the calibration was meant to sample never had a chance to express itself.",
+            "crux": "Whether the zero-disagreement, unusually-narrow range reflects genuine independent agreement about the model's property, versus a model-architectural invariant (self-repair leaving only one layer/strength as a viable operating point) that mechanically forces the same pick regardless of which documents seed each re-check. The committed evidence only reports the five identical picks and the project's own flag that the range is narrower than its preset limit \u2014 it contains no test that varies or disables downstream self-repair (e.g., checking whether other layers' edits get compensated away by later layers, or whether the optimum shifts when self-repair is suppressed) to distinguish \"true precision\" from \"self-repair collapsing the search space.\"",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "Selection bias: the five \"re-checks\" may not have been independent draws over genuinely different document sets/seeds. If the calibration procedure is a deterministic grid search (layer \u00d7 strength) run five times over overlapping or identical/near-identical document pools, or if the five re-checks are five subsamples from one underlying corpus rather than five independently collected corpora, then landing on the exact same (layer=7, strength=100.0) global optimum five times is the expected, mechanical outcome of the selection procedure -- not evidence about the model's true signal. The project's own pre-registered concern (that the range could come out \"unusually narrow\" for reasons unrelated to the model) is precisely the failure mode that non-independent or narrow-support re-sampling would produce.",
+            "crux": "Whether the five re-check rows were built from independent, non-overlapping document sets/seeds (which would make five-for-five agreement a genuine model-signal finding) or from overlapping/resampled/deterministic draws over the same pool (which would make five-for-five agreement a trivial artifact of the selection procedure). The evidence given only reports the outcome (5/5 same pick, range flagged as unusually narrow) and does not establish independence of the five re-check inputs, so the selection-bias mechanism remains fully consistent with -- and sufficient to produce -- the observed claim.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "Readout artifact: the \"five re-checks\" could be five re-runs of a deterministic selection procedure over the same (or near-identical) underlying data/grid, rather than five independent samples of natural variation. If so, zero disagreement is trivial and tells us nothing about the true spread of the metric \u2014 it would just reflect that the readout mechanism (e.g., an argmax over a fixed candidate grid) has no stochastic component to vary, or that strength=100.0 is sitting at the edge of the tested grid (a classic saturating-metric artifact where the selection criterion keeps improving toward the boundary rather than peaking at an interior optimum).",
+            "crux": "Whether the five re-checks differed in their underlying inputs (different document subsets/seeds feeding the calibration) or were re-runs of an effectively deterministic procedure, and whether strength=100.0 is the maximum value on the tested grid (boundary artifact) versus an interior value with room to vary on either side. The evidence given states only the five picks and that the resulting range was flagged as unusually narrow \u2014 it does not report what varied across rows or the grid's boundaries.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "Regime specificity: the five \"re-checks\" may not have sampled independent document regimes/splits at all \u2014 if all five draws come from the same underlying regime (same corpus slice, same task distribution), then picking the identical layer/strength five times is not evidence of stability, it's a tautology (same input \u2192 same optimum every time). The calibration file's own flag \u2014 that the resulting range is \"unusually narrow, below a limit the project had set for itself in advance\" \u2014 is exactly the symptom this confound predicts: a check that should reflect natural cross-regime variation instead reflects zero variation because there was no real regime diversity behind the five rows.",
+            "crux": "Whether the five re-check rows were drawn from genuinely distinct document regimes/splits (which would make unanimous layer-7/strength-100.0 selection a real convergence signal) or from a single regime replicated five times (which would make the unanimity mechanical and uninformative). The evidence given does not establish regime diversity across the five rows \u2014 it only reports the outcome (identical picks, narrow range) and the project's own worry that this narrowness signals exactly this kind of artifact. No committed number in the calibration file (e.g., a per-row regime/dataset identifier showing five distinct sources) is cited to rule this out, so the confound stands as a live, unrefuted explanation \u2014 consistent with the project's own stated concern, not contradicted by it.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "construct validity \u2014 whether the \"five re-checks\" actually instantiate independent draws of the thing the calibration is meant to measure (natural variation across document sets), or whether the re-check procedure is constructed such that it cannot produce disagreement regardless of true variability.",
+            "crux": "The evidence shows five re-checks producing zero disagreement (identical layer=7, strength=100.0) and the project's own pre-registered concern that a resulting range this narrow would signal exactly this failure mode. There is no committed number in the evidence showing the five re-checks used sufficiently distinct/independent inputs (e.g., disjoint document sets, different seeds) to make disagreement possible in principle \u2014 without that, unanimous agreement is exactly what a construct-invalid re-check (one that doesn't actually sample the variation it claims to measure) would produce.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "scale incomparability",
+            "crux": "Whether strength=100.0 sits at (or near) the boundary of the tested regularization-strength grid and whether the selection metric is normalized comparably across layers/strengths before argmax; the calibration file only reports the five identical picks and the narrow-range flag, not the grid bounds or metric normalization.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "Noise floor: the calibration procedure's five \"re-checks\" may not inject enough independent variation (e.g., overlapping document sets, same seed/resampling scheme) to actually probe how much the layer/strength selection naturally varies. If the resampling method itself has near-zero entropy, getting identical picks on all five and an unusually narrow allowed range is exactly what that artifact would produce \u2014 it says nothing about the model's true selection stability.",
+            "crux": "The claim itself is a null-style flag (\"the range is unusually narrow, below the project's preset limit\") which is precisely what a too-low noise floor (insufficient variation across the five re-check draws) would produce \u2014 the evidence given is the project's own written concern that this narrowness could be spurious, and nothing committed (e.g., a per-recheck document-overlap statistic, or a check that the five draws differ enough in composition) is presented to show the re-checks were actually independent enough to rule that out.",
+            "status": "EXPLAINS"
+          },
+          {
+            "confound": "Ceiling/floor effect: if the calibration sweep's grid caps out at strength=100.0 (or layer=7 is an edge of the tested layer range), then five re-checks landing on the same value isn't evidence of low natural variance \u2014 it's evidence that the true optimum lies at or beyond the boundary the grid could express, so every re-check is forced to the same edge regardless of how much the underlying signal actually varies across document sets.",
+            "crux": "Whether strength=100.0 (and/or layer=7) sits at the boundary of the values the calibration grid actually swept, versus being an interior value freely selectable by the search \u2014 the evidence describes the five identical picks and the project's own narrow-range flag, but never states the grid's min/max bounds, so a boundary-clamped optimum and a genuinely tight natural range are both consistent with what's committed.",
+            "status": "NEEDS_RUN"
+          },
+          {
+            "confound": "single-case overfit: the five \"re-checks\" could all be scoring the exact same fixed calibration case/document set rather than independent resamples, in which case picking identical layer/strength every time is a mechanical certainty (deterministic argmax over an unchanged input), not evidence of a genuinely tight natural-variation band.",
+            "crux": "Whether each of the five re-check rows was computed over an independently drawn/varied set of documents (making zero disagreement a real signal about tight natural variation) or over the same fixed case/inputs repeated five times (making zero disagreement a tautology of determinism). The evidence states only that five rows exist and all agree plus that the resulting range is flagged as narrower than a preset limit \u2014 it never states what varied (if anything) between the five runs.",
+            "status": "NEEDS_RUN"
+          }
+        ],
+        "grounding": {
+          "artifacts_read": [
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/calibration.json",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/GATE_COMMIT_seedC1.md",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/QUESTION.md",
+            "/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/run_seedC1.py"
+          ],
+          "grounding": "reproduces",
+          "note": "Numbers reproduce exactly from /home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/out/results_seedC1/out/calibration.json, but the claim's causal framing is off: the band half-width comes from spread of the five held-out R^2 values across five DISTINCT held-out doc sets (nonzero, 0.0136), not from agreement on layer/alpha; identical layer 7 / alpha 100 does not imply zero variance source, and GATE_COMMIT_seedC1.md D1 states the <0.02 flag is recorded and never gated.",
+          "observed": "All 5 anchor_resplit_choices rows: readout=7, ridge_strength=100.0 (matches claim). Held-out qualities [0.867072, 0.876217, 0.866433, 0.861897, 0.860696]; median 0.866433, MAD 0.004536, 3*MAD half-width = 0.013608 (recorded 0.0135058... i.e. 0.013605815, agrees to 5dp from rounded stored values); band 0.767394-0.794606 around centre 0.781; flag band_half_width_below_0.02=true, decision CALIBRATION_OK."
+        },
+        "id": "q3",
+        "rejected_findings": [],
+        "run_queue": [
+          "Inspect the calibration/grid-search script or config to check whether the swept strength range's max equals 100.0 and whether layer 7 is an edge of the swept layer range (e.g. grep -n \"strength\\|layer\" on the calibration search-grid definition file) to distinguish a boundary-clamped optimum from a genuine interior optimum."
+        ],
+        "runner_results": null
+      }
+    ],
+    "instrument_queue": [],
+    "shared_queue": []
+  },
+  "takeaways": "Both gates pass cleanly.\n\n## Summary\n\nI wrote `/home/hal/dev/interp/dm_hack/latent_skeptic_meta/experiments/manifold_c/TAKEAWAYS_seedC1.md`, drawing only from `QUESTION.md`, `out/seedC1_design_diff_triage.json`, and the endpoint/provenance JSON files under `out/results_seedC1/out/`.\n\nKey content: the run tested whether a repeating wave in Pythia-410m-deduped's (checkpoint step143000) internal representation of character-position-since-last-newline has a fixed wavelength across three probe widths (140/200/280 chars) or scales with the width. The required calibration sanity check (anchor gate) was predicted to land in 0.767394\u20130.794606 (centered on 0.781) but measured 0.859740 \u2014 failing high, the opposite direction every prior warning anticipated \u2014 which voids every downstream result as an instrument fault rather than a finding about the model. The voided numbers themselves show a wavelength of exactly half the tested width at all three widths (70/100/140 chars, rank 1 of 200 every time), and an ambient dimensionality of 93\u2013196 directions versus a prior run's 1 direction.\n\nThe \"what does not fit\" section reproduces the eight supplied open questions in plain language, verified where checkable against the raw files (e.g., confirmed all five anchor resplits picked identical layer/strength; confirmed the represented-range gap at bins 176\u2013210 vs. 211\u2013280; confirmed only 3 of 9 wrap widths have surviving per-line data), plus four additional findings from my own review: a mismatch between the layer chosen by direct test-document scoring versus the layer favored by the cross-validated ridge-strength sweep; the deeply negative absolute fit values hiding behind \"represented\" labels; the path-formatting bug in the first launch; and the $4 approved budget versus $0.69 actual spend.\n\nBoth gates were run against a copy truncated at \"Raw samples, verbatim\" and pass (density: 0.0 codes/1000 words; scope: 0 unscoped sentences); their verbatim output is pasted at the end of the file."
+}

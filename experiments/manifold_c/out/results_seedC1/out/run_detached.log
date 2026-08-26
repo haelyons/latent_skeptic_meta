@@ -1,0 +1,133 @@
+[setup] using preinstalled torch; adding transformers/accelerate/scikit-learn
+  WARNING: The scripts pip, pip3 and pip3.10 are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+WARNING: Error parsing dependencies of flatbuffers: Invalid version: '1.12.1-git20200711.33e2d80-dfsg1-0.6'
+  WARNING: The script tqdm is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script pygmentize is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script f2py is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script markdown-it is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script httpx is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script typer is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts hf, huggingface-cli and tiny-agents are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The scripts accelerate, accelerate-config, accelerate-estimate-memory, accelerate-launch and accelerate-merge-weights are installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+  WARNING: The script transformers is installed in '/home/ubuntu/.local/bin' which is not on PATH.
+  Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[setup] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[setup] transformers 5.15.1 numpy 1.26.4 scikit-learn 1.7.2 pillow 12.3.0
+[setup] Gemma2ForCausalLM resolvable
+[run] bash onbox_seedC1.sh
+=== onbox_seedC1 model=EleutherAI/pythia-410m-deduped revision=step143000 results=results_seedC1 ===
+=== instance=cfca0389986f46ec8b2e950210c5f399 host=129-146-52-181 commit=ac92d7ea3b3ebedb852764c50a43a6c0b8d40493 ===
+NVIDIA A100-SXM4-40GB, 40960 MiB, 570.148.08
+/dev/vda1       497G   26G  471G   6% /
+=== INPUTS ===
+[inputs] runner=run_seedC1.py writer=provenance.py design=seedC1_design_diff_triage.json gate=GATE_COMMIT_seedC1.md
+[inputs] stimulus_linewrap_v2.json hash matches the committed hash
+=== SELF-TESTS (no model, no graphics card) ===
+  provenance.py: rc=0  selftest: PASS
+  run_seedC1.py: rc=0  selftest: PASS
+=== PACKAGES ===
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+/usr/lib/python3/dist-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.17.3 and <1.25.0 is required for this version of SciPy (detected version 1.26.4
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+[packages] torch 2.7.0 cuda 12.8 device NVIDIA A100-SXM4-40GB
+[packages] transformers 5.15.1 numpy 1.26.4 GPTNeoXForCausalLM resolvable
+=== seedC1_extract RUNNING ===
+--- seedC1_extract last lines ---
+[extract] committed text file stimulus_linewrap_v2.json
+[extract] hash b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd (expected b0aa4255b5038d6fbc2e7314decf1011a5b5a13990098142e16ab44c6bba41dd) match=True
+[extract] downloaded config: layers=24 hidden=1024 context=2048
+[record] SETUP_OK valid=True -> arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[extract] loading EleutherAI/pythia-410m-deduped revision step143000 in float16 on cuda
+Loading weights:   0%|          | 0/292 [00:00<?, ?it/s]Loading weights: 100%|██████████| 292/292 [00:00<00:00, 3397.63it/s]
+[extract] document 0 of 48 done (1 s)
+[extract] document 8 of 48 done (5 s)
+[extract] document 16 of 48 done (9 s)
+[extract] document 24 of 48 done (13 s)
+[extract] document 32 of 48 done (17 s)
+[extract] document 40 of 48 done (22 s)
+[record] EXTRACT_OK valid=True -> arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+[extract] 432 forward passes, 435642 labelled positions, 26.2 s
+=== stage extract done in 50.5 s ===
+=== seedC1_extract OK ===
+=== seedC1_calibrate RUNNING ===
+--- seedC1_calibrate last lines ---
+[calibrate] main ridge strength 1000, cross-validated best readout 6, quality 0.672421
+[calibrate] anchor sweep readout 0 of 24
+[calibrate] anchor sweep readout 6 of 24
+[calibrate] anchor sweep readout 12 of 24
+[calibrate] anchor sweep readout 18 of 24
+[calibrate] anchor sweep readout 24 of 24
+[calibrate] anchor ridge strength 100, anchor readout 7, cross-validated quality 0.865584
+[calibrate] resplit values ['0.867072', '0.876217', '0.866433', '0.861897', '0.860696']
+[calibrate] anchor band centre 0.781000, spread 0.004535, half-width 0.013606, band 0.767394 to 0.794606
+[calibrate] window 140: character labels 1 to 141, profile length 140, 35 periods; token labels 1 to 53, profile length 52, 13 periods
+[calibrate] window 200: character labels 1 to 201, profile length 200, 50 periods; token labels 1 to 68, profile length 67, 16 periods
+[calibrate] window 280: character labels 1 to 281, profile length 280, 70 periods; token labels 1 to 92, profile length 91, 22 periods
+[record] CALIBRATION_OK valid=True -> arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+[calibrate] committed record written before any held-out number exists
+=== stage calibrate done in 159.9 s ===
+=== seedC1_calibrate OK ===
+=== seedC1_endpoints RUNNING ===
+--- seedC1_endpoints last lines ---
+[endpoints] window 140 token-position control -> TOKEN_CONTROL_NOT_COMPUTABLE
+[record] TOKEN_CONTROL_NOT_COMPUTABLE valid=False -> aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] window 200 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED valid=False -> aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] window 280 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED valid=False -> aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] represented-range check -> ABOVE_150_REPRESENTED
+[record] ABOVE_150_REPRESENTED valid=False -> aperture-280_arm-represented_range_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] AT_LEAST_ONE_WINDOW_CLEARED valid=False -> arm-windows_cleared_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] WAVELENGTHS_DIFFER valid=False -> arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] RATIOS_WITHIN_CUTOFF valid=False -> arm-ratio_gap_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] VOID_ANCHOR_FAILED valid=False -> arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] {"anchor_band_half_width": 0.013605814767710833, "anchor_band_high": 0.7946058147677109, "anchor_band_low": 0.7673941852322892, "anchor_layer": 7, "anchor_ridge_strength": 100.0, "anchor_ridge_strength_interior_on_grid": true, "anchor_statistic": 0.85974, "band_half_width_below_0.02": true, "endpoint_1_anchor_gate": "ANCHOR_OUT_OF_BAND", "endpoint_2_pattern_by_window": {"140": "NULL_CLEARED", "200": "NULL_CLEARED", "280": "NULL_CLEARED"}, "endpoint_3_windows_cleared": 3, "endpoint_4_wavelength_gap_chars": 70.0, "endpoint_5_ratio_gap": 0.0, "endpoint_6_represented_range": "ABOVE_150_REPRESENTED", "endpoint_7_token_control_by_window": {"140": "TOKEN_CONTROL_NOT_COMPUTABLE", "200": "CHARACTER_COUNT_DISTINGUISHED", "280": "CHARACTER_COUNT_DISTINGUISHED"}, "headline": "VOID_ANCHOR_FAILED", "main_layer": 5, "main_ridge_strength": 1000.0, "main_ridge_strength_interior_on_grid": true, "rank_by_aperture": {"140": 1, "200": 1, "280": 1}, "run_valid": false, "wavelength_by_cleared_aperture": {"140": 70.0, "200": 100.0, "280": 140.0}}
+[endpoints] THIS RUN IS VOID. The anchor gate failed, so every pattern, control and range-check number above is an instrument fault and is not evidence about the model. Every record written after the gate carries run_valid=false in its own values.
+=== stage endpoints done in 194.8 s ===
+=== seedC1_endpoints OK ===
+=== COLLECT results_seedC1/out -> out/ ===
+[work, never fetched] 13G	results_seedC1/work
+-rw-rw-r-- 1 ubuntu ubuntu    3707 Aug 26 01:30 arm-forward_passes_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu    3773 Aug 26 01:30 arm-main_layer_selection_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    2535 Aug 26 01:30 arm-ratio_gap_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    2844 Aug 26 01:30 arm-recorded_fit_readings_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    3155 Aug 26 01:30 arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    2826 Aug 26 01:30 arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract.json
+-rw-rw-r-- 1 ubuntu ubuntu    2341 Aug 26 01:30 arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu    2626 Aug 26 01:30 arm-windows_cleared_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+-rw-rw-r-- 1 ubuntu ubuntu   37150 Aug 26 01:30 calibration.json
+-rw-rw-r-- 1 ubuntu ubuntu  587684 Aug 26 01:30 mean_vectors_aperture-140_labels-characters.npz
+-rw-rw-r-- 1 ubuntu ubuntu  835364 Aug 26 01:30 mean_vectors_aperture-200_labels-characters.npz
+-rw-rw-r-- 1 ubuntu ubuntu  286340 Aug 26 01:30 mean_vectors_aperture-200_labels-tokens.npz
+-rw-rw-r-- 1 ubuntu ubuntu 1165604 Aug 26 01:30 mean_vectors_aperture-280_labels-characters.npz
+-rw-rw-r-- 1 ubuntu ubuntu  385412 Aug 26 01:30 mean_vectors_aperture-280_labels-tokens.npz
+-rw-rw-r-- 1 ubuntu ubuntu  187789 Aug 26 01:30 null_spectra_aperture-140_labels-characters.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  259225 Aug 26 01:30 null_spectra_aperture-200_labels-characters.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu   97396 Aug 26 01:30 null_spectra_aperture-200_labels-tokens.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  353081 Aug 26 01:30 null_spectra_aperture-280_labels-characters.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu  125121 Aug 26 01:30 null_spectra_aperture-280_labels-tokens.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 5358780 Aug 26 01:30 rows_positions_apertures.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu 1697784 Aug 26 01:30 rows_variants.jsonl
+-rw-rw-r-- 1 ubuntu ubuntu    9672 Aug 26 01:30 run_detached.log
+-rw-rw-r-- 1 ubuntu ubuntu     471 Aug 26 01:30 run_state.json
+-rw-rw-r-- 1 ubuntu ubuntu    1324 Aug 26 01:27 seedC1_calibrate.log
+-rw-rw-r-- 1 ubuntu ubuntu    4787 Aug 26 01:30 seedC1_endpoints.log
+-rw-rw-r-- 1 ubuntu ubuntu    1352 Aug 26 01:25 seedC1_extract.log
+-rw-rw-r-- 1 ubuntu ubuntu    4236 Aug 26 01:30 seedC1_onbox_summary.json
+-rw-rw-r-- 1 ubuntu ubuntu       0 Aug 26 01:30 seedC1_status.err
+-rw-rw-r-- 1 ubuntu ubuntu      15 Aug 26 01:24 selftest_provenance.log
+-rw-rw-r-- 1 ubuntu ubuntu   14540 Aug 26 01:24 selftest_run_seedC1.log
+=== EXIT CODES: selftest_provenance=0 selftest_run_seedC1=0 packages=0 seedC1_extract=0 seedC1_calibrate=0 seedC1_endpoints=0 ===
+=== ALLDONE_SEEDC1 OK ===

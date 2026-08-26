@@ -1,0 +1,210 @@
+== the position labeller ==
+  columns on a two-line text                                       ok
+  token counts on a two-line text                                  ok
+  line numbers on a two-line text                                  ok
+  implied opening boundary, first line columns                     ok
+  implied opening boundary, first line token counts                ok
+  a swallowed line break, columns                                  ok
+  a swallowed line break, token counts                             ok
+  a swallowed line break, line numbers                             ok
+  a line-break token takes the next column                         ok
+  a full line's line break lands at the width plus one             ok
+  an empty range is never labelled                                 ok
+  an empty range is never counted                                  ok
+  position counts per label                                        ok
+== the committed text file reader ==
+  a well-formed text file loads                                    ok
+  a missing document halts                                         ok
+  wrong wrap widths halt                                           ok
+  a document missing a wrap width halts                            ok
+== the calibration record reader ==
+  a committed calibration record reads back                        ok
+  its committed strength reads back                                ok
+== the degenerate-input and degenerate-measurement detectors ==
+  reaching the context limit flags                                 ok
+  under the context limit does not flag                            ok
+  a repeated block flags                                           ok
+  seven back-to-back copies counted                                ok
+  prose-like tokens are clean                                      ok
+  both degenerate conditions can flag together                     ok
+  an average vector of no length is found                          ok
+  vectors that all have length are clean                           ok
+  held-out labels that differ have spread                          ok
+  held-out labels that are all equal have no spread                ok
+  no spread halts fit quality rather than dividing by zero         ok
+== exact matches, label windows and seeds ==
+  identical hashes match                                           ok
+  hashes one character apart do not match                          ok
+  the expected configuration matches                               ok
+  a different layer count does not match                           ok
+  a different hidden size does not match                           ok
+  the setup call with everything matching                          ok
+  the setup call with a different text hash                        ok
+  the setup call with a different layer count                      ok
+  the lowest window value maps to slot 0                           ok
+  the highest window value maps to the last slot                   ok
+  one below the window is outside                                  ok
+  one above the window is outside                                  ok
+  a fractional label is never accepted                             ok
+  a true-or-false value is never accepted as a label               ok
+  slot counts                                                      ok
+  slot indices                                                     ok
+  the window runs from 1 to the largest training label             ok
+  a fully populated window has no gaps                             ok
+  a label no training position carries is recorded as a gap        ok
+  no training label at all halts                                   ok
+  the profile length is clamped to the label count minus one       ok
+  the clamp is recorded as having bitten                           ok
+  a shorter committed span is not clamped                          ok
+  the nominal pair counts of a full window                         ok
+  every derived shuffle seed is distinct                           ok
+  the character-count stream at window 140                         ok
+  the token-position stream at window 140                          ok
+  the first range-check bin stream                                 ok
+  the base seed is 0                                               ok
+== the repeating-pattern readout, endpoint 2 ==
+  a full window's pairs at distance 1                              ok
+  a full window's pairs at distance 3                              ok
+  a missing label drops only the pairs that need it                ok
+  distances the missing label leaves untouched keep their pairs    ok
+  the profile at distance 1                                        ok
+  the profile at distance 20                                       ok
+  the pair count at distance 1                                     ok
+  the pair count at distance 20                                    ok
+  a straight line is removed by the trend fit                      ok
+  a curved trend is removed by the trend fit                       ok
+  a profile too short to detrend halts                             ok
+  the longest searched period is the profile's own length          ok
+  the shortest searched period is at least 4                       ok
+  the number of whole-cycle periods over a 140-long profile        ok
+  periods come longest first                                       ok
+  a planted 28-character wave is recovered end to end              ok
+  the planted wave is 5 whole cycles over the profile              ok
+  the far tail of the profile rests on one label pair              ok
+  the near end of the profile rests on many label pairs            ok
+  a flat profile carries no power                                  ok
+  a flat profile ranks below every draw                            ok
+  and so does not clear its comparison                             ok
+  a distance with no label pairs halts                             ok
+== the anchor gate readout, endpoint 1 ==
+  the middle of five values                                        ok
+  the middle of an even count                                      ok
+  the unscaled spread of five values                               ok
+  the band's half-width is three times that spread                 ok
+  the band's low end                                               ok
+  the band's high end                                              ok
+  the band is centred on 0.781                                     ok
+  a wide band does not raise the narrow-band flag                  ok
+  a spread under 0.02 raises the recorded narrow-band flag         ok
+  a value inside the band                                          ok
+  a value exactly on the low end is inside                         ok
+  a value exactly on the high end is inside                        ok
+  a value below the band is outside                                ok
+  a value above the band is outside                                ok
+  an absent value is outside                                       ok
+  a narrow measured band puts a distant value outside it           ok
+  that same narrow band still admits its own centre                ok
+  five identical resplit values halt as the wrong source of variation ok
+  a resplit value that is not a number halts                       ok
+== the shuffle comparison, endpoint 2 ==
+  a value above every draw ranks first                             ok
+  a value above all but nine draws ranks tenth                     ok
+  a value above all but ten draws ranks eleventh                   ok
+  a tie counts against the observed value                          ok
+  rank 1 clears                                                    ok
+  rank 10 clears                                                   ok
+  rank 11 does not clear                                           ok
+== the count of clearing windows, endpoint 3 ==
+  three windows clearing with one shared wavelength                ok
+  two windows clearing with one shared wavelength                  ok
+  exactly one window clearing is undetermined                      ok
+  no window clearing                                               ok
+  none clearing while counts above 150 are represented is a decisive negative ok
+  none clearing while that range was never measurable defers to the range check ok
+  none clearing with an incomplete range pattern is neither        ok
+  one clearing window reports undetermined                         ok
+  two clearing windows report the fork                             ok
+  three clearing windows report the fork                           ok
+  a failed anchor gate overrides every other call                  ok
+== the wavelength gap, endpoint 4 ==
+  gaps all at or under 10 characters                               ok
+  a gap of exactly 10 characters counts as one shared wavelength   ok
+  a gap over 10 characters does not                                ok
+  fewer than two clearing windows leaves the gap undefined         ok
+  and that undefined gap is reported as such                       ok
+  a planted set with a gap over 10 characters is not one wavelength ok
+== the ratio gap, endpoint 5 ==
+  wavelengths that scale with the window read as proportional      ok
+  their ratios sit within 0.1                                      ok
+  their wavelength gap is over 10 characters                       ok
+  ratios within 0.1 pass the ratio rule                            ok
+  ratios wider than 0.1 do not                                     ok
+  wide wavelength gaps and wide ratio gaps read as mixed           ok
+  the mixed case's wavelength gap is over 10 characters            ok
+  the mixed case's ratio gap is over 0.1                           ok
+  exactly one clearing window is never mixed                       ok
+== the represented-range readout, endpoint 6 ==
+  a bin ending at or below 140 is a low bin                        ok
+  the bin spanning 150 straddles the boundary                      ok
+  a bin starting above 150 is a high bin                           ok
+  the eight committed bins                                         ok
+  exactly one bin straddles the boundary                           ok
+  the 95th percentile of fifty draws                               ok
+  a bin above its own 95th percentile is represented               ok
+  a bin below its own 95th percentile is not                       ok
+  a bin exactly on its own 95th percentile does not exceed it      ok
+  the escape pattern holds even when the straddling bin is represented ok
+  one represented bin above 150 makes a null result a genuine negative ok
+  a low bin that is not represented leaves the pattern incomplete  ok
+  a bin's fit quality against its own labels, planted perfect fit  ok
+  a bin's fit quality, planted known value                         ok
+  a bin whose predictions are its own mean scores zero             ok
+  labels above 280 fall in no committed bin                        ok
+== the token-position control, endpoint 7 ==
+  a converted gap over 3 characters credits counting characters    ok
+  a gap under 3 characters with both clearing credits token position ok
+  a gap of exactly 3 characters with both clearing credits token position ok
+  a gap just over 3 characters credits counting characters         ok
+  disagreement on clearing credits characters whatever the gap     ok
+  disagreement the other way also credits characters               ok
+  neither labelling clearing leaves nothing to credit              ok
+  an uncomputable control is recorded as such                      ok
+  a 14-token period converts to characters at the measured rate    ok
+  and that converted period is within 3 characters of a 60-character one ok
+== a failed gate reaches every record written after it, endpoint 1 ==
+[record] RECORDED_NOT_GATED valid=True -> arm-planted_before_gate_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+  the planted anchor value fails its band                          ok
+[record] ANCHOR_OUT_OF_BAND valid=True -> arm-planted_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[void] planted gate failure
+[record] NULL_CLEARED valid=False -> aperture-280_arm-planted_pattern_endpoint-2_labelling-characters_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] VOID_ANCHOR_FAILED valid=False -> arm-planted_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+  a record written before the gate is still valid                  ok
+  the gate's own record carries its failing call                   ok
+  the per-probe-window record written after the gate is void       ok
+  that per-window record names the reason inside its own values    ok
+  that per-window record carries the gate's call in its own values ok
+  that per-window record carries the measured band in its own values ok
+  the roll-up is void as well                                      ok
+  the void is not only in the roll-up                              ok
+  the record's file name and its identity agree                    ok
+== supporting checks ==
+  the record writer is importable                                  ok
+  the sum of squared errors from running sums                      ok
+  fit quality from running sums                                    ok
+  the planted weights are recovered                                ok
+  the winning strength at an edge of the grid is flagged           ok
+  a strength inside the grid is flagged interior                   ok
+  the fast profile and the plain one agree                         ok
+  the average vector of a planted group                            ok
+  an empty slot has no positions                                   ok
+  the planted position counts                                      ok
+  the held-out readout recovers a planted period of 10 characters  ok
+  that period is 4 whole cycles over the profile                   ok
+  the planted pattern ranks above every shuffled draw              ok
+  a label the held-out set never carries is reported               ok
+  the profile is as long as the committed length                   ok
+  the missing label costs the nearest distance one pair            ok
+  the far tail still rests on one pair                             ok
+  the average vectors saved cover every label of the window        ok
+  and the rows kept are the labels the held-out set carries        ok
+selftest: PASS

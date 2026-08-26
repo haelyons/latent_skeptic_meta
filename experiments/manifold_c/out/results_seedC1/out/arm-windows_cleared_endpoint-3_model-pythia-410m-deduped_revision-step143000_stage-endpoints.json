@@ -1,0 +1,79 @@
+{
+  "cell": {
+    "arm": "windows_cleared",
+    "endpoint": 3,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "AT_LEAST_ONE_WINDOW_CLEARED",
+  "decision_rule": "Count how many of the three probe windows clear their own shuffle comparison. None clearing is a decisive negative up to 280 characters, unless the represented-range check shows label counts above 150 were never measurable.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-52-181",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-26T01:30:46+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 33347,
+      "n_items": 1,
+      "path": "seedC1_design_diff_triage.json",
+      "present": true,
+      "sha256": "06fae77e203c"
+    },
+    {
+      "bytes": 16044,
+      "n_items": 1,
+      "path": "GATE_COMMIT_seedC1.md",
+      "present": true,
+      "sha256": "5fe5efdcbc0e"
+    },
+    {
+      "bytes": 3151874910,
+      "n_items": 25,
+      "path": "results_seedC1/work/group_sums.npz",
+      "present": true,
+      "sha256": "16196cdaf8b6"
+    }
+  ],
+  "metric": "Count, among the three probe windows, of how many clear their own shuffle comparison.",
+  "notes": "None clearing is a decisive negative only when the represented-range check shows label counts above 150 are represented. If instead every bin at or below 140 is represented and no bin above 150 is, the same result is recorded as a range that was never measurable. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "decisive_negative_at": 0
+  },
+  "values": {
+    "anchor_band_centre": 0.781,
+    "anchor_band_half_width": 0.013605814767710833,
+    "anchor_band_high": 0.7946058147677109,
+    "anchor_band_low": 0.7673941852322892,
+    "anchor_gate_decision": "ANCHOR_OUT_OF_BAND",
+    "anchor_statistic": 0.85974,
+    "cleared_apertures": [
+      140,
+      200,
+      280
+    ],
+    "rank_by_aperture": {
+      "140": 1,
+      "200": 1,
+      "280": 1
+    },
+    "represented_range_pattern": "ABOVE_150_REPRESENTED",
+    "run_valid": false,
+    "run_void_reason": "the anchor gate failed: held-out fit quality 0.859740 falls outside the measured band 0.767394 to 0.794606, so every result this run produces is an instrument fault and is not evidence about the model",
+    "wavelength_by_cleared_aperture": {
+      "140": 70.0,
+      "200": 100.0,
+      "280": 140.0
+    },
+    "windows_cleared": 3
+  }
+}

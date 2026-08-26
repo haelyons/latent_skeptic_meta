@@ -1,0 +1,1430 @@
+{
+  "cell": {
+    "aperture": 140,
+    "arm": "pattern_vs_shuffle",
+    "endpoint": 2,
+    "labelling": "characters",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "NULL_CLEARED",
+  "decision_rule": "The largest power over every whole-cycle period from 4 characters up to the committed profile length must rank 10th or better among 200 label-shuffled draws, counting the observed value itself. Worse than 10th is no separable repeating pattern at that probe window.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-52-181",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-26T01:28:31+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 33347,
+      "n_items": 1,
+      "path": "seedC1_design_diff_triage.json",
+      "present": true,
+      "sha256": "06fae77e203c"
+    },
+    {
+      "bytes": 16044,
+      "n_items": 1,
+      "path": "GATE_COMMIT_seedC1.md",
+      "present": true,
+      "sha256": "5fe5efdcbc0e"
+    },
+    {
+      "bytes": 3151874910,
+      "n_items": 25,
+      "path": "results_seedC1/work/group_sums.npz",
+      "present": true,
+      "sha256": "16196cdaf8b6"
+    },
+    {
+      "bytes": 340016,
+      "n_items": 10578,
+      "path": "results_seedC1/work/act_meta_a140.npz",
+      "present": true,
+      "sha256": "454562dbb070"
+    }
+  ],
+  "metric": "Largest power over every whole-cycle period from 4 characters up to the committed profile length, against this probe window's own 200-draw shuffle comparison.",
+  "notes": "A shuffle permutes the labels inside each document, so every label keeps exactly the same number of positions and the same labels carry an average vector in every draw. Every draw's full per-period power vector is in null_spectra_aperture-140_labels-characters.jsonl, and the average vectors are in mean_vectors_aperture-140_labels-characters.npz. The far tail of the profile rests on few label pairs; the count per distance is recorded here. The measured number of directions is recorded and constrains nothing. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "rows": [
+    {
+      "draw": 0,
+      "max_power": 1.1480937736816937e-05,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 1,
+      "max_power": 6.006626659172018e-06,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 2,
+      "max_power": 1.226506582599115e-05,
+      "wavelength": 46.666666666666664
+    },
+    {
+      "draw": 3,
+      "max_power": 1.2222271658101913e-05,
+      "wavelength": 5.0
+    },
+    {
+      "draw": 4,
+      "max_power": 3.4563900341903983e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 5,
+      "max_power": 8.005727367689112e-06,
+      "wavelength": 7.368421052631579
+    },
+    {
+      "draw": 6,
+      "max_power": 7.634170732336863e-06,
+      "wavelength": 5.6
+    },
+    {
+      "draw": 7,
+      "max_power": 6.0807020437996685e-06,
+      "wavelength": 35.0
+    },
+    {
+      "draw": 8,
+      "max_power": 8.16454671615414e-06,
+      "wavelength": 5.384615384615385
+    },
+    {
+      "draw": 9,
+      "max_power": 7.813942656584108e-06,
+      "wavelength": 10.0
+    },
+    {
+      "draw": 10,
+      "max_power": 6.4221568192314495e-06,
+      "wavelength": 23.333333333333332
+    },
+    {
+      "draw": 11,
+      "max_power": 6.710542368038096e-06,
+      "wavelength": 10.0
+    },
+    {
+      "draw": 12,
+      "max_power": 2.2609547148418183e-05,
+      "wavelength": 12.727272727272727
+    },
+    {
+      "draw": 13,
+      "max_power": 9.628158692812414e-06,
+      "wavelength": 7.777777777777778
+    },
+    {
+      "draw": 14,
+      "max_power": 4.771929122447378e-06,
+      "wavelength": 12.727272727272727
+    },
+    {
+      "draw": 15,
+      "max_power": 9.248345437500116e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 16,
+      "max_power": 4.715459939100691e-06,
+      "wavelength": 6.666666666666667
+    },
+    {
+      "draw": 17,
+      "max_power": 2.751773359982022e-06,
+      "wavelength": 9.333333333333334
+    },
+    {
+      "draw": 18,
+      "max_power": 1.0029565527383125e-05,
+      "wavelength": 10.76923076923077
+    },
+    {
+      "draw": 19,
+      "max_power": 8.998912002198061e-06,
+      "wavelength": 5.185185185185185
+    },
+    {
+      "draw": 20,
+      "max_power": 1.076339107474901e-05,
+      "wavelength": 8.75
+    },
+    {
+      "draw": 21,
+      "max_power": 4.408646793805961e-06,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 22,
+      "max_power": 3.980656907627209e-06,
+      "wavelength": 6.666666666666667
+    },
+    {
+      "draw": 23,
+      "max_power": 1.2869850788458444e-05,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 24,
+      "max_power": 5.367967309308315e-06,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 25,
+      "max_power": 7.461067402652664e-06,
+      "wavelength": 6.666666666666667
+    },
+    {
+      "draw": 26,
+      "max_power": 6.28331729043828e-06,
+      "wavelength": 46.666666666666664
+    },
+    {
+      "draw": 27,
+      "max_power": 7.394742191287952e-06,
+      "wavelength": 20.0
+    },
+    {
+      "draw": 28,
+      "max_power": 9.735043015099469e-06,
+      "wavelength": 4.666666666666667
+    },
+    {
+      "draw": 29,
+      "max_power": 3.160361501718718e-06,
+      "wavelength": 28.0
+    },
+    {
+      "draw": 30,
+      "max_power": 5.237956981107354e-06,
+      "wavelength": 4.666666666666667
+    },
+    {
+      "draw": 31,
+      "max_power": 1.1202944462780502e-05,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 32,
+      "max_power": 1.0943874429909911e-05,
+      "wavelength": 11.666666666666666
+    },
+    {
+      "draw": 33,
+      "max_power": 1.0263108400728525e-05,
+      "wavelength": 6.666666666666667
+    },
+    {
+      "draw": 34,
+      "max_power": 4.5544941241945165e-06,
+      "wavelength": 14.0
+    },
+    {
+      "draw": 35,
+      "max_power": 8.928932403388454e-06,
+      "wavelength": 7.0
+    },
+    {
+      "draw": 36,
+      "max_power": 9.261869619995343e-06,
+      "wavelength": 7.777777777777778
+    },
+    {
+      "draw": 37,
+      "max_power": 1.0738489954589322e-05,
+      "wavelength": 9.333333333333334
+    },
+    {
+      "draw": 38,
+      "max_power": 1.4873778289855447e-05,
+      "wavelength": 7.777777777777778
+    },
+    {
+      "draw": 39,
+      "max_power": 7.309124343374001e-06,
+      "wavelength": 17.5
+    },
+    {
+      "draw": 40,
+      "max_power": 1.2595598824200127e-05,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 41,
+      "max_power": 7.647399576957943e-06,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 42,
+      "max_power": 1.7459858601972692e-05,
+      "wavelength": 8.75
+    },
+    {
+      "draw": 43,
+      "max_power": 5.295305476656228e-06,
+      "wavelength": 4.117647058823529
+    },
+    {
+      "draw": 44,
+      "max_power": 8.301241465499165e-06,
+      "wavelength": 20.0
+    },
+    {
+      "draw": 45,
+      "max_power": 9.260670644338865e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 46,
+      "max_power": 9.9296396052298e-06,
+      "wavelength": 6.666666666666667
+    },
+    {
+      "draw": 47,
+      "max_power": 4.5323507511291604e-06,
+      "wavelength": 5.185185185185185
+    },
+    {
+      "draw": 48,
+      "max_power": 9.524311348563656e-06,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 49,
+      "max_power": 7.73003132729886e-06,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 50,
+      "max_power": 1.5276877863531943e-05,
+      "wavelength": 4.666666666666667
+    },
+    {
+      "draw": 51,
+      "max_power": 7.5242686177304246e-06,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 52,
+      "max_power": 4.843586291245055e-06,
+      "wavelength": 5.6
+    },
+    {
+      "draw": 53,
+      "max_power": 4.449535777581892e-06,
+      "wavelength": 10.76923076923077
+    },
+    {
+      "draw": 54,
+      "max_power": 3.3977831939081953e-06,
+      "wavelength": 10.0
+    },
+    {
+      "draw": 55,
+      "max_power": 8.561776236613664e-06,
+      "wavelength": 9.333333333333334
+    },
+    {
+      "draw": 56,
+      "max_power": 8.749712137692824e-06,
+      "wavelength": 46.666666666666664
+    },
+    {
+      "draw": 57,
+      "max_power": 5.744539359270375e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 58,
+      "max_power": 1.5799378910632866e-05,
+      "wavelength": 7.368421052631579
+    },
+    {
+      "draw": 59,
+      "max_power": 8.769781746247153e-06,
+      "wavelength": 9.333333333333334
+    },
+    {
+      "draw": 60,
+      "max_power": 7.1147380972722816e-06,
+      "wavelength": 20.0
+    },
+    {
+      "draw": 61,
+      "max_power": 1.4657577907997092e-05,
+      "wavelength": 7.368421052631579
+    },
+    {
+      "draw": 62,
+      "max_power": 1.0129483230848234e-05,
+      "wavelength": 4.666666666666667
+    },
+    {
+      "draw": 63,
+      "max_power": 3.415243236014291e-06,
+      "wavelength": 12.727272727272727
+    },
+    {
+      "draw": 64,
+      "max_power": 4.413869768838382e-06,
+      "wavelength": 15.555555555555555
+    },
+    {
+      "draw": 65,
+      "max_power": 4.875331523919225e-06,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 66,
+      "max_power": 5.106767306276733e-06,
+      "wavelength": 7.0
+    },
+    {
+      "draw": 67,
+      "max_power": 4.859697341418242e-06,
+      "wavelength": 10.76923076923077
+    },
+    {
+      "draw": 68,
+      "max_power": 1.2136659856246495e-05,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 69,
+      "max_power": 3.5882356955657894e-06,
+      "wavelength": 17.5
+    },
+    {
+      "draw": 70,
+      "max_power": 6.944784821122404e-06,
+      "wavelength": 4.117647058823529
+    },
+    {
+      "draw": 71,
+      "max_power": 4.801872719325708e-06,
+      "wavelength": 46.666666666666664
+    },
+    {
+      "draw": 72,
+      "max_power": 7.03165972945952e-06,
+      "wavelength": 35.0
+    },
+    {
+      "draw": 73,
+      "max_power": 6.153991203246558e-06,
+      "wavelength": 46.666666666666664
+    },
+    {
+      "draw": 74,
+      "max_power": 1.8243314764436898e-05,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 75,
+      "max_power": 9.16389961690853e-06,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 76,
+      "max_power": 6.452110772415043e-06,
+      "wavelength": 35.0
+    },
+    {
+      "draw": 77,
+      "max_power": 9.526977900785142e-06,
+      "wavelength": 140.0
+    },
+    {
+      "draw": 78,
+      "max_power": 8.999223372280406e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 79,
+      "max_power": 5.512901538855603e-06,
+      "wavelength": 4.666666666666667
+    },
+    {
+      "draw": 80,
+      "max_power": 9.05673350193926e-06,
+      "wavelength": 23.333333333333332
+    },
+    {
+      "draw": 81,
+      "max_power": 4.857461811725991e-06,
+      "wavelength": 5.384615384615385
+    },
+    {
+      "draw": 82,
+      "max_power": 1.1696027912719732e-05,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 83,
+      "max_power": 9.559180494097468e-06,
+      "wavelength": 8.75
+    },
+    {
+      "draw": 84,
+      "max_power": 6.596117162454898e-06,
+      "wavelength": 7.777777777777778
+    },
+    {
+      "draw": 85,
+      "max_power": 9.540048903230268e-06,
+      "wavelength": 20.0
+    },
+    {
+      "draw": 86,
+      "max_power": 6.1946248255481935e-06,
+      "wavelength": 6.086956521739131
+    },
+    {
+      "draw": 87,
+      "max_power": 1.502450470191096e-05,
+      "wavelength": 5.833333333333333
+    },
+    {
+      "draw": 88,
+      "max_power": 3.4074036831826962e-06,
+      "wavelength": 7.0
+    },
+    {
+      "draw": 89,
+      "max_power": 9.049823101983364e-06,
+      "wavelength": 12.727272727272727
+    },
+    {
+      "draw": 90,
+      "max_power": 9.751924559661566e-06,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 91,
+      "max_power": 1.0423678023535127e-05,
+      "wavelength": 8.75
+    },
+    {
+      "draw": 92,
+      "max_power": 7.912587566620109e-06,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 93,
+      "max_power": 1.4127781918283734e-05,
+      "wavelength": 10.0
+    },
+    {
+      "draw": 94,
+      "max_power": 7.722390447130641e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 95,
+      "max_power": 7.184345098575183e-06,
+      "wavelength": 23.333333333333332
+    },
+    {
+      "draw": 96,
+      "max_power": 5.150875738018127e-06,
+      "wavelength": 5.6
+    },
+    {
+      "draw": 97,
+      "max_power": 1.0194843822563687e-05,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 98,
+      "max_power": 5.328772885907003e-06,
+      "wavelength": 11.666666666666666
+    },
+    {
+      "draw": 99,
+      "max_power": 9.991644747421264e-06,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 100,
+      "max_power": 5.20436827187633e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 101,
+      "max_power": 4.8790281393449236e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 102,
+      "max_power": 1.0972853860292695e-05,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 103,
+      "max_power": 7.461878182850479e-06,
+      "wavelength": 4.666666666666667
+    },
+    {
+      "draw": 104,
+      "max_power": 9.886788031262037e-06,
+      "wavelength": 9.333333333333334
+    },
+    {
+      "draw": 105,
+      "max_power": 8.623144920208069e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 106,
+      "max_power": 6.680118375093814e-06,
+      "wavelength": 9.333333333333334
+    },
+    {
+      "draw": 107,
+      "max_power": 7.085438386970156e-06,
+      "wavelength": 5.833333333333333
+    },
+    {
+      "draw": 108,
+      "max_power": 7.213432361592585e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 109,
+      "max_power": 1.0823023373178186e-05,
+      "wavelength": 28.0
+    },
+    {
+      "draw": 110,
+      "max_power": 5.721581479610227e-06,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 111,
+      "max_power": 7.5263157631825745e-06,
+      "wavelength": 20.0
+    },
+    {
+      "draw": 112,
+      "max_power": 8.938697921823798e-06,
+      "wavelength": 14.0
+    },
+    {
+      "draw": 113,
+      "max_power": 5.7372679112707425e-06,
+      "wavelength": 10.76923076923077
+    },
+    {
+      "draw": 114,
+      "max_power": 6.438780065694524e-06,
+      "wavelength": 5.6
+    },
+    {
+      "draw": 115,
+      "max_power": 7.412486242716588e-06,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 116,
+      "max_power": 8.614717962648163e-06,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 117,
+      "max_power": 8.06147909699558e-06,
+      "wavelength": 35.0
+    },
+    {
+      "draw": 118,
+      "max_power": 1.3732413593714749e-05,
+      "wavelength": 5.0
+    },
+    {
+      "draw": 119,
+      "max_power": 1.0142105047642897e-05,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 120,
+      "max_power": 2.8508488666150432e-06,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 121,
+      "max_power": 1.1670564474966032e-05,
+      "wavelength": 5.384615384615385
+    },
+    {
+      "draw": 122,
+      "max_power": 8.99875995190214e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 123,
+      "max_power": 1.4782161558677308e-05,
+      "wavelength": 8.235294117647058
+    },
+    {
+      "draw": 124,
+      "max_power": 6.5798379422546646e-06,
+      "wavelength": 14.0
+    },
+    {
+      "draw": 125,
+      "max_power": 3.6888125223455344e-06,
+      "wavelength": 4.666666666666667
+    },
+    {
+      "draw": 126,
+      "max_power": 5.856006807705613e-06,
+      "wavelength": 6.086956521739131
+    },
+    {
+      "draw": 127,
+      "max_power": 4.6455987955941504e-06,
+      "wavelength": 20.0
+    },
+    {
+      "draw": 128,
+      "max_power": 9.600020352989857e-06,
+      "wavelength": 23.333333333333332
+    },
+    {
+      "draw": 129,
+      "max_power": 9.919828402956739e-06,
+      "wavelength": 4.117647058823529
+    },
+    {
+      "draw": 130,
+      "max_power": 6.458259129443125e-06,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 131,
+      "max_power": 1.2037888992432472e-05,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 132,
+      "max_power": 6.063887269538549e-06,
+      "wavelength": 4.242424242424242
+    },
+    {
+      "draw": 133,
+      "max_power": 5.7799457931855755e-06,
+      "wavelength": 7.368421052631579
+    },
+    {
+      "draw": 134,
+      "max_power": 1.0383107678374657e-05,
+      "wavelength": 6.666666666666667
+    },
+    {
+      "draw": 135,
+      "max_power": 1.0618166785329013e-05,
+      "wavelength": 7.777777777777778
+    },
+    {
+      "draw": 136,
+      "max_power": 5.098106400644463e-06,
+      "wavelength": 10.0
+    },
+    {
+      "draw": 137,
+      "max_power": 3.1133359730078446e-06,
+      "wavelength": 7.777777777777778
+    },
+    {
+      "draw": 138,
+      "max_power": 3.5394749709746865e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 139,
+      "max_power": 6.045669686801933e-06,
+      "wavelength": 5.384615384615385
+    },
+    {
+      "draw": 140,
+      "max_power": 4.4109730505652844e-06,
+      "wavelength": 28.0
+    },
+    {
+      "draw": 141,
+      "max_power": 6.635749082252695e-06,
+      "wavelength": 6.086956521739131
+    },
+    {
+      "draw": 142,
+      "max_power": 1.6285292993689675e-05,
+      "wavelength": 10.76923076923077
+    },
+    {
+      "draw": 143,
+      "max_power": 4.693281134367668e-06,
+      "wavelength": 4.0
+    },
+    {
+      "draw": 144,
+      "max_power": 6.942505220755953e-06,
+      "wavelength": 7.0
+    },
+    {
+      "draw": 145,
+      "max_power": 1.3398418548083625e-05,
+      "wavelength": 11.666666666666666
+    },
+    {
+      "draw": 146,
+      "max_power": 4.319593510877441e-06,
+      "wavelength": 17.5
+    },
+    {
+      "draw": 147,
+      "max_power": 5.06420962422598e-06,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 148,
+      "max_power": 9.148575103361832e-06,
+      "wavelength": 5.384615384615385
+    },
+    {
+      "draw": 149,
+      "max_power": 7.881613600516688e-06,
+      "wavelength": 4.666666666666667
+    },
+    {
+      "draw": 150,
+      "max_power": 9.855982048710201e-06,
+      "wavelength": 7.777777777777778
+    },
+    {
+      "draw": 151,
+      "max_power": 8.572149322857341e-06,
+      "wavelength": 11.666666666666666
+    },
+    {
+      "draw": 152,
+      "max_power": 1.3921690727225096e-05,
+      "wavelength": 6.086956521739131
+    },
+    {
+      "draw": 153,
+      "max_power": 5.085941781964575e-06,
+      "wavelength": 5.6
+    },
+    {
+      "draw": 154,
+      "max_power": 1.5415407256479036e-05,
+      "wavelength": 4.827586206896552
+    },
+    {
+      "draw": 155,
+      "max_power": 5.960136163517476e-06,
+      "wavelength": 28.0
+    },
+    {
+      "draw": 156,
+      "max_power": 5.180320219197522e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 157,
+      "max_power": 6.349847474426821e-06,
+      "wavelength": 5.833333333333333
+    },
+    {
+      "draw": 158,
+      "max_power": 1.619847200332124e-05,
+      "wavelength": 11.666666666666666
+    },
+    {
+      "draw": 159,
+      "max_power": 1.1191636639940756e-05,
+      "wavelength": 7.777777777777778
+    },
+    {
+      "draw": 160,
+      "max_power": 8.82018973431915e-06,
+      "wavelength": 6.666666666666667
+    },
+    {
+      "draw": 161,
+      "max_power": 6.829796319140368e-06,
+      "wavelength": 8.75
+    },
+    {
+      "draw": 162,
+      "max_power": 9.100181490653519e-06,
+      "wavelength": 7.368421052631579
+    },
+    {
+      "draw": 163,
+      "max_power": 3.866776671376552e-06,
+      "wavelength": 5.0
+    },
+    {
+      "draw": 164,
+      "max_power": 6.296022336386711e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 165,
+      "max_power": 9.401602979185043e-06,
+      "wavelength": 140.0
+    },
+    {
+      "draw": 166,
+      "max_power": 1.0309873329527215e-05,
+      "wavelength": 8.75
+    },
+    {
+      "draw": 167,
+      "max_power": 1.3492836777456664e-05,
+      "wavelength": 15.555555555555555
+    },
+    {
+      "draw": 168,
+      "max_power": 9.439064458396268e-06,
+      "wavelength": 6.666666666666667
+    },
+    {
+      "draw": 169,
+      "max_power": 6.333212659944752e-06,
+      "wavelength": 11.666666666666666
+    },
+    {
+      "draw": 170,
+      "max_power": 7.620917174102756e-06,
+      "wavelength": 28.0
+    },
+    {
+      "draw": 171,
+      "max_power": 3.1124745467044846e-06,
+      "wavelength": 5.0
+    },
+    {
+      "draw": 172,
+      "max_power": 7.912518295666778e-06,
+      "wavelength": 6.086956521739131
+    },
+    {
+      "draw": 173,
+      "max_power": 7.79321814923146e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 174,
+      "max_power": 1.2769876283127727e-05,
+      "wavelength": 7.0
+    },
+    {
+      "draw": 175,
+      "max_power": 6.09101987718722e-06,
+      "wavelength": 5.384615384615385
+    },
+    {
+      "draw": 176,
+      "max_power": 1.2999813440684301e-05,
+      "wavelength": 10.76923076923077
+    },
+    {
+      "draw": 177,
+      "max_power": 1.0529062947792438e-05,
+      "wavelength": 14.0
+    },
+    {
+      "draw": 178,
+      "max_power": 6.415602458751998e-06,
+      "wavelength": 9.333333333333334
+    },
+    {
+      "draw": 179,
+      "max_power": 9.378971725709632e-06,
+      "wavelength": 46.666666666666664
+    },
+    {
+      "draw": 180,
+      "max_power": 7.441374930443011e-06,
+      "wavelength": 8.235294117647058
+    },
+    {
+      "draw": 181,
+      "max_power": 6.018466326028462e-06,
+      "wavelength": 5.0
+    },
+    {
+      "draw": 182,
+      "max_power": 5.380964741406351e-06,
+      "wavelength": 6.363636363636363
+    },
+    {
+      "draw": 183,
+      "max_power": 4.908928805845174e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 184,
+      "max_power": 5.531207369458061e-06,
+      "wavelength": 11.666666666666666
+    },
+    {
+      "draw": 185,
+      "max_power": 5.043504825400855e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 186,
+      "max_power": 6.360210210178205e-06,
+      "wavelength": 28.0
+    },
+    {
+      "draw": 187,
+      "max_power": 7.916939796051153e-06,
+      "wavelength": 7.368421052631579
+    },
+    {
+      "draw": 188,
+      "max_power": 5.714020007163262e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 189,
+      "max_power": 4.875374919855556e-06,
+      "wavelength": 4.516129032258065
+    },
+    {
+      "draw": 190,
+      "max_power": 1.7830582362858577e-05,
+      "wavelength": 10.0
+    },
+    {
+      "draw": 191,
+      "max_power": 4.759460295863781e-06,
+      "wavelength": 4.375
+    },
+    {
+      "draw": 192,
+      "max_power": 1.115622179110833e-05,
+      "wavelength": 5.384615384615385
+    },
+    {
+      "draw": 193,
+      "max_power": 3.698076766894685e-06,
+      "wavelength": 4.117647058823529
+    },
+    {
+      "draw": 194,
+      "max_power": 7.894904949839324e-06,
+      "wavelength": 7.368421052631579
+    },
+    {
+      "draw": 195,
+      "max_power": 6.809433853733527e-06,
+      "wavelength": 5.185185185185185
+    },
+    {
+      "draw": 196,
+      "max_power": 7.380054021247108e-06,
+      "wavelength": 8.75
+    },
+    {
+      "draw": 197,
+      "max_power": 1.1354517014883025e-05,
+      "wavelength": 6.363636363636363
+    },
+    {
+      "draw": 198,
+      "max_power": 7.35772751616571e-06,
+      "wavelength": 7.368421052631579
+    },
+    {
+      "draw": 199,
+      "max_power": 9.80659488003192e-06,
+      "wavelength": 12.727272727272727
+    }
+  ],
+  "threshold": {
+    "draws": 200,
+    "rank_at_most": 10
+  },
+  "values": {
+    "ambient_dimension_at_95_percent": 93,
+    "anchor_band_centre": 0.781,
+    "anchor_band_half_width": 0.013605814767710833,
+    "anchor_band_high": 0.7946058147677109,
+    "anchor_band_low": 0.7673941852322892,
+    "anchor_gate_decision": "ANCHOR_OUT_OF_BAND",
+    "anchor_statistic": 0.85974,
+    "aperture": 140,
+    "committed_profile_length": 140,
+    "cycles": 2,
+    "draws": 200,
+    "full_spectra_file": "null_spectra_aperture-140_labels-characters.jsonl",
+    "held_out_positions": 10578,
+    "label_window_high": 141,
+    "label_window_low": 1,
+    "labelling": "characters",
+    "labels_missing_from_held_out": [],
+    "main_layer": 5,
+    "max_power": 8.842109681403189e-05,
+    "mean_vectors_file": "mean_vectors_aperture-140_labels-characters.npz",
+    "n_periods_searched": 35,
+    "null_largest": 2.2609547148418183e-05,
+    "null_median": 7.62754395321981e-06,
+    "observed_power_by_cycles": [
+      6.02938986862681e-05,
+      8.842109681403189e-05,
+      7.027586936911313e-05,
+      3.02185379249934e-05,
+      2.2423984931732966e-05,
+      3.821430040733449e-05,
+      2.933007656203626e-05,
+      9.992498317973564e-06,
+      3.76380251479322e-05,
+      1.6545475292548837e-05,
+      1.717436585816776e-05,
+      1.068040000812328e-05,
+      5.4025909036980884e-06,
+      7.864898018278405e-06,
+      4.610605609979195e-06,
+      3.788473260731661e-06,
+      1.0757677997422913e-06,
+      3.276961706014489e-07,
+      5.839986317007803e-06,
+      4.91221109016975e-06,
+      8.09772901054451e-06,
+      2.982153247300109e-06,
+      4.103373693052778e-06,
+      4.699947130569467e-06,
+      4.058089438379859e-06,
+      6.606090132450827e-06,
+      4.505704421066718e-06,
+      1.6480938904952778e-06,
+      2.1447384292208583e-06,
+      4.594830683902907e-07,
+      1.953848549530911e-06,
+      8.509494308066292e-07,
+      8.749026060994545e-07,
+      2.545342667703797e-06,
+      1.5626505017417101e-06
+    ],
+    "pair_counts_by_distance": [
+      140,
+      139,
+      138,
+      137,
+      136,
+      135,
+      134,
+      133,
+      132,
+      131,
+      130,
+      129,
+      128,
+      127,
+      126,
+      125,
+      124,
+      123,
+      122,
+      121,
+      120,
+      119,
+      118,
+      117,
+      116,
+      115,
+      114,
+      113,
+      112,
+      111,
+      110,
+      109,
+      108,
+      107,
+      106,
+      105,
+      104,
+      103,
+      102,
+      101,
+      100,
+      99,
+      98,
+      97,
+      96,
+      95,
+      94,
+      93,
+      92,
+      91,
+      90,
+      89,
+      88,
+      87,
+      86,
+      85,
+      84,
+      83,
+      82,
+      81,
+      80,
+      79,
+      78,
+      77,
+      76,
+      75,
+      74,
+      73,
+      72,
+      71,
+      70,
+      69,
+      68,
+      67,
+      66,
+      65,
+      64,
+      63,
+      62,
+      61,
+      60,
+      59,
+      58,
+      57,
+      56,
+      55,
+      54,
+      53,
+      52,
+      51,
+      50,
+      49,
+      48,
+      47,
+      46,
+      45,
+      44,
+      43,
+      42,
+      41,
+      40,
+      39,
+      38,
+      37,
+      36,
+      35,
+      34,
+      33,
+      32,
+      31,
+      30,
+      29,
+      28,
+      27,
+      26,
+      25,
+      24,
+      23,
+      22,
+      21,
+      20,
+      19,
+      18,
+      17,
+      16,
+      15,
+      14,
+      13,
+      12,
+      11,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1
+    ],
+    "positions_per_label_max": 116,
+    "positions_per_label_min": 27,
+    "profile": [
+      0.18141607,
+      0.18911087,
+      0.17546709,
+      0.16063728,
+      0.16008894,
+      0.12067259,
+      0.1276192,
+      0.11376142,
+      0.10081303,
+      0.09753462,
+      0.07914322,
+      0.09249431,
+      0.07346399,
+      0.08720709,
+      0.08430581,
+      0.07673411,
+      0.07409496,
+      0.0693713,
+      0.0702593,
+      0.06717886,
+      0.06778628,
+      0.06375338,
+      0.0630607,
+      0.05422827,
+      0.05483242,
+      0.06326805,
+      0.04665513,
+      0.05750611,
+      0.05144011,
+      0.04740256,
+      0.05250276,
+      0.03437171,
+      0.03248954,
+      0.04359696,
+      0.03137855,
+      0.02551756,
+      0.03629296,
+      0.03098416,
+      0.02380482,
+      0.04626934,
+      0.02299721,
+      0.02508815,
+      0.01906409,
+      0.01981912,
+      0.01282269,
+      0.01109823,
+      0.00252479,
+      0.00488398,
+      0.01080314,
+      0.00396885,
+      -0.00836887,
+      -0.00893351,
+      0.00290862,
+      -0.00584988,
+      -0.02059518,
+      -0.02186803,
+      -0.02214497,
+      -0.00392469,
+      -0.01633807,
+      -0.01119128,
+      -0.01486018,
+      -0.01997776,
+      -0.02479865,
+      -0.02618213,
+      -0.03128837,
+      -0.02777754,
+      -0.03349805,
+      -0.0359742,
+      -0.04708519,
+      -0.04868814,
+      -0.03769807,
+      -0.0405464,
+      -0.0510772,
+      -0.04415017,
+      -0.03917026,
+      -0.03766068,
+      -0.05056106,
+      -0.05105796,
+      -0.03391857,
+      -0.06062034,
+      -0.04646186,
+      -0.06005185,
+      -0.08309728,
+      -0.0831289,
+      -0.0977578,
+      -0.07224733,
+      -0.08433155,
+      -0.08717128,
+      -0.07988004,
+      -0.07573927,
+      -0.06066926,
+      -0.09486959,
+      -0.05213213,
+      -0.09522587,
+      -0.09432756,
+      -0.08102537,
+      -0.101756,
+      -0.09993059,
+      -0.12578462,
+      -0.11032347,
+      -0.11705875,
+      -0.12507746,
+      -0.12913853,
+      -0.12538415,
+      -0.1355644,
+      -0.1412035,
+      -0.1329338,
+      -0.14578078,
+      -0.13640829,
+      -0.13124798,
+      -0.12146461,
+      -0.09860646,
+      -0.12786083,
+      -0.12896575,
+      -0.14253691,
+      -0.13516527,
+      -0.12872841,
+      -0.13627936,
+      -0.10600721,
+      -0.11613634,
+      -0.12434022,
+      -0.12601916,
+      -0.116374,
+      -0.09763155,
+      -0.12162769,
+      -0.08392656,
+      -0.070174,
+      -0.08808192,
+      -0.09342824,
+      -0.14476449,
+      -0.12828525,
+      -0.13711921,
+      -0.07594782,
+      -0.08041251,
+      -0.07700876,
+      -0.05094786,
+      -0.02526345,
+      0.02808641,
+      0.05812111,
+      0.16215523
+    ],
+    "rank": 1,
+    "run_valid": false,
+    "run_void_reason": "the anchor gate failed: held-out fit quality 0.859740 falls outside the measured band 0.767394 to 0.794606, so every result this run produces is an instrument fault and is not evidence about the model",
+    "share_of_draws_at_or_above": 0.00498,
+    "shuffle_seed": 140000,
+    "variance_share_first_ten": [
+      0.436806,
+      0.114501,
+      0.056854,
+      0.022962,
+      0.020739,
+      0.015529,
+      0.00996,
+      0.009522,
+      0.008019,
+      0.007295
+    ],
+    "wavelength_chars": 70.0
+  }
+}

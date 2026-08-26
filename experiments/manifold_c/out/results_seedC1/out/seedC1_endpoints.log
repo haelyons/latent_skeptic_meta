@@ -1,0 +1,29 @@
+=== stage endpoints ===
+[endpoints] main layer 5, held-out fit quality pooled over nine widths 0.657823
+[record] RECORDED_NOT_GATED valid=True -> arm-main_layer_selection_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] anchor statistic 0.859740 against band 0.767394 to 0.794606 -> ANCHOR_OUT_OF_BAND
+[record] ANCHOR_OUT_OF_BAND valid=True -> arm-anchor_gate_endpoint-1_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[void] the anchor gate failed: held-out fit quality 0.859740 falls outside the measured band 0.767394 to 0.794606, so every result this run produces is an instrument fault and is not evidence about the model
+[record] RECORDED_NOT_GATED valid=False -> arm-recorded_fit_readings_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] window 140 characters: largest power 8.84211e-05 at period 70.0000, rank 1 of 200 -> NULL_CLEARED (25 s)
+[record] NULL_CLEARED valid=False -> aperture-140_arm-pattern_vs_shuffle_endpoint-2_labelling-characters_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] window 200 characters: largest power 3.77246e-05 at period 100.0000, rank 1 of 200 -> NULL_CLEARED (26 s)
+[record] NULL_CLEARED valid=False -> aperture-200_arm-pattern_vs_shuffle_endpoint-2_labelling-characters_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] window 280 characters: largest power 2.68707e-05 at period 140.0000, rank 1 of 200 -> NULL_CLEARED (27 s)
+[record] NULL_CLEARED valid=False -> aperture-280_arm-pattern_vs_shuffle_endpoint-2_labelling-characters_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] window 140 token positions: not computable: distances [50, 51, 52] average zero label pairs, because the held-out documents carry no position at labels [51, 52, 53]; the committed profile length may not be shortened after the fact
+[endpoints] window 140 token-position control -> TOKEN_CONTROL_NOT_COMPUTABLE
+[record] TOKEN_CONTROL_NOT_COMPUTABLE valid=False -> aperture-140_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] window 200 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED valid=False -> aperture-200_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] window 280 token-position control -> CHARACTER_COUNT_DISTINGUISHED
+[record] CHARACTER_COUNT_DISTINGUISHED valid=False -> aperture-280_arm-token_position_control_endpoint-7_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] represented-range check -> ABOVE_150_REPRESENTED
+[record] ABOVE_150_REPRESENTED valid=False -> aperture-280_arm-represented_range_endpoint-6_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] AT_LEAST_ONE_WINDOW_CLEARED valid=False -> arm-windows_cleared_endpoint-3_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] WAVELENGTHS_DIFFER valid=False -> arm-wavelength_gap_endpoint-4_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] RATIOS_WITHIN_CUTOFF valid=False -> arm-ratio_gap_endpoint-5_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[record] VOID_ANCHOR_FAILED valid=False -> arm-run_summary_model-pythia-410m-deduped_revision-step143000_stage-endpoints.json
+[endpoints] {"anchor_band_half_width": 0.013605814767710833, "anchor_band_high": 0.7946058147677109, "anchor_band_low": 0.7673941852322892, "anchor_layer": 7, "anchor_ridge_strength": 100.0, "anchor_ridge_strength_interior_on_grid": true, "anchor_statistic": 0.85974, "band_half_width_below_0.02": true, "endpoint_1_anchor_gate": "ANCHOR_OUT_OF_BAND", "endpoint_2_pattern_by_window": {"140": "NULL_CLEARED", "200": "NULL_CLEARED", "280": "NULL_CLEARED"}, "endpoint_3_windows_cleared": 3, "endpoint_4_wavelength_gap_chars": 70.0, "endpoint_5_ratio_gap": 0.0, "endpoint_6_represented_range": "ABOVE_150_REPRESENTED", "endpoint_7_token_control_by_window": {"140": "TOKEN_CONTROL_NOT_COMPUTABLE", "200": "CHARACTER_COUNT_DISTINGUISHED", "280": "CHARACTER_COUNT_DISTINGUISHED"}, "headline": "VOID_ANCHOR_FAILED", "main_layer": 5, "main_ridge_strength": 1000.0, "main_ridge_strength_interior_on_grid": true, "rank_by_aperture": {"140": 1, "200": 1, "280": 1}, "run_valid": false, "wavelength_by_cleared_aperture": {"140": 70.0, "200": 100.0, "280": 140.0}}
+[endpoints] THIS RUN IS VOID. The anchor gate failed, so every pattern, control and range-check number above is an instrument fault and is not evidence about the model. Every record written after the gate carries run_valid=false in its own values.
+=== stage endpoints done in 194.8 s ===

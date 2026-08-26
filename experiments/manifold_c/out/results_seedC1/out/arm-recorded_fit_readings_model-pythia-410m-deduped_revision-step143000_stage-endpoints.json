@@ -1,0 +1,81 @@
+{
+  "cell": {
+    "arm": "recorded_fit_readings",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "RECORDED_NOT_GATED",
+  "decision_rule": "These numbers are recorded so the record can be read. None of them may enter any decision, and none of them is compared against any threshold.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-52-181",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-26T01:28:01+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 33347,
+      "n_items": 1,
+      "path": "seedC1_design_diff_triage.json",
+      "present": true,
+      "sha256": "06fae77e203c"
+    },
+    {
+      "bytes": 16044,
+      "n_items": 1,
+      "path": "GATE_COMMIT_seedC1.md",
+      "present": true,
+      "sha256": "5fe5efdcbc0e"
+    },
+    {
+      "bytes": 3151874910,
+      "n_items": 25,
+      "path": "results_seedC1/work/group_sums.npz",
+      "present": true,
+      "sha256": "16196cdaf8b6"
+    }
+  ],
+  "metric": "Held-out fit quality of the pooled nine-width probe, read several ways, so an out-of-band anchor can be told apart from a mismatch between two different fits.",
+  "notes": "The anchor statistic fits and scores at width 140 alone, which is the design's own reading. The other readings here exist so a reader can see whether an out-of-band anchor means the instrument drifted or means the band's centre belongs to a different fit. None of them decides anything. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {},
+  "values": {
+    "anchor_band_centre": 0.781,
+    "anchor_band_half_width": 0.013605814767710833,
+    "anchor_band_high": 0.7946058147677109,
+    "anchor_band_low": 0.7673941852322892,
+    "anchor_gate_decision": "ANCHOR_OUT_OF_BAND",
+    "anchor_layer": 7,
+    "anchor_statistic": 0.85974,
+    "anchor_statistic_width140_only_fit": 0.85974,
+    "main_layer": 5,
+    "pooled_probe_by_wrap_width": {
+      "100": 0.525727,
+      "120": 0.572825,
+      "140": 0.549167,
+      "20": -7.993348,
+      "200": 0.445511,
+      "280": 0.253689,
+      "40": -1.184322,
+      "60": 0.067243,
+      "80": 0.442422
+    },
+    "pooled_probe_scored_on_width140_only": 0.549167,
+    "pooled_probe_scored_on_widths_20_to_140": 0.612773,
+    "project_records_pooled_20_to_140": 0.781031,
+    "project_records_width140_only": [
+      0.700601,
+      0.549,
+      0.664024
+    ],
+    "run_valid": false,
+    "run_void_reason": "the anchor gate failed: held-out fit quality 0.859740 falls outside the measured band 0.767394 to 0.794606, so every result this run produces is an instrument fault and is not evidence about the model"
+  }
+}

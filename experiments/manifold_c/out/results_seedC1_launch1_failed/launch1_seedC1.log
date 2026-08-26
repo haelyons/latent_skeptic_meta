@@ -1,0 +1,33 @@
+[launch] gpu_1x_a100_sxm4 @ us-west-2
+[launch] id=71a83ac35d244fe1bc5a51053629dee5
+[poll 1] status=booting ip=
+[poll 2] status=booting ip=
+[poll 3] status=booting ip=
+[poll 4] status=booting ip=
+[poll 5] status=booting ip=
+[poll 6] status=booting ip=
+[poll 7] status=booting ip=
+[poll 8] status=booting ip=129.146.52.183
+[poll 9] status=booting ip=129.146.52.183
+[poll 10] status=booting ip=129.146.52.183
+[poll 11] status=booting ip=129.146.52.183
+[poll 12] status=booting ip=129.146.52.183
+[poll 13] status=booting ip=129.146.52.183
+[poll 14] status=booting ip=129.146.52.183
+[poll 15] status=active ip=129.146.52.183
+[reattach] recorded 71a83ac35d244fe1bc5a51053629dee5 129.146.52.183 -> .last_lambda_instance (recover via: bash lambda_reattach.sh)
+[ssh] waiting for sshd @ 129.146.52.183
+[ssh] up
+[scp] code -> box
+[backstop] arming box self-destruct in 7200s (71a83ac35d244fe1bc5a51053629dee5)
+[backstop] armed + confirmed running
+[run] onbox_seedC1.sh DETACHED on box (cap 5400s); local marker-poll every 60s
+[run] confirmed started (try 1)
+[run] DONE marker rc=1 after 60s
+[fetch] -> out/results_seedC1 : tiny criticals FIRST (summary/log/marker), then the big out/ blobs
+[fetch] summary+logs verified (try 1)
+[fetch] full out/ ok (try 1)
+[done] out/results_seedC1 (teardown trap will terminate 71a83ac35d244fe1bc5a51053629dee5)
+[teardown] terminating 71a83ac35d244fe1bc5a51053629dee5
+[teardown] terminate try 1 failed (network/DNS?); retrying in 20s
+[teardown] terminate accepted for 71a83ac35d244fe1bc5a51053629dee5 (try 2)

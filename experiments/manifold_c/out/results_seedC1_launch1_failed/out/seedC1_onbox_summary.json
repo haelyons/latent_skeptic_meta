@@ -1,0 +1,23 @@
+{
+  "runner": "onbox_seedC1.sh",
+  "model": "EleutherAI/pythia-410m-deduped",
+  "revision": "step143000",
+  "generation_performed": false,
+  "exit_codes": {
+    "selftest_provenance": "0",
+    "selftest_run_seedC1": "0",
+    "packages": "0",
+    "seedC1_extract": "1",
+    "seedC1_calibrate": "skipped",
+    "seedC1_endpoints": "skipped"
+  },
+  "any_step_failed": true,
+  "records_present": [
+    "arm-setup_check_model-pythia-410m-deduped_revision-step143000_stage-extract.json",
+    "run_state.json"
+  ],
+  "roll_up": {},
+  "instance_id": "71a83ac35d244fe1bc5a51053629dee5",
+  "git_commit": "ac92d7ea3b3ebedb852764c50a43a6c0b8d40493",
+  "note": "A further run of this script on the same box is a rerun of the same instrument, not a replication."
+}

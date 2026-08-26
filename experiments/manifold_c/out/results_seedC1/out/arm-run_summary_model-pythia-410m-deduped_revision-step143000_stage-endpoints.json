@@ -1,0 +1,92 @@
+{
+  "cell": {
+    "arm": "run_summary",
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "VOID_ANCHOR_FAILED",
+  "decision_rule": "Each endpoint's own rule, restated in its own record. This record gathers the calls and computes no new number. A failed anchor gate makes every other call here void as an instrument fault.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-52-181",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-26T01:30:59+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 33347,
+      "n_items": 1,
+      "path": "seedC1_design_diff_triage.json",
+      "present": true,
+      "sha256": "06fae77e203c"
+    },
+    {
+      "bytes": 16044,
+      "n_items": 1,
+      "path": "GATE_COMMIT_seedC1.md",
+      "present": true,
+      "sha256": "5fe5efdcbc0e"
+    },
+    {
+      "bytes": 3151874910,
+      "n_items": 25,
+      "path": "results_seedC1/work/group_sums.npz",
+      "present": true,
+      "sha256": "16196cdaf8b6"
+    }
+  ],
+  "metric": "One call per endpoint, gathered from the records written beside this one.",
+  "notes": "A failed anchor gate makes every other call here void as an instrument fault, not evidence about the model, and the void flag is written into every record produced after the gate, per-probe-window files included. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {},
+  "values": {
+    "anchor_band_centre": 0.781,
+    "anchor_band_half_width": 0.013605814767710833,
+    "anchor_band_high": 0.7946058147677109,
+    "anchor_band_low": 0.7673941852322892,
+    "anchor_gate_decision": "ANCHOR_OUT_OF_BAND",
+    "anchor_layer": 7,
+    "anchor_ridge_strength": 100.0,
+    "anchor_ridge_strength_interior_on_grid": true,
+    "anchor_statistic": 0.85974,
+    "band_half_width_below_0.02": true,
+    "endpoint_1_anchor_gate": "ANCHOR_OUT_OF_BAND",
+    "endpoint_2_pattern_by_window": {
+      "140": "NULL_CLEARED",
+      "200": "NULL_CLEARED",
+      "280": "NULL_CLEARED"
+    },
+    "endpoint_3_windows_cleared": 3,
+    "endpoint_4_wavelength_gap_chars": 70.0,
+    "endpoint_5_ratio_gap": 0.0,
+    "endpoint_6_represented_range": "ABOVE_150_REPRESENTED",
+    "endpoint_7_token_control_by_window": {
+      "140": "TOKEN_CONTROL_NOT_COMPUTABLE",
+      "200": "CHARACTER_COUNT_DISTINGUISHED",
+      "280": "CHARACTER_COUNT_DISTINGUISHED"
+    },
+    "headline": "VOID_ANCHOR_FAILED",
+    "main_layer": 5,
+    "main_ridge_strength": 1000.0,
+    "main_ridge_strength_interior_on_grid": true,
+    "rank_by_aperture": {
+      "140": 1,
+      "200": 1,
+      "280": 1
+    },
+    "run_valid": false,
+    "run_void_reason": "the anchor gate failed: held-out fit quality 0.859740 falls outside the measured band 0.767394 to 0.794606, so every result this run produces is an instrument fault and is not evidence about the model",
+    "wavelength_by_cleared_aperture": {
+      "140": 70.0,
+      "200": 100.0,
+      "280": 140.0
+    }
+  }
+}

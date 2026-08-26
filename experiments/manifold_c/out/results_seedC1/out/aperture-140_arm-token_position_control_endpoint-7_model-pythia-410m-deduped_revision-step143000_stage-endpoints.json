@@ -1,0 +1,81 @@
+{
+  "cell": {
+    "aperture": 140,
+    "arm": "token_position_control",
+    "endpoint": 7,
+    "model": "pythia-410m-deduped",
+    "revision": "step143000",
+    "stage": "endpoints"
+  },
+  "decision": "TOKEN_CONTROL_NOT_COMPUTABLE",
+  "decision_rule": "The repeating pattern is credited to counting characters when the two labellings' wavelengths differ by more than 3 characters, or when they disagree on whether they clear their own comparison. A gap of 3 characters or less with both labellings clearing credits token position instead.",
+  "env": {
+    "git_rev": null,
+    "host": "129-146-52-181",
+    "python": "3.10.12",
+    "timestamp_utc": "2026-08-26T01:29:36+00:00"
+  },
+  "inputs": [
+    {
+      "bytes": 1592674,
+      "n_items": 432,
+      "path": "stimulus_linewrap_v2.json",
+      "present": true,
+      "sha256": "b0aa4255b503"
+    },
+    {
+      "bytes": 33347,
+      "n_items": 1,
+      "path": "seedC1_design_diff_triage.json",
+      "present": true,
+      "sha256": "06fae77e203c"
+    },
+    {
+      "bytes": 16044,
+      "n_items": 1,
+      "path": "GATE_COMMIT_seedC1.md",
+      "present": true,
+      "sha256": "5fe5efdcbc0e"
+    },
+    {
+      "bytes": 3151874910,
+      "n_items": 25,
+      "path": "results_seedC1/work/group_sums.npz",
+      "present": true,
+      "sha256": "16196cdaf8b6"
+    },
+    {
+      "bytes": 340016,
+      "n_items": 10578,
+      "path": "results_seedC1/work/act_meta_a140.npz",
+      "present": true,
+      "sha256": "454562dbb070"
+    }
+  ],
+  "metric": "Gap in characters between the character-count pattern's wavelength and the token-position control's wavelength, after converting at the measured characters-per-token rate.",
+  "notes": "A token's label here counts the sub-word tokens since the last line break. The rate that converts token periods into characters is measured on this probe window's own labelled held-out positions, and all three rates are recorded. A further run of this script on the same box is a rerun of the same instrument, not a replication.",
+  "threshold": {
+    "margin_chars": 3.0
+  },
+  "values": {
+    "anchor_band_centre": 0.781,
+    "anchor_band_half_width": 0.013605814767710833,
+    "anchor_band_high": 0.7946058147677109,
+    "anchor_band_low": 0.7673941852322892,
+    "anchor_gate_decision": "ANCHOR_OUT_OF_BAND",
+    "anchor_statistic": 0.85974,
+    "aperture": 140,
+    "character_cleared": true,
+    "character_wavelength_chars": 70.0,
+    "characters_per_token": 3.408395,
+    "characters_per_token_from_whole_text": 4.079788,
+    "committed_profile_length_tokens": 52,
+    "held_out_labelled_positions": 10578,
+    "labelling": "tokens",
+    "main_layer": 5,
+    "not_computable_reason": "distances [50, 51, 52] average zero label pairs, because the held-out documents carry no position at labels [51, 52, 53]; the committed profile length may not be shortened after the fact",
+    "run_valid": false,
+    "run_void_reason": "the anchor gate failed: held-out fit quality 0.859740 falls outside the measured band 0.767394 to 0.794606, so every result this run produces is an instrument fault and is not evidence about the model",
+    "token_label_window_high": 53
+  }
+}

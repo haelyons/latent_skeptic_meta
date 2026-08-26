@@ -1,0 +1,17 @@
+=== stage calibrate ===
+[calibrate] cross-validating the ridge strength on training documents, all nine widths
+[calibrate] main ridge strength 1000, cross-validated best readout 6, quality 0.672421
+[calibrate] anchor sweep readout 0 of 24
+[calibrate] anchor sweep readout 6 of 24
+[calibrate] anchor sweep readout 12 of 24
+[calibrate] anchor sweep readout 18 of 24
+[calibrate] anchor sweep readout 24 of 24
+[calibrate] anchor ridge strength 100, anchor readout 7, cross-validated quality 0.865584
+[calibrate] resplit values ['0.867072', '0.876217', '0.866433', '0.861897', '0.860696']
+[calibrate] anchor band centre 0.781000, spread 0.004535, half-width 0.013606, band 0.767394 to 0.794606
+[calibrate] window 140: character labels 1 to 141, profile length 140, 35 periods; token labels 1 to 53, profile length 52, 13 periods
+[calibrate] window 200: character labels 1 to 201, profile length 200, 50 periods; token labels 1 to 68, profile length 67, 16 periods
+[calibrate] window 280: character labels 1 to 281, profile length 280, 70 periods; token labels 1 to 92, profile length 91, 22 periods
+[record] CALIBRATION_OK valid=True -> arm-constants_model-pythia-410m-deduped_revision-step143000_stage-calibrate.json
+[calibrate] committed record written before any held-out number exists
+=== stage calibrate done in 159.9 s ===

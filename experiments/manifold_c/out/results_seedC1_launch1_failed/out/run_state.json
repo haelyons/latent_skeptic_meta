@@ -1,0 +1,12 @@
+{
+  "anchor": {
+    "band_centre": 0.781,
+    "band_half_width": null,
+    "band_high": null,
+    "band_low": null,
+    "decision": "NOT_YET_COMPUTED",
+    "statistic": null
+  },
+  "run_valid": true,
+  "void_reason": null
+}
