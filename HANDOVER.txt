@@ -1,0 +1,40 @@
+HANDOVER, 2026-08-26. Stateless brief for the next session.
+
+Everything written down is in this repo (read README.txt first; the tool is
+the latent_skeptic submodule, pinned at v2.2; experimental branches
+v2.3-a/b/c live on the tool repo). Do not restate the repo; below is only
+what is written nowhere else.
+
+Live state:
+- tmux "manifold-c" = session DM-HACK-RETRO-E-manager-ii, idle, remote at
+  https://claude.ai/code/session_01KthQbFUyxCgKY8JfLciYk5. Its transcript in
+  experiments/manifold_c/ is a snapshot; the original still grows. tmux
+  "auto-interp" = the first manager, idle.
+- Standing operator directive: proceed autonomously on clearly answerable
+  gates (GPU spend within the 15 USD cap); never message a session mid-turn.
+- The manifold lineage is blocked by its own rule: a failed anchor blocks
+  the next seed until the anchor is re-specified. What a next asking must
+  change is already written (experiments/manifold_c/out/OPERATOR_READING
+  section 6).
+
+Your task frame:
+
+What is the latent_skeptic tooling? Look at the pipeline
+(experiments/manifold_c/pipeline.js and its header) and describe how it is
+used. Register your predictions around how it is used, and how it should be
+used, according to your hypothesis of its purpose. Then examine, in order:
+experiments/manifold_c (one complete run, newest and smallest);
+experiments/auto_interp (the first delegated run); experiments/mats_manifold
+seeds D through D4.1 (the question-refinement lineage); experiments/mats_r1d1
+seeds C and C2 (the data-in-seed pair). For the chats, read 2fb15c4d (drove
+the D lineage; count the human's interventions) and 4b5dae78 (the first
+manager) before any others. Start from each question or seed file, then the
+prompt that launched the session (README.txt, New experiment), then the
+harness - not all at once. Elicit questions from claims-beside-results
+pairings; that is the tool's own method. What can you observe neutrally? How
+does this bear on your predictions? What does this tell us about how
+latent_skeptic was used? What kind of inputs generate what kind of results?
+Be specific, and refer to the available evidence.
+
+As simply as possible, but no simpler. Don't answer until you've thought
+about the problem as thoroughly as possible without answering.
